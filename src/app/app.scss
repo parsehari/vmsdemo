@@ -1,0 +1,151 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+@import "../theme/icons.scss";
+
+body{
+  letter-spacing: 0.5px !important;
+}
+
+.toolbar-title-md {           // android device
+  font-size: 17px !important;
+  //overflow: visible;
+  overflow: auto;
+}
+
+.toolbar-title-ios {         // ios device
+  font-size: 17px !important;
+  //overflow: visible;
+  overflow: auto;
+}
+.toolbar-title{
+  font-size: 15px;
+  font-family: "font-regular" !important;
+}
+.list-ios >.item-block:first-child {
+  border-top: 0px solid #8a8a8e !important;
+}
+.title-ios{
+  padding-left: 45px !important;
+  padding-right: 45px !important;
+  overflow: auto;
+}
+.title.title-md {
+  position: absolute;
+  left: 0%;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  z-index: -1;
+}
+
+.back-button-md{
+  margin: 0px;
+  min-width: 0px;
+  padding: 0px !important;
+  z-index: 100;
+}
+
+.search-pin:before{    // search input header set location pin
+  position: absolute;
+  margin-left: 5%;
+  margin-top: 0.5%;
+}
+
+.round {        // search input header set location pin
+  text-align: center;
+  color: #666;
+  border-radius: 11px;
+  border: none;
+  width: 95%;
+}
+
+.toolbar-md{
+  text-align: center !important;
+}
+input[type="text"]:disabled {
+  background: white !important;
+}
+
+
+.blank-message{
+  text-align: center;
+  color: gray;
+}
+::-webkit-scrollbar{ display:none; }
+
+.toolbar-background-md {
+  border-color: color($colors, grey, base);
+  background: color($colors, red, base);
+}
+
+.forword-arrow{     // global class for all forword arrow
+  color:  color($colors, red, base);
+}
+
+.alert-title{
+  text-align: center !important;
+}
+
+.toast-message{
+  text-align: center !important;
+  opacity: 0.6;
+  color: white !important;
+}
+.toast-wrapper{
+  background: #777777 !important;
+  opacity: 7.2
+}
+.sidemenu-margin{
+  margin-left: 15%;
+}
+.popover-ios .popover-content{
+      height: 45% !important;
+}
+
+@media (min-width:320px)  {
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+  .toolbar-title{
+    text-align: center;
+    font-size: 14px;
+    font-family: "font-regular" !important;
+  }
+
+}
+
+@media (-webkit-min-device-pixel-ratio: 1) {
+  .list-ios .item .item-inner {
+    border-bottom-width: 1px;
+  }
+}
+
+//@media (-webkit-min-device-pixel-ratio: 1) {
+//  .list-ios > .item-block:first-child {
+//    border-top-width: 1px;
+//  }
+//
+//  .list-ios > .item-block:last-child,
+//  .list-ios > .item-wrapper:last-child .item-block {
+//    border-bottom-width: 1px;
+//  }
+//}
+
+@media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */ }
+@media (min-width:600px)  { /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */ }
+@media (min-width:801px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
