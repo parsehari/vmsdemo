@@ -91,6 +91,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "../cordova-plugin-fcm-with-dependecy-updated/starter-FCMPlugin.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -260,6 +261,9 @@ dependencies {
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
     compile "com.facebook.android:facebook-android-sdk:4.+"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
+    compile "com.google.firebase:firebase-core:10.+"
+    compile "com.google.firebase:firebase-messaging:10.+"
     // SUB-PROJECT DEPENDENCIES END
 }
 

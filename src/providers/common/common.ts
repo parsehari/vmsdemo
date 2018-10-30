@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoadingController, ToastController, AlertController} from 'ionic-angular';
 import { Network } from '@ionic-native/network';
@@ -16,7 +16,7 @@ export class CommonProvider {
   loading: any = false;
   isOnline: boolean = true;
 
-  constructor(public http: HttpClient,
+  constructor(
               public loadingCtrl: LoadingController,
               public toast: ToastController,
               public alertCtrl: AlertController,

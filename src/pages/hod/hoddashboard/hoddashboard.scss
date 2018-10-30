@@ -1,0 +1,42 @@
+page-hoddashboard {
+  .formtitle{
+        color: #999;
+  }
+  ul.bar {
+    margin: 0;
+    padding: 4px 0px 0px 30px;
+  }
+  ul.bar:before {
+    border-left: #f00 1px solid;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    height: 20%;
+    top: 64px;
+    /* bottom: 39px; */
+    margin-left: 2px;
+}
+ul.bar li {
+    list-style: none;
+    position: relative;
+    padding-left: 15px;
+    /* line-height: 30px; */
+    padding-bottom: 10px;
+}
+ul.bar li:before {
+    background: #f00;
+    position: absolute;
+    content: " ";
+    width: 5px;
+    height: 5px;
+    left: 0;
+    top: 6px;
+}
+.cart-badge{
+    position: absolute !important;
+    top: 0px !important;
+    right: 17px !important;
+    border-radius: 22px !important;
+    background-color: #9e9e9ebd !important;
+}
+}

@@ -1,0 +1,32 @@
+page-notification-detail {
+  ul.bar {
+    margin: 0;
+    padding: 4px 0px 0px 5px;
+  }
+  ul.bar:before {
+    border-left: #f00 1px solid;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    height: 27%;
+    top: 25px;
+    /* bottom: 39px; */
+    margin-left: 2px;
+}
+ul.bar li {
+    list-style: none;
+    position: relative;
+    padding-left: 15px;
+    /* line-height: 30px; */
+    padding-bottom: 10px;
+}
+ul.bar li:before {
+    background: #f00;
+    position: absolute;
+    content: " ";
+    width: 5px;
+    height: 5px;
+    left: 0;
+    top: 6px;
+}
+}

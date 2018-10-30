@@ -1,64 +1,67 @@
-<ion-header>
-  <!-- <ion-navbar>
-    <ion-title></ion-title>
-  </ion-navbar> -->
-</ion-header>
+<!-- <ion-header no-border>
+  <ion-navbar>
+    <ion-title text-center></ion-title>
+  </ion-navbar>
+</ion-header> -->
 
-<ion-content padding>
-  <p></p>
-<ion-row text-center class="row-height">
-    <ion-col>
-      <button ion-button icon-right (click)="login()" round outline>
-            Login with
-        <ion-icon name="logo-facebook"></ion-icon>
-      </button>
-    </ion-col>
-</ion-row>
-<p></p>
-  <!-- <div class="row">
-  <button ion-button icon-right (click)="addProducts()" round outline>
-        Subscribe
-  </button>
-</div> -->
-</ion-content>
+<ion-content class="page-content">
+  <ion-grid>
+    <ion-row text-center>
+      <ion-col style="margin-top: 5%;">
+        <img src="assets/imgs/mahindra_logo_white.png" alt="" style="width: 61%;height: 75%;">
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col>
+        <div class="reset-title">VEHICLE MANAGEMENT SYSTEM</div>
+      </ion-col>
+    </ion-row>
 
-<!-- Uncomment this to use default center login form -->
-<!-- <ion-content class="login-content" padding>
-  <ion-row class="logo-row">
-    <ion-col></ion-col>
-    <ion-col width-67>
-    <img src="http://placehold.it/300x200"/>
-    </ion-col>
-    <ion-col></ion-col>
-  </ion-row>
-  <div class="login-box">
 
-    <form #registerForm="ngForm">
-      <ion-row>
-        <ion-col>
-          <ion-list inset>
-
-            <ion-item>
-              <ion-input type="text" placeholder="Email" required></ion-input>
-            </ion-item>
-
-            <ion-item>
-              <ion-input type="password" placeholder="Password" required></ion-input>
-            </ion-item>
-
-          </ion-list>
+   <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
+      <ion-row text-center class="row-height" style="margin-top: 1%">
+        <ion-col class="input-height">
+          <input type="email" class="login-input1" formControlName="email"
+                 placeholder="Email"
+                 required
+                 [style.background-color]="(!email.errors) ? '#C24857' : ''"
+                 [style.color]="(!email.errors) ? '#f8f8f8' : ''"
+          />
+          <div class="form-control-feedback"
+               *ngIf="email.errors && (email.dirty || email.touched)">
+               <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>
+          </div>
         </ion-col>
       </ion-row>
-
-      <ion-row>
-        <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit">Login</button>
-          <button ion-button icon-right (click)="login()" class="submit-btn" full>Login with
-            <ion-icon name="logo-facebook"></ion-icon>
+      <ion-row text-center class="row-height" style="margin-top: 7%">
+        <ion-col class="input-height">
+          <input type="password" class="login-input1" formControlName="password"
+                 [ngClass]="{'typed':password.length>1}"
+                 placeholder="Password"
+                 required
+                 [style.background-color]="(!password.errors) ? '#C24857' : ''"
+                 [style.color]="(!password.errors) ? '#f8f8f8' : ''"
+          />
+          <div class="form-control-feedback"
+               *ngIf="password.errors && (password.dirty || password.touched)">
+            <!--<p *ngIf="password.errors.required" style="margin: 7px;font-size: 12px">Password is required</p>-->
+            <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">
+              Passsword must be at least 8 characters long.
+            </p>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row text-center class="row-height">
+        <ion-col>
+          <p class="forgot-password">FORGOT PASSWORD?</p>
+        </ion-col>
+      </ion-row>
+      <ion-row text-center class="row-height"  style="margin-top: 1%">
+        <ion-col>
+            <button [ngClass]="{'login-button':(!email.errors && !password.errors),'login-button-dynamic':(email.errors || password.errors)}">LOGIN
           </button>
         </ion-col>
       </ion-row>
-
     </form>
-  </div>
-</ion-content> -->
+  </ion-grid>
+</ion-content>

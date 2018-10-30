@@ -1,55 +1,143 @@
 page-login {
-  // .login-content {
-  //   background: darkred;
-  //
-  //   .logo-row {
-  //     padding-top: 50px;
-  //     padding-bottom: 20px;
-  //   }
-  //
-  //   .login-box {
-  //     padding: 20px 20px 0px 20px;
-  //     margin-top: 30px;
-  //   }
-  //
-  //   ion-row {
-  //      align-items: center;
-  //      text-align: center;
-  //    }
-  //
-  //    ion-item {
-  //        border-radius: 30px !important;
-  //        padding-left: 30px !important;
-  //        font-size: 0.9em;
-  //        margin-bottom: 10px;
-  //        border: 1px solid #ffffff;
-  //        border-bottom: 0px !important;
-  //        box-shadow: none !important;
-  //    }
-  //
-  //    .signup-col {
-  //      margin: 0px 16px 0px 16px;
-  //      padding-bottom: 20px;
-  //    }
-  //
-  //    .item-inner {
-  //      border-bottom-color: #ffffff !important;
-  //      box-shadow: none !important;
-  //    }
-  //
-  //    .submit-btn {
-  //      background: darkgrey;
-  //      border-radius: 30px !important;
-  //      border: 1px solid #ffffff;
-  //    }
-  //
-  //    .register-btn {
-  //      color: #ffffff;
-  //      font-size: 0.8em;
-  //    }
-  // }
+  .forgot-label{
+    color: white;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 20%;
+    font-family: "font-regular" !important;
+  }
   .row-height{
-        margin-top: 250px;
+    height: 43px;
+  }
+  .reset-title{
+    color: white !important;
+    margin: 8px 0px;
+    font-size: 13px;
+  }
+  .page-content{
+    background-color: color($colors, red, base);;
+  }
+  .login-form{
+    height: 53%;
+    width: 87%;
+    margin-top: 24%;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    background-color: color($colors, red, base);;
+    position: relative;
+  }
+  .logo-title{
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 15%;
+  }
+  .login-input1{
+    width: 70%;
+    background-color: #f8f8f8;
+    border: none;
+    height: 100%;
+    text-align: center;
+  }
+  .forgot-password{
+    font-weight: bold;
+    color: rgba(244, 229, 229, 0.83);
+    font-size: 12px;
+    margin-top: 25px;
+  }
+  .login-input2{
+    height: 11%;
+    width: 78%;
+    margin-top: 8%;
+    margin-left: 12%;
+    background-color: #f8f8f8;
+    border: none;
+  }
+  .login-button{
+    color: white;
+    height: 38px;
+    width: 34%;
+    margin-top: 5%;
+    font-size: 15px;
+    background-color: #262626;
+    letter-spacing: 1px;
+    font-family: "font-medium"
+  }
+  .login-button-dynamic{
+    color:  color($colors, red, base);
+    height: 38px;
+    width: 34%;
+    margin-top: 5%;
+    font-size: 15px;
+    background-color: white;
+    letter-spacing: 1px;
+    font-family: "font-medium"
+  }
+  #footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  #footer h1{
+    font-size: 15px;
+    margin-left: 20px;
+    color: white;
+  }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #000000;
+    font-family: "font-regular" !important;
+    letter-spacing: 1px;
+    margin-left: 10px;
+    font-size: 15px;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #000000;
+    margin-left: 10px;
+    font-family: "font-regular" !important;
+    letter-spacing: 1px;
+  }
+  ::-webkit-input-placeholder {
+    margin-left: 10px;
+    color: rgba(0, 0, 0, 0.71);
+    font-family: "font-regular" !important;
+    letter-spacing: 1px;
+  }
+  input[type="email"]
+  {
+    text-align: center;
+    font-size: 17px !important;
+  }
+
+  input[type="password"]
+  {
+    text-align: center;
+    font-size: 17px;
+  }
+  :-ms-input-placeholder { /* Microsoft Edge */
+    color: #FFFFFF;
+    margin-left: 10px;
+    font-family: "font-regular" !important;
+    letter-spacing: 1px;
+  }
+  .typed{
+    background-color: #C24857 !important;
+    color: white !important;
+  }
+}
+
+.input-height{
+  padding: 0% !important;
+}
+
+@media (min-width:480px)  {
+  //portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android)
+  .input-height{
+    padding: 0% !important;
   }
 
 }
