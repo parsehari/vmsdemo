@@ -3,7 +3,7 @@
     <name>vmsApp</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://172.26.3.133:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
@@ -90,7 +90,6 @@
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
     <plugin name="cordova-plugin-fcm-with-dependecy-updated" spec="^2.2.5" />
-    <allow-navigation href="http://172.26.3.133:8100" sessionid="239e3a59" />
     <engine name="browser" spec="5.0.4" />
     <engine name="android" spec="^7.1.1" />
     <engine name="ios" spec="4.5.5" />
