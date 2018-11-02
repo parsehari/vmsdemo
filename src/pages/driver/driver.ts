@@ -4,6 +4,7 @@ import { NotificationPage } from '../notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { CommonProvider } from '../../providers/common/common';
+
 /**
  * Generated class for the DriverPage page.
  *

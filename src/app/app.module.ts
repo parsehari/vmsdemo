@@ -14,7 +14,7 @@ import { Facebook } from '@ionic-native/facebook'
 import { ServiceProvider } from '../providers/service/service';
 import { CommonProvider } from '../providers/common/common';
 import { FCM } from '@ionic-native/fcm';
-
+//import { QRCodeModule } from 'angular2-qrcode';
 //page
 import { EmpdashboardPageModule } from '../pages/employee/empdashboard/empdashboard.module';
 import { NotificationPageModule } from '../pages/notification/notification.module';
@@ -40,6 +40,7 @@ import { DriverPageModule } from '../pages/driver/driver.module';
     RequesthistoryPageModule,
     HttpModule,
     DriverPageModule,
+    //QRCodeModule,
 
     IonicModule.forRoot(MyApp,{
       backButtonText: 'Back',
