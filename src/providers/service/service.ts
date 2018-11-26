@@ -17,7 +17,7 @@ export class ServiceProvider {
   // header for json/content-type
 //  private url = 'http://mmkndmobdev.corp.mahindra.com';
 //  private url = 'http://192.168.42.115';
-  private url = 'http://10.174.55.224:8080/vms';
+  private url = 'http://10.174.55.190:8080/vms';
   raiseReq:any;
 
   constructor(public http: Http) {

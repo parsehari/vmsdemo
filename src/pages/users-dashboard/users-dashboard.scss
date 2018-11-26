@@ -24,6 +24,16 @@ page-users-dashboard {
     color: white;
     padding-bottom: 35px;
   }
+  .bgimg{
+    background-image: url('../assets/imgs/bgimg2.png')!important;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.toolbar-background.toolbar-background-ios {
+    background: #7c8185c2;
+}
 }
 
 

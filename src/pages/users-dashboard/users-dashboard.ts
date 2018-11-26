@@ -40,18 +40,18 @@ export class UsersDashboardPage {
     console.log('ionViewDidLoad UsersDashboardPage');
   }
   showDashboard(){
-    this.navCtrl.push('EmpdashboardPage',{ 'EmployeeDetail': this.userDetails });
+    this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
   }
   getTripDetails(status: any){
     this.navCtrl.push('DriverPage',{'pageOpen': status});
   }
-  logout(){
-    this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
-      this.nativeStorage.remove('userData');
-    this.navCtrl.setRoot(LoginPage,{});
-  },err=>{
-    console.log('user cancelled');
-  })
-  }
+  // logout(){
+  //   this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
+  //     this.nativeStorage.remove('userData');
+  //   this.navCtrl.setRoot(LoginPage,{});
+  // },err=>{
+  //   console.log('user cancelled');
+  // })
+  // }
 
 }

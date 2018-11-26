@@ -34309,3 +34309,14 @@ page-users-dashboard .bgclr {
   color: white;
   padding-bottom: 35px;
 }
+
+page-users-dashboard .bgimg {
+  background-image: url("../assets/imgs/bgimg2.png") !important;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+page-users-dashboard .toolbar-background.toolbar-background-ios {
+  background: #7c8185c2;
+}
