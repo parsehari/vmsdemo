@@ -1,160 +1,127 @@
 <ion-header>
     <ion-navbar color="navColor">
-        <ion-title text-center>Scan Ticket</ion-title>
+        <ion-title text-center>Trip Details</ion-title>
         <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-        <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
-        <ion-badge class="cart-badge">5</ion-badge>
+        <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
+        <ion-badge class="cart-badge">5</ion-badge> -->
     </ion-navbar>
-    <ion-toolbar color="white">
-      <ion-grid>
+     <ion-toolbar style="color: white;">
+      <!-- <section> -->
         <ion-row>
-          <ion-col col-7>
-            <span style="font-size: 17px;"> Mr. Abc Xyz </span>
+          <ion-col text-center>
+             <span>
+               {{srcSubstr}}
+             </span><br>
+            <span  style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>
+               <!-- <span>
+                 {{tripDetail.travel_time}}
+               </span> -->
           </ion-col>
-          <ion-col col-5>
-            <span> EMPL1DRV </span>
+          <ion-col text-center>
+            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>
+            <span class="icon-automobile" style="font-size: 1.5em"></span><br>
+            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>
+          </ion-col>
+          <ion-col text-center>
+             <span>
+               {{destSubstr}}
+             </span><br>
+            <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>
+               <!-- <span>
+                 {{tripDetail.travel_time}}
+               </span> -->
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col offset-7 style="padding-top: 0px;">
-            <span> Scorpio/MH12PB8989 </span>
-          </ion-col>
-        </ion-row>
-    </ion-grid>
+      <!-- </section> -->
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
+
+  <!-- <ion-row text-center class="row-height"  style="margin-top: 10%">
+      <ion-col>
+      <qr-code [value]="tripDetail.barcodeId" [size]="200"></qr-code>
+    </ion-col>
+  </ion-row> -->
+    <!-- <ion-col> -->
+    <div *ngIf="driverPage == 'tripPage' ">
+      <ion-card class="driverCard">
+        <ion-card-header style="text-align: center" color="red">
+          Passengers Details</ion-card-header>
+          <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Passanger Name</span>
+            </ion-col>
+            <ion-col>
+              {{tripDetail.emp_userName}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          <ion-col>
+            <span class="formtitle">Mobile Number</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_phoneNo}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Email Id</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_email}}
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+      </ion-card>
+
+
+      <ion-card class="driverCard">
+        <ion-card-header style="text-align: center" color="red">
+          Cab Details</ion-card-header>
+          <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Cab Name</span>
+            </ion-col>
+            <ion-col>
+                {{cabDetail.cab_name}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Cab Number</span>
+            </ion-col>
+            <ion-col>
+                {{cabDetail.cab_no}}
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Number of seats</span>
+          </ion-col>
+          <ion-col>
+            {{cabDetail.no_of_seats}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+  </ion-card>
+</div>
+  <div *ngIf="driverPage == 'ticketPage' ">
   <ion-row text-center class="row-height"  style="margin-top: 10%">
       <ion-col>
-      <qr-code [value]="'UXC1234567'" [size]="200"></qr-code>
+      <qr-code [value]="tripDetail.barcodeId" [size]="200"></qr-code>
     </ion-col>
   </ion-row>
-
-<!-- <div>
-<ion-segment [(ngModel)]="requestSegment" color="red">
-    <ion-segment-button value="raisereq">
-      Raise Request
-    </ion-segment-button>
-    <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
-      History
-    </ion-segment-button>
-  </ion-segment>
+  <ion-row text-center class="row-height"  style="margin-top: 1%">
+    <ion-col>
+      <button ion-button  color="red" (click)="startTrip()">Start Trip
+    </button>
+    <button ion-button  color="red" (click)="endTrip()">End Trip
+  </button>
+    </ion-col>
+  </ion-row>
 </div>
-<div [ngSwitch]="requestSegment">
-
-      <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
-        <div *ngIf="!confirmReqst">
-      <ion-item>
-        <ion-label floating>Update Purpose</ion-label>
-        <ion-input type="text" formControlName="updatepurpose"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Travel Date</ion-label>
-        <ion-datetime displayFormat="MM/DD/YYYY" [min]="minDate" [max]="2050"formControlName="traveldate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Time</ion-label>
-        <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Source</ion-label>
-        <ion-select formControlName="travelsrc">
-          <div  *ngFor="let locs of locations">
-          <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
-        </div>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Destination</ion-label>
-        <ion-input type="text" formControlName="traveldest"></ion-input>
-      </ion-item>
-      <ion-row text-center class="row-height"  style="margin-top: 1%">
-        <ion-col>
-            <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next
-          </button>
-        </ion-col>
-      </ion-row>
-    </div>
-    <div *ngIf="confirmReqst" >
-      <ion-card>
-        <ion-card-header style="text-align: center" color="red">
-
-    <span >Confirm Request</span>
-    <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>
-        </ion-card-header>
-        <ion-card-content style="padding: 13px 6px 5px;">
-            <ion-row>
-              <ion-col>
-                <span class="formtitle">Update Purpose</span>
-              </ion-col>
-              <ion-col>
-                {{bookingForm.value.updatepurpose}}
-              </ion-col>
-            </ion-row>
-            <ion-row>
-            <ion-col>
-              <span class="formtitle">Travel Date</span>
-            </ion-col>
-            <ion-col>
-              {{bookingForm.value.traveldate}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Travel Time</span>
-            </ion-col>
-            <ion-col>
-              {{bookingForm.value.traveltime}}
-            </ion-col>
-          </ion-row>
-            <ion-row>
-            <ion-col>
-              <span class="formtitle">Source</span>
-            </ion-col>
-            <ion-col>
-              {{bookingForm.value.travelsrc}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Destination</span>
-            </ion-col>
-            <ion-col>
-              {{bookingForm.value.traveldest}}
-            </ion-col>
-          </ion-row>
-          <ion-row text-center class="row-height"  style="margin-top: 1%">
-            <ion-col>
-
-              <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request
-            </button>
-            <button ion-button small="true" color="red" (click)="sendRequest()">Send Request
-          </button>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </form>
-  <div *ngSwitchCase="'history'">
-  <ion-list >
-      <ion-list-header style="background: #9e9e9e1f !important;">
-        <span style="color:#ad081f">Pending for approval</span>
-      </ion-list-header>
-      <ion-item *ngFor= "let hdata of historyData">
-        <span class="icon-directions_car" style="float:left"></span>
-        <h2 style="float:right; color: #a90e1b;">Pending</h2>
-            <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3><br>
-            <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
-            <div>
-              <br>
-            <ul class="bar">
-              <li style="color:green"><h3>{{hdata.source}}</h3></li>
-              <li style="color:#a90e1b"><h3>{{hdata.destination}}</h3></li>
-            </ul>
-            </div>
-      </ion-item>
-    </ion-list>
-  </div>
-</div> -->
 </ion-content>

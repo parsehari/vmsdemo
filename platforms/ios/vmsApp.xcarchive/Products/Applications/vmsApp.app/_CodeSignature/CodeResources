@@ -98,11 +98,11 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		uxtPTHr11t9umzdvuzZVnnTcTb4=
+		LCDlXqVuSHjP/GqHV3eKxIRHS2I=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
-		ejHITyumi0JUa+oZro6wQWHMft8=
+		n3NcNIFCk69gezu7csdmU+jCjuU=
 		</data>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
 		<data>
@@ -110,7 +110,7 @@
 		</data>
 		<key>CDVLaunchScreen.storyboardc/UIViewController-01J-lp-oVM.nib</key>
 		<data>
-		Cc+GQa3IeTC4wrNA5J2E0utHcXo=
+		U+X/y9NqKUOoRuk0UfZfFUE0760=
 		</data>
 		<key>GoogleService-Info.plist</key>
 		<data>
@@ -118,7 +118,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		nVAhfN9eq/F0fBPRv7MqGb4XzcA=
+		TACly7qKpquWtXX9OMkarjikK/0=
 		</data>
 		<key>LaunchImage-568h@2x.png</key>
 		<data>
@@ -186,7 +186,7 @@
 		</data>
 		<key>MainViewController.nib</key>
 		<data>
-		/zpusXgJwy/pkOdiNWYFXXmVUXI=
+		3YLxzLOjUJ1WMlZCH2dwEoKnECY=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -194,7 +194,7 @@
 		</data>
 		<key>config.xml</key>
 		<data>
-		YAAtFqGxwE2v0Ca/3VtvbffHU2c=
+		PQGF/TQA5bs6Bw3tC39143Bp3Jc=
 		</data>
 		<key>embedded.mobileprovision</key>
 		<data>
@@ -354,11 +354,11 @@
 		</data>
 		<key>www/build/main.js</key>
 		<data>
-		5mw1NQAqPtfD5O99R3o/f2o7ySo=
+		uKSsJZFg7AXS1yxhXLPuL2ocI5c=
 		</data>
 		<key>www/build/main.js.map</key>
 		<data>
-		NEkxvZcN0j7o77fH1LAFAJEjy7Y=
+		H5yXcc/civpdANCIcDSIg/tW/G8=
 		</data>
 		<key>www/build/polyfills.js</key>
 		<data>
@@ -370,11 +370,11 @@
 		</data>
 		<key>www/build/vendor.js</key>
 		<data>
-		cOMiew71alRH3DxcMWrlShgrHZs=
+		BuM7+/ciI+R/ByOFbPpp9XcHYE8=
 		</data>
 		<key>www/build/vendor.js.map</key>
 		<data>
-		sJ2D0Fm54pUr0GSQ80QVWh9QbHI=
+		BMQjn5Tggy3OHYLxry7ighlDjvI=
 		</data>
 		<key>www/cordova-js-src/exec.js</key>
 		<data>
@@ -398,7 +398,7 @@
 		</data>
 		<key>www/cordova_plugins.js</key>
 		<data>
-		+x1WixGCHQjxLSvZZmeibAn1Eis=
+		Pzlh7pabJwMmHuG/37ZrcaBwB9g=
 		</data>
 		<key>www/index.html</key>
 		<data>
@@ -536,9 +536,25 @@
 		<data>
 		p7A9a+/7es1E4aKJPkx0j6eQwuw=
 		</data>
+		<key>www/plugins/cordova-plugin-inappbrowser/www/inappbrowser.js</key>
+		<data>
+		04BAdz7ulKVCu3lMDwCrtzoPTJA=
+		</data>
 		<key>www/plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js</key>
 		<data>
 		SBZdZZyfiHuyQLIH3qlRTPDtcp0=
+		</data>
+		<key>www/plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js</key>
+		<data>
+		PZZqiz3Ikzq/qfHENPGoWnv6uUM=
+		</data>
+		<key>www/plugins/cordova-plugin-nativestorage/www/NativeStorageError.js</key>
+		<data>
+		BiXbCvbDnbSjrkuZOYvlENlmGEY=
+		</data>
+		<key>www/plugins/cordova-plugin-nativestorage/www/mainHandle.js</key>
+		<data>
+		wv0rjLtFyULO9p51ucsj36rgeWU=
 		</data>
 		<key>www/plugins/cordova-plugin-network-information/www/Connection.js</key>
 		<data>
@@ -816,22 +832,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uxtPTHr11t9umzdvuzZVnnTcTb4=
+			LCDlXqVuSHjP/GqHV3eKxIRHS2I=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ufbfi0fSfQLjreMfmsJcgliJ0uBtrOTlyxRysr425b8=
+			Y8gFABo54r8fU5bJfrkes+Nz4S1vE8jqhgsGx6itHYw=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ejHITyumi0JUa+oZro6wQWHMft8=
+			n3NcNIFCk69gezu7csdmU+jCjuU=
 			</data>
 			<key>hash2</key>
 			<data>
-			98N3T6ojUkymTsmwz38zeIFOEdHIvitsogC/PY0opkE=
+			wnSMWsNq8o3ODflobsAomAbSeTwZ3iwv2CjtF+sdIh8=
 			</data>
 		</dict>
 		<key>CDVLaunchScreen.storyboardc/Info.plist</key>
@@ -849,11 +865,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Cc+GQa3IeTC4wrNA5J2E0utHcXo=
+			U+X/y9NqKUOoRuk0UfZfFUE0760=
 			</data>
 			<key>hash2</key>
 			<data>
-			o8zJbPLFSvBw7604v3e9bgNwfAlAy4wjSUHUTxqdvPM=
+			E5otk4NCR+yUAn8ifcJ3VQXws/Zlw0moOtOzYMGIZzU=
 			</data>
 		</dict>
 		<key>GoogleService-Info.plist</key>
@@ -1047,22 +1063,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/zpusXgJwy/pkOdiNWYFXXmVUXI=
+			3YLxzLOjUJ1WMlZCH2dwEoKnECY=
 			</data>
 			<key>hash2</key>
 			<data>
-			Nlsyi2hGAZG1y5vLzw8lsEuDNb/3RvG0Oi9Lq7E62ek=
+			kdW9Cr8w4w0K8jBLjJt8SDSfPnbUeVLBFq6AsBbwpOY=
 			</data>
 		</dict>
 		<key>config.xml</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			YAAtFqGxwE2v0Ca/3VtvbffHU2c=
+			PQGF/TQA5bs6Bw3tC39143Bp3Jc=
 			</data>
 			<key>hash2</key>
 			<data>
-			z435im+SnFRn6hdtibzcwaDcj3Y1KAZjFRpUhFT3WIE=
+			XcHEjWa3exc1lsuSA2E7wNCdhhrcJvTYdHXzeUS46JI=
 			</data>
 		</dict>
 		<key>embedded.mobileprovision</key>
@@ -1498,22 +1514,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			5mw1NQAqPtfD5O99R3o/f2o7ySo=
+			uKSsJZFg7AXS1yxhXLPuL2ocI5c=
 			</data>
 			<key>hash2</key>
 			<data>
-			2mIv/SKmyKXTymLqQ/cjaEAqoGtL/iO4T1DqGeZkQ4g=
+			6MJyAX3u1QSArgvQ/m7iaxhafMODjC9riebMm4j6Heo=
 			</data>
 		</dict>
 		<key>www/build/main.js.map</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			NEkxvZcN0j7o77fH1LAFAJEjy7Y=
+			H5yXcc/civpdANCIcDSIg/tW/G8=
 			</data>
 			<key>hash2</key>
 			<data>
-			k/pmvh8f5B2ahfPJWm4n0IA4C5xQpwvPNdnbg/9tKjQ=
+			QQ7WSBKDxPJqdLaT1c3J6CRaVj46wJx+MCurw8BL+UM=
 			</data>
 		</dict>
 		<key>www/build/polyfills.js</key>
@@ -1542,22 +1558,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			cOMiew71alRH3DxcMWrlShgrHZs=
+			BuM7+/ciI+R/ByOFbPpp9XcHYE8=
 			</data>
 			<key>hash2</key>
 			<data>
-			Af5FFHuKRzhN1Smb4UhsCYnos2zsKKAJw6hsVX6kmMY=
+			Ro7RyiE0rO6OB4K/PAuw1PrHRWpFO/qxDLehx59PdNU=
 			</data>
 		</dict>
 		<key>www/build/vendor.js.map</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sJ2D0Fm54pUr0GSQ80QVWh9QbHI=
+			BMQjn5Tggy3OHYLxry7ighlDjvI=
 			</data>
 			<key>hash2</key>
 			<data>
-			er1Gf2n+K494ZEN6WitGH9BRZ7ytrEpGL7ol4QsLTZU=
+			iqAi0C1jm4EQ1UXp9nj96RYugBUKoisGTKrIGepJyIg=
 			</data>
 		</dict>
 		<key>www/cordova-js-src/exec.js</key>
@@ -1619,11 +1635,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+x1WixGCHQjxLSvZZmeibAn1Eis=
+			Pzlh7pabJwMmHuG/37ZrcaBwB9g=
 			</data>
 			<key>hash2</key>
 			<data>
-			/yIGYlw9nk5PaSShF5uVJlJwPPkIW7/QBaFzvR07LFw=
+			XadDxCJcqkefm06HQEu+Z5U4tecCQ2Kj/XKs1VEfd+A=
 			</data>
 		</dict>
 		<key>www/index.html</key>
@@ -2000,6 +2016,17 @@
 			2r19nzz0vvRYaDlexf+ZC0go3w4I74oCafncQ2Noe3U=
 			</data>
 		</dict>
+		<key>www/plugins/cordova-plugin-inappbrowser/www/inappbrowser.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			04BAdz7ulKVCu3lMDwCrtzoPTJA=
+			</data>
+			<key>hash2</key>
+			<data>
+			FCu11gkLUdAX8FSq0fp81oMiQpBkqbX6AbJfNn5xmfs=
+			</data>
+		</dict>
 		<key>www/plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js</key>
 		<dict>
 			<key>hash</key>
@@ -2009,6 +2036,39 @@
 			<key>hash2</key>
 			<data>
 			mNu92A0NEJzLA4mT1fuIk3x+6SfmD2elZ8JgBfdd//E=
+			</data>
+		</dict>
+		<key>www/plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			PZZqiz3Ikzq/qfHENPGoWnv6uUM=
+			</data>
+			<key>hash2</key>
+			<data>
+			s4MrOvDgh6lkdZkIEwOvVeA5SYvfPnpMnTOsTO5Mo2M=
+			</data>
+		</dict>
+		<key>www/plugins/cordova-plugin-nativestorage/www/NativeStorageError.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			BiXbCvbDnbSjrkuZOYvlENlmGEY=
+			</data>
+			<key>hash2</key>
+			<data>
+			6FqtlZJjmja522AePg3/fzqppp36JACg7HCPoRF0//A=
+			</data>
+		</dict>
+		<key>www/plugins/cordova-plugin-nativestorage/www/mainHandle.js</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wv0rjLtFyULO9p51ucsj36rgeWU=
+			</data>
+			<key>hash2</key>
+			<data>
+			iQIB1PjCikXDbasXkThsdfjNPdTcDDDQMdpyGHe3bU8=
 			</data>
 		</dict>
 		<key>www/plugins/cordova-plugin-network-information/www/Connection.js</key>
@@ -2058,7 +2118,7 @@
 	</dict>
 	<key>rules</key>
 	<dict>
-		<key>^</key>
+		<key>^.*</key>
 		<true/>
 		<key>^.*\.lproj/</key>
 		<dict>
@@ -2089,24 +2149,12 @@
 			<key>weight</key>
 			<real>11</real>
 		</dict>
-		<key>^</key>
-		<dict>
-			<key>weight</key>
-			<real>20</real>
-		</dict>
 		<key>^(.*/)?\.DS_Store$</key>
 		<dict>
 			<key>omit</key>
 			<true/>
 			<key>weight</key>
 			<real>2000</real>
-		</dict>
-		<key>^(Frameworks|SharedFrameworks|PlugIns|Plug-ins|XPCServices|Helpers|MacOS|Library/(Automator|Spotlight|LoginItems))/</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^.*</key>
 		<true/>
@@ -2142,13 +2190,6 @@
 			<true/>
 			<key>weight</key>
 			<real>20</real>
-		</dict>
-		<key>^[^/]+$</key>
-		<dict>
-			<key>nested</key>
-			<true/>
-			<key>weight</key>
-			<real>10</real>
 		</dict>
 		<key>^embedded\.provisionprofile$</key>
 		<dict>

@@ -33,6 +33,12 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },
   "dependent_plugins": {

@@ -15,16 +15,16 @@
   <ion-toolbar color="white">
     <ion-grid>
       <ion-row>
-        <ion-col col-7>
-          <span style="font-size: 17px;"> Mr. John Snow</span>
+        <ion-col col-8>
+          <span style="font-size: 17px;">{{userDetails.emp_f_name}}</span>
         </ion-col>
-        <ion-col col-5>
-          <span> HODID123JOHN </span>
+        <ion-col col-4>
+          <span> {{userDetails.emp_no}} </span>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col offset-7 style="padding-top: 0px;">
-          <span> BRANCH MANAGER </span>
+        <ion-col col-8 style="padding-top: 0px;">
+          <span> {{userDetails.emp_pos}} </span>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -38,14 +38,14 @@
 
 
   <div>
-  <ion-segment [(ngModel)]="requestSegment" color="red">
-    <ion-segment-button value="pendingReq" (ionSelect)="getApprovalHistory()">
+  <ion-segment [(ngModel)]="requestSegment" color="red" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="pendingReq" (ionChange)="getApprovalHistory()">
       Requests
     </ion-segment-button>
     <ion-segment-button value="raisereq">
       Raise Request
     </ion-segment-button>
-    <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
+    <ion-segment-button value="history" (ionChange)="getEmpHistory()">
       Booking History
     </ion-segment-button>
 
@@ -63,8 +63,6 @@
       <ion-item>
         <ion-label floating>Travel Date</ion-label>
         <ion-datetime displayFormat="MM/DD/YYYY" [min]="minDate" [max]="2050"formControlName="traveldate"></ion-datetime>
-
-        <!-- <ion-input type="date" formControlName="traveldate"></ion-input> -->
       </ion-item>
       <ion-item>
         <ion-label floating>Time</ion-label>
@@ -80,10 +78,6 @@
       </ion-item>
       <ion-item>
         <ion-label floating>Destination</ion-label>
-        <!-- <ion-select formControlName="traveldest">
-          <ion-option value="Reay Road">Reay Road</ion-option>
-          <ion-option value="Cotton Green">Cotton Green</ion-option>
-        </ion-select> -->
         <ion-input type="text" formControlName="traveldest"></ion-input>
       </ion-item>
       <ion-row text-center class="row-height"  style="margin-top: 1%">
@@ -164,8 +158,8 @@
         <span class="icon-directions_car" style="float:left"></span>
             <h3 style="float:left; padding-left: 12px;font-weight: 500;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3><br>
             <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('A', applh);">Accept</button>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('R', applh);">Decline</button>
+            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
+            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
             <div>
               <br>
             <ul class="bar">
@@ -184,7 +178,7 @@
         <ng-container *ngFor= "let hdata of historyData">
         <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
           <span class="icon-directions_car" style="float:left"></span>
-          <h2 style="float:right; color: #a90e1b;">Pending</h2>
+          <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>
               <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3><br>
               <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
               <div>

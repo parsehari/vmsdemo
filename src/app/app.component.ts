@@ -14,7 +14,7 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //this.fcm.subscribeToTopic('/topics/all');
+      this.fcm.subscribeToTopic('/topics/all');
       this.fcm.getToken().then(token => {
       console.log("Device token from fcm is ", token)
     })

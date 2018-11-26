@@ -15,19 +15,28 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ServiceProvider {
   // header for json/content-type
-  private url = 'http://mmkndmobdev.corp.mahindra.com';
-//  private url = 'http://10.174.55.169:8080';
+//  private url = 'http://mmkndmobdev.corp.mahindra.com';
+//  private url = 'http://192.168.42.115';
+  private url = 'http://10.174.55.224:8080/vms';
   raiseReq:any;
 
   constructor(public http: Http) {
     console.log('Hello ServiceProvider Provider');
   }
 
-  getBookingHistory(param: any): Observable<any> {
+  getBookingHistory(param: any, usrID: any): Observable<any> {
     var headers =  new Headers({ 'Content-Type': 'application/json' });
   //  headers.append()
     let options = new RequestOptions({headers: headers});
-    return this.http.get(this.url+param + "/" + 'chowza-cont', options );
+    return this.http.get(this.url+param + "/" + usrID, options );
+      //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
+  }
+
+  getAllTripHistory(param: any, usrID: any): Observable<any> {
+    var headers =  new Headers({ 'Content-Type': 'application/json' });
+  //  headers.append()
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.url+param + "/" + usrID, options );
       //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
   }
 
@@ -39,10 +48,10 @@ export class ServiceProvider {
       //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
   }
 
-  getApprovalList(param: any):Observable<any>{
+  getApprovalList(param: any, uid: any):Observable<any>{
     var headers = new Headers({});
     var options =  new RequestOptions({headers: headers});
-    return this.http.get(this.url+param);
+    return this.http.get(this.url+param+'/'+uid);
   }
 
   raiseRequest(param: any, data: any, datastatus: any = "default"): Observable<any>{
@@ -55,11 +64,16 @@ export class ServiceProvider {
     this.raiseReq.append("purpose", data.purpose);
     this.raiseReq.append("travel_date", data.travel_date);
     this.raiseReq.append("travel_time", data.travel_time);
+    this.raiseReq.append("status", data.status);
+    this.raiseReq.append("bh_Id", data.bh_Id);
+    this.raiseReq.append("emp_email", data.emp_email);
+    this.raiseReq.append("emp_userName", data.emp_UserName);
+    this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
 
     if(datastatus == "hodAction"){
       this.raiseReq.append("id", data.id);
-      this.raiseReq.append("status", data.status);
       this.raiseReq.append("modified_by", data.modified_by);
+      this.raiseReq.append("comment", data.comment);
     }
 
     let headers = new Headers({ });
@@ -70,4 +84,26 @@ export class ServiceProvider {
 
   }
 
+  getUsrRoleDetails(url:any, sapClinet:any, ivPernr:any, type:any): Observable<any>{
+    var headers =  new Headers({});
+  //  headers.append()
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(url + "?sap-client=" + sapClinet + "&IV_PERNR=" + ivPernr + "&TYPE="+ type, options);
+  }
+
+  getDeptHeadUser(url:any): Observable<any>{
+    var headers = new Headers({});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(url);
+  }
+
+  getDriverTripDetails(params:any): Observable<any>{
+    var headers = new Headers({});
+    let options = new RequestOptions({headers: headers});
+    return this.http.get(this.url+params);
+  }
+
 }
+
+
+// https://appstore.mahindra.com/saml <https://appstore.mahindra.com/saml>

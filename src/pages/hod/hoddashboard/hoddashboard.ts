@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PopoverController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
@@ -26,6 +26,8 @@ export class HoddashboardPage {
   locations: any;
   approvalList: any;
   historyData: any = [];
+  userDetails: any = [];
+
 
   private bookingForm : FormGroup;
 
@@ -34,8 +36,15 @@ export class HoddashboardPage {
     private formBuilder: FormBuilder,
     public popoverController: PopoverController,
     public serviceProvider:ServiceProvider,
-    public commonProvider:CommonProvider
+    public commonProvider:CommonProvider,
+    public alertCtrl:AlertController,
+    public zone: NgZone
+
     ) {
+      console.log("params hod",navParams);
+      this.userDetails = navParams.data.EmployeeDetail;
+      console.log("params ",this.userDetails);
+
       this.bookingForm = this.formBuilder.group({
         updatepurpose: ['', Validators.required],
         traveldate: ['', Validators.required],
@@ -76,14 +85,8 @@ export class HoddashboardPage {
   }
 
   getEmpHistory(){
-    console.log("In Emp History");
-    const userDetails = {
-        'email': 'abcd@gmail.com',
-        'pwd': 'admin123'
-    };
-    this.serviceProvider.getBookingHistory('/vms/getTripHistory').subscribe((response: any) => {
+    this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
      console.log("Emplyee history ", response);
-
      if(response.status == 200){
        this.historyData = JSON.parse(response._body);
        console.log("Emplyee history ", this.historyData);
@@ -99,14 +102,19 @@ export class HoddashboardPage {
       this.commonProvider.showLoader('Sending request...');
     console.log('this.bookingForm.value ',this.bookingForm.value);
     let reqData = {
-      'userID': 'chowza-cont',
+      'userID': this.userDetails.emp_no,
       'source':this.bookingForm.value.travelsrc,
       'destination':this.bookingForm.value.traveldest,
       'purpose':this.bookingForm.value.updatepurpose,
       'travel_date':this.bookingForm.value.traveldate,
-      'travel_time':this.bookingForm.value.traveltime
+      'travel_time':this.bookingForm.value.traveltime,
+      'emp_email': this.userDetails.emp_email,
+      'emp_UserName': this.userDetails.emp_f_name +' '+ this.userDetails.emp_l_name,
+      'emp_phoneNo': this.userDetails.emp_cell,
+      'status':'Pending'
+
     }
-    this.serviceProvider.raiseRequest('/vms/insertTrip',reqData).subscribe((response: any) => {
+    this.serviceProvider.raiseRequest('/insertTrip',reqData).subscribe((response: any) => {
       console.log("raise request ",response);
       this.commonProvider.hideLoader();
       if(response){
@@ -127,10 +135,47 @@ export class HoddashboardPage {
   reqAction(status: string, obj: any){
     console.log("obj ",obj);
     console.log("status ",status);
-    this.commonProvider.Alert.confirm('Are you confirm ?').then((res) => {
+    if(status == "R"){
+    const prompt = this.alertCtrl.create({
+      title: 'Are you confirm ?',
+      message: "Please enter a comment",
+      inputs: [
+        {
+          name: 'comment',
+          placeholder: 'Your reason'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked', data);
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Saved clicked', data);
+            this.confirmReqAction(status,obj,data.comment);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  return;
+}else{
+  this.commonProvider.Alert.confirm('Are you confirm ?').then((res) => {
+    this.confirmReqAction(status,obj);
+  }, err => {
+      console.log('user cancelled');
+  })
+}
+}
+confirmReqAction(status: string, obj: any, comment: any = "null"){
+
       this.commonProvider.showLoader('Sending request...');
       let reqData = {
-        'userID': 'chowza-cont',
+        'userID': this.userDetails.emp_no,
         'source':obj.source,
         'destination':obj.destination,
         'purpose':obj.purpose,
@@ -138,10 +183,12 @@ export class HoddashboardPage {
         'travel_time':obj.travel_time,
         'id': obj.id,
         'status': status,
-        'modified_by': 'parha-cont'
+        'modified_by': this.userDetails.emp_no,
+        'comment': comment
       }
-      this.serviceProvider.raiseRequest('/vms/approveRequest',reqData,'hodAction').subscribe((response: any) => {
-        console.log("raise request ",response);
+      console.log("raise request ",reqData);
+      //return;
+      this.serviceProvider.raiseRequest('/approveRequest/hod',reqData,'hodAction').subscribe((response: any) => {
         this.commonProvider.hideLoader();
         if(response){
           this.getApprovalHistory();
@@ -155,31 +202,31 @@ export class HoddashboardPage {
       });
 
 
-    }, err => {
-        console.log('user cancelled');
-    })
+
   }
 
   viewReqHistory(){
-    this.navCtrl.push('RequesthistoryPage',{});
+    this.navCtrl.push('RequesthistoryPage',{ EmployeeDetail: this.userDetails });
   }
 
   ionViewDidLoad() {
-    this.serviceProvider.getAllLocations('/vms/getAllLocations').subscribe((response:any) => {
-      console.log("Locations ",response);
+    this.commonProvider.showLoader();
+    this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response:any) => {
       console.log("Locations ",JSON.parse(response._body));
        this.locations = JSON.parse(response._body);
+       this.commonProvider.hideLoader();
        this.getApprovalHistory();
     },
     (err) => {
+      this.commonProvider.hideLoader();
       this.commonProvider.showToast(err.message);
     });
     console.log('ionViewDidLoad EmpdashboardPage');
   }
 
   getApprovalHistory(){
-    this.commonProvider.showLoader('Loading...');
-    this.serviceProvider.getApprovalList('/vms/getApprovalHistory').subscribe((response:any) => {
+    this.commonProvider.showLoader('');
+    this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response:any) => {
       console.log("Locations ",response);
       console.log("Locations ",JSON.parse(response._body));
        this.approvalList = JSON.parse(response._body);
@@ -198,6 +245,13 @@ export class HoddashboardPage {
     console.log('user cancelled');
   })
   }
+
+   segmentChanged(event) {
+        console.log("Segment clicked! " + event.value, this, event);
+        this.zone.run(() => {
+            this.requestSegment = event.value;
+        });
+    }
 
 
 

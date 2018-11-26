@@ -6,6 +6,7 @@ import { NotificationPage } from '../../notification/notification';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { LoginPage } from '../../login/login';
+import { NativeStorage } from '@ionic-native/native-storage';
 //import { FCM } from '@ionic-native/fcm';
 /**
  * Generated class for the EmpdashboardPage page.
@@ -27,6 +28,9 @@ export class EmpdashboardPage {
   minDate: any;
   locations: any;
   historyData: any = [];
+  userDetails: any = [];
+  dhDetails: any = [];
+
   private bookingForm : FormGroup;
 
   constructor(public navCtrl: NavController,
@@ -34,9 +38,14 @@ export class EmpdashboardPage {
               private formBuilder: FormBuilder,
               public popoverController: PopoverController,
               public serviceProvider:ServiceProvider,
-              public commonProvider:CommonProvider
+              public commonProvider:CommonProvider,
+              public nativeStorage: NativeStorage
             //  public fcm: FCM
               ) {
+
+              console.log("params ",navParams);
+              this.userDetails = navParams.data.EmployeeDetail;
+              console.log("params ",this.userDetails);
     this.bookingForm = this.formBuilder.group({
       updatepurpose: ['', Validators.required],
       traveldate: ['', Validators.required],
@@ -47,6 +56,25 @@ export class EmpdashboardPage {
     this.requestSegment = "raisereq";
     this.minDate = new Date().toISOString();
     console.log('this...',this.minDate)
+  }
+
+  ionViewDidLoad() {
+    this.serviceProvider.getDeptHeadUser('http://mivlad1rd2.corp.mahindra.com:8001/sap/bc/zzhr_org_grade?sap-client=220&empid=EMPLOYEE04').subscribe((response:any) => {
+      console.log('DH response ', response);
+      this.dhDetails = JSON.parse(response._body);
+    },(err)=>{
+      this.commonProvider.showToast(err.message);
+    })
+
+    this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response:any) => {
+      console.log("Locations ",response);
+      console.log("Locations ",JSON.parse(response._body));
+       this.locations = JSON.parse(response._body);
+    },
+    (err) => {
+      this.commonProvider.showToast(err.message);
+    });
+    console.log('ionViewDidLoad EmpdashboardPage');
   }
 
   showNotifn(myEvent){
@@ -76,15 +104,8 @@ export class EmpdashboardPage {
   }
   getEmpHistory(){
     console.log("In Emp History");
-  //   this.fcm.getToken().then(token => {
-  //   console.log("Device token from fcm is ", token)
-  // })
-    const userDetails = {
-        'email': 'abcd@gmail.com',
-        'pwd': 'admin123'
-    };
     this.commonProvider.showLoader();
-    this.serviceProvider.getBookingHistory('/vms/getTripHistory').subscribe((response: any) => {
+    this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
      console.log("Emplyee history ", response);
      if(response.status == 200){
        this.historyData = JSON.parse(response._body);
@@ -101,15 +122,34 @@ export class EmpdashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
       this.commonProvider.showLoader('Sending request...');
     console.log('this.bookingForm.value ',this.bookingForm.value);
-    let reqData = {
-      'userID': 'chowza-cont',
+    let ustr = this.userDetails.emp_esg.substring(0, 2);
+
+    let reqData;
+
+      reqData = {
+      'userID': this.userDetails.emp_no,
       'source':this.bookingForm.value.travelsrc,
       'destination':this.bookingForm.value.traveldest,
       'purpose':this.bookingForm.value.updatepurpose,
       'travel_date':this.bookingForm.value.traveldate,
-      'travel_time':this.bookingForm.value.traveltime
+      'travel_time':this.bookingForm.value.traveltime,
+      'emp_email': this.userDetails.emp_email,
+      'emp_UserName': this.userDetails.emp_f_name +' '+ this.userDetails.emp_l_name,
+      'emp_phoneNo': this.userDetails.emp_cell,
+      'status': 'Pending'
+      //'bh_Id' : '00211779'
+      //'bh_Id':this.userDetails.emp_no
     }
-    this.serviceProvider.raiseRequest('/vms/insertTrip',reqData).subscribe((response: any) => {
+    console.log("ustr",reqData );
+  //  return;
+    if( ustr == "L4" || ustr == "L5" ||ustr == "L6" ||ustr == "L7" ||ustr == "L8" || ustr == "L9"){
+      reqData.bh_Id = '00211779' ;
+    }else{
+      reqData.bh_Id = 'null';
+    }
+    console.log("reqraise data", reqData);
+
+    this.serviceProvider.raiseRequest('/insertTrip',reqData).subscribe((response: any) => {
       console.log("raise request ",response);
       this.commonProvider.hideLoader();
       if(response){
@@ -128,20 +168,12 @@ export class EmpdashboardPage {
   })
   }
 
-  ionViewDidLoad() {
-    this.serviceProvider.getAllLocations('/vms/getAllLocations').subscribe((response:any) => {
-      console.log("Locations ",response);
-      console.log("Locations ",JSON.parse(response._body));
-       this.locations = JSON.parse(response._body);
-    },
-    (err) => {
-      this.commonProvider.showToast(err.message);
-    });
-    console.log('ionViewDidLoad EmpdashboardPage');
-  }
+
+
 
   logout(){
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
+      this.nativeStorage.remove('userData');
     this.navCtrl.setRoot(LoginPage,{});
   },err=>{
     console.log('user cancelled');

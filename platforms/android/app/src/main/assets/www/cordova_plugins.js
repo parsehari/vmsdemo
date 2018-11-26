@@ -267,6 +267,33 @@ module.exports = [
     "clobbers": [
       "FCMPlugin"
     ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
+  },
+  {
+    "id": "cordova-plugin-nativestorage.mainHandle",
+    "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+    "pluginId": "cordova-plugin-nativestorage",
+    "clobbers": [
+      "NativeStorage"
+    ]
+  },
+  {
+    "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+    "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+    "pluginId": "cordova-plugin-nativestorage"
+  },
+  {
+    "id": "cordova-plugin-nativestorage.NativeStorageError",
+    "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+    "pluginId": "cordova-plugin-nativestorage"
   }
 ];
 module.exports.metadata = 
@@ -280,7 +307,9 @@ module.exports.metadata =
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
-  "cordova-plugin-fcm-with-dependecy-updated": "2.2.5"
+  "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
+  "cordova-plugin-inappbrowser": "3.0.0",
+  "cordova-plugin-nativestorage": "2.3.2"
 };
 // BOTTOM OF METADATA
 });

@@ -14,6 +14,9 @@ import { Facebook } from '@ionic-native/facebook'
 import { ServiceProvider } from '../providers/service/service';
 import { CommonProvider } from '../providers/common/common';
 import { FCM } from '@ionic-native/fcm';
+import { InAppBrowser} from '@ionic-native/in-app-browser';
+import { NativeStorage } from '@ionic-native/native-storage';
+
 //page
 import { EmpdashboardPageModule } from '../pages/employee/empdashboard/empdashboard.module';
 import { NotificationPageModule } from '../pages/notification/notification.module';
@@ -23,7 +26,7 @@ import { HoddashboardPageModule } from '../pages/hod/hoddashboard/hoddashboard.m
 import { RequesthistoryPageModule } from '../pages/hod/requesthistory/requesthistory.module';
 //Driver page
 import { DriverPageModule } from '../pages/driver/driver.module';
-
+import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboard.module';
 @NgModule({
   declarations: [
     MyApp,
@@ -37,6 +40,7 @@ import { DriverPageModule } from '../pages/driver/driver.module';
     NotificationDetailPageModule,
     HoddashboardPageModule,
     RequesthistoryPageModule,
+    UsersDashboardPageModule,
     HttpModule,
     DriverPageModule,
 
@@ -60,7 +64,9 @@ import { DriverPageModule } from '../pages/driver/driver.module';
     ServiceProvider,
     CommonProvider,
     FCM,
-    Network
+    Network,
+    InAppBrowser,
+    NativeStorage
   ]
 })
 export class AppModule {}

@@ -269,11 +269,38 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-qrscanner.QRScanner",
-    "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
-    "pluginId": "cordova-plugin-qrscanner",
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
     "clobbers": [
-      "QRScanner"
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
+  },
+  {
+    "id": "cordova-plugin-nativestorage.mainHandle",
+    "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+    "pluginId": "cordova-plugin-nativestorage",
+    "clobbers": [
+      "NativeStorage"
+    ]
+  },
+  {
+    "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+    "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+    "pluginId": "cordova-plugin-nativestorage"
+  },
+  {
+    "id": "cordova-plugin-nativestorage.NativeStorageError",
+    "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+    "pluginId": "cordova-plugin-nativestorage"
+  },
+  {
+    "id": "cordova-plugin-ionic-webview.IonicWebView",
+    "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+    "pluginId": "cordova-plugin-ionic-webview",
+    "clobbers": [
+      "Ionic.WebView"
     ]
   }
 ];
@@ -289,7 +316,9 @@ module.exports.metadata =
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
   "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
-  "cordova-plugin-qrscanner": "2.6.0"
+  "cordova-plugin-inappbrowser": "3.0.0",
+  "cordova-plugin-nativestorage": "2.3.2",
+  "cordova-plugin-ionic-webview": "2.2.3"
 };
 // BOTTOM OF METADATA
 });

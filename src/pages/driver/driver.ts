@@ -4,6 +4,7 @@ import { NotificationPage } from '../notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { CommonProvider } from '../../providers/common/common';
+import { ServiceProvider } from '../../providers/service/service';
 
 /**
  * Generated class for the DriverPage page.
@@ -18,17 +19,21 @@ import { CommonProvider } from '../../providers/common/common';
   templateUrl: 'driver.html',
 })
 export class DriverPage {
-
+  tripDetail:any = [];
+  cabDetail:any = [];
+  driverDetail:any = [];
+  srcSubstr: any;
+  destSubstr: any;
+  driverPage: any;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverController: PopoverController,
-              public commonProvider: CommonProvider
+              public commonProvider: CommonProvider,
+              public serviceProvider: ServiceProvider
              ) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DriverPage');
-  }
+               console.log('driver status page', this.navParams.get('pageOpen'));
+                   this.driverPage = this.navParams.get('pageOpen');
+             }
 
   logout(){
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
@@ -44,6 +49,26 @@ export class DriverPage {
         {
            ev:myEvent
         })
+  }
+
+  ionViewDidLoad(){
+    this.commonProvider.showLoader('Getting cab details..');
+    this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/9000111111').subscribe((resp: any)=>{
+      this.tripDetail = JSON.parse(resp._body);
+      this.tripDetail = this.tripDetail[0];
+      this.cabDetail = this.tripDetail.cab;
+      this.driverDetail = this.tripDetail.driver;
+      this.srcSubstr = this.tripDetail.source.substring(0,3);
+      this.destSubstr = this.tripDetail.destination.substring(0,3);
+      this.commonProvider.hideLoader();
+      console.log("trip response ", this.tripDetail );
+      console.log("cabDetail response ", this.cabDetail );
+      console.log("driver Detail response ", this.driverDetail );
+    },(err)=>{
+        this.commonProvider.hideLoader();
+        console.log("error ",err);
+      this.commonProvider.showToast(err.message)
+    })
   }
 
 

@@ -33,6 +33,12 @@
     },
     "cordova-plugin-fcm-with-dependecy-updated": {
       "PACKAGE_NAME": "io.ionic.starter"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-nativestorage": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },
   "dependent_plugins": {

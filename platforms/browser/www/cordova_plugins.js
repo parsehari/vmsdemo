@@ -291,18 +291,45 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
-        "id": "cordova-plugin-qrscanner.QRScanner",
-        "pluginId": "cordova-plugin-qrscanner",
+        "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+        "id": "cordova-plugin-inappbrowser.inappbrowser",
+        "pluginId": "cordova-plugin-inappbrowser",
         "clobbers": [
-            "QRScanner"
+            "cordova.InAppBrowser.open",
+            "window.open"
         ]
     },
     {
-        "file": "plugins/cordova-plugin-qrscanner/src/browser/plugin.min.js",
-        "id": "cordova-plugin-qrscanner.QRScannerProxy",
-        "pluginId": "cordova-plugin-qrscanner",
+        "file": "plugins/cordova-plugin-inappbrowser/src/browser/InAppBrowserProxy.js",
+        "id": "cordova-plugin-inappbrowser.InAppBrowserProxy",
+        "pluginId": "cordova-plugin-inappbrowser",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
+        "id": "cordova-plugin-nativestorage.mainHandle",
+        "pluginId": "cordova-plugin-nativestorage",
+        "clobbers": [
+            "NativeStorage"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
+        "id": "cordova-plugin-nativestorage.LocalStorageHandle",
+        "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+        "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
+        "id": "cordova-plugin-nativestorage.NativeStorageError",
+        "pluginId": "cordova-plugin-nativestorage"
+    },
+    {
+        "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+        "id": "cordova-plugin-ionic-webview.IonicWebView",
+        "pluginId": "cordova-plugin-ionic-webview",
+        "clobbers": [
+            "Ionic.WebView"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -317,7 +344,9 @@ module.exports.metadata =
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-advanced-http": "2.0.1",
     "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
-    "cordova-plugin-qrscanner": "2.6.0"
+    "cordova-plugin-inappbrowser": "3.0.0",
+    "cordova-plugin-nativestorage": "2.3.2",
+    "cordova-plugin-ionic-webview": "2.2.3"
 }
 // BOTTOM OF METADATA
 });

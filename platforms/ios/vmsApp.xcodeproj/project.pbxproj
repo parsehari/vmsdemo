@@ -55,6 +55,8 @@
 		D400A7A1E8AB4D579C55D593 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 198AD611D5D942948D7D7159 /* AFURLSessionManager.m */; };
 		EEB52CA509A1401AA41F64D8 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BFF2DC472CE4D028280AB3A /* GoogleUtilities.framework */; };
 		FEB25CD10A6A40E1B0B03388 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E648F31BE1245BC9206180B /* AFHTTPSessionManager.m */; };
+		0AFB26E5D1A34EE59DBD3D9F /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = E0E0F6BDCFB149E8B08CE261 /* CDVInAppBrowser.m */; };
+		AF7A1B3E48E14FE2ABCF270D /* NativeStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = A12CFC24CEA6411BBC058452 /* NativeStorage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +170,10 @@
 		FA9FD36EFABD4D50B311B8E3 /* CDVReachability.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVReachability.m; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; };
 		FB9C97E615144D628D0E11CE /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = "cordova-plugin-advanced-http/AFURLResponseSerialization.h"; sourceTree = "<group>"; };
 		FE7A843945D544638866B3C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Resources/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E0E0F6BDCFB149E8B08CE261 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		DBEA1635355D40F784C75370 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		A12CFC24CEA6411BBC058452 /* NativeStorage.m */ = {isa = PBXFileReference; name = "NativeStorage.m"; path = "cordova-plugin-nativestorage/NativeStorage.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		6CB978FF90E246B79C53027B /* NativeStorage.h */ = {isa = PBXFileReference; name = "NativeStorage.h"; path = "cordova-plugin-nativestorage/NativeStorage.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +363,10 @@
 				CBA346AA4F0549638C57EDEA /* CDVViewController+SplashScreen.m */,
 				EEE8ED6458384B509A0755D7 /* CDVSplashScreen.h */,
 				C86318D7419A4F6AA675E9FE /* CDVViewController+SplashScreen.h */,
+				E0E0F6BDCFB149E8B08CE261 /* CDVInAppBrowser.m */,
+				DBEA1635355D40F784C75370 /* CDVInAppBrowser.h */,
+				A12CFC24CEA6411BBC058452 /* NativeStorage.m */,
+				6CB978FF90E246B79C53027B /* NativeStorage.h */,
 			);
 			name = Plugins;
 			path = vmsApp/Plugins;
@@ -512,6 +522,8 @@
 				70302813CDF745FD99C81170 /* CDVReachability.m in Sources */,
 				CC9849EDF26E4BD9848093A3 /* CDVSplashScreen.m in Sources */,
 				9F326FC68C454ECFB7A49679 /* CDVViewController+SplashScreen.m in Sources */,
+				0AFB26E5D1A34EE59DBD3D9F /* CDVInAppBrowser.m in Sources */,
+				AF7A1B3E48E14FE2ABCF270D /* NativeStorage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar>
+    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
+  </ion-navbar>
+  <ion-toolbar>
+  <section text-center class="bgclr">
+    <span class="icon-noimage-icon"></span>
+      <h1>Welcome, <br>
+        Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</h1>
+        <span text-center class="userText">
+          {{userDetails.emp_cost}}
+        </span><br>
+        <span text-center class="userText">
+            {{userDetails.emp_esg}}
+        </span>
+  </section>
+</ion-toolbar>
+</ion-header>
+<ion-content>
+
+<ion-grid *ngIf="!driverMobileNumber">
+  <ion-row>
+    <ion-col col-6>
+      <ion-card class="dashboardCard" text-center padding color="danger" (click)="showDashboard();">
+        <span class="icon-automobile" style="font-size: 2.7rem"></span>
+        <h3>Raise Request</h3>
+      </ion-card>
+    </ion-col>
+    <ion-col col-6>
+      <ion-card class="dashboardCard" text-center padding color="danger">
+        <span class="icon-loop2" style="font-size: 2.7rem"></span>
+        <h3>Trip details</h3>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-6>
+      <ion-card class="dashboardCard" text-center padding color="danger" >
+        <span class="icon-automobile" style="font-size: 2.7rem"></span>
+        <h5>History</h5>
+      </ion-card>
+    </ion-col>
+    <ion-col col-6>
+      <ion-card class="dashboardCard" text-center padding color="danger">
+        <span class="icon-loop2" style="font-size: 2.7rem"></span>
+        <h5>Notifications</h5>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid *ngIf="driverMobileNumber">
+  <ion-row>
+  <ion-col col-6>
+    <ion-card class="dashboardCard" text-center padding color="danger" (click)="getTripDetails('ticketPage');">
+      <span class="icon-automobile" style="font-size: 2.7rem"></span>
+      <h5>Scan Ticket</h5>
+    </ion-card>
+  </ion-col>
+  <ion-col col-6>
+    <ion-card class="dashboardCard" text-center padding color="danger" (click)="getTripDetails('tripPage');">
+      <span class="icon-loop2" style="font-size: 2.7rem"></span>
+      <h3>Trip details</h3>
+    </ion-card>
+  </ion-col>
+</ion-row>
+</ion-grid>
+
+</ion-content>
