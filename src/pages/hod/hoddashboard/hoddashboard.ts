@@ -85,6 +85,7 @@ export class HoddashboardPage {
   }
 
   getEmpHistory(){
+    alert("booking history")
     this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
      console.log("Emplyee history ", response);
      if(response.status == 200){
@@ -135,7 +136,8 @@ export class HoddashboardPage {
   reqAction(status: string, obj: any){
     console.log("obj ",obj);
     console.log("status ",status);
-    if(status == "R"){
+    if(status == "Rejected"){
+
     const prompt = this.alertCtrl.create({
       title: 'Are you confirm ?',
       message: "Please enter a comment",
@@ -168,14 +170,17 @@ export class HoddashboardPage {
     this.confirmReqAction(status,obj);
   }, err => {
       console.log('user cancelled');
+      this.commonProvider.hideLoader();
+      this.commonProvider.showToast(err.message);
   })
 }
 }
 confirmReqAction(status: string, obj: any, comment: any = "null"){
-
+  console.log("status ",status)
+  console.log("status obj ",obj);
       this.commonProvider.showLoader('Sending request...');
       let reqData = {
-        'userID': this.userDetails.emp_no,
+        'userID': obj.userID,
         'source':obj.source,
         'destination':obj.destination,
         'purpose':obj.purpose,
@@ -184,7 +189,11 @@ confirmReqAction(status: string, obj: any, comment: any = "null"){
         'id': obj.id,
         'status': status,
         'modified_by': this.userDetails.emp_no,
-        'comment': comment
+        'comment': comment,
+        'emp_email': obj.emp_email,
+        'emp_UserName': obj.emp_userName,
+        'emp_phoneNo': obj.emp_phoneNo,
+        'bh_Id': this.userDetails.emp_no
       }
       console.log("raise request ",reqData);
       //return;
@@ -198,6 +207,8 @@ confirmReqAction(status: string, obj: any, comment: any = "null"){
         }
 
       },(err)=>{
+        console.log("error ",err);
+        this.commonProvider.hideLoader();
         this.commonProvider.showToast(err.message);
       });
 

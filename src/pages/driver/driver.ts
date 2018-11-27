@@ -71,6 +71,22 @@ export class DriverPage {
     })
   }
 
+  startTrip(ev){
+    this.commonProvider.showLoader('Trip starting..');
+    let today = new Date();
+    let cdate= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'/'+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    console.log("ctime ", cdate);
+    this.serviceProvider.tripStart('/updateOngoingTripDetails/driver/','10fWbCSh4',cdate).subscribe((resp: any)=>{
+        console.log("response ",resp);
+        this.commonProvider.hideLoader();
+
+    },(err)=>{
+      console.log("error",err);
+      this.commonProvider.showToast(err.message);
+      this.commonProvider.hideLoader();
+    })
+  }
+
 
 
 }

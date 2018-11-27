@@ -40,6 +40,7 @@ export class UsersDashboardPage {
     console.log('ionViewDidLoad UsersDashboardPage');
   }
   showDashboard(){
+      //this.navCtrl.push('EmpdashboardPage',{ 'EmployeeDetail': this.userDetails });
     this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
   }
   getTripDetails(status: any){

@@ -33696,10 +33696,6 @@ ion-navbar.toolbar {
   content: "\e9bc";
 }
 
-.icon-cancel-circle:before {
-  content: "\ea0d";
-}
-
 .icon-photo:before {
   content: "\e900";
 }
@@ -33780,6 +33776,96 @@ ion-navbar.toolbar {
 
 .icon-circle-left:before {
   content: "\ea44";
+}
+
+.icon-bubble2:before {
+  content: "\e96e";
+}
+
+.icon-user-check:before {
+  content: "\e975";
+}
+
+.icon-cancel-circle:before {
+  content: "\ea0d";
+  color: white;
+  font-size: 25px;
+}
+
+.icon-cross:before {
+  content: "\ea0f";
+}
+
+.icon-checkmark:before {
+  content: "\ea10";
+}
+
+.icon-checkmark2:before {
+  content: "\ea11";
+}
+
+.icon-enter:before {
+  content: "\ea13";
+}
+
+.icon-exit:before {
+  content: "\ea14";
+}
+
+.icon-loop:before {
+  content: "\ea2d";
+}
+
+.icon-infinite:before {
+  content: "\ea2f";
+}
+
+.icon-arrow-left:before {
+  content: "\ea38";
+}
+
+.icon-arrow-up-left2:before {
+  content: "\ea39";
+}
+
+.icon-arrow-up2:before {
+  content: "\ea3a";
+}
+
+.icon-circle-down:before {
+  content: "\ea43";
+}
+
+.icon-circle-left:before {
+  content: "\ea44";
+}
+
+.icon-tab:before {
+  content: "\ea45";
+}
+
+.icon-command:before {
+  content: "\ea4e";
+}
+
+.icon-shift:before {
+  content: "\ea4f";
+}
+
+.icon-ctrl:before {
+  content: "\ea50";
+}
+
+.icon-ungroup:before {
+  content: "\ea59";
+}
+
+.icon-scissors:before {
+  content: "\ea5a";
+}
+
+.icon-filter:before {
+  content: "\ea5b";
 }
 
 body {
@@ -34303,6 +34389,7 @@ page-users-dashboard .dashboardCard {
 page-users-dashboard .userText {
   font-size: 16px;
   font-family: "font-medium";
+  color: white;
 }
 
 page-users-dashboard .bgclr {
@@ -34315,6 +34402,7 @@ page-users-dashboard .bgimg {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  opacity: 0.8;
 }
 
 page-users-dashboard .toolbar-background.toolbar-background-ios {

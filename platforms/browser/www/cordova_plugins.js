@@ -322,14 +322,6 @@ module.exports = [
         "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
         "id": "cordova-plugin-nativestorage.NativeStorageError",
         "pluginId": "cordova-plugin-nativestorage"
-    },
-    {
-        "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-        "id": "cordova-plugin-ionic-webview.IonicWebView",
-        "pluginId": "cordova-plugin-ionic-webview",
-        "clobbers": [
-            "Ionic.WebView"
-        ]
     }
 ];
 module.exports.metadata = 
@@ -345,8 +337,7 @@ module.exports.metadata =
     "cordova-plugin-advanced-http": "2.0.1",
     "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
     "cordova-plugin-inappbrowser": "3.0.0",
-    "cordova-plugin-nativestorage": "2.3.2",
-    "cordova-plugin-ionic-webview": "2.2.3"
+    "cordova-plugin-nativestorage": "2.3.2"
 }
 // BOTTOM OF METADATA
 });

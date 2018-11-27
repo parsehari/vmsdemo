@@ -17,9 +17,9 @@ export class ServiceProvider {
   // header for json/content-type
 //  private url = 'http://mmkndmobdev.corp.mahindra.com';
 //  private url = 'http://192.168.42.115';
-  private url = 'http://10.174.55.190:8080/vms';
+  private url = 'http://10.174.50.137:8080/vms';
   raiseReq:any;
-
+  tripTime:any;
   constructor(public http: Http) {
     console.log('Hello ServiceProvider Provider');
   }
@@ -72,7 +72,7 @@ export class ServiceProvider {
 
     if(datastatus == "hodAction"){
       this.raiseReq.append("id", data.id);
-      this.raiseReq.append("modified_by", data.modified_by);
+      this.raiseReq.append("modifiedby", data.modified_by);
       this.raiseReq.append("comment", data.comment);
     }
 
@@ -80,7 +80,7 @@ export class ServiceProvider {
     let options = new RequestOptions({ headers: headers });
     console.log("in service ",this.raiseReq)
     console.log("in options ",options)
-    return this.http.post(this.url + param, this.raiseReq,options)
+    return this.http.post(this.url + param, this.raiseReq,options);
 
   }
 
@@ -101,6 +101,15 @@ export class ServiceProvider {
     var headers = new Headers({});
     let options = new RequestOptions({headers: headers});
     return this.http.get(this.url+params);
+  }
+
+  tripStart(params:any,barcodeId:any,startTrip:any): Observable<any>{
+    var headers = new Headers({});
+    let options = new RequestOptions({headers: headers});
+    this.tripTime = new FormData();
+    this.tripTime.append("barcodeId", barcodeId);
+    this.tripTime.append("startTrip", startTrip);
+    return this.http.post(this.url +params,this.tripTime,options);
   }
 
 }

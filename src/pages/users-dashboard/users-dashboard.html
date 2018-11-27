@@ -3,13 +3,13 @@
       <!-- <img  object-fit: cover src="../assets/imgs/Sp02.jpg" > -->
   <section text-center class="bgclr bgimg">
     <span class="icon-noimage-icon"></span>
-      <h1 style="margin-top: 0rem !important;">Welcome, <br>
-        Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</h1>
+      <h1 style="margin-top: 0rem !important;"><b>Welcome,</b> <br>
+        <b>Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</b></h1>
         <span text-center class="userText">
-          {{userDetails.emp_cost}}
+        <b>  {{userDetails.emp_cost}}</b>
         </span><br>
         <span text-center class="userText">
-            {{userDetails.emp_esg}}
+          <b>  {{userDetails.emp_esg}}</b>
         </span>
   </section>
 </ion-toolbar>
@@ -18,19 +18,23 @@
 
 <ion-grid *ngIf="!driverMobileNumber">
   <ion-row>
-    <ion-col (click)="showDashboard();">
-<img src="assets/imgs/ani/bell2.png" alt="">
+    <ion-col text-center (click)="showDashboard();">
+      <img src="assets/imgs/ani/bell2.png" alt="">
+      <span class="userText">Notifications</span>
     </ion-col>
-    <ion-col (click)="showDashboard();">
+    <ion-col text-center (click)="showDashboard();">
 <img src="assets/imgs/ani/cab1.png" alt="">
+<span class="userText">Cabs History</span>
     </ion-col>
 </ion-row>
   <ion-row>
-    <ion-col (click)="showDashboard();">
+    <ion-col text-center (click)="showDashboard();">
 <img src="assets/imgs/ani/create1.png" alt="">
+<span class="userText">Create Request</span>
     </ion-col>
-    <ion-col (click)="showDashboard();">
+    <ion-col text-center (click)="showDashboard();">
 <img src="assets/imgs/ani/raise1.png" alt="">
+<span class="userText">Create Request</span>
     </ion-col>
 </ion-row>
 
@@ -65,11 +69,13 @@
 
 <ion-grid *ngIf="driverMobileNumber">
   <ion-row>
-    <ion-col (click)="getTripDetails('ticketPage');">
+    <ion-col text-center (click)="getTripDetails('tripPage');">
 <img src="assets/imgs/ani/create1.png" alt="">
+    <span class="userText">Trip Details</span>
     </ion-col>
-    <ion-col (click)="getTripDetails('tripPage');">
+    <ion-col text-center (click)="getTripDetails('ticketPage');">
 <img src="assets/imgs/ani/raise1.png" alt="">
+<span class="userText">Scan Code</span>
     </ion-col>
 </ion-row>
   <!-- <ion-row>

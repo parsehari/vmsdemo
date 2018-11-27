@@ -38,14 +38,14 @@
 
 
   <div>
-  <ion-segment [(ngModel)]="requestSegment" color="red" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="pendingReq" (ionChange)="getApprovalHistory()">
+  <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">
+    <ion-segment-button value="pendingReq" (ionSelect)="getApprovalHistory()">
       Requests
     </ion-segment-button>
     <ion-segment-button value="raisereq">
       Raise Request
     </ion-segment-button>
-    <ion-segment-button value="history" (ionChange)="getEmpHistory()">
+    <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
       Booking History
     </ion-segment-button>
 
@@ -156,10 +156,12 @@
       </ion-list-header>
       <ion-item *ngFor="let applh of approvalList">
         <span class="icon-directions_car" style="float:left"></span>
-            <h3 style="float:left; padding-left: 12px;font-weight: 500;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3><br>
-            <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
+        <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{applh.purpose}}</h3><br>
+            <h3  style="float:left; padding-left: 29px;color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>
+             <button item-right ion-button icon-only (click)="reqAction('Inprocess', applh);" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);"><span class="icon-cross" style="float:right;font-size: 25px;"></span></button>
+            <button item-right ion-button icon-only (click)="reqAction('Rejected', applh);" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);"><span class="icon-checkmark2" style="float:right;font-size: 25px;"></span></button>
+            <!-- <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
+            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button> -->
             <div>
               <br>
             <ul class="bar">
@@ -179,8 +181,8 @@
         <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
           <span class="icon-directions_car" style="float:left"></span>
           <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>
-              <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3><br>
-              <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
+          <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.purpose}}</h3><br>
+              <h3 style="float:left; padding-left: 29px;color: #424242;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>
               <div>
                 <br>
               <ul class="bar">

@@ -19,6 +19,7 @@ page-users-dashboard {
   .userText{
     font-size: 16px;
     font-family: "font-medium";
+    color: white;
   }
   .bgclr{
     color: white;
@@ -29,6 +30,7 @@ page-users-dashboard {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+    opacity: 0.8;
 }
 
 .toolbar-background.toolbar-background-ios {

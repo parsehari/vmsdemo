@@ -22,8 +22,8 @@
     <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
       <span class="icon-directions_car" style="float:left"></span>
       <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>
-          <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3><br>
-          <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>
+      <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.purpose}}</h3><br>
+          <h3 style="float:left; padding-left: 29px;color: #424242;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>
           <div>
             <br>
           <ul class="bar">

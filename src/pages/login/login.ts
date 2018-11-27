@@ -79,7 +79,6 @@ export class LoginPage {
     //  browser.on('loadstop').subscribe(
     //
     //   data => {
-    //      // browser.insertCSS({ code: "body{color: red;" });
     //       let url = data.url;
     //       this.company = this.getParameterByName('company',url);
     //       this.usremail = this.getParameterByName('email',url);
@@ -107,18 +106,18 @@ export class LoginPage {
 
                           this.navCtrl.setRoot(UsersDashboardPage, {response});
                         }
-                          },(err)=>{
-                            this.commonProvider.showToast(err.message);
-                          })
-            //            },
-            //             error => {this.commonProvider.showToast(error.message);
-            //           }
-            //         );
-            //       },
-            //       error => console.error('Error storing item', error)
-            // );
-
-  //  })
+   //                        },(err)=>{
+   //                          this.commonProvider.showToast(err.message);
+   //                        })
+   //                     },
+   //                      error => {this.commonProvider.showToast(error.message);
+   //                    }
+   //                  );
+   //                },
+   //                error => console.error('Error storing item', error)
+   //          );
+   //
+    })
 
 }
   }
