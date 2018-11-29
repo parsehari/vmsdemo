@@ -21,19 +21,23 @@ import { CommonProvider } from '../../providers/common/common';
 export class UsersDashboardPage {
   userDetails: any = [];
   driverMobileNumber: any = '';
+  securityCheck: any = '';
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public commonProvider: CommonProvider,
               public serviceProvider: ServiceProvider
    ) {
-    //this.userDetails = navParams.data.response.EmployeeDetail;
-    console.log("in user page ", navParams);
-    if(navParams.get('driverNumber')){
-       this.driverMobileNumber = navParams.get('driverNumber');
-    }else{
-      this.userDetails = navParams.data.response.EmployeeDetail;
-    }
+     console.log("in user page ", navParams);
+     console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
+     console.log("navParams.get('securitylogin') ", navParams.get('security'));
+     if(navParams.get('driverNumber')){
+        this.driverMobileNumber = navParams.get('driverNumber');
+     }else if(navParams.get('security')){
+       this.securityCheck = navParams.get('security');
+     }else{
+       this.userDetails = navParams.data.response.EmployeeDetail;
+     }
   }
 
   ionViewDidLoad() {

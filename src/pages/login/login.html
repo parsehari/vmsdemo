@@ -21,7 +21,7 @@
    <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col class="input-height">
-          <input type="number" class="login-input1" formControlName="email"
+          <input type="text" class="login-input1" formControlName="email"
                  placeholder="Mobile number"
                  required
                  [style.background-color]="(!email.errors) ? '#C24857' : ''"

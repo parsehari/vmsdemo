@@ -26,6 +26,7 @@ export class LoginPage {
   nameID: any;
   inapbrowser: any;
   mobileNumber: any;
+  securitylogin: any;
   constructor(public navCtrl: NavController,
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
@@ -70,8 +71,17 @@ export class LoginPage {
   loginAction(){
     console.log('this.loginForm ',this.email.value);
     if(this.email.value){
-      this.mobileNumber = this.email.value;
-      this.navCtrl.setRoot(UsersDashboardPage, {'driverNumber': this.mobileNumber});
+      if(isNaN(this.email.value)){
+        if(this.email.value == "security"){
+          this.securitylogin = this.email.value;
+          this.navCtrl.setRoot(UsersDashboardPage, {'security': this.securitylogin})
+        }else{
+          this.commonProvider.showToast("Enter correct credentials ");
+        }
+      }else{
+        this.mobileNumber = this.email.value;
+        this.navCtrl.setRoot(UsersDashboardPage, {'driverNumber': this.mobileNumber});
+      }
     }else{
     //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
     //   location: 'yes'
