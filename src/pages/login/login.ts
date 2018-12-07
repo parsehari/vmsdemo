@@ -6,9 +6,10 @@ import { UsersDashboardPage } from '../users-dashboard/users-dashboard';
 import { EmpdashboardPage } from '../employee/empdashboard/empdashboard';
 import { HoddashboardPage } from '../hod/hoddashboard/hoddashboard';
 import { DriverPage } from '../driver/driver';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { ScanPage } from '../scan/scan';
+import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 
 @Component({
   selector: 'page-login',
@@ -27,120 +28,162 @@ export class LoginPage {
   inapbrowser: any;
   mobileNumber: any;
   securitylogin: any;
+  userid: any;
   constructor(public navCtrl: NavController,
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
-    public iab: InAppBrowser,
-    public nativeStorage: NativeStorage
+    public iab: InAppBrowser
   ) {
+    this.loginToApp();
   }
 
-  ionViewDidLoad(){
-    //     this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
-    //     this.bookingForm.reset();
-    //     this.confirmReqst = false;
-    // }, err => {
-    //     console.log('user cancelled');
-    // })
+  ionViewDidLoad() {
+
   }
 
   ngOnInit() {
-      this.createFormControls();
-      this.createForm();
+    this.createFormControls();
+    this.createForm();
   }
 
   createFormControls() {
-      this.email = new FormControl(this.email, [
-          Validators.required,
-          Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
-      ]);
-      this.password = new FormControl('', [
-          Validators.required,
-          Validators.minLength(4)
-      ]);
+    this.email = new FormControl(this.email, [
+      Validators.required,
+      Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
+    ]);
+    this.password = new FormControl('', [
+      Validators.required,
+      Validators.minLength(4)
+    ]);
   }
 
 
   createForm() {
-      this.loginForm = new FormGroup({
-          email: this.email,
-          password: this.password
-      });
+    this.loginForm = new FormGroup({
+      email: this.email,
+      password: this.password
+    });
   }
 
-  loginAction(){
-    console.log('this.loginForm ',this.email.value);
-    if(this.email.value){
-      if(isNaN(this.email.value)){
-        if(this.email.value == "security"){
+  loginToApp() {
+    this.commonProvider.showLoader();
+    let params = new URLSearchParams(window.location.href);
+    console.log(params);
+    let someParam = params.rawParams;
+    this.userid = this.getQueryString('username', someParam);
+    if (this.userid) {
+      this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.userid).subscribe((response: any) => {
+        response = JSON.parse(response._body);
+        console.log("response ", response);
+        let str = response.emp_esg;
+        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+          this.commonProvider.hideLoader();
+          this.navCtrl.setRoot(HoddashboardPage, { response });
+        } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+          this.commonProvider.hideLoader();
+          this.navCtrl.setRoot(EmpdashboardPage, { response });
+        } else {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("User role band not maintained")
+        }
+
+      },(err)=>{
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err.message);
+      })
+    } else {
+      this.commonProvider.hideLoader();
+    }
+  }
+
+  loginAction() {
+    console.log('this.loginForm ', this.email.value);
+    if (this.email.value) {
+      if (isNaN(this.email.value)) {
+        if (this.email.value == "security") {
           this.securitylogin = this.email.value;
-          this.navCtrl.setRoot(UsersDashboardPage, {'security': this.securitylogin})
-        }else{
+          this.navCtrl.setRoot(UsersDashboardPage, { 'security': this.securitylogin })
+        } else {
           this.commonProvider.showToast("Enter correct credentials ");
         }
-      }else{
+      } else {
         this.mobileNumber = this.email.value;
-        this.navCtrl.setRoot(UsersDashboardPage, {'driverNumber': this.mobileNumber});
+        this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
       }
-    }else{
-    //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
-    //   location: 'yes'
-    // });
-    //  browser.on('loadstop').subscribe(
-    //
-    //   data => {
-    //       let url = data.url;
-    //       this.company = this.getParameterByName('company',url);
-    //       this.usremail = this.getParameterByName('email',url);
-    //       this.nameID = this.getParameterByName('nameid',url);
-    //
-    //       var obj = {company: this.company, usremail: this.usremail, nameID: this.nameID};
-    //       console.log("userData obj  ",obj);
-    //       this.nativeStorage.setItem('userData', obj)
-    //         .then(
-    //               () => {
-    //                 console.log('Stored item successfully')
-    //                 this.nativeStorage.getItem('userData')
-    //                   .then(
-    //                     data => {
-                          this.serviceProvider.getUsrRoleDetails('https://emss.mahindra.com/sap/bc/zsi_user_detail','500',211779,'DTA').subscribe((response:any)=>{
-                            response = JSON.parse(response._body);
-                            console.log("response ",response);
-                          //  browser.close();
-                          let str = response.EmployeeDetail.emp_esg.substring(0, 2);
-                          if(str == "L4" || str == "L5" || str == "L6" || str == "L7" || str == "L8" || str == "L9" ){
-                          //   browser.close();
+    }
+    else {
+      //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
+      //   location: 'yes'
+      // });
+      //  browser.on('loadstop').subscribe(
+      //
+      //   data => {
+      //       let url = data.url;
+      //       this.company = this.getParameterByName('company',url);
+      //       this.usremail = this.getParameterByName('email',url);
+      //       this.nameID = this.getParameterByName('nameid',url);
+      //
+      //       var obj = {company: this.company, usremail: this.usremail, nameID: this.nameID};
+      //       console.log("userData obj  ",obj);
+      //       this.nativeStorage.setItem('userData', obj)
+      //         .then(
+      //               () => {
+      //                 console.log('Stored item successfully')
+      //                 this.nativeStorage.getItem('userData')
+      //                   .then(
+      //                     data => {
 
-                          this.navCtrl.setRoot(UsersDashboardPage, {response});
-                        }else{
+      // let params = new URLSearchParams(window.location.href);
+      // console.log(params);
+      // let someParam = params.rawParams;
+      // this.userid = this.getQueryString('username', someParam);
 
-                          this.navCtrl.setRoot(UsersDashboardPage, {response});
-                        }
-   //                        },(err)=>{
-   //                          this.commonProvider.showToast(err.message);
-   //                        })
-   //                     },
-   //                      error => {this.commonProvider.showToast(error.message);
-   //                    }
-   //                  );
-   //                },
-   //                error => console.error('Error storing item', error)
-   //          );
-   //
-    })
+      this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
+        response = JSON.parse(response._body);
+        console.log("response ", response);
+        //  browser.close();
+        //let str = response.EmployeeDetail.emp_esg.substring(0, 2);
+        let str = response.emp_esg;
+        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+          //   browser.close();
+          this.navCtrl.setRoot(HoddashboardPage, { response });
+        } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+          this.navCtrl.setRoot(EmpdashboardPage, { response });
+        } else {
+          this.commonProvider.showToast("User role band not maintained")
+        }
+        //                        },(err)=>{
+        //                          this.commonProvider.showToast(err.message);
+        //                        })
+        //                     },
+        //                      error => {this.commonProvider.showToast(error.message);
+        //                    }
+        //                  );
+        //                },
+        //                error => console.error('Error storing item', error)
+        //          );
+        //
+      })
 
-}
+    }
   }
 
   getParameterByName(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
     var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-        results = regex.exec(url);
+      results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+  }
+
+  getQueryString(field, url) {
+    var href = url ? url : window.location.href;
+    var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+    var string = reg.exec(href);
+    return string ? string[1] : null;
+  };
 
 
 

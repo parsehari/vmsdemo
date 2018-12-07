@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage,AlertController, NavController, NavParams, Modal, ModalController, ModalOptions } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { NotificationDetailPage } from '../notification-detail/notification-detail';
 
 /**
@@ -17,16 +17,14 @@ import { NotificationDetailPage } from '../notification-detail/notification-deta
 export class NotificationPage {
 
   constructor(
-                public navCtrl: NavController,
-                public navParams: NavParams,
-                private modal: ModalController,
-                private alertCtrl: AlertController
-            ) {
+    public navCtrl: NavController,
+    public navParams: NavParams
+  ) {
 
   }
 
-  showDetails(){
-      this.navCtrl.push(NotificationDetailPage, {});
+  showDetails() {
+    this.navCtrl.push(NotificationDetailPage, {});
   }
 
 

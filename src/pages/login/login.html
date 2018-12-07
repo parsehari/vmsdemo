@@ -18,17 +18,12 @@
     </ion-row>
 
 
-   <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
+    <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col class="input-height">
-          <input type="text" class="login-input1" formControlName="email"
-                 placeholder="Mobile number"
-                 required
-                 [style.background-color]="(!email.errors) ? '#C24857' : ''"
-                 [style.color]="(!email.errors) ? '#f8f8f8' : ''"
-          />
+          <input type="text" class="login-input1" formControlName="email" placeholder="Mobile number" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
           <div class="form-control-feedback">
-               <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>
+            <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>
           </div>
         </ion-col>
       </ion-row>
@@ -68,9 +63,9 @@
           <p class="forgot-password">FORGOT PASSWORD?</p>
         </ion-col>
       </ion-row> -->
-      <ion-row text-center  style="margin-top: 18%">
+      <ion-row text-center style="padding-top:7%">
         <ion-col>
-            <button [ngClass]="{'login-button':(!email.errors),'login-button-dynamic':(email.errors)}">LOGIN
+          <button [ngClass]="{'login-button':(!email.errors),'login-button-dynamic':(email.errors)}">LOGIN
           </button>
         </ion-col>
       </ion-row>

@@ -24,15 +24,18 @@ export class DriverPage {
   driverDetail:any = [];
   srcSubstr: any;
   destSubstr: any;
-  driverPage: any;
+  driverphno: any;
+  startkm: any;
+  endkm: any;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public popoverController: PopoverController,
               public commonProvider: CommonProvider,
               public serviceProvider: ServiceProvider
              ) {
-               console.log('driver status page', this.navParams.get('pageOpen'));
-                   this.driverPage = this.navParams.get('pageOpen');
+               console.log('driver driverNumber page', this.navParams.get('driverNumber'));
+                   this.driverphno = this.navParams.get('driverNumber');
              }
 
   logout(){
@@ -53,17 +56,23 @@ export class DriverPage {
 
   ionViewDidLoad(){
     this.commonProvider.showLoader('Getting cab details..');
-    this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/9000111111').subscribe((resp: any)=>{
+    this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/'+this.driverphno).subscribe((resp: any)=>{
+      //if(resp.length){
       this.tripDetail = JSON.parse(resp._body);
+      console.log("this.tripDetail ",this.tripDetail);
       this.tripDetail = this.tripDetail[0];
-      this.cabDetail = this.tripDetail.cab;
+      this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
       this.driverDetail = this.tripDetail.driver;
       this.srcSubstr = this.tripDetail.source.substring(0,3);
       this.destSubstr = this.tripDetail.destination.substring(0,3);
+
       this.commonProvider.hideLoader();
       console.log("trip response ", this.tripDetail );
       console.log("cabDetail response ", this.cabDetail );
       console.log("driver Detail response ", this.driverDetail );
+    // }else{
+    //   this.commonProvider.hideLoader();
+    // }
     },(err)=>{
         this.commonProvider.hideLoader();
         console.log("error ",err);
@@ -71,12 +80,13 @@ export class DriverPage {
     })
   }
 
-  startTrip(ev){
+  startTrip(type){
     this.commonProvider.showLoader('Trip starting..');
     let today = new Date();
     let cdate= today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()+'/'+today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     console.log("ctime ", cdate);
-    this.serviceProvider.tripStart('/updateOngoingTripDetails/driver/','10fWbCSh4',cdate).subscribe((resp: any)=>{
+    console.log("this.tripDetail ", this.tripDetail);
+    this.serviceProvider.tripStart('/updateOngoingTripDetails',cdate,type,this.tripDetail.id,this.startkm).subscribe((resp: any)=>{
         console.log("response ",resp);
         this.commonProvider.hideLoader();
 

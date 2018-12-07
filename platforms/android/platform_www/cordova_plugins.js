@@ -296,11 +296,11 @@ module.exports = [
     "pluginId": "cordova-plugin-nativestorage"
   },
   {
-    "id": "cordova-plugin-ionic-webview.IonicWebView",
-    "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-    "pluginId": "cordova-plugin-ionic-webview",
+    "id": "cordova-plugin-qrscanner.QRScanner",
+    "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+    "pluginId": "cordova-plugin-qrscanner",
     "clobbers": [
-      "Ionic.WebView"
+      "QRScanner"
     ]
   }
 ];
@@ -318,7 +318,7 @@ module.exports.metadata =
   "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
   "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-nativestorage": "2.3.2",
-  "cordova-plugin-ionic-webview": "2.2.3"
+  "cordova-plugin-qrscanner": "2.6.0"
 };
 // BOTTOM OF METADATA
 });

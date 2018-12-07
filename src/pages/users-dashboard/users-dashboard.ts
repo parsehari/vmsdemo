@@ -6,6 +6,8 @@ import { DriverPage } from '../driver/driver';
 import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
 import { CommonProvider } from '../../providers/common/common';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { ScanPage } from '../scan/scan';
 /**
  * Generated class for the UsersDashboardPage page.
  *
@@ -22,11 +24,14 @@ export class UsersDashboardPage {
   userDetails: any = [];
   driverMobileNumber: any = '';
   securityCheck: any = '';
-
+ scanSub: any ;
+ scannig: any =  false;
+ qrCode:any;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public commonProvider: CommonProvider,
-              public serviceProvider: ServiceProvider
+              public serviceProvider: ServiceProvider,
+              public qrScanner: QRScanner
    ) {
      console.log("in user page ", navParams);
      console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
@@ -40,16 +45,24 @@ export class UsersDashboardPage {
      }
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UsersDashboardPage');
-  }
+
+
   showDashboard(){
-      //this.navCtrl.push('EmpdashboardPage',{ 'EmployeeDetail': this.userDetails });
-    this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
+   this.navCtrl.push('EmpdashboardPage',{ 'EmployeeDetail': this.userDetails });
+   //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
   }
   getTripDetails(status: any){
     this.navCtrl.push('DriverPage',{'pageOpen': status});
   }
+
+ securityScan(){
+   this.navCtrl.push('ScanPage',{});
+
+  }
+
+
+
+
   // logout(){
   //   this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
   //     this.nativeStorage.remove('userData');

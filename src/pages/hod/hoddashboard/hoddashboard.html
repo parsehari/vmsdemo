@@ -15,16 +15,16 @@
   <ion-toolbar color="white">
     <ion-grid>
       <ion-row>
-        <ion-col col-8>
-          <span style="font-size: 17px;">{{userDetails.emp_f_name}}</span>
+        <ion-col col-8 text-left>
+          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>
         </ion-col>
-        <ion-col col-4>
-          <span> {{userDetails.emp_no}} </span>
+        <ion-col col-4 text-right>
+          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col col-8 style="padding-top: 0px;">
-          <span> {{userDetails.emp_pos}} </span>
+        <ion-col col-8 style="padding-top: 0px;" text-left>
+          <span> {{userDetails.emp_cost}} </span>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -79,6 +79,17 @@
       <ion-item>
         <ion-label floating>Destination</ion-label>
         <ion-input type="text" formControlName="traveldest"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Remark</ion-label>
+        <ion-input type="text" formControlName="remark"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Travel type</ion-label>
+        <ion-select formControlName="travelType">
+          <ion-option value="outstation">Outstation</ion-option>
+          <ion-option value="local">Local</ion-option>
+        </ion-select>
       </ion-item>
       <ion-row text-center class="row-height"  style="margin-top: 1%">
         <ion-col>
@@ -135,9 +146,24 @@
               {{bookingForm.value.traveldest}}
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Remark</span>
+            </ion-col>
+            <ion-col>
+              {{bookingForm.value.remark}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Travel Type</span>
+            </ion-col>
+            <ion-col>
+              {{bookingForm.value.travelType}}
+            </ion-col>
+          </ion-row>
           <ion-row text-center class="row-height"  style="margin-top: 1%">
             <ion-col>
-
               <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request
             </button>
             <button ion-button small="true" color="red" (click)="sendRequest()">Send Request
@@ -158,10 +184,10 @@
         <span class="icon-directions_car" style="float:left"></span>
         <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{applh.purpose}}</h3><br>
             <h3  style="float:left; padding-left: 29px;color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>
-             <button item-right ion-button icon-only (click)="reqAction('Inprocess', applh);" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);"><span class="icon-cross" style="float:right;font-size: 25px;"></span></button>
-            <button item-right ion-button icon-only (click)="reqAction('Rejected', applh);" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);"><span class="icon-checkmark2" style="float:right;font-size: 25px;"></span></button>
-            <!-- <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button> -->
+             <!-- <button item-right ion-button icon-only (click)="reqAction('Inprocess', applh);" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);"><span class="icon-cross" style="float:right;font-size: 25px;"></span></button>
+            <button item-right ion-button icon-only (click)="reqAction('Rejected', applh);" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);"><span class="icon-checkmark2" style="float:right;font-size: 25px;"></span></button> -->
+            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
+            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
             <div>
               <br>
             <ul class="bar">

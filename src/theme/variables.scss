@@ -125,3 +125,7 @@ $modal-inset-min-height-small: 600px;
   font-style: normal;
   font-weight: 300;
 }
+
+ion-app.cameraView, ion-app.cameraView ion-content, ion-app.cameraView .nav-decor {
+  background: transparent none !important;
+}

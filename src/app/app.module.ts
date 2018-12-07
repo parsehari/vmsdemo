@@ -10,17 +10,17 @@ import { HttpModule } from '@angular/http';
 // plugins
 import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
-import { Facebook } from '@ionic-native/facebook'
 import { ServiceProvider } from '../providers/service/service';
 import { CommonProvider } from '../providers/common/common';
 import { FCM } from '@ionic-native/fcm';
 import { InAppBrowser} from '@ionic-native/in-app-browser';
-import { NativeStorage } from '@ionic-native/native-storage';
+import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
 //page
 import { EmpdashboardPageModule } from '../pages/employee/empdashboard/empdashboard.module';
 import { NotificationPageModule } from '../pages/notification/notification.module';
 import { NotificationDetailPageModule } from '../pages/notification-detail/notification-detail.module';
+import { ScanPageModule } from '../pages/scan/scan.module';
 //hod Dashboard
 import { HoddashboardPageModule } from '../pages/hod/hoddashboard/hoddashboard.module';
 import { RequesthistoryPageModule } from '../pages/hod/requesthistory/requesthistory.module';
@@ -43,7 +43,7 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
     UsersDashboardPageModule,
     HttpModule,
     DriverPageModule,
-
+    ScanPageModule,
     IonicModule.forRoot(MyApp,{
       backButtonText: 'Back',
       backButtonIcon: ''
@@ -59,14 +59,14 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
   providers: [
     StatusBar,
     SplashScreen,
-    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
     CommonProvider,
     FCM,
     Network,
     InAppBrowser,
-    NativeStorage
+    QRScanner
+
   ]
 })
 export class AppModule {}

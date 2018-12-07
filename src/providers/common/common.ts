@@ -125,7 +125,6 @@ export class CommonProvider {
   //     }, error => console.error(error));  // }
 
   displayNetworkUpdate(connectionState: string) {
-      let networkType = this.network.type;
       if (connectionState == 'online') {
           this.isOnline = true;
       } else {

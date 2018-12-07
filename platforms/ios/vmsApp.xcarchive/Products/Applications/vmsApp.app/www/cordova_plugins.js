@@ -220,14 +220,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
-    "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
-    "pluginId": "cordova-plugin-facebook4",
-    "clobbers": [
-      "facebookConnectPlugin"
-    ]
-  },
-  {
     "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
     "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
     "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
@@ -278,22 +270,12 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-nativestorage.mainHandle",
-    "file": "plugins/cordova-plugin-nativestorage/www/mainHandle.js",
-    "pluginId": "cordova-plugin-nativestorage",
+    "id": "cordova-plugin-qrscanner.QRScanner",
+    "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+    "pluginId": "cordova-plugin-qrscanner",
     "clobbers": [
-      "NativeStorage"
+      "QRScanner"
     ]
-  },
-  {
-    "id": "cordova-plugin-nativestorage.LocalStorageHandle",
-    "file": "plugins/cordova-plugin-nativestorage/www/LocalStorageHandle.js",
-    "pluginId": "cordova-plugin-nativestorage"
-  },
-  {
-    "id": "cordova-plugin-nativestorage.NativeStorageError",
-    "file": "plugins/cordova-plugin-nativestorage/www/NativeStorageError.js",
-    "pluginId": "cordova-plugin-nativestorage"
   }
 ];
 module.exports.metadata = 
@@ -302,14 +284,14 @@ module.exports.metadata =
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
   "cordova-plugin-device": "2.0.2",
-  "cordova-plugin-facebook4": "2.1.0",
   "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
   "cordova-plugin-ionic-keyboard": "2.0.5",
   "cordova-plugin-network-information": "2.0.1",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-inappbrowser": "3.0.0",
-  "cordova-plugin-nativestorage": "2.3.2"
+  "cordova-plugin-add-swift-support": "1.7.2",
+  "cordova-plugin-qrscanner": "2.6.0"
 };
 // BOTTOM OF METADATA
 });

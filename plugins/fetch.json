@@ -31,17 +31,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-facebook4": {
-    "source": {
-      "type": "registry",
-      "id": "cordova-plugin-facebook4"
-    },
-    "is_top_level": true,
-    "variables": {
-      "APP_ID": "345193719339652",
-      "APP_NAME": "Harsh's first app"
-    }
-  },
   "cordova-plugin-network-information": {
     "source": {
       "type": "registry",
@@ -90,10 +79,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-nativestorage": {
+  "cordova-plugin-qrscanner": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-nativestorage"
+      "id": "cordova-plugin-qrscanner"
     },
     "is_top_level": true,
     "variables": {}

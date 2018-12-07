@@ -1,6 +1,6 @@
 {
-  "name": "demoApp",
-  "short_name": "demoApp",
+  "name": "vmsApp",
+  "short_name": "vmsApp",
   "description": "Description of your app from template",
   "start_url": "index.html",
   "scope": "index.html",
