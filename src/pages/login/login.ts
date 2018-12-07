@@ -71,6 +71,7 @@ export class LoginPage {
     console.log(params);
     let someParam = params.rawParams;
     this.userid = this.getQueryString('username', someParam);
+    this.userid=atob(this.userid);
     if (this.userid) {
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.userid).subscribe((response: any) => {
         response = JSON.parse(response._body);
@@ -98,16 +99,20 @@ export class LoginPage {
 
   loginAction() {
     console.log('this.loginForm ', this.email.value);
+    this.commonProvider.showLoader();
     if (this.email.value) {
       if (isNaN(this.email.value)) {
         if (this.email.value == "security") {
           this.securitylogin = this.email.value;
+          this.commonProvider.hideLoader()
           this.navCtrl.setRoot(UsersDashboardPage, { 'security': this.securitylogin })
         } else {
+          this.commonProvider.hideLoader();
           this.commonProvider.showToast("Enter correct credentials ");
         }
       } else {
         this.mobileNumber = this.email.value;
+        this.commonProvider.hideLoader();
         this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
       }
     }
@@ -141,8 +146,8 @@ export class LoginPage {
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
         response = JSON.parse(response._body);
         console.log("response ", response);
+        this.commonProvider.hideLoader();
         //  browser.close();
-        //let str = response.EmployeeDetail.emp_esg.substring(0, 2);
         let str = response.emp_esg;
         if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
           //   browser.close();

@@ -238,14 +238,6 @@ module.exports = [
         "runs": true
     },
     {
-        "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
-        "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
-        "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
-        "clobbers": [
-            "FCMPlugin"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
         "id": "cordova-plugin-inappbrowser.inappbrowser",
         "pluginId": "cordova-plugin-inappbrowser",
@@ -319,7 +311,6 @@ module.exports.metadata =
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-advanced-http": "2.0.1",
     "cordova-plugin-device": "2.0.2",
-    "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-ionic-keyboard": "2.0.5",
     "cordova-plugin-network-information": "2.0.1",

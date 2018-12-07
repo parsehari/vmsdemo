@@ -12,7 +12,7 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { ServiceProvider } from '../providers/service/service';
 import { CommonProvider } from '../providers/common/common';
-import { FCM } from '@ionic-native/fcm';
+// import { FCM } from '@ionic-native/fcm';
 import { InAppBrowser} from '@ionic-native/in-app-browser';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
@@ -62,7 +62,7 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
     CommonProvider,
-    FCM,
+  //  FCM,
     Network,
     InAppBrowser,
     QRScanner

@@ -15,9 +15,9 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ServiceProvider {
   // header for json/content-type
-  //  private url = 'http://mmkndmobdev.corp.mahindra.com';
+    private url = 'https://mapps.mahindra.com/vms';
   //  private url = 'http://192.168.42.115';
-  private url = 'http://10.174.55.165:8080/vms';
+//  private url = 'http://10.174.55.165:8080/vms';
   raiseReq: any;
   tripDTO: any;
   constructor(public http: Http) {

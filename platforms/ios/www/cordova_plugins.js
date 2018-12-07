@@ -220,14 +220,6 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
-    "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
-    "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
-    "clobbers": [
-      "FCMPlugin"
-    ]
-  },
-  {
     "id": "cordova-plugin-ionic-keyboard.keyboard",
     "file": "plugins/cordova-plugin-ionic-keyboard/www/ios/keyboard.js",
     "pluginId": "cordova-plugin-ionic-keyboard",
@@ -284,7 +276,6 @@ module.exports.metadata =
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
   "cordova-plugin-device": "2.0.2",
-  "cordova-plugin-fcm-with-dependecy-updated": "2.2.5",
   "cordova-plugin-ionic-keyboard": "2.0.5",
   "cordova-plugin-network-information": "2.0.1",
   "cordova-plugin-splashscreen": "5.0.2",
