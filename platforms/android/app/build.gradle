@@ -91,7 +91,6 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../cordova-plugin-fcm-with-dependecy-updated/starter-FCMPlugin.gradle"
 apply from: "../cordova-plugin-qrscanner/vmsapp-qrscanner.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 

@@ -28,22 +28,22 @@ var map = {
 		168
 	],
 	"../pages/hod/hoddashboard/hoddashboard.module": [
-		174
+		173
 	],
 	"../pages/hod/requesthistory/requesthistory.module": [
 		169
 	],
 	"../pages/notification-detail/notification-detail.module": [
-		170
+		171
 	],
 	"../pages/notification/notification.module": [
-		171
+		170
 	],
 	"../pages/scan/scan.module": [
 		172
 	],
 	"../pages/users-dashboard/users-dashboard.module": [
-		173
+		174
 	]
 };
 function webpackAsyncContext(req) {
@@ -925,44 +925,6 @@ var RequesthistoryPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(161);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var NotificationDetailPageModule = /** @class */ (function () {
-    function NotificationDetailPageModule() {
-    }
-    NotificationDetailPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
-            ],
-        })
-    ], NotificationDetailPageModule);
-    return NotificationDetailPageModule;
-}());
-
-//# sourceMappingURL=notification-detail.module.js.map
-
-/***/ }),
-
-/***/ 171:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
@@ -993,6 +955,44 @@ var NotificationPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=notification.module.js.map
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(161);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationDetailPageModule = /** @class */ (function () {
+    function NotificationDetailPageModule() {
+    }
+    NotificationDetailPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
+            ],
+        })
+    ], NotificationDetailPageModule);
+    return NotificationDetailPageModule;
+}());
+
+//# sourceMappingURL=notification-detail.module.js.map
 
 /***/ }),
 
@@ -1039,44 +1039,6 @@ var ScanPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersDashboardPageModule", function() { return UsersDashboardPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(164);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var UsersDashboardPageModule = /** @class */ (function () {
-    function UsersDashboardPageModule() {
-    }
-    UsersDashboardPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */]),
-            ],
-        })
-    ], UsersDashboardPageModule);
-    return UsersDashboardPageModule;
-}());
-
-//# sourceMappingURL=users-dashboard.module.js.map
-
-/***/ }),
-
-/***/ 174:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
@@ -1107,6 +1069,44 @@ var HoddashboardPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=hoddashboard.module.js.map
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersDashboardPageModule", function() { return UsersDashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(164);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var UsersDashboardPageModule = /** @class */ (function () {
+    function UsersDashboardPageModule() {
+    }
+    UsersDashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */]),
+            ],
+        })
+    ], UsersDashboardPageModule);
+    return UsersDashboardPageModule;
+}());
+
+//# sourceMappingURL=users-dashboard.module.js.map
 
 /***/ }),
 
@@ -1143,13 +1143,13 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__ = __webpack_require__(84);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_notification_notification_module__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_notification_detail_notification_detail_module__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_notification_notification_module__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_notification_detail_notification_detail_module__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_scan_scan_module__ = __webpack_require__(172);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_driver_driver_module__ = __webpack_require__(159);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(174);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1212,11 +1212,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] }
                     ]
                 })
             ],
@@ -1865,11 +1865,46 @@ var LoginPage = /** @class */ (function () {
         console.log('this.loginForm ', this.email.value);
         this.commonProvider.showLoader();
         if (this.email.value) {
+            var str = this.email.value.trim();
             if (isNaN(this.email.value)) {
                 if (this.email.value == "security") {
                     this.securitylogin = this.email.value;
                     this.commonProvider.hideLoader();
                     this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__users_dashboard_users_dashboard__["a" /* UsersDashboardPage */], { 'security': this.securitylogin });
+                }
+                else if (str == "hod") {
+                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 203442).subscribe(function (response) {
+                        response = JSON.parse(response._body);
+                        console.log("response ", response);
+                        _this.commonProvider.hideLoader();
+                        var str = response.emp_esg;
+                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                        }
+                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                        }
+                        else {
+                            _this.commonProvider.showToast("User role band not maintained");
+                        }
+                    });
+                }
+                else if (str == "emp") {
+                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23165827).subscribe(function (response) {
+                        response = JSON.parse(response._body);
+                        console.log("response ", response);
+                        _this.commonProvider.hideLoader();
+                        var str = response.emp_esg;
+                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                        }
+                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                        }
+                        else {
+                            _this.commonProvider.showToast("User role band not maintained");
+                        }
+                    });
                 }
                 else {
                     this.commonProvider.hideLoader();
@@ -1883,6 +1918,7 @@ var LoginPage = /** @class */ (function () {
             }
         }
         else {
+            this.commonProvider.hideLoader();
             //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
             //   location: 'yes'
             // });
@@ -1907,34 +1943,32 @@ var LoginPage = /** @class */ (function () {
             // console.log(params);
             // let someParam = params.rawParams;
             // this.userid = this.getQueryString('username', someParam);
-            this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe(function (response) {
-                response = JSON.parse(response._body);
-                console.log("response ", response);
-                _this.commonProvider.hideLoader();
-                //  browser.close();
-                var str = response.emp_esg;
-                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
-                    //   browser.close();
-                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
-                }
-                else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
-                }
-                else {
-                    _this.commonProvider.showToast("User role band not maintained");
-                }
-                //                        },(err)=>{
-                //                          this.commonProvider.showToast(err.message);
-                //                        })
-                //                     },
-                //                      error => {this.commonProvider.showToast(error.message);
-                //                    }
-                //                  );
-                //                },
-                //                error => console.error('Error storing item', error)
-                //          );
-                //
-            });
+            // this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
+            //   response = JSON.parse(response._body);
+            //   console.log("response ", response);
+            //   this.commonProvider.hideLoader();
+            //   //  browser.close();
+            //   let str = response.emp_esg;
+            //   if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+            //     //   browser.close();
+            //     this.navCtrl.setRoot(HoddashboardPage, { response });
+            //   } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+            //     this.navCtrl.setRoot(EmpdashboardPage, { response });
+            //   } else {
+            //     this.commonProvider.showToast("User role band not maintained")
+            //   }
+            //                        },(err)=>{
+            //                          this.commonProvider.showToast(err.message);
+            //                        })
+            //                     },
+            //                      error => {this.commonProvider.showToast(error.message);
+            //                    }
+            //                  );
+            //                },
+            //                error => console.error('Error storing item', error)
+            //          );
+            //
+            //})
         }
     };
     LoginPage.prototype.getParameterByName = function (name, url) {

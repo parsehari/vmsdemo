@@ -186,14 +186,17 @@
             <h3  style="float:left; padding-left: 29px;color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>
              <!-- <button item-right ion-button icon-only (click)="reqAction('Inprocess', applh);" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);"><span class="icon-cross" style="float:right;font-size: 25px;"></span></button>
             <button item-right ion-button icon-only (click)="reqAction('Rejected', applh);" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);"><span class="icon-checkmark2" style="float:right;font-size: 25px;"></span></button> -->
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
-            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
+
             <div>
               <br>
             <ul class="bar">
               <li style="color:green"><h3>{{applh.source}}</h3></li>
               <li style="color:#a90e1b"><h3>{{applh.destination}}</h3></li>
             </ul>
+            </div>
+            <div>
+              <button  text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Inprocess', applh);">Accept</button>
+              <button  text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
             </div>
       </ion-item>
     </ion-list>

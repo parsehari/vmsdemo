@@ -100,13 +100,42 @@ export class LoginPage {
   loginAction() {
     console.log('this.loginForm ', this.email.value);
     this.commonProvider.showLoader();
+
     if (this.email.value) {
+      var str = this.email.value.trim();
+      console.log("str",str);
       if (isNaN(this.email.value)) {
         if (this.email.value == "security") {
           this.securitylogin = this.email.value;
           this.commonProvider.hideLoader()
           this.navCtrl.setRoot(UsersDashboardPage, { 'security': this.securitylogin })
-        } else {
+        }else if(str == "hod"){
+          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
+            response = JSON.parse(response._body);
+            console.log("response ", response);
+            this.commonProvider.hideLoader();
+              let str = response.emp_esg;
+            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "L3-Executive") {
+              this.navCtrl.setRoot(HoddashboardPage, { response });
+            } else {
+              this.commonProvider.showToast("User role band not maintained")
+            }
+          })
+        }else if(str == "emp"){
+          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
+            response = JSON.parse(response._body);
+            console.log("response ", response);
+            this.commonProvider.hideLoader();
+              let str = response.emp_esg;
+            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+              this.navCtrl.setRoot(HoddashboardPage, { response });
+            } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+              this.navCtrl.setRoot(EmpdashboardPage, { response });
+            } else {
+              this.commonProvider.showToast("User role band not maintained")
+            }
+          })
+        }else{
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Enter correct credentials ");
         }
@@ -117,6 +146,7 @@ export class LoginPage {
       }
     }
     else {
+      this.commonProvider.hideLoader();
       //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
       //   location: 'yes'
       // });
@@ -143,20 +173,20 @@ export class LoginPage {
       // let someParam = params.rawParams;
       // this.userid = this.getQueryString('username', someParam);
 
-      this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
-        response = JSON.parse(response._body);
-        console.log("response ", response);
-        this.commonProvider.hideLoader();
-        //  browser.close();
-        let str = response.emp_esg;
-        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
-          //   browser.close();
-          this.navCtrl.setRoot(HoddashboardPage, { response });
-        } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-          this.navCtrl.setRoot(EmpdashboardPage, { response });
-        } else {
-          this.commonProvider.showToast("User role band not maintained")
-        }
+      // this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
+      //   response = JSON.parse(response._body);
+      //   console.log("response ", response);
+      //   this.commonProvider.hideLoader();
+      //   //  browser.close();
+      //   let str = response.emp_esg;
+      //   if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+      //     //   browser.close();
+      //     this.navCtrl.setRoot(HoddashboardPage, { response });
+      //   } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+      //     this.navCtrl.setRoot(EmpdashboardPage, { response });
+      //   } else {
+      //     this.commonProvider.showToast("User role band not maintained")
+      //   }
         //                        },(err)=>{
         //                          this.commonProvider.showToast(err.message);
         //                        })
@@ -168,7 +198,7 @@ export class LoginPage {
         //                error => console.error('Error storing item', error)
         //          );
         //
-      })
+      //})
 
     }
   }
