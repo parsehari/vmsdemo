@@ -5,7 +5,7 @@ import { PopoverController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
-import { RequesthistoryPage } from '../requesthistory/requesthistory';
+import { RequesthistoryPage } from '../../hod/requesthistory/requesthistory';
 import { LoginPage } from '../../login/login';
 /**
  * Generated class for the HoddashboardPage page.
@@ -130,6 +130,7 @@ export class HoddashboardPage {
         this.commonProvider.hideLoader();
         if (response) {
           this.confirmReqst = false;
+          this.bookingForm.reset();
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -232,7 +233,7 @@ export class HoddashboardPage {
   }
 
   viewReqHistory() {
-    this.navCtrl.push('RequesthistoryPage', { EmployeeDetail: this.userDetails });
+    this.navCtrl.push(RequesthistoryPage, { EmployeeDetail: this.userDetails });
   }
 
   ionViewDidLoad() {

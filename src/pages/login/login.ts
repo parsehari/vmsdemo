@@ -71,7 +71,7 @@ export class LoginPage {
     console.log(params);
     let someParam = params.rawParams;
     this.userid = this.getQueryString('username', someParam);
-    this.userid=atob(this.userid);
+    this.userid = atob(this.userid);
     if (this.userid) {
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.userid).subscribe((response: any) => {
         response = JSON.parse(response._body);
@@ -88,7 +88,7 @@ export class LoginPage {
           this.commonProvider.showToast("User role band not maintained")
         }
 
-      },(err)=>{
+      }, (err) => {
         this.commonProvider.hideLoader();
         this.commonProvider.showToast(err.message);
       })
@@ -103,30 +103,30 @@ export class LoginPage {
 
     if (this.email.value) {
       var str = this.email.value.trim();
-      console.log("str",str);
+      console.log("str", str);
       if (isNaN(this.email.value)) {
         if (this.email.value == "security") {
           this.securitylogin = this.email.value;
           this.commonProvider.hideLoader()
           this.navCtrl.setRoot(UsersDashboardPage, { 'security': this.securitylogin })
-        }else if(str == "hod"){
+        } else if (str == "hod") {
           this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
             response = JSON.parse(response._body);
             console.log("response ", response);
             this.commonProvider.hideLoader();
-              let str = response.emp_esg;
+            let str = response.emp_esg;
             if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "L3-Executive") {
               this.navCtrl.setRoot(HoddashboardPage, { response });
             } else {
               this.commonProvider.showToast("User role band not maintained")
             }
           })
-        }else if(str == "emp"){
+        } else if (str == "emp") {
           this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
             response = JSON.parse(response._body);
             console.log("response ", response);
             this.commonProvider.hideLoader();
-              let str = response.emp_esg;
+            let str = response.emp_esg;
             if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
               this.navCtrl.setRoot(HoddashboardPage, { response });
             } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
@@ -135,7 +135,7 @@ export class LoginPage {
               this.commonProvider.showToast("User role band not maintained")
             }
           })
-        }else{
+        } else {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Enter correct credentials ");
         }
@@ -187,17 +187,17 @@ export class LoginPage {
       //   } else {
       //     this.commonProvider.showToast("User role band not maintained")
       //   }
-        //                        },(err)=>{
-        //                          this.commonProvider.showToast(err.message);
-        //                        })
-        //                     },
-        //                      error => {this.commonProvider.showToast(error.message);
-        //                    }
-        //                  );
-        //                },
-        //                error => console.error('Error storing item', error)
-        //          );
-        //
+      //                        },(err)=>{
+      //                          this.commonProvider.showToast(err.message);
+      //                        })
+      //                     },
+      //                      error => {this.commonProvider.showToast(error.message);
+      //                    }
+      //                  );
+      //                },
+      //                error => console.error('Error storing item', error)
+      //          );
+      //
       //})
 
     }

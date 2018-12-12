@@ -1,48 +1,45 @@
 <ion-header>
-    <ion-navbar color="navColor">
-        <ion-title text-center>Trip Details</ion-title>
-        <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-        <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
-        <ion-badge class="cart-badge">5</ion-badge> -->
-    </ion-navbar>
-     <ion-toolbar style="color: white;">
-      <!-- <section> -->
-        <ion-row>
-          <ion-col text-center>
-             <span>
-               {{srcSubstr}}
-             </span><br>
-            <span  style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>
-               <!-- <span>
-                 {{tripDetail.travel_time}}
-               </span> -->
-          </ion-col>
-          <ion-col text-center>
-            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>
-            <span class="icon-automobile" style="font-size: 1.5em"></span><br>
-            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>
-          </ion-col>
-          <ion-col text-center>
-             <span>
-               {{destSubstr}}
-             </span><br>
-            <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>
-               <!-- <span>
-                 {{tripDetail.travel_time}}
-               </span> -->
-          </ion-col>
-        </ion-row>
-      <!-- </section> -->
-    </ion-toolbar>
+  <ion-navbar color="navColor">
+    <ion-title text-center>Trip Details</ion-title>
+    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
+
+  </ion-navbar>
+  <ion-toolbar style="color: white;" *ngIf="tripDetail.length != 0">
+    <ion-row>
+      <ion-col text-center>
+        <span>
+          {{srcSubstr}}
+        </span><br>
+        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>
+      </ion-col>
+      <ion-col text-center>
+        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>
+        <span class="icon-automobile" style="font-size: 1.5em"></span><br>
+        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>
+      </ion-col>
+      <ion-col text-center>
+        <span>
+          {{destSubstr}}
+        </span><br>
+        <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="tripDetail.length == 0">
+    <ion-card class="driverCard">
+      <ion-card-header style="text-align: center" color="red">
+        No cab is assigned</ion-card-header>
+    </ion-card>
+  </div>
+  <div *ngIf="tripDetail.length != 0" style="margin-top: 26%;">
     <div>
       <ion-card class="driverCard">
         <ion-card-header style="text-align: center" color="red">
           Passengers Details</ion-card-header>
-          <ion-card-content>
+        <ion-card-content>
           <ion-row>
             <ion-col>
               <span class="formtitle">Passanger Name</span>
@@ -52,36 +49,36 @@
             </ion-col>
           </ion-row>
           <ion-row>
-          <ion-col>
-            <span class="formtitle">Mobile Number</span>
-          </ion-col>
-          <ion-col>
-            {{tripDetail.emp_phoneNo}}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="formtitle">Email Id</span>
-          </ion-col>
-          <ion-col>
-            {{tripDetail.emp_email}}
-          </ion-col>
-        </ion-row>
+            <ion-col>
+              <span class="formtitle">Mobile Number</span>
+            </ion-col>
+            <ion-col>
+              {{tripDetail.emp_phoneNo}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Email Id</span>
+            </ion-col>
+            <ion-col>
+              {{tripDetail.emp_email}}
+            </ion-col>
+          </ion-row>
 
-      </ion-card-content>
+        </ion-card-content>
       </ion-card>
 
 
       <ion-card class="driverCard">
         <ion-card-header style="text-align: center" color="red">
           Cab Details</ion-card-header>
-          <ion-card-content>
+        <ion-card-content>
           <ion-row>
             <ion-col>
               <span class="formtitle">Cab Name</span>
             </ion-col>
             <ion-col>
-                {{cabDetail.cab_name}}
+              {{cabDetail.cab_name}}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -89,37 +86,33 @@
               <span class="formtitle">Cab Number</span>
             </ion-col>
             <ion-col>
-                {{cabDetail.cab_no}}
+              {{cabDetail.cab_no}}
             </ion-col>
           </ion-row>
-        <ion-row>
-          <ion-col>
-            <span class="formtitle">Number of seats</span>
-          </ion-col>
-          <ion-col>
-            {{cabDetail.no_of_seats}}
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-  </ion-card>
-</div>
-  <div>
-  <!-- <ion-row text-center class="row-height"  style="margin-top: 10%">
-      <ion-col>
-      <qr-code [value]="tripDetail.barcodeId" [size]="200"></qr-code>
-    </ion-col>
-  </ion-row> -->
-  <ion-item>
-    <ion-label floating>Enter kms.</ion-label>
-    <ion-input type="number" [(ngModel)]="startkm" ></ion-input>
-  </ion-item>
-  <ion-row text-center class="row-height"  style="margin-top: 1%">
-    <ion-col>
-      <button ion-button  color="red" (click)="startTrip('startTrip')">Start Trip
-    </button>
-    <button ion-button  color="red" (click)="startTrip('endTrip')">End Trip
-  </button>
-    </ion-col>
-  </ion-row>
-</div>
+          <ion-row>
+            <ion-col>
+              <span class="formtitle">Number of seats</span>
+            </ion-col>
+            <ion-col>
+              {{cabDetail.no_of_seats}}
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="tripDetail.length != 0">
+      <ion-item>
+        <ion-label floating>Enter kms.</ion-label>
+        <ion-input type="number" [(ngModel)]="startkm"></ion-input>
+      </ion-item>
+      <ion-row text-center class="row-height" style="margin-top: 1%">
+        <ion-col>
+          <button ion-button color="red" (click)="startTrip('startTrip')">Start Trip
+          </button>
+          <button ion-button color="red" (click)="startTrip('endTrip')">End Trip
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
 </ion-content>

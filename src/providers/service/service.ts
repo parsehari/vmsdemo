@@ -15,9 +15,9 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ServiceProvider {
   // header for json/content-type
-    private url = 'https://mapps.mahindra.com/vms';
+  private url = 'https://mapps.mahindra.com/vms';
   //  private url = 'http://192.168.42.115';
-//  private url = 'http://10.174.55.165:8080/vms';
+  //  private url = 'http://10.174.55.154:8080/vms';
   raiseReq: any;
   tripDTO: any;
   constructor(public http: Http) {
@@ -25,7 +25,7 @@ export class ServiceProvider {
   }
 
   getBookingHistory(param: any, usrID: any): Observable<any> {
-    var headers = new Headers({ });
+    var headers = new Headers({});
     //  headers.append()
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + param + "/" + usrID, options);
@@ -33,7 +33,7 @@ export class ServiceProvider {
   }
 
   getAllTripHistory(param: any, usrID: any): Observable<any> {
-    var headers = new Headers({ });
+    var headers = new Headers({});
     //  headers.append()
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + param + "/" + usrID, options);
@@ -90,13 +90,13 @@ export class ServiceProvider {
   getUsrRoleDetails(param: any, ivPernr: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.url+param + "/" + ivPernr, options);
+    return this.http.get(this.url + param + "/" + ivPernr, options);
   }
 
   getDeptHeadUser(param: any, ivPernr: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.url+param + "/" + ivPernr, options);
+    return this.http.get(this.url + param + "/" + ivPernr, options);
   }
 
   getDriverTripDetails(params: any): Observable<any> {
@@ -108,10 +108,10 @@ export class ServiceProvider {
     let options = new RequestOptions({ headers: headers });
     this.tripDTO = new FormData();
     this.tripDTO.append("id", id);
-    if(type == 'startTrip'){
+    if (type == 'startTrip') {
       this.tripDTO.append("startTrip", cdate);
       this.tripDTO.append("startKm", km);
-    }else{
+    } else {
       this.tripDTO.append("endTrip", cdate);
       this.tripDTO.append("endKm", km);
     }

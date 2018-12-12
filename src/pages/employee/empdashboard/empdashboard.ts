@@ -61,6 +61,8 @@ export class EmpdashboardPage {
     });
     this.requestSegment = "raisereq";
     this.minDate = new Date().toISOString();
+    // console.log("current time ", this.minDate.getHours());
+    // console.log("current time ", this.minDate.getMinutes());
     console.log('this...', this.minDate)
   }
 
@@ -163,6 +165,7 @@ export class EmpdashboardPage {
         this.commonProvider.hideLoader();
         if (response) {
           this.confirmReqst = false;
+          this.bookingForm.reset();
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -170,7 +173,7 @@ export class EmpdashboardPage {
 
       }, (err) => {
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
+        this.commonProvider.showToast('Request error, Please check with admin');
       });
     }, err => {
       console.log('user cancelled');

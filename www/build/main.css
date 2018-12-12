@@ -34018,7 +34018,7 @@ input[type="text"]:disabled {
 
 page-driver .cart-badge {
   position: absolute !important;
-  top: 0px !important;
+  top: 0 !important;
   right: 17px !important;
   border-radius: 22px !important;
   background-color: #9e9e9ebd !important;
@@ -34034,13 +34034,18 @@ page-driver .psgrDetls {
   font-family: "font-medium";
 }
 
+page-driver ion-toolbar {
+  height: 93px;
+}
+
 page-empdashboard .formtitle {
   color: #999;
 }
 
 page-empdashboard ul.bar {
   margin: 0;
-  padding: 4px 0px 0px 30px;
+  padding: 0 0 0 3px;
+  position: relative;
 }
 
 page-empdashboard ul.bar:before {
@@ -34048,10 +34053,14 @@ page-empdashboard ul.bar:before {
   position: absolute;
   content: " ";
   width: 2px;
-  height: 20%;
-  top: 64px;
+  height: 56%;
+  top: 9px;
   /* bottom: 39px; */
   margin-left: 2px;
+}
+
+page-empdashboard ion-label {
+  white-space: initial !important;
 }
 
 page-empdashboard ul.bar li {
@@ -34074,7 +34083,7 @@ page-empdashboard ul.bar li:before {
 
 page-empdashboard .cart-badge {
   position: absolute !important;
-  top: 0px !important;
+  top: 0 !important;
   right: 17px !important;
   border-radius: 22px !important;
   background-color: #9e9e9ebd !important;
@@ -34086,7 +34095,8 @@ page-hoddashboard .formtitle {
 
 page-hoddashboard ul.bar {
   margin: 0;
-  padding: 4px 0px 0px 30px;
+  padding: 0px 0px 0px 3px;
+  position: relative;
 }
 
 page-hoddashboard ul.bar:before {
@@ -34094,10 +34104,14 @@ page-hoddashboard ul.bar:before {
   position: absolute;
   content: " ";
   width: 2px;
-  height: 20%;
-  top: 64px;
+  height: 56%;
+  top: 9px;
   /* bottom: 39px; */
   margin-left: 2px;
+}
+
+page-hoddashboard ion-label {
+  white-space: initial !important;
 }
 
 page-hoddashboard ul.bar li {
@@ -34128,7 +34142,8 @@ page-hoddashboard .cart-badge {
 
 page-requesthistory ul.bar {
   margin: 0;
-  padding: 4px 0px 0px 30px;
+  padding: 0 0 0 3px;
+  position: relative;
 }
 
 page-requesthistory ul.bar:before {
@@ -34136,8 +34151,8 @@ page-requesthistory ul.bar:before {
   position: absolute;
   content: " ";
   width: 2px;
-  height: 20%;
-  top: 64px;
+  height: 56%;
+  top: 9px;
   /* bottom: 39px; */
   margin-left: 2px;
 }
@@ -34148,6 +34163,10 @@ page-requesthistory ul.bar li {
   padding-left: 15px;
   /* line-height: 30px; */
   padding-bottom: 10px;
+}
+
+page-requesthistory ion-label {
+  white-space: initial !important;
 }
 
 page-requesthistory ul.bar li:before {

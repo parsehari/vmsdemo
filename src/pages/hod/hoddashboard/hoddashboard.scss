@@ -4,18 +4,25 @@ page-hoddashboard {
   }
   ul.bar {
     margin: 0;
-    padding: 4px 0px 0px 30px;
+    padding: 0px 0px 0px 3px;
+    position: relative;
   }
   ul.bar:before {
-    border-left: #f00 1px solid;
-    position: absolute;
-    content: " ";
-    width: 2px;
-    height: 20%;
-    top: 64px;
-    /* bottom: 39px; */
-    margin-left: 2px;
+      border-left: #f00 1px solid;
+        position: absolute;
+        content: " ";
+        width: 2px;
+        height: 56%;
+    top: 9px;
+        /* bottom: 39px; */
+        margin-left: 2px;
 }
+
+ion-label {
+
+    white-space: initial !important;
+}
+
 ul.bar li {
     list-style: none;
     position: relative;

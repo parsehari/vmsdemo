@@ -1,17 +1,23 @@
 page-driver {
-  .cart-badge{
-      position: absolute !important;
-      top: 0px !important;
-      right: 17px !important;
-      border-radius: 22px !important;
-      background-color: #9e9e9ebd !important;
+  .cart-badge {
+    position: absolute !important;
+    top: 0 !important;
+    right: 17px !important;
+    border-radius: 22px !important;
+    background-color: #9e9e9ebd !important;
   }
-  .driverCard{
+
+  .driverCard {
     background: #FFF !important;
     border-radius: 1rem !important;
   }
-  .psgrDetls{
+
+  .psgrDetls {
     font-size: 16px;
     font-family: "font-medium";
+  }
+
+  ion-toolbar {
+    height: 93px;
   }
 }
