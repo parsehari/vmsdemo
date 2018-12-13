@@ -49,4 +49,10 @@ page-empdashboard {
     border-radius: 22px !important;
     background-color: #9e9e9ebd !important;
   }
+  @media screen and (min-width: 1024px) {
+    .gridSize {
+      padding: 3px !important;
+      width: 70% !important;
+    }
+  }
 }

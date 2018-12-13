@@ -34089,6 +34089,13 @@ page-empdashboard .cart-badge {
   background-color: #9e9e9ebd !important;
 }
 
+@media screen and (min-width: 1024px) {
+  page-empdashboard .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+}
+
 page-hoddashboard .formtitle {
   color: #999;
 }
@@ -34193,7 +34200,7 @@ page-login .row-height {
 
 page-login .reset-title {
   color: white !important;
-  margin: 8px 0px;
+  margin: 8px 0;
   font-size: 13px;
 }
 
@@ -34204,10 +34211,7 @@ page-login .page-content {
 page-login .login-form {
   height: 53%;
   width: 87%;
-  margin-top: 24%;
-  margin-right: auto;
-  margin-bottom: 0px;
-  margin-left: auto;
+  margin: 24% auto 0;
   background-color: #ad081f;
   position: relative;
 }
@@ -34345,12 +34349,19 @@ page-login .typed {
 }
 
 .input-height {
-  padding: 0% !important;
+  padding: 0 !important;
 }
 
 @media (min-width: 480px) {
   .input-height {
-    padding: 0% !important;
+    padding: 0 !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .gridSize {
+    padding: 24px !important;
+    width: 38% !important;
   }
 }
 

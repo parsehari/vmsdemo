@@ -25,22 +25,22 @@ var map = {
 		159
 	],
 	"../pages/employee/empdashboard/empdashboard.module": [
-		168
+		169
 	],
 	"../pages/hod/hoddashboard/hoddashboard.module": [
-		173
+		175
 	],
 	"../pages/hod/requesthistory/requesthistory.module": [
-		169
+		170
 	],
 	"../pages/notification-detail/notification-detail.module": [
 		171
 	],
 	"../pages/notification/notification.module": [
-		170
+		172
 	],
 	"../pages/scan/scan.module": [
-		172
+		173
 	],
 	"../pages/users-dashboard/users-dashboard.module": [
 		174
@@ -71,7 +71,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(278);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -163,50 +163,69 @@ var DriverPage = /** @class */ (function () {
             ev: myEvent
         });
     };
-    DriverPage.prototype.ionViewDidLoad = function () {
+    DriverPage.prototype.getTrip = function () {
         var _this = this;
         this.commonProvider.showLoader('Getting cab details..');
         this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe(function (resp) {
-            //if(resp.length){
             _this.tripDetail = JSON.parse(resp._body);
-            console.log("this.tripDetail ", _this.tripDetail);
-            _this.tripDetail = _this.tripDetail[0];
-            _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
-            _this.driverDetail = _this.tripDetail.driver;
-            _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
-            _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
-            _this.commonProvider.hideLoader();
-            console.log("trip response ", _this.tripDetail);
-            console.log("cabDetail response ", _this.cabDetail);
-            console.log("driver Detail response ", _this.driverDetail);
+            console.log("this.tripDetail ", _this.tripDetail.length);
+            if (_this.tripDetail.length) {
+                _this.tripDetail[0] ? _this.tripDetail = _this.tripDetail[0] : 'nothing';
+                console.log("this.tripDetail ", _this.tripDetail.length);
+                _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
+                _this.driverDetail = _this.tripDetail.driver;
+                _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
+                _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
+                _this.commonProvider.hideLoader();
+                console.log("trip response ", _this.tripDetail);
+                console.log("cabDetail response ", _this.cabDetail);
+                console.log("driver Detail response ", _this.driverDetail);
+            }
+            else {
+                _this.commonProvider.hideLoader();
+            }
             // }else{
             //   this.commonProvider.hideLoader();
             // }
         }, function (err) {
             _this.commonProvider.hideLoader();
             console.log("error ", err);
-            _this.commonProvider.showToast(err.message);
+            _this.commonProvider.showToast('Service error');
         });
+    };
+    DriverPage.prototype.ionViewDidLoad = function () {
+        this.getTrip();
     };
     DriverPage.prototype.startTrip = function (type) {
         var _this = this;
-        this.commonProvider.showLoader('Trip starting..');
-        var today = new Date();
-        var cdate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '/' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        console.log("ctime ", cdate);
-        console.log("this.tripDetail ", this.tripDetail);
-        this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
-            console.log("response ", resp);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            console.log("error", err);
-            _this.commonProvider.showToast(err.message);
-            _this.commonProvider.hideLoader();
-        });
+        console.log(this.startkm);
+        if (this.startkm) {
+            this.commonProvider.showLoader('Updating Kms..');
+            var today = new Date();
+            var cdate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '/' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            console.log("ctime ", cdate);
+            console.log("this.tripDetail ", this.tripDetail);
+            this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
+                console.log("response ", resp);
+                _this.commonProvider.hideLoader();
+                if (type == 'endTrip') {
+                    console.log("end trip");
+                    _this.getTrip();
+                }
+            }, function (err) {
+                console.log("error", err);
+                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.hideLoader();
+            });
+        }
+        else {
+            this.commonProvider.hideLoader();
+            this.commonProvider.showToast("Please enter kms");
+        }
     };
     DriverPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-driver',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/'<ion-header>\n    <ion-navbar color="navColor">\n        <ion-title text-center>Trip Details</ion-title>\n        <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n        <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n        <ion-badge class="cart-badge">5</ion-badge> -->\n    </ion-navbar>\n     <ion-toolbar style="color: white;">\n      <!-- <section> -->\n        <ion-row>\n          <ion-col text-center>\n             <span>\n               {{srcSubstr}}\n             </span><br>\n            <span  style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>\n               <!-- <span>\n                 {{tripDetail.travel_time}}\n               </span> -->\n          </ion-col>\n          <ion-col text-center>\n            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>\n            <span class="icon-automobile" style="font-size: 1.5em"></span><br>\n            <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>\n          </ion-col>\n          <ion-col text-center>\n             <span>\n               {{destSubstr}}\n             </span><br>\n            <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>\n               <!-- <span>\n                 {{tripDetail.travel_time}}\n               </span> -->\n          </ion-col>\n        </ion-row>\n      <!-- </section> -->\n    </ion-toolbar>\n</ion-header>\n\n<ion-content>\n\n    <div>\n      <ion-card class="driverCard">\n        <ion-card-header style="text-align: center" color="red">\n          Passengers Details</ion-card-header>\n          <ion-card-content>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Passanger Name</span>\n            </ion-col>\n            <ion-col>\n              {{tripDetail.emp_userName}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n          <ion-col>\n            <span class="formtitle">Mobile Number</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_phoneNo}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Email Id</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_email}}\n          </ion-col>\n        </ion-row>\n\n      </ion-card-content>\n      </ion-card>\n\n\n      <ion-card class="driverCard">\n        <ion-card-header style="text-align: center" color="red">\n          Cab Details</ion-card-header>\n          <ion-card-content>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Cab Name</span>\n            </ion-col>\n            <ion-col>\n                {{cabDetail.cab_name}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Cab Number</span>\n            </ion-col>\n            <ion-col>\n                {{cabDetail.cab_no}}\n            </ion-col>\n          </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Number of seats</span>\n          </ion-col>\n          <ion-col>\n            {{cabDetail.no_of_seats}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n  </ion-card>\n</div>\n  <div>\n  <!-- <ion-row text-center class="row-height"  style="margin-top: 10%">\n      <ion-col>\n      <qr-code [value]="tripDetail.barcodeId" [size]="200"></qr-code>\n    </ion-col>\n  </ion-row> -->\n  <ion-item>\n    <ion-label floating>Enter kms.</ion-label>\n    <ion-input type="number" [(ngModel)]="startkm" ></ion-input>\n  </ion-item>\n  <ion-row text-center class="row-height"  style="margin-top: 1%">\n    <ion-col>\n      <button ion-button  color="red" (click)="startTrip(\'startTrip\')">Start Trip\n    </button>\n    <button ion-button  color="red" (click)="startTrip(\'endTrip\')">End Trip\n  </button>\n    </ion-col>\n  </ion-row>\n</div>\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/,
+            selector: 'page-driver',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>Trip Details</ion-title>\n    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n\n  </ion-navbar>\n  <ion-toolbar style="color: white;" *ngIf="tripDetail.length != 0">\n    <ion-row>\n      <ion-col text-center>\n        <span>\n          {{srcSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>\n      </ion-col>\n      <ion-col text-center>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>\n        <span class="icon-automobile" style="font-size: 1.5em"></span><br>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>\n      </ion-col>\n      <ion-col text-center>\n        <span>\n          {{destSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div *ngIf="tripDetail.length == 0">\n    <ion-card class="driverCard">\n      <ion-card-header style="text-align: center" color="red">\n        No cab is assigned</ion-card-header>\n    </ion-card>\n  </div>\n  <div *ngIf="tripDetail.length != 0" style="margin-top: 26%;">\n    <div>\n      <ion-card class="driverCard">\n        <ion-card-header style="text-align: center" color="red">\n          Passengers Details</ion-card-header>\n        <ion-card-content>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Passanger Name</span>\n            </ion-col>\n            <ion-col>\n              {{tripDetail.emp_userName}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Mobile Number</span>\n            </ion-col>\n            <ion-col>\n              {{tripDetail.emp_phoneNo}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Email Id</span>\n            </ion-col>\n            <ion-col>\n              {{tripDetail.emp_email}}\n            </ion-col>\n          </ion-row>\n\n        </ion-card-content>\n      </ion-card>\n\n\n      <ion-card class="driverCard">\n        <ion-card-header style="text-align: center" color="red">\n          Cab Details</ion-card-header>\n        <ion-card-content>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Cab Name</span>\n            </ion-col>\n            <ion-col>\n              {{cabDetail.cab_name}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Cab Number</span>\n            </ion-col>\n            <ion-col>\n              {{cabDetail.cab_no}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Number of seats</span>\n            </ion-col>\n            <ion-col>\n              {{cabDetail.no_of_seats}}\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </div>\n    <div *ngIf="tripDetail.length != 0">\n      <ion-item>\n        <ion-label floating>Enter kms.</ion-label>\n        <ion-input type="number" [(ngModel)]="startkm"></ion-input>\n      </ion-item>\n      <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col>\n          <button ion-button color="red" (click)="startTrip(\'startTrip\')">Start Trip\n          </button>\n          <button ion-button color="red" (click)="startTrip(\'endTrip\')">End Trip\n          </button>\n        </ion-col>\n      </ion-row>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
@@ -417,6 +436,8 @@ var EmpdashboardPage = /** @class */ (function () {
         });
         this.requestSegment = "raisereq";
         this.minDate = new Date().toISOString();
+        // console.log("current time ", this.minDate.getHours());
+        // console.log("current time ", this.minDate.getMinutes());
         console.log('this...', this.minDate);
     }
     EmpdashboardPage.prototype.ionViewDidLoad = function () {
@@ -490,7 +511,7 @@ var EmpdashboardPage = /** @class */ (function () {
                 'emp_email': _this.userDetails.emp_email,
                 'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
                 'emp_phoneNo': _this.userDetails.emp_cell,
-                'status': 'Pending',
+                'status': 'Pending with Manager',
                 'bh_Id': _this.dhDetails.pernr,
                 'bh_email': _this.dhDetails.email,
                 'remark': _this.bookingForm.value.remark,
@@ -507,6 +528,7 @@ var EmpdashboardPage = /** @class */ (function () {
                 _this.commonProvider.hideLoader();
                 if (response) {
                     _this.confirmReqst = false;
+                    _this.bookingForm.reset();
                     _this.commonProvider.showToast('Request sent successfully');
                 }
                 else {
@@ -514,7 +536,7 @@ var EmpdashboardPage = /** @class */ (function () {
                 }
             }, function (err) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast('Request error, Please check with admin');
             });
         }, function (err) {
             console.log('user cancelled');
@@ -530,7 +552,7 @@ var EmpdashboardPage = /** @class */ (function () {
     };
     EmpdashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-empdashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/'<ion-header>\n    <ion-navbar color="navColor">\n        <ion-title text-center>Dashboard</ion-title>\n        <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n        <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n        <ion-badge class="cart-badge">5</ion-badge>\n    </ion-navbar>\n    <ion-toolbar color="white">\n      <ion-grid>\n        <ion-row>\n          <ion-col col-8 text-left>\n            <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n          </ion-col>\n          <ion-col col-4 text-right>\n            <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col col-8 style="padding-top: 0px; font-family: font-medium;" text-left>\n            <span> {{userDetails.emp_cost}} </span>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n\n    </ion-toolbar>\n\n</ion-header>\n<ion-content>\n<div>\n<ion-segment [(ngModel)]="requestSegment" color="red">\n    <ion-segment-button value="raisereq">\n      Raise Request\n    </ion-segment-button>\n    <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n      History\n    </ion-segment-button>\n  </ion-segment>\n</div>\n<div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n      <ion-item>\n        <ion-label floating>Update Purpose</ion-label>\n        <ion-input type="text" formControlName="updatepurpose"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Travel Date</ion-label>\n        <ion-datetime displayFormat="MM/DD/YYYY" [min]="minDate" [max]="2050"formControlName="traveldate"></ion-datetime>\n\n        <!-- <ion-input type="date" formControlName="traveldate"></ion-input> -->\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Time</ion-label>\n        <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Source</ion-label>\n        <ion-select formControlName="travelsrc">\n          <div  *ngFor="let locs of locations">\n          <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n        </div>\n        </ion-select>\n        <!-- <ion-label floating>Source</ion-label>\n        <ion-input type="text" formControlName="travelsrc"></ion-input> -->\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Destination</ion-label>\n        <ion-input type="text" formControlName="traveldest"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Remark</ion-label>\n        <ion-input type="text" formControlName="remark"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Travel type</ion-label>\n        <ion-select formControlName="travelType">\n          <ion-option value="outstation">Outstation</ion-option>\n          <ion-option value="local">Local</ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-row text-center class="row-height"  style="margin-top: 1%">\n        <ion-col>\n            <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n          </button>\n        </ion-col>\n      </ion-row>\n    </div>\n    <div *ngIf="confirmReqst" >\n      <ion-card>\n        <ion-card-header style="text-align: center" color="red">\n\n    <span >Confirm Request</span>\n    <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n        </ion-card-header>\n        <ion-card-content style="padding: 13px 6px 5px;">\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Update Purpose</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.updatepurpose}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Date</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveldate}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Time</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveltime}}\n            </ion-col>\n          </ion-row>\n            <ion-row>\n            <ion-col>\n              <span class="formtitle">Source</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.travelsrc}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Destination</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveldest}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Remark</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.remark}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Type</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.travelType}}\n            </ion-col>\n          </ion-row>\n          <ion-row text-center class="row-height"  style="margin-top: 1%">\n            <ion-col>\n\n              <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n            </button>\n            <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n          </button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </div>\n  </form>\n  <div *ngSwitchCase="\'history\'">\n  <ion-list >\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Pending for approval</span>\n      </ion-list-header>\n      <ng-container *ngFor= "let hdata of historyData">\n      <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n        <span class="icon-directions_car" style="float:left"></span>\n        <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>\n            <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>\n            <!--<br> <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3> -->\n            <div>\n              <br>\n            <ul class="bar">\n              <li style="color:green"><h3>{{hdata.source}}</h3></li>\n              <li style="color:#a90e1b"><h3>{{hdata.destination}}</h3></li>\n            </ul>\n            </div>\n      </ion-item>\n      </ng-container>\n    </ion-list>\n  </div>\n</div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/,
+            selector: 'page-empdashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>Dashboard</ion-title>\n    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge>\n  </ion-navbar>\n  <ion-toolbar color="white">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px; font-family: font-medium;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n<ion-content>\n  <div>\n    <ion-segment [(ngModel)]="requestSegment" color="red">\n      <ion-segment-button value="raisereq">\n        Raise Request\n      </ion-segment-button>\n      <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n        History\n      </ion-segment-button>\n    </ion-segment>\n  </div>\n  <div [ngSwitch]="requestSegment">\n\n    <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n      <div *ngIf="!confirmReqst">\n        <ion-item>\n          <ion-label floating>Update Purpose</ion-label>\n          <ion-input type="text" formControlName="updatepurpose"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Travel Date</ion-label>\n          <ion-datetime displayFormat="YYYY/MM/DD" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime>\n\n          <!-- <ion-input type="date" formControlName="traveldate"></ion-input> -->\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Time</ion-label>\n          <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Source</ion-label>\n          <ion-select formControlName="travelsrc">\n            <div *ngFor="let locs of locations">\n              <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n            </div>\n          </ion-select>\n          <!-- <ion-label floating>Source</ion-label>\n        <ion-input type="text" formControlName="travelsrc"></ion-input> -->\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Destination</ion-label>\n          <ion-input type="text" formControlName="traveldest" maxlength=15></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Remark</ion-label>\n          <ion-input type="text" formControlName="remark"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Travel type</ion-label>\n          <ion-select formControlName="travelType">\n            <ion-option value="outstation">Outstation</ion-option>\n            <ion-option value="local">Local</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-row text-center class="row-height" style="margin-top: 1%">\n          <ion-col>\n            <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n            </button>\n          </ion-col>\n        </ion-row>\n      </div>\n      <div *ngIf="confirmReqst">\n        <ion-card>\n          <ion-card-header style="text-align: center" color="red">\n\n            <span>Confirm Request</span>\n            <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n          </ion-card-header>\n          <ion-card-content style="padding: 13px 6px 5px;">\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Update Purpose</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.updatepurpose}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Date</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveldate}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Time</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveltime}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Source</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.travelsrc}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Destination</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveldest}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Remark</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.remark}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Type</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.travelType}}\n              </ion-col>\n            </ion-row>\n            <ion-row text-center class="row-height" style="margin-top: 1%">\n              <ion-col>\n\n                <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                </button>\n                <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                </button>\n              </ion-col>\n            </ion-row>\n          </ion-card-content>\n        </ion-card>\n      </div>\n    </form>\n    <div *ngSwitchCase="\'history\'">\n      <ion-list>\n        <ion-list-header style="background: #9e9e9e1f !important;">\n          <span style="color:#ad081f">Booking History</span>\n        </ion-list-header>\n        <ng-container *ngFor="let hdata of historyData">\n          <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n            <span>\n              <h3 style="font-weight: 500; margin-bottom: 5px;">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date | date}}, {{hdata.travel_time}}\n            </span>\n            <span style="color: #a90e1b; float: right">\n              {{hdata.status}}\n            </span>\n            <!-- <span>\n              <h3 style="color: #424242;" *ngIf="hdata.travel_date!=null">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>\n              <h3 style="color: #424242;">{{hdata.status}}</h3>\n            </span> -->\n            <div>\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{hdata.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{hdata.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n            <!-- <p text-center style="color: #a90e1b;">\n              {{hdata.status}}\n            </p> -->\n          </ion-item>\n        </ng-container>\n      </ion-list>\n    </div>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
@@ -559,7 +581,8 @@ var EmpdashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -569,6 +592,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -666,7 +690,7 @@ var HoddashboardPage = /** @class */ (function () {
                 'cost_center': _this.userDetails.emp_cost,
                 'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
                 'emp_phoneNo': _this.userDetails.emp_cell,
-                'status': 'Inprocess',
+                'status': 'Pending with Admin',
                 'travelType': _this.bookingForm.value.travelType
             };
             _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
@@ -674,6 +698,7 @@ var HoddashboardPage = /** @class */ (function () {
                 _this.commonProvider.hideLoader();
                 if (response) {
                     _this.confirmReqst = false;
+                    _this.bookingForm.reset();
                     _this.commonProvider.showToast('Request sent successfully');
                 }
                 else {
@@ -774,7 +799,7 @@ var HoddashboardPage = /** @class */ (function () {
         });
     };
     HoddashboardPage.prototype.viewReqHistory = function () {
-        this.navCtrl.push('RequesthistoryPage', { EmployeeDetail: this.userDetails });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__["a" /* RequesthistoryPage */], { EmployeeDetail: this.userDetails });
     };
     HoddashboardPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -812,7 +837,7 @@ var HoddashboardPage = /** @class */ (function () {
     HoddashboardPage.prototype.logout = function () {
         var _this = this;
         this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
         }, function (err) {
             console.log('user cancelled');
         });
@@ -826,7 +851,7 @@ var HoddashboardPage = /** @class */ (function () {
     };
     HoddashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-hoddashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n      <ion-title text-center>Dashboard</ion-title>\n      <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n      <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n      <ion-badge class="cart-badge">5</ion-badge>\n  </ion-navbar>\n  <ion-toolbar color="white">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n\n\n  <div>\n  <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n    <ion-segment-button value="pendingReq" (ionSelect)="getApprovalHistory()">\n      Requests\n    </ion-segment-button>\n    <ion-segment-button value="raisereq">\n      Raise Request\n    </ion-segment-button>\n    <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n      Booking History\n    </ion-segment-button>\n\n  </ion-segment>\n\n</div>\n<div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n      <ion-item>\n        <ion-label floating>Update Purpose</ion-label>\n        <ion-input type="text" formControlName="updatepurpose"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Travel Date</ion-label>\n        <ion-datetime displayFormat="MM/DD/YYYY" [min]="minDate" [max]="2050"formControlName="traveldate"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Time</ion-label>\n        <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Source</ion-label>\n        <ion-select formControlName="travelsrc">\n          <div  *ngFor="let locs of locations">\n          <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n        </div>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Destination</ion-label>\n        <ion-input type="text" formControlName="traveldest"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Remark</ion-label>\n        <ion-input type="text" formControlName="remark"></ion-input>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>Travel type</ion-label>\n        <ion-select formControlName="travelType">\n          <ion-option value="outstation">Outstation</ion-option>\n          <ion-option value="local">Local</ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-row text-center class="row-height"  style="margin-top: 1%">\n        <ion-col>\n            <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n          </button>\n        </ion-col>\n      </ion-row>\n    </div>\n    <div *ngIf="confirmReqst" >\n      <ion-card>\n        <ion-card-header style="text-align: center" color="red">\n\n    <span >Confirm Request</span>\n    <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n        </ion-card-header>\n        <ion-card-content style="padding: 13px 6px 5px;">\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Update Purpose</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.updatepurpose}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Date</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveldate}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Time</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveltime}}\n            </ion-col>\n          </ion-row>\n            <ion-row>\n            <ion-col>\n              <span class="formtitle">Source</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.travelsrc}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Destination</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.traveldest}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Remark</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.remark}}\n            </ion-col>\n          </ion-row>\n          <ion-row>\n            <ion-col>\n              <span class="formtitle">Travel Type</span>\n            </ion-col>\n            <ion-col>\n              {{bookingForm.value.travelType}}\n            </ion-col>\n          </ion-row>\n          <ion-row text-center class="row-height"  style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n            </button>\n            <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n          </button>\n            </ion-col>\n          </ion-row>\n        </ion-card-content>\n      </ion-card>\n    </div>\n  </form>\n  <div *ngSwitchCase="\'pendingReq\'">\n  <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Pending for approval</span>\n        <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span>\n      </ion-list-header>\n      <ion-item *ngFor="let applh of approvalList">\n        <span class="icon-directions_car" style="float:left"></span>\n        <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{applh.purpose}}</h3><br>\n            <h3  style="float:left; padding-left: 29px;color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>\n             <!-- <button item-right ion-button icon-only (click)="reqAction(\'Inprocess\', applh);" style="background-color: #398b00;" (click)="reqAction(\'Inprocess\', applh);"><span class="icon-cross" style="float:right;font-size: 25px;"></span></button>\n            <button item-right ion-button icon-only (click)="reqAction(\'Rejected\', applh);" style="background-color: #ca3636;" (click)="reqAction(\'Rejected\', applh);"><span class="icon-checkmark2" style="float:right;font-size: 25px;"></span></button> -->\n            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction(\'Inprocess\', applh);">Accept</button>\n            <button item-right text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction(\'Rejected\', applh);">Decline</button>\n            <div>\n              <br>\n            <ul class="bar">\n              <li style="color:green"><h3>{{applh.source}}</h3></li>\n              <li style="color:#a90e1b"><h3>{{applh.destination}}</h3></li>\n            </ul>\n            </div>\n      </ion-item>\n    </ion-list>\n  </div>\n    <div *ngSwitchCase="\'history\'">\n    <ion-list>\n        <ion-list-header style="background: #9e9e9e1f !important;">\n          <span style="color:#ad081f">Booking History</span>\n        </ion-list-header>\n        <ng-container *ngFor= "let hdata of historyData">\n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <span class="icon-directions_car" style="float:left"></span>\n          <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>\n          <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.purpose}}</h3><br>\n              <h3 style="float:left; padding-left: 29px;color: #424242;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>\n              <div>\n                <br>\n              <ul class="bar">\n                <li style="color:green"><h3>{{hdata.source}}</h3></li>\n                <li style="color:#a90e1b"><h3>{{hdata.destination}}</h3></li>\n              </ul>\n              </div>\n        </ion-item>\n      </ng-container>\n      </ion-list>\n    </div>\n</div>\n\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/,
+            selector: 'page-hoddashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>Dashboard</ion-title>\n    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge>\n  </ion-navbar>\n  <ion-toolbar color="white">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n\n\n  <div>\n    <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n      <ion-segment-button value="pendingReq" (ionSelect)="getApprovalHistory()">\n        Requests\n      </ion-segment-button>\n      <ion-segment-button value="raisereq">\n        Raise Request\n      </ion-segment-button>\n      <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n        Booking History\n      </ion-segment-button>\n\n    </ion-segment>\n\n  </div>\n  <div [ngSwitch]="requestSegment">\n\n    <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n      <div *ngIf="!confirmReqst">\n        <ion-item>\n          <ion-label floating>Update Purpose</ion-label>\n          <ion-input type="text" formControlName="updatepurpose"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Travel Date</ion-label>\n          <ion-datetime displayFormat="YYYY/MM/DD" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Time</ion-label>\n          <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Source</ion-label>\n          <ion-select formControlName="travelsrc">\n            <div *ngFor="let locs of locations">\n              <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n            </div>\n          </ion-select>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Destination</ion-label>\n          <ion-input type="text" formControlName="traveldest" maxlength=15></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Remark</ion-label>\n          <ion-input type="text" formControlName="remark"></ion-input>\n        </ion-item>\n        <ion-item>\n          <ion-label floating>Travel type</ion-label>\n          <ion-select formControlName="travelType">\n            <ion-option value="outstation">Outstation</ion-option>\n            <ion-option value="local">Local</ion-option>\n          </ion-select>\n        </ion-item>\n        <ion-row text-center class="row-height" style="margin-top: 1%">\n          <ion-col>\n            <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n            </button>\n          </ion-col>\n        </ion-row>\n      </div>\n      <div *ngIf="confirmReqst">\n        <ion-card>\n          <ion-card-header style="text-align: center" color="red">\n\n            <span>Confirm Request</span>\n            <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n          </ion-card-header>\n          <ion-card-content style="padding: 13px 6px 5px;">\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Update Purpose</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.updatepurpose}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Date</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveldate}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Time</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveltime}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Source</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.travelsrc}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Destination</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.traveldest}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Remark</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.remark}}\n              </ion-col>\n            </ion-row>\n            <ion-row>\n              <ion-col>\n                <span class="formtitle">Travel Type</span>\n              </ion-col>\n              <ion-col>\n                {{bookingForm.value.travelType}}\n              </ion-col>\n            </ion-row>\n            <ion-row text-center class="row-height" style="margin-top: 1%">\n              <ion-col>\n                <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                </button>\n                <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                </button>\n              </ion-col>\n            </ion-row>\n          </ion-card-content>\n        </ion-card>\n      </div>\n    </form>\n    <div *ngSwitchCase="\'pendingReq\'">\n      <ion-list>\n        <ion-list-header style="background: #9e9e9e1f !important;">\n          <span style="color:#ad081f">Pending for approval</span>\n          <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span>\n        </ion-list-header>\n        <ion-item *ngFor="let applh of approvalList">\n          <span>\n            <h3 style="font-weight: 500; margin-bottom: 5px;">\n              <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n          </span>\n          <span>\n            <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>\n          </span>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{applh.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{applh.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <div>\n            <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction(\'Inprocess\', applh);">Accept</button>\n            <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction(\'Rejected\', applh);">Decline</button>\n          </div>\n        </ion-item>\n      </ion-list>\n    </div>\n    <div *ngSwitchCase="\'history\'">\n      <ion-list>\n        <ion-list-header style="background: #9e9e9e1f !important;">\n          <span style="color:#ad081f">Booking History</span>\n        </ion-list-header>\n        <ng-container *ngFor="let hdata of historyData">\n          <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n            <span>\n              <h3 style="font-weight: 500; margin-bottom: 5px;">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date | date}}, {{hdata.travel_time}}\n            </span>\n            <span style="color: #a90e1b; float: right">\n              {{hdata.status}}\n            </span>\n            <div>\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{hdata.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{hdata.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ng-container>\n      </ion-list>\n    </div>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
@@ -844,7 +869,76 @@ var HoddashboardPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 168:
+/***/ 167:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequesthistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the RequesthistoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var RequesthistoryPage = /** @class */ (function () {
+    function RequesthistoryPage(navCtrl, navParams, serviceProvider, commonProvider) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.userDetails = [];
+        this.tripHistory = [];
+        this.userDetails = navParams.get('EmployeeDetail');
+        console.log("nav params ", this.userDetails);
+    }
+    RequesthistoryPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.commonProvider.showLoader('');
+        this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+            console.log("getAllTripHistory ", response);
+            console.log("getAllTripHistory ", JSON.parse(response._body));
+            _this.tripHistory = JSON.parse(response._body);
+            // this.approvalList = JSON.parse(response._body);
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    RequesthistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-requesthistory',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-list>\n    <ion-list-header style="background: #9e9e9e1f !important;">\n      <span style="color:#ad081f">Trip Completed</span>\n    </ion-list-header>\n    <ng-container *ngFor="let hdata of tripHistory">\n      <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n        <span>\n          <h3 style="font-weight: 500; margin-bottom: 5px;">\n            <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n        </span>\n        <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n          {{hdata.travel_date | date}}, {{hdata.travel_time}}\n        </span>\n        <span style="color: #a90e1b; float: right">\n          {{hdata.status}}\n        </span>\n        <div>\n          <ul class="bar">\n            <li style="color:green">\n              <h3>{{hdata.source}}</h3>\n            </li>\n            <li style="color:#a90e1b">\n              <h3>{{hdata.destination}}</h3>\n            </li>\n          </ul>\n        </div>\n\n        <!-- <span class="icon-directions_car" style="float:left"></span>\n      <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>\n      <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.purpose}}</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>{{hdata.source}}</h3></li>\n            <li style="color:#a90e1b"><h3>{{hdata.destination}}</h3></li>\n          </ul>\n          </div> -->\n      </ion-item>\n    </ng-container>\n    <!-- <ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n        <h2 style="float:right; color: #a90e1b;">Accept</h2>\n          <h3 style="float:left; padding-left: 12px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item><ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n          <h2 style="float:right; color: #a90e1b;">Decline</h2>\n          <h3 style="float:left; padding-left: 12px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item><ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n          <h2 style="float:right; color: #a90e1b; ">Accept</h2>\n          <h3 style="float:left; padding-left: 2px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 20px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item>-->\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */]])
+    ], RequesthistoryPage);
+    return RequesthistoryPage;
+}());
+
+//# sourceMappingURL=requesthistory.js.map
+
+/***/ }),
+
+/***/ 169:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -882,7 +976,7 @@ var EmpdashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 169:
+/***/ 170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -890,7 +984,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequesthistoryPageModule", function() { return RequesthistoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(167);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -917,44 +1011,6 @@ var RequesthistoryPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=requesthistory.module.js.map
-
-/***/ }),
-
-/***/ 170:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(52);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var NotificationPageModule = /** @class */ (function () {
-    function NotificationPageModule() {
-    }
-    NotificationPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
-            ],
-        })
-    ], NotificationPageModule);
-    return NotificationPageModule;
-}());
-
-//# sourceMappingURL=notification.module.js.map
 
 /***/ }),
 
@@ -1001,6 +1057,44 @@ var NotificationDetailPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(52);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationPageModule = /** @class */ (function () {
+    function NotificationPageModule() {
+    }
+    NotificationPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+            ],
+        })
+    ], NotificationPageModule);
+    return NotificationPageModule;
+}());
+
+//# sourceMappingURL=notification.module.js.map
+
+/***/ }),
+
+/***/ 173:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScanPageModule", function() { return ScanPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
@@ -1031,44 +1125,6 @@ var ScanPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=scan.module.js.map
-
-/***/ }),
-
-/***/ 173:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(166);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var HoddashboardPageModule = /** @class */ (function () {
-    function HoddashboardPageModule() {
-    }
-    HoddashboardPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */]),
-            ],
-        })
-    ], HoddashboardPageModule);
-    return HoddashboardPageModule;
-}());
-
-//# sourceMappingURL=hoddashboard.module.js.map
 
 /***/ }),
 
@@ -1110,13 +1166,51 @@ var UsersDashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 216:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(238);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(166);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var HoddashboardPageModule = /** @class */ (function () {
+    function HoddashboardPageModule() {
+    }
+    HoddashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */]),
+            ],
+        })
+    ], HoddashboardPageModule);
+    return HoddashboardPageModule;
+}());
+
+//# sourceMappingURL=hoddashboard.module.js.map
+
+/***/ }),
+
+/***/ 217:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(218);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(239);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -1124,7 +1218,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1132,22 +1226,22 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(162);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(298);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_service_service__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_common_common__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(168);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_notification_notification_module__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_notification_notification_module__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_notification_detail_notification_detail_module__ = __webpack_require__(171);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_scan_scan_module__ = __webpack_require__(172);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(173);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_scan_scan_module__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_driver_driver_module__ = __webpack_require__(159);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(174);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1212,11 +1306,11 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
                     ]
                 })
             ],
@@ -1252,11 +1346,11 @@ var AppModule = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(82);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(263);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(265);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(268);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1535,75 +1629,6 @@ var CommonProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 279:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequesthistoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(26);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/**
- * Generated class for the RequesthistoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var RequesthistoryPage = /** @class */ (function () {
-    function RequesthistoryPage(navCtrl, navParams, serviceProvider, commonProvider) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.serviceProvider = serviceProvider;
-        this.commonProvider = commonProvider;
-        this.userDetails = [];
-        this.tripHistory = [];
-        this.userDetails = navParams.get('EmployeeDetail');
-        console.log("nav params ", this.userDetails);
-    }
-    RequesthistoryPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        this.commonProvider.showLoader('');
-        this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe(function (response) {
-            console.log("getAllTripHistory ", response);
-            console.log("getAllTripHistory ", JSON.parse(response._body));
-            _this.tripHistory = JSON.parse(response._body);
-            // this.approvalList = JSON.parse(response._body);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
-    };
-    RequesthistoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-requesthistory',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-list>\n    <ion-list-header style="background: #9e9e9e1f !important;">\n      <span style="color:#ad081f">Trip Completed</span>\n    </ion-list-header>\n    <ng-container *ngFor= "let hdata of tripHistory">\n    <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n      <span class="icon-directions_car" style="float:left"></span>\n      <h2 style="float:right; color: #a90e1b;">{{hdata.status}}</h2>\n      <h3 style="float:left; padding-left: 12px;font-weight: 500;">{{hdata.purpose}}</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>{{hdata.source}}</h3></li>\n            <li style="color:#a90e1b"><h3>{{hdata.destination}}</h3></li>\n          </ul>\n          </div>\n    </ion-item>\n  </ng-container>\n    <!-- <ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n        <h2 style="float:right; color: #a90e1b;">Accept</h2>\n          <h3 style="float:left; padding-left: 12px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item><ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n          <h2 style="float:right; color: #a90e1b;">Decline</h2>\n          <h3 style="float:left; padding-left: 12px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 29px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item><ion-item>\n          <span class="icon-directions_car" style="float:left"></span>\n          <h2 style="float:right; color: #a90e1b; ">Accept</h2>\n          <h3 style="float:left; padding-left: 2px;font-weight: 500;">Mon, Sep 03, 06:49AM</h3><br>\n          <h3 style="float:left; padding-left: 20px;color: #424242;">Micro . CRN 22312312</h3>\n          <div>\n            <br>\n          <ul class="bar">\n            <li style="color:green"><h3>Reay Road</h3></li>\n            <li style="color:#a90e1b"><h3>CSMT</h3></li>\n          </ul>\n          </div>\n    </ion-item>-->\n  </ion-list>\n\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */]])
-    ], RequesthistoryPage);
-    return RequesthistoryPage;
-}());
-
-//# sourceMappingURL=requesthistory.js.map
-
-/***/ }),
-
 /***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1714,8 +1739,8 @@ var ScanPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1772,7 +1797,7 @@ var MyApp = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_hoddashboard_hoddashboard__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(82);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1866,6 +1891,7 @@ var LoginPage = /** @class */ (function () {
         this.commonProvider.showLoader();
         if (this.email.value) {
             var str = this.email.value.trim();
+            console.log("str", str);
             if (isNaN(this.email.value)) {
                 if (this.email.value == "security") {
                     this.securitylogin = this.email.value;
@@ -1873,16 +1899,13 @@ var LoginPage = /** @class */ (function () {
                     this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__users_dashboard_users_dashboard__["a" /* UsersDashboardPage */], { 'security': this.securitylogin });
                 }
                 else if (str == "hod") {
-                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 203442).subscribe(function (response) {
+                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe(function (response) {
                         response = JSON.parse(response._body);
                         console.log("response ", response);
                         _this.commonProvider.hideLoader();
                         var str = response.emp_esg;
-                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
+                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "L3-Executive") {
                             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
-                        }
-                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
                         }
                         else {
                             _this.commonProvider.showToast("User role band not maintained");
@@ -1890,7 +1913,7 @@ var LoginPage = /** @class */ (function () {
                     });
                 }
                 else if (str == "emp") {
-                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23165827).subscribe(function (response) {
+                    this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe(function (response) {
                         response = JSON.parse(response._body);
                         console.log("response ", response);
                         _this.commonProvider.hideLoader();
@@ -1991,7 +2014,7 @@ var LoginPage = /** @class */ (function () {
     ;
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-login',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/'<!-- <ion-header no-border>\n  <ion-navbar>\n    <ion-title text-center></ion-title>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content class="page-content">\n  <ion-grid>\n    <ion-row text-center>\n      <ion-col style="margin-top: 5%;">\n        <img src="assets/imgs/mahindra_logo_white.png" alt="" style="width: 61%;height: 75%;">\n      </ion-col>\n    </ion-row>\n    <ion-row text-center>\n      <ion-col>\n        <div class="reset-title">VEHICLE MANAGEMENT SYSTEM</div>\n      </ion-col>\n    </ion-row>\n\n\n    <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">\n      <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col class="input-height">\n          <input type="text" class="login-input1" formControlName="email" placeholder="Mobile number" required [style.background-color]="(!email.errors) ? \'#C24857\' : \'\'" [style.color]="(!email.errors) ? \'#f8f8f8\' : \'\'" />\n          <div class="form-control-feedback">\n            <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>\n          </div>\n        </ion-col>\n      </ion-row>\n      <!-- <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col class="input-height">\n          <input type="email" class="login-input1" formControlName="email"\n                 placeholder="Email"\n                 required\n                 [style.background-color]="(!email.errors) ? \'#C24857\' : \'\'"\n                 [style.color]="(!email.errors) ? \'#f8f8f8\' : \'\'"\n          />\n          <div class="form-control-feedback"\n               *ngIf="email.errors && (email.dirty || email.touched)">\n               <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>\n          </div>\n        </ion-col>\n      </ion-row> -->\n      <!-- <ion-row text-center class="row-height" style="margin-top: 7%">\n        <ion-col class="input-height">\n          <input type="password" class="login-input1" formControlName="password"\n                 [ngClass]="{\'typed\':password.length>1}"\n                 placeholder="Password"\n                 required\n                 [style.background-color]="(!password.errors) ? \'#C24857\' : \'\'"\n                 [style.color]="(!password.errors) ? \'#f8f8f8\' : \'\'"\n          />\n          <div class="form-control-feedback"\n               *ngIf="password.errors && (password.dirty || password.touched)">\n            <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">\n              Passsword must be at least 8 characters long.\n            </p>\n          </div>\n        </ion-col>\n      </ion-row> -->\n      <!-- <ion-row text-center class="row-height">\n        <ion-col>\n          <p class="forgot-password">FORGOT PASSWORD?</p>\n        </ion-col>\n      </ion-row> -->\n      <ion-row text-center style="padding-top:7%">\n        <ion-col>\n          <button [ngClass]="{\'login-button\':(!email.errors),\'login-button-dynamic\':(email.errors)}">LOGIN\n          </button>\n        </ion-col>\n      </ion-row>\n    </form>\n  </ion-grid>\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/
+            selector: 'page-login',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/'<!-- <ion-header no-border>\n  <ion-navbar>\n    <ion-title text-center></ion-title>\n  </ion-navbar>\n</ion-header> -->\n\n<ion-content class="page-content">\n  <ion-grid>\n    <ion-row text-center>\n      <ion-col style="margin-top: 5%;">\n        <img src="assets/imgs/mahindra_logo_white.png" alt="" style="width: 61%;height: 75%;">\n      </ion-col>\n    </ion-row>\n    <ion-row text-center>\n      <ion-col>\n        <div class="reset-title">VEHICLE MANAGEMENT SYSTEM</div>\n      </ion-col>\n    </ion-row>\n\n\n    <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">\n      <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col class="input-height">\n          <input type="text" class="login-input1" formControlName="email" placeholder="Mobile number" required [style.background-color]="(!email.errors) ? \'#C24857\' : \'\'" [style.color]="(!email.errors) ? \'#f8f8f8\' : \'\'" />\n          <div class="form-control-feedback">\n            <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>\n          </div>\n        </ion-col>\n      </ion-row>\n\n      <!-- <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col class="input-height">\n          <input type="email" class="login-input1" formControlName="email"\n                 placeholder="Email"\n                 required\n                 [style.background-color]="(!email.errors) ? \'#C24857\' : \'\'"\n                 [style.color]="(!email.errors) ? \'#f8f8f8\' : \'\'"\n          />\n          <div class="form-control-feedback"\n               *ngIf="email.errors && (email.dirty || email.touched)">\n               <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>\n          </div>\n        </ion-col>\n      </ion-row> -->\n      <!-- <ion-row text-center class="row-height" style="margin-top: 7%">\n        <ion-col class="input-height">\n          <input type="password" class="login-input1" formControlName="password"\n                 [ngClass]="{\'typed\':password.length>1}"\n                 placeholder="Password"\n                 required\n                 [style.background-color]="(!password.errors) ? \'#C24857\' : \'\'"\n                 [style.color]="(!password.errors) ? \'#f8f8f8\' : \'\'"\n          />\n          <div class="form-control-feedback"\n               *ngIf="password.errors && (password.dirty || password.touched)">\n            <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">\n              Passsword must be at least 8 characters long.\n            </p>\n          </div>\n        </ion-col>\n      </ion-row> -->\n      <!-- <ion-row text-center class="row-height">\n        <ion-col>\n          <p class="forgot-password">FORGOT PASSWORD?</p>\n        </ion-col>\n      </ion-row> -->\n      <ion-row text-center style="padding-top:7%">\n        <ion-col>\n          <button [ngClass]="{\'login-button\':(!email.errors),\'login-button-dynamic\':(email.errors)}">LOGIN\n          </button>\n        </ion-col>\n      </ion-row>\n    </form>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
@@ -2082,5 +2105,5 @@ var NotificationPage = /** @class */ (function () {
 
 /***/ })
 
-},[216]);
+},[217]);
 //# sourceMappingURL=main.js.map

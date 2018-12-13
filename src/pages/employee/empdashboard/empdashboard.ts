@@ -145,7 +145,7 @@ export class EmpdashboardPage {
         'emp_email': this.userDetails.emp_email,
         'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
         'emp_phoneNo': this.userDetails.emp_cell,
-        'status': 'Pending',
+        'status': 'Pending with Manager',
         'bh_Id': this.dhDetails.pernr,
         'bh_email': this.dhDetails.email,
 

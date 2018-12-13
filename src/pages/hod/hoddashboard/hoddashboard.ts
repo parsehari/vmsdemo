@@ -120,7 +120,7 @@ export class HoddashboardPage {
 
         'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
         'emp_phoneNo': this.userDetails.emp_cell,
-        'status': 'Inprocess',
+        'status': 'Pending with Admin',
         'travelType': this.bookingForm.value.travelType
 
       }

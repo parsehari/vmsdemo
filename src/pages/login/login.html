@@ -5,7 +5,7 @@
 </ion-header> -->
 
 <ion-content class="page-content">
-  <ion-grid>
+  <ion-grid class="gridSize">
     <ion-row text-center>
       <ion-col style="margin-top: 5%;">
         <img src="assets/imgs/mahindra_logo_white.png" alt="" style="width: 61%;height: 75%;">
@@ -19,46 +19,33 @@
 
 
     <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
-      <ion-row text-center class="row-height" style="margin-top: 1%">
+      <!-- <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col class="input-height">
           <input type="text" class="login-input1" formControlName="email" placeholder="Mobile number" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
           <div class="form-control-feedback">
             <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>
           </div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
-      <!-- <ion-row text-center class="row-height" style="margin-top: 1%">
+      <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col class="input-height">
-          <input type="email" class="login-input1" formControlName="email"
-                 placeholder="Email"
-                 required
-                 [style.background-color]="(!email.errors) ? '#C24857' : ''"
-                 [style.color]="(!email.errors) ? '#f8f8f8' : ''"
-          />
-          <div class="form-control-feedback"
-               *ngIf="email.errors && (email.dirty || email.touched)">
-               <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>
+          <input type="email" class="login-input1" formControlName="email" placeholder="Email" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
+          <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+            <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>
           </div>
         </ion-col>
-      </ion-row> -->
-      <!-- <ion-row text-center class="row-height" style="margin-top: 7%">
+      </ion-row>
+      <ion-row text-center class="row-height" style="margin-top: 7%">
         <ion-col class="input-height">
-          <input type="password" class="login-input1" formControlName="password"
-                 [ngClass]="{'typed':password.length>1}"
-                 placeholder="Password"
-                 required
-                 [style.background-color]="(!password.errors) ? '#C24857' : ''"
-                 [style.color]="(!password.errors) ? '#f8f8f8' : ''"
-          />
-          <div class="form-control-feedback"
-               *ngIf="password.errors && (password.dirty || password.touched)">
+          <input type="password" class="login-input1" formControlName="password" [ngClass]="{'typed':password.length>1}" placeholder="Password" required [style.background-color]="(!password.errors) ? '#C24857' : ''" [style.color]="(!password.errors) ? '#f8f8f8' : ''" />
+          <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
             <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">
               Passsword must be at least 8 characters long.
             </p>
           </div>
         </ion-col>
-      </ion-row> -->
+      </ion-row>
       <!-- <ion-row text-center class="row-height">
         <ion-col>
           <p class="forgot-password">FORGOT PASSWORD?</p>
