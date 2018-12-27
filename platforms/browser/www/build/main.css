@@ -34089,13 +34089,36 @@ page-empdashboard .cart-badge {
   background-color: #9e9e9ebd !important;
 }
 
+page-empdashboard .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 136px;
+  word-wrap: break-word;
+}
+
+@media screen and (min-width: 1024px) {
+  page-empdashboard .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+  page-empdashboard .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-empdashboard .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
+}
+
 page-hoddashboard .formtitle {
   color: #999;
 }
 
 page-hoddashboard ul.bar {
   margin: 0;
-  padding: 0px 0px 0px 3px;
+  padding: 0 0 0 3px;
   position: relative;
 }
 
@@ -34134,10 +34157,33 @@ page-hoddashboard ul.bar li:before {
 
 page-hoddashboard .cart-badge {
   position: absolute !important;
-  top: 0px !important;
+  top: 0 !important;
   right: 17px !important;
   border-radius: 22px !important;
   background-color: #9e9e9ebd !important;
+}
+
+page-hoddashboard .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 136px;
+  word-wrap: break-word;
+}
+
+@media screen and (min-width: 1024px) {
+  page-hoddashboard .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+  page-hoddashboard .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-hoddashboard .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
 }
 
 page-requesthistory ul.bar {
@@ -34179,6 +34225,21 @@ page-requesthistory ul.bar li:before {
   top: 6px;
 }
 
+page-requesthistory .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 136px;
+  word-wrap: break-word;
+}
+
+@media screen and (min-width: 1024px) {
+  page-requesthistory .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
+}
+
 page-login .forgot-label {
   color: white;
   font-size: 13px;
@@ -34193,7 +34254,7 @@ page-login .row-height {
 
 page-login .reset-title {
   color: white !important;
-  margin: 8px 0px;
+  margin: 8px 0;
   font-size: 13px;
 }
 
@@ -34204,10 +34265,7 @@ page-login .page-content {
 page-login .login-form {
   height: 53%;
   width: 87%;
-  margin-top: 24%;
-  margin-right: auto;
-  margin-bottom: 0px;
-  margin-left: auto;
+  margin: 24% auto 0;
   background-color: #ad081f;
   position: relative;
 }
@@ -34345,12 +34403,21 @@ page-login .typed {
 }
 
 .input-height {
-  padding: 0% !important;
+  padding: 0 !important;
 }
 
 @media (min-width: 480px) {
   .input-height {
-    padding: 0% !important;
+    padding: 0 !important;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .gridSize {
+    padding: 24px !important;
+    width: 38% !important;
+    border: 1px solid #ffffff75;
+    margin-top: 47px;
   }
 }
 

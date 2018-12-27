@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 /**
@@ -16,30 +16,37 @@ import { CommonProvider } from '../../../providers/common/common';
 })
 export class RequesthistoryPage {
   userDetails: any = [];
-  tripHistory:any = [];
+  tripHistory: any = [];
   constructor(
-              public navCtrl: NavController,
-              public navParams: NavParams,
-              public serviceProvider:ServiceProvider,
-              public commonProvider:CommonProvider
-            ) {
-              this.userDetails = navParams.get('EmployeeDetail');
-              console.log("nav params ", this.userDetails);
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public serviceProvider: ServiceProvider,
+    public commonProvider: CommonProvider,
+    public modal: ModalController
+  ) {
+    this.userDetails = navParams.get('EmployeeDetail');
+    console.log("nav params ", this.userDetails);
   }
 
   ionViewDidLoad() {
     this.commonProvider.showLoader('');
-    this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response:any) => {
-      console.log("getAllTripHistory ",response);
-      console.log("getAllTripHistory ",JSON.parse(response._body));
+    this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+      console.log("getAllTripHistory ", response);
+      console.log("getAllTripHistory ", JSON.parse(response._body));
       this.tripHistory = JSON.parse(response._body);
-       // this.approvalList = JSON.parse(response._body);
-       this.commonProvider.hideLoader();
-    },
-    (err) => {
+      // this.approvalList = JSON.parse(response._body);
       this.commonProvider.hideLoader();
-      this.commonProvider.showToast(err.message);
-    });
+    },
+      (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err.message);
+      });
+  }
+
+  openDetail(obj: any) {
+    console.log("open modal")
+    const myModal = this.modal.create('ModalDetailPage', { data: obj });
+    myModal.present();
   }
 
 }

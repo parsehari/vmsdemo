@@ -1,64 +1,64 @@
 <ion-header>
   <ion-navbar>
-     <ion-title text-center>(M&M)</ion-title>
+    <ion-title text-center>(M&M)</ion-title>
   </ion-navbar>
-  <ion-toolbar >
-  <section text-center class="bgclr bgimg">
-    <span class="icon-noimage-icon"></span>
+  <ion-toolbar>
+    <section text-center class="bgclr bgimg">
+      <span class="icon-noimage-icon"></span>
 
-<div class="header-content">
+      <div class="header-content">
         <h1 style="margin-top: 0rem !important;"><b>Welcome,</b> <br>
-        <b>Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</b></h1>
+          <b>Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</b></h1>
         <span text-center class="userText">
-        <b>  {{userDetails.emp_cost}}</b>
+          <b> {{userDetails.emp_cost}}</b>
         </span><br>
         <span text-center class="userText">
-          <b>  {{userDetails.emp_esg}}</b>
+          <b> {{userDetails.emp_esg}}</b>
         </span>
       </div>
-  </section>
-</ion-toolbar>
+    </section>
+  </ion-toolbar>
 </ion-header>
 <ion-content style="background-color: #7c8185c2;">
-<ion-grid *ngIf="!driverMobileNumber && !securityCheck">
-  <ion-row>
-    <ion-col text-center (click)="showDashboard();">
-      <img src="assets/imgs/ani/bell2.png" alt="">
-      <span class="userText">Notifications</span>
-    </ion-col>
-    <ion-col text-center (click)="showDashboard();">
-<img src="assets/imgs/ani/cab1.png" alt="">
-<span class="userText">Cabs History</span>
-    </ion-col>
-</ion-row>
-  <ion-row>
-    <ion-col offset-3 col-6 text-center (click)="showDashboard();">
-<img src="assets/imgs/ani/create1.png" alt="">
-<span class="userText">Create Request</span>
-    </ion-col>
-</ion-row>
-</ion-grid>
+  <ion-grid *ngIf="!driverMobileNumber && !securityCheck">
+    <ion-row>
+      <ion-col text-center (click)="showDashboard();">
+        <img src="assets/imgs/ani/bell2.png" alt="">
+        <span class="userText">Notifications</span>
+      </ion-col>
+      <ion-col text-center (click)="showDashboard();">
+        <img src="assets/imgs/ani/cab1.png" alt="">
+        <span class="userText">Cabs History</span>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset-3 col-6 text-center (click)="showDashboard();">
+        <img src="assets/imgs/ani/create1.png" alt="">
+        <span class="userText">Create Request</span>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<ion-grid *ngIf="driverMobileNumber">
-  <ion-row>
-    <ion-col text-center (click)="getTripDetails('tripPage');">
-<img class="height: 50%"src="assets/imgs/ani/create1.png" alt="">
-    <span class="userText">Trip Details</span>
-    </ion-col>
-    <ion-col text-center (click)="getTripDetails('ticketPage');">
-<img src="assets/imgs/ani/raise1.png" alt="">
-<span class="userText">Scan Code</span>
-    </ion-col>
-</ion-row>
-</ion-grid>
-
-<ion-grid *ngIf="securityCheck">
-  <ion-row>
-    <ion-col offset-3 col-6 text-center (click)="securityScan();">
+  <ion-grid *ngIf="driverMobileNumber">
+    <ion-row>
+      <ion-col text-center (click)="getTripDetails('tripPage');">
+        <img class="height: 50%" src="assets/imgs/ani/create1.png" alt="">
+        <span class="userText">Trip Details</span>
+      </ion-col>
+      <ion-col text-center (click)="getTripDetails('ticketPage');">
         <img src="assets/imgs/ani/raise1.png" alt="">
         <span class="userText">Scan Code</span>
-    </ion-col>
-</ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-</ion-grid>
+  <ion-grid *ngIf="securityCheck">
+    <ion-row (click)="securityScan();">
+      <ion-col offset-3 col-6 text-center (click)="securityScan();">
+        <img src="assets/imgs/ani/raise1.png" alt="">
+        <span class="userText">Scan Code</span>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
 </ion-content>

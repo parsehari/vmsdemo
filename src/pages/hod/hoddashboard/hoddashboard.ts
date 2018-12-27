@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { PopoverController } from 'ionic-angular';
+import { PopoverController, ModalController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
@@ -39,7 +39,8 @@ export class HoddashboardPage {
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
     public alertCtrl: AlertController,
-    public zone: NgZone
+    public zone: NgZone,
+    public modal: ModalController
 
   ) {
     console.log("params hod", navParams);
@@ -101,7 +102,7 @@ export class HoddashboardPage {
   }
 
   sendRequest() {
-    this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
+    this.commonProvider.Alert.confirm().then((res) => {
       this.commonProvider.showLoader('Sending request...');
       console.log('this.bookingForm.value ', this.bookingForm.value);
       let reqData = {
@@ -131,6 +132,7 @@ export class HoddashboardPage {
         if (response) {
           this.confirmReqst = false;
           this.bookingForm.reset();
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -150,8 +152,8 @@ export class HoddashboardPage {
     if (status == "Rejected") {
 
       const prompt = this.alertCtrl.create({
-        title: 'Are you confirm ?',
-        message: "Please enter a comment",
+        title: '',
+        message: "Please enter comments for rejection",
         inputs: [
           {
             name: 'comment',
@@ -177,7 +179,7 @@ export class HoddashboardPage {
       prompt.present();
       return;
     } else {
-      this.commonProvider.Alert.confirm('Are you confirm ?').then((res) => {
+      this.commonProvider.Alert.confirm('').then((res) => {
         this.confirmReqAction(status, obj);
       }, err => {
         console.log('user cancelled');
@@ -205,7 +207,9 @@ export class HoddashboardPage {
       'emp_UserName': obj.emp_userName,
       'emp_phoneNo': obj.emp_phoneNo,
       'bh_Id': this.userDetails.emp_no,
+      'bh_UserName': obj.bh_UserName,
       'remark': obj.remark,
+      //  'location': obj.source,
       'location': obj.emp_location,
       'cost_id': obj.cost_id,
       'cost_center': obj.cost_center,
@@ -249,6 +253,7 @@ export class HoddashboardPage {
     this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
       console.log("Locations ", JSON.parse(response._body));
       this.locations = JSON.parse(response._body);
+      this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
       this.commonProvider.hideLoader();
       this.getApprovalHistory();
     },
@@ -288,6 +293,11 @@ export class HoddashboardPage {
     });
   }
 
+  openDetail(obj: any) {
+    console.log("open modal")
+    const myModal = this.modal.create('ModalDetailPage', { data: obj });
+    myModal.present();
+  }
 
 
 }

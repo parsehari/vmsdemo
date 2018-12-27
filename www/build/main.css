@@ -33424,6 +33424,72 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+ion-calendar {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+ion-calendar .center {
+  text-align: center;
+}
+
+ion-calendar .calendar-header-col {
+  font-size: 1rem;
+  color: #666;
+}
+
+ion-calendar .calendar-row:last-child {
+  border-bottom: 1px solid #eee;
+}
+
+ion-calendar .calendar-row .calendar-col {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.8rem;
+  font-size: 1.2rem;
+  border-left: 1px solid #eee;
+  border-top: 1px solid #eee;
+}
+
+ion-calendar .calendar-row .calendar-col:last-child {
+  border-right: 1px solid #eee;
+}
+
+ion-calendar .calendar-row .not-this-month {
+  color: #989898;
+  background: #eee;
+}
+
+ion-calendar .calendar-row .today {
+  color: #fff;
+  -webkit-box-shadow: inset 0 0 10px #aaa;
+  box-shadow: inset 0 0 10px #aaa;
+  background: #46b592;
+}
+
+ion-calendar .calendar-row .eventBlip {
+  background: #46b592;
+  width: 6.5px;
+  height: 6.5px;
+  display: inline-block;
+  border-radius: 6.5px;
+  position: absolute;
+  top: 3.5px;
+  right: 3.5px;
+}
+
+ion-calendar .calendar-row .select {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  background: #46b592;
+}
+
 @font-face {
   font-family: 'icomoon';
   src: url("../assets/fonts/icomoon.eot?1ghnha");
@@ -34016,6 +34082,88 @@ input[type="text"]:disabled {
   /* hi-res laptops and desktops */
 }
 
+page-adminrequests .formtitle {
+  color: #999;
+}
+
+page-adminrequests ul.bar {
+  margin: 0;
+  padding: 0 0 0 3px;
+  position: relative;
+}
+
+page-adminrequests ul.bar:before {
+  border-left: #f00 1px solid;
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 56%;
+  top: 9px;
+  /* bottom: 39px; */
+  margin-left: 2px;
+}
+
+page-adminrequests ion-label {
+  white-space: initial !important;
+}
+
+page-adminrequests ul.bar li {
+  list-style: none;
+  position: relative;
+  padding-left: 15px;
+  /* line-height: 30px; */
+  padding-bottom: 10px;
+}
+
+page-adminrequests ul.bar li:before {
+  background: #f00;
+  position: absolute;
+  content: " ";
+  width: 5px;
+  height: 5px;
+  left: 0;
+  top: 6px;
+}
+
+page-adminrequests .cart-badge {
+  position: absolute !important;
+  top: 0 !important;
+  right: 17px !important;
+  border-radius: 22px !important;
+  background-color: #9e9e9ebd !important;
+}
+
+page-adminrequests .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  word-wrap: break-word;
+}
+
+page-adminrequests .reqText {
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1024px) {
+  page-adminrequests .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+  page-adminrequests .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-adminrequests .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
+}
+
 page-driver .cart-badge {
   position: absolute !important;
   top: 0 !important;
@@ -34089,10 +34237,35 @@ page-empdashboard .cart-badge {
   background-color: #9e9e9ebd !important;
 }
 
+page-empdashboard .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 136px;
+  word-wrap: break-word;
+}
+
+page-empdashboard .reqText {
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 @media screen and (min-width: 1024px) {
   page-empdashboard .gridSize {
     padding: 3px !important;
     width: 70% !important;
+  }
+  page-empdashboard .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-empdashboard .formcntent {
+    margin-left: 15%;
+    width: 70%;
   }
 }
 
@@ -34102,7 +34275,7 @@ page-hoddashboard .formtitle {
 
 page-hoddashboard ul.bar {
   margin: 0;
-  padding: 0px 0px 0px 3px;
+  padding: 0 0 0 3px;
   position: relative;
 }
 
@@ -34141,10 +34314,42 @@ page-hoddashboard ul.bar li:before {
 
 page-hoddashboard .cart-badge {
   position: absolute !important;
-  top: 0px !important;
+  top: 0 !important;
   right: 17px !important;
   border-radius: 22px !important;
   background-color: #9e9e9ebd !important;
+}
+
+page-hoddashboard .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 136px;
+  word-wrap: break-word;
+}
+
+page-hoddashboard .reqText {
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1024px) {
+  page-hoddashboard .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+  page-hoddashboard .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-hoddashboard .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
 }
 
 page-requesthistory ul.bar {
@@ -34184,6 +34389,30 @@ page-requesthistory ul.bar li:before {
   height: 5px;
   left: 0;
   top: 6px;
+}
+
+page-requesthistory .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 93px;
+  word-wrap: break-word;
+}
+
+page-requesthistory .reqText {
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1024px) {
+  page-requesthistory .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
 }
 
 page-login .forgot-label {
@@ -34362,6 +34591,8 @@ page-login .typed {
   .gridSize {
     padding: 24px !important;
     width: 38% !important;
+    border: 1px solid #ffffff75;
+    margin-top: 47px;
   }
 }
 

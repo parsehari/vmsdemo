@@ -49,10 +49,51 @@ page-empdashboard {
     border-radius: 22px !important;
     background-color: #9e9e9ebd !important;
   }
+
+  .statusWrds {
+    color: #a90e1b;
+    float: right;
+    display: block;
+    width: 136px;
+    word-wrap: break-word;
+  }
+
+  .reqText {
+    font-weight: 500;
+    margin-bottom: 5px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   @media screen and (min-width: 1024px) {
+    // .gridSize {
+    //   padding: 3px !important;
+    //   width: 70% !important;
+    // }
+    //
+    // .webToolbar {
+    //   width: 70% !important;
+    //   margin-left: 15% !important;
+    // }
+    //
+    // .formcntent {
+    //   margin-left: 15%;
+    //   width: 70%;
+    // }
     .gridSize {
       padding: 3px !important;
       width: 70% !important;
+    }
+
+    .webToolbar {
+      width: 70% !important;
+      margin-left: 15% !important;
+    }
+
+    .formcntent {
+      margin-left: 15%;
+      width: 70%;
     }
   }
 }

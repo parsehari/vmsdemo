@@ -104,10 +104,10 @@ export class DriverPage {
       this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
         console.log("response ", resp);
         this.commonProvider.hideLoader();
-        if (type == 'endTrip') {
-          console.log("end trip");
-          this.getTrip();
-        }
+        // if (type == 'endTrip') {
+        console.log("end trip");
+        this.getTrip();
+        // }
 
       }, (err) => {
         console.log("error", err);

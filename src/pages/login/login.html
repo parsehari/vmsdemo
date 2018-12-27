@@ -30,20 +30,20 @@
 
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col class="input-height">
-          <input type="email" class="login-input1" formControlName="email" placeholder="Email" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
-          <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
+          <input type="email" class="login-input1" formControlName="email" placeholder="Username" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
+          <!-- <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
             <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>
-          </div>
+          </div> -->
         </ion-col>
       </ion-row>
       <ion-row text-center class="row-height" style="margin-top: 7%">
         <ion-col class="input-height">
           <input type="password" class="login-input1" formControlName="password" [ngClass]="{'typed':password.length>1}" placeholder="Password" required [style.background-color]="(!password.errors) ? '#C24857' : ''" [style.color]="(!password.errors) ? '#f8f8f8' : ''" />
-          <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
+          <!-- <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
             <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">
               Passsword must be at least 8 characters long.
             </p>
-          </div>
+          </div> -->
         </ion-col>
       </ion-row>
       <!-- <ion-row text-center class="row-height">

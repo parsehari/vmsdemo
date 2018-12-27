@@ -62,8 +62,6 @@
     </dict>
     <key>UILaunchStoryboardName</key>
     <string>CDVLaunchScreen</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array/>
     <key>NSCameraUsageDescription</key>
     <string>The camera is used to scan QR codes.</string>
   </dict>

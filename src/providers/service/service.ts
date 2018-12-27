@@ -17,9 +17,13 @@ export class ServiceProvider {
   // header for json/content-type
   private url = 'https://mapps.mahindra.com/vms';
   //  private url = 'http://192.168.42.115';
-  //  private url = 'http://10.174.55.154:8080/vms';
+  //private url = 'http://10.174.55.154:8080/vms';
+  //private url = 'http://10.174.55.203:8080/vms';
   raiseReq: any;
   tripDTO: any;
+  lgnDTO: any;
+  assignTripDto: any;
+
   constructor(public http: Http) {
     console.log('Hello ServiceProvider Provider');
   }
@@ -61,6 +65,7 @@ export class ServiceProvider {
     this.raiseReq.append("travel_time", data.travel_time);
     this.raiseReq.append("status", data.status);
     this.raiseReq.append("bh_Id", data.bh_Id);
+    this.raiseReq.append("bh_UserName", data.bh_UserName);
     this.raiseReq.append("bh_email", data.bh_email);
     this.raiseReq.append("emp_email", data.emp_email);
     this.raiseReq.append("emp_userName", data.emp_UserName);
@@ -117,6 +122,45 @@ export class ServiceProvider {
     }
 
     return this.http.post(this.url + params, this.tripDTO, options);
+  }
+
+  weblogin(params: any, username: any, pwd: any): Observable<any> {
+    console.log("emp ", username)
+    console.log("pwd ", pwd)
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+
+    this.lgnDTO = new FormData();
+    this.lgnDTO.append('employeeId', username);
+    this.lgnDTO.append('pwd', pwd);
+
+    return this.http.post(this.url + params, this.lgnDTO, options)
+  }
+
+  saveScan(params: any, text: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + text, options)
+  }
+
+  getReqDetails(params: any, id: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + id, options)
+
+  }
+
+  assignReq(params: any, tripID: any, cabs: any, driver: any, vendor: any, admincomment: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    this.assignTripDto = new FormData();
+    this.assignTripDto.append('tripId', tripID);
+    this.assignTripDto.append('cabId', cabs);
+    this.assignTripDto.append('driverId', driver);
+    this.assignTripDto.append('vendorId', vendor);
+    this.assignTripDto.append('admincomment', admincomment);
+
+    return this.http.post(this.url + params, this.assignTripDto, options);
   }
 
 }

@@ -37,4 +37,27 @@ page-requesthistory {
     left: 0;
     top: 6px;
   }
+
+  .statusWrds {
+    color: #a90e1b;
+    float: right;
+    display: block;
+    width: 93px;
+    word-wrap: break-word;
+  }
+
+  .reqText {
+    font-weight: 500;
+    margin-bottom: 5px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media screen and (min-width: 1024px) {
+    .formcntent {
+      margin-left: 15%;
+      width: 70%;
+    }
+  }
 }

@@ -13,7 +13,7 @@ import { LoginPage } from '../pages/login/login';
 import { ServiceProvider } from '../providers/service/service';
 import { CommonProvider } from '../providers/common/common';
 // import { FCM } from '@ionic-native/fcm';
-import { InAppBrowser} from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 
 //page
@@ -27,6 +27,12 @@ import { RequesthistoryPageModule } from '../pages/hod/requesthistory/requesthis
 //Driver page
 import { DriverPageModule } from '../pages/driver/driver.module';
 import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboard.module';
+//Admin page
+import { AdminrequestsPageModule } from '../pages/adminrequests/adminrequests.module';
+import { AdminAprvlPageModule } from '../pages/admin-aprvl/admin-aprvl.module';
+
+import { CalendarModule } from 'ionic3-calendar-en';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -34,17 +40,21 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
   ],
   imports: [
     BrowserModule,
-  //  HttpClientModule,
+    //  HttpClientModule,
     EmpdashboardPageModule,
     NotificationPageModule,
     NotificationDetailPageModule,
     HoddashboardPageModule,
     RequesthistoryPageModule,
     UsersDashboardPageModule,
+    AdminrequestsPageModule,
+    AdminAprvlPageModule,
     HttpModule,
     DriverPageModule,
     ScanPageModule,
-    IonicModule.forRoot(MyApp,{
+    CalendarModule,
+
+    IonicModule.forRoot(MyApp, {
       backButtonText: 'Back',
       backButtonIcon: ''
     })
@@ -59,14 +69,14 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ServiceProvider,
     CommonProvider,
-  //  FCM,
+    //  FCM,
     Network,
     InAppBrowser,
     QRScanner
 
   ]
 })
-export class AppModule {}
+export class AppModule { }

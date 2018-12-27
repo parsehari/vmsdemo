@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PopoverController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { LoginPage } from '../../login/login';
+
+
+// import { Calendar } from '@ionic-native/calendar';
 //import { FCM } from '@ionic-native/fcm';
 /**
  * Generated class for the EmpdashboardPage page.
@@ -29,8 +32,12 @@ export class EmpdashboardPage {
   historyData: any = [];
   userDetails: any = [];
   dhDetails: any = [];
+  dhUsrDetails: any = [];
   travelType: any = [];
   userName: any;
+  startDatetimeMin: any;
+  endDatetimeMax: any;
+
   private bookingForm: FormGroup;
 
   constructor(public navCtrl: NavController,
@@ -38,7 +45,9 @@ export class EmpdashboardPage {
     private formBuilder: FormBuilder,
     public popoverController: PopoverController,
     public serviceProvider: ServiceProvider,
-    public commonProvider: CommonProvider
+    public commonProvider: CommonProvider,
+    public modal: ModalController
+    //  public calendar: Calendar
     //  public fcm: FCM
   ) {
 
@@ -70,20 +79,34 @@ export class EmpdashboardPage {
     this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
       this.dhDetails = JSON.parse(response._body);
       console.log('DH response ', this.dhDetails);
+      this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
+        this.dhUsrDetails = JSON.parse(response._body);
+        console.log("this.dhUsrDetails ", this.dhUsrDetails);
+      }, (err) => {
+        this.commonProvider.showToast("Error in user details");
+      })
     }, (err) => {
-      this.commonProvider.showToast(err.message);
+      this.commonProvider.showToast("Error in dh details");
     })
 
     this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
       console.log("Locations ", response);
       console.log("Locations ", JSON.parse(response._body));
       this.locations = JSON.parse(response._body);
+      console.log("this.locations[0].loc_name ", this.locations[1].loc_name);
+      this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
     },
       (err) => {
 
         this.commonProvider.showToast(err.message);
       });
-    console.log('ionViewDidLoad EmpdashboardPage');
+
+    this.startDatetimeMin = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString();// set the current date time
+    this.endDatetimeMax = (new Date((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString()) // sets the 30 days from the current date time
+    console.log('ionViewDidLoad EmpdashboardPage ', this.startDatetimeMin);
+    console.log('ionViewDidLoad EmpdashboardPage ', this.endDatetimeMax);
+
+
   }
 
   showNotifn(myEvent) {
@@ -147,6 +170,7 @@ export class EmpdashboardPage {
         'emp_phoneNo': this.userDetails.emp_cell,
         'status': 'Pending with Manager',
         'bh_Id': this.dhDetails.pernr,
+        'bh_UserName': this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
         'bh_email': this.dhDetails.email,
 
         'remark': this.bookingForm.value.remark,
@@ -166,6 +190,7 @@ export class EmpdashboardPage {
         if (response) {
           this.confirmReqst = false;
           this.bookingForm.reset();
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -180,9 +205,6 @@ export class EmpdashboardPage {
     })
   }
 
-
-
-
   logout() {
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
       this.navCtrl.setRoot(LoginPage, {});
@@ -190,5 +212,13 @@ export class EmpdashboardPage {
       console.log('user cancelled');
     })
   }
+
+  openDetail(obj: any) {
+    console.log("open modal")
+    const myModal = this.modal.create('ModalDetailPage', { data: obj });
+    myModal.present();
+  }
+
+
 
 }

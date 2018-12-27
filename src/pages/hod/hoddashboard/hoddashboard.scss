@@ -1,36 +1,38 @@
 page-hoddashboard {
-  .formtitle{
-        color: #999;
+  .formtitle {
+    color: #999;
   }
+
   ul.bar {
     margin: 0;
-    padding: 0px 0px 0px 3px;
+    padding: 0 0 0 3px;
     position: relative;
   }
+
   ul.bar:before {
-      border-left: #f00 1px solid;
-        position: absolute;
-        content: " ";
-        width: 2px;
-        height: 56%;
+    border-left: #f00 1px solid;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    height: 56%;
     top: 9px;
-        /* bottom: 39px; */
-        margin-left: 2px;
-}
+    /* bottom: 39px; */
+    margin-left: 2px;
+  }
 
-ion-label {
-
+  ion-label {
     white-space: initial !important;
-}
+  }
 
-ul.bar li {
+  ul.bar li {
     list-style: none;
     position: relative;
     padding-left: 15px;
     /* line-height: 30px; */
     padding-bottom: 10px;
-}
-ul.bar li:before {
+  }
+
+  ul.bar li:before {
     background: #f00;
     position: absolute;
     content: " ";
@@ -38,12 +40,46 @@ ul.bar li:before {
     height: 5px;
     left: 0;
     top: 6px;
-}
-.cart-badge{
+  }
+
+  .cart-badge {
     position: absolute !important;
-    top: 0px !important;
+    top: 0 !important;
     right: 17px !important;
     border-radius: 22px !important;
     background-color: #9e9e9ebd !important;
-}
+  }
+
+  .statusWrds {
+    color: #a90e1b;
+    float: right;
+    display: block;
+    width: 136px;
+    word-wrap: break-word;
+  }
+
+  .reqText {
+    font-weight: 500;
+    margin-bottom: 5px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media screen and (min-width: 1024px) {
+    .gridSize {
+      padding: 3px !important;
+      width: 70% !important;
+    }
+
+    .webToolbar {
+      width: 70% !important;
+      margin-left: 15% !important;
+    }
+
+    .formcntent {
+      margin-left: 15%;
+      width: 70%;
+    }
+  }
 }

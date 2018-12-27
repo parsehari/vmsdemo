@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Platform } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { CommonProvider } from '../../providers/common/common';
 import { UsersDashboardPage } from '../users-dashboard/users-dashboard';
 import { EmpdashboardPage } from '../employee/empdashboard/empdashboard';
 import { HoddashboardPage } from '../hod/hoddashboard/hoddashboard';
+import { AdminrequestsPage } from '../adminrequests/adminrequests';
 import { DriverPage } from '../driver/driver';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -32,7 +33,8 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
-    public iab: InAppBrowser
+    public iab: InAppBrowser,
+    public plt: Platform
   ) {
     this.loginToApp();
   }
@@ -68,11 +70,11 @@ export class LoginPage {
   loginToApp() {
     this.commonProvider.showLoader();
     let params = new URLSearchParams(window.location.href);
-    console.log(params);
     let someParam = params.rawParams;
     this.userid = this.getQueryString('username', someParam);
-    this.userid = atob(this.userid);
+    console.log("this.userid ", this.userid);
     if (this.userid) {
+      this.userid = atob(this.userid);
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.userid).subscribe((response: any) => {
         response = JSON.parse(response._body);
         console.log("response ", response);
@@ -99,107 +101,39 @@ export class LoginPage {
 
   loginAction() {
     console.log('this.loginForm ', this.email.value);
-    this.commonProvider.showLoader();
-
-    if (this.email.value) {
-      var str = this.email.value.trim();
-      console.log("str", str);
-      if (isNaN(this.email.value)) {
-        if (this.email.value == "security") {
-          this.securitylogin = this.email.value;
-          this.commonProvider.hideLoader()
-          this.navCtrl.setRoot(UsersDashboardPage, { 'security': this.securitylogin })
-        } else if (str == "hod") {
-          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 23062721).subscribe((response: any) => {
+    if (this.password.value == 'driver' || this.password.value == 'Driver') {
+      this.mobileNumber = this.email.value;
+      this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
+    } else {
+      this.commonProvider.showLoader('Please wait..');
+      this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
+        console.log("response ", response);
+        if (response._body == "Login success") {
+          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.email.value).subscribe((response: any) => {
             response = JSON.parse(response._body);
             console.log("response ", response);
             this.commonProvider.hideLoader();
             let str = response.emp_esg;
-            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "L3-Executive") {
+            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive") {
               this.navCtrl.setRoot(HoddashboardPage, { response });
-            } else {
-              this.commonProvider.showToast("User role band not maintained")
-            }
-          })
-        } else if (str == "emp") {
-          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
-            response = JSON.parse(response._body);
-            console.log("response ", response);
-            this.commonProvider.hideLoader();
-            let str = response.emp_esg;
-            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
-              this.navCtrl.setRoot(HoddashboardPage, { response });
+              //this.navCtrl.setRoot(EmpdashboardPage, { response });
             } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
               this.navCtrl.setRoot(EmpdashboardPage, { response });
+              //  this.navCtrl.setRoot(HoddashboardPage, { response });
             } else {
-              this.commonProvider.showToast("User role band not maintained")
+
+              this.commonProvider.showToast("User role is not allow to login")
             }
           })
         } else {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast("Enter correct credentials ");
+          response = JSON.parse(response._body);
+          this.navCtrl.setRoot(AdminrequestsPage, { response });
         }
-      } else {
-        this.mobileNumber = this.email.value;
+      }, (err) => {
         this.commonProvider.hideLoader();
-        this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
-      }
-    }
-    else {
-      this.commonProvider.hideLoader();
-      //  const browser = this.iab.create('https://appstore.mahindra.com/saml', '_blank', {
-      //   location: 'yes'
-      // });
-      //  browser.on('loadstop').subscribe(
-      //
-      //   data => {
-      //       let url = data.url;
-      //       this.company = this.getParameterByName('company',url);
-      //       this.usremail = this.getParameterByName('email',url);
-      //       this.nameID = this.getParameterByName('nameid',url);
-      //
-      //       var obj = {company: this.company, usremail: this.usremail, nameID: this.nameID};
-      //       console.log("userData obj  ",obj);
-      //       this.nativeStorage.setItem('userData', obj)
-      //         .then(
-      //               () => {
-      //                 console.log('Stored item successfully')
-      //                 this.nativeStorage.getItem('userData')
-      //                   .then(
-      //                     data => {
-
-      // let params = new URLSearchParams(window.location.href);
-      // console.log(params);
-      // let someParam = params.rawParams;
-      // this.userid = this.getQueryString('username', someParam);
-
-      // this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', 211779).subscribe((response: any) => {
-      //   response = JSON.parse(response._body);
-      //   console.log("response ", response);
-      //   this.commonProvider.hideLoader();
-      //   //  browser.close();
-      //   let str = response.emp_esg;
-      //   if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
-      //     //   browser.close();
-      //     this.navCtrl.setRoot(HoddashboardPage, { response });
-      //   } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-      //     this.navCtrl.setRoot(EmpdashboardPage, { response });
-      //   } else {
-      //     this.commonProvider.showToast("User role band not maintained")
-      //   }
-      //                        },(err)=>{
-      //                          this.commonProvider.showToast(err.message);
-      //                        })
-      //                     },
-      //                      error => {this.commonProvider.showToast(error.message);
-      //                    }
-      //                  );
-      //                },
-      //                error => console.error('Error storing item', error)
-      //          );
-      //
-      //})
-
+        this.commonProvider.showToast("Error while login");
+      });
     }
   }
 
@@ -220,7 +154,83 @@ export class LoginPage {
     return string ? string[1] : null;
   };
 
-
+  // loginMEFunctionold() {
+  //   var loginUrl = 'https://ep.mahindra.com/AuthenticateLDAPUsersWSService/AuthenticateLDAPUsersWS?wsdl';
+  //   this.commonProvider.showLoader('Please wait..');
+  //   this.Password = btoa(this.datas.password);
+  //   this.Username = this.datas.empid;
+  //   var sr = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:mah="http://mahindra.com/"> <soapenv:Header/> <soapenv:Body> <mah:authenticateUser> <!--Optional:--> <token>' + this.Username + '</token> <!--Optional:--> <password>' + this.Password + '</password> </mah:authenticateUser> </soapenv:Body>';
+  //   // var headers = new Headers();
+  //
+  //   // headers.append('Content-Type', 'text/xml');
+  //
+  //   //this.aHttp.setDataSerializer('json');
+  //
+  //   // this.aHttp.post(loginUrl,{'':sr},{'Content-Type':'text/xml'}).then(data => {
+  //
+  //   // console.log('succ',data.status);
+  //
+  //   // console.log(data.data); // data received by server
+  //
+  //   // console.log(data.headers);
+  //
+  //   // }).catch(error => {
+  //
+  //   // console.log('fail',error.status);
+  //
+  //   // console.log(error.error); // error message as string
+  //
+  //   // console.log(error.headers);
+  //
+  //   // });
+  //
+  //   var xmlhttp = new XMLHttpRequest();
+  //
+  //   xmlhttp.open('POST', loginUrl, true);
+  //
+  //   xmlhttp.onreadystatechange = function() {
+  //
+  //     this.commonProvider.hideLoader();
+  //
+  //     if (xmlhttp.readyState == 4) {
+  //
+  //       if (xmlhttp.status == 200) {
+  //
+  //         var re = this.responseXML;
+  //
+  //         try {
+  //
+  //           var Authstatus = re.getElementsByTagName("authStatus")[0].childNodes[0].nodeValue;
+  //
+  //           if (Authstatus == "Success") {
+  //
+  //             var displayName = re.getElementsByTagName("displayName")[0].childNodes[0].nodeValue;
+  //
+  //             _self.datas.username = displayName;
+  //
+  //             console.log("EmployeeName", displayName);
+  //
+  //           }
+  //           else {
+  //
+  //             alert("login error");
+  //           }
+  //
+  //         } catch (exp) {
+  //           alert("exception");
+  //         }
+  //
+  //       }
+  //
+  //     }
+  //
+  //   }
+  //
+  //   xmlhttp.setRequestHeader('Content-Type', 'text/xml');
+  //
+  //   xmlhttp.send(sr);
+  //
+  // }
 
 
 }

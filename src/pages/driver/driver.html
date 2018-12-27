@@ -99,6 +99,13 @@
           </ion-row>
         </ion-card-content>
       </ion-card>
+
+      <ion-row text-center class="row-height" style="margin-top: 10%">
+        <ion-col>
+          <qr-code [value]="asd" [size]="200"></qr-code>
+        </ion-col>
+      </ion-row>
+
     </div>
     <div *ngIf="tripDetail.length != 0">
       <ion-item>
@@ -107,9 +114,9 @@
       </ion-item>
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col>
-          <button ion-button color="red" (click)="startTrip('startTrip')">Start Trip
+          <button ion-button color="red" (click)="startTrip('startTrip')" [disabled]="tripDetail.startKm != 0">Start Trip
           </button>
-          <button ion-button color="red" (click)="startTrip('endTrip')">End Trip
+          <button ion-button color="red" (click)="startTrip('endTrip')" [disabled]="tripDetail.endKm != 0">End Trip
           </button>
         </ion-col>
       </ion-row>

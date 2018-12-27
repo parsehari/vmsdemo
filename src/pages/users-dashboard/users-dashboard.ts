@@ -24,39 +24,39 @@ export class UsersDashboardPage {
   userDetails: any = [];
   driverMobileNumber: any = '';
   securityCheck: any = '';
- scanSub: any ;
- scannig: any =  false;
- qrCode:any;
+  scanSub: any;
+  scannig: any = false;
+  qrCode: any;
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public commonProvider: CommonProvider,
-              public serviceProvider: ServiceProvider,
-              public qrScanner: QRScanner
-   ) {
-     console.log("in user page ", navParams);
-     console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
-     console.log("navParams.get('securitylogin') ", navParams.get('security'));
-     if(navParams.get('driverNumber')){
-        this.driverMobileNumber = navParams.get('driverNumber');
-     }else if(navParams.get('security')){
-       this.securityCheck = navParams.get('security');
-     }else{
-       this.userDetails = navParams.data.response.EmployeeDetail;
-     }
+    public navParams: NavParams,
+    public commonProvider: CommonProvider,
+    public serviceProvider: ServiceProvider,
+    public qrScanner: QRScanner
+  ) {
+    console.log("in user page ", navParams);
+    console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
+    console.log("navParams.get('securitylogin') ", navParams.get('security'));
+    if (navParams.get('driverNumber')) {
+      this.driverMobileNumber = navParams.get('driverNumber');
+    } else if (navParams.get('security')) {
+      this.securityCheck = navParams.get('security');
+    } else {
+      this.userDetails = navParams.data.response.EmployeeDetail;
+    }
   }
 
 
 
-  showDashboard(){
-   this.navCtrl.push('EmpdashboardPage',{ 'EmployeeDetail': this.userDetails });
-   //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
+  showDashboard() {
+    this.navCtrl.push('EmpdashboardPage', { 'EmployeeDetail': this.userDetails });
+    //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
   }
-  getTripDetails(status: any){
-    this.navCtrl.push('DriverPage',{'pageOpen': status});
+  getTripDetails(status: any) {
+    this.navCtrl.push('DriverPage', { 'pageOpen': status });
   }
 
- securityScan(){
-   this.navCtrl.push('ScanPage',{});
+  securityScan() {
+    this.navCtrl.push(ScanPage, {});
 
   }
 

@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-navbar color="navColor">
+    <ion-title text-center>Request Details</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button (click)="closeModal()">
+        Close
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+  <ion-toolbar style="color: white;">
+    <ion-row>
+      <ion-col text-center>
+        <span>
+          {{srcSubstr}}
+        </span><br>
+        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>
+      </ion-col>
+      <ion-col text-center>
+        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>
+        <span class="icon-automobile" style="font-size: 1.5em"></span><br>
+        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>
+      </ion-col>
+      <ion-col text-center>
+        <span>
+          {{destSubstr}}
+        </span><br>
+        <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>
+
+    <ion-card class="driverCard">
+      <ion-card-header style="text-align: center" color="red">
+        Request Details</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Purpose</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.purpose}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Remark</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.remark}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Employee Name</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_userName}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Employee Location</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_location}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Mobile Number</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_phoneNo}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Email Id</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_email}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Travel Type</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.travelType}}
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+
+    <ion-item>
+      <ion-label>Assign Cab</ion-label>
+      <ion-select [(ngModel)]="cabs" [disabled]="tripDetail.travelType == 'outstation' ">
+        <div *ngFor="let cab of cabList">
+          <ion-option value="{{cab.id}}">{{cab.cab_name}}</ion-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Assign Driver</ion-label>
+      <ion-select [(ngModel)]="driver" [disabled]="tripDetail.travelType == 'outstation' ">
+        <div *ngFor="let drvr of driverList">
+          <ion-option value="{{drvr.id}}">{{drvr.first_name}}</ion-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Assign Vendor</ion-label>
+      <ion-select [(ngModel)]="vendor" [disabled]="tripDetail.travelType == 'local' ">
+        <div *ngFor="let vendor of vendorList">
+          <ion-option value="{{vendor.id}}">{{vendor.vName}}</ion-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Admin note</ion-label>
+      <ion-input type="text" [(ngModel)]="admincomment"></ion-input>
+    </ion-item>
+    <ion-row text-center>
+      <ion-col>
+        <button ion-button small="true" color="red" (click)="assignRequest()">Assign</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+</ion-content>
