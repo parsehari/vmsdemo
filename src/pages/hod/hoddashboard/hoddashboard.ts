@@ -23,6 +23,7 @@ export class HoddashboardPage {
   requestSegment: any;
   confirmReqst: boolean = false;
   minDate: any;
+  travelDate: any;
   locations: any;
   approvalList: any;
   historyData: any = [];
@@ -48,16 +49,26 @@ export class HoddashboardPage {
     console.log("params ", this.userDetails);
 
     this.bookingForm = this.formBuilder.group({
-      updatepurpose: ['', Validators.required],
-      traveldate: ['', Validators.required],
+      updatepurpose: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
       travelsrc: ['', Validators.required],
-      traveldest: ['', Validators.required],
-      remark: ['', Validators.required],
+      traveldest: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      remark: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
       travelType: ['', Validators.required]
     });
     this.requestSegment = "pendingReq";
-    this.minDate = new Date().toISOString();
+    this.minDate = new Date();
+    this.travelDate = new Date();
     console.log('this...', this.minDate)
   }
 
@@ -83,6 +94,7 @@ export class HoddashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
       this.bookingForm.reset();
       this.confirmReqst = false;
+      this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
     }, err => {
       console.log('user cancelled');
     })
@@ -110,7 +122,8 @@ export class HoddashboardPage {
         'source': this.bookingForm.value.travelsrc,
         'destination': this.bookingForm.value.traveldest,
         'purpose': this.bookingForm.value.updatepurpose,
-        'travel_date': this.bookingForm.value.traveldate,
+        'travel_date': new Date(this.travelDate).toDateString(),
+        // 'travel_date': this.bookingForm.value.traveldate,
         'travel_time': this.bookingForm.value.traveltime,
         'emp_email': this.userDetails.emp_email,
 
@@ -299,5 +312,14 @@ export class HoddashboardPage {
     myModal.present();
   }
 
+  setDate(dte: any) {
+    this.travelDate = new Date(dte);
+    console.log("date obj ", this.travelDate);
+  }
+
+  cancelDate(dte: any) {
+    console.log("date obj ", dte);
+    this.minDate = new Date();
+  }
 
 }

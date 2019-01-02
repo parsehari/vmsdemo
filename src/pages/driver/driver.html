@@ -116,7 +116,7 @@
         <ion-col>
           <button ion-button color="red" (click)="startTrip('startTrip')" [disabled]="tripDetail.startKm != 0">Start Trip
           </button>
-          <button ion-button color="red" (click)="startTrip('endTrip')" [disabled]="tripDetail.endKm != 0">End Trip
+          <button ion-button color="red" (click)="startTrip('endTrip')" [disabled]="tripDetail.startKm == 0">End Trip
           </button>
         </ion-col>
       </ion-row>

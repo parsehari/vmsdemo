@@ -108,6 +108,7 @@ export class LoginPage {
       this.commonProvider.showLoader('Please wait..');
       this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
         console.log("response ", response);
+
         if (response._body == "Login success") {
           this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.email.value).subscribe((response: any) => {
             response = JSON.parse(response._body);
@@ -125,6 +126,9 @@ export class LoginPage {
               this.commonProvider.showToast("User role is not allow to login")
             }
           })
+        } else if (response._body == "false") {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Please enter correct user credentials")
         } else {
           this.commonProvider.hideLoader();
           response = JSON.parse(response._body);

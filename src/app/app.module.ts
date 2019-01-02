@@ -31,7 +31,7 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
 import { AdminrequestsPageModule } from '../pages/adminrequests/adminrequests.module';
 import { AdminAprvlPageModule } from '../pages/admin-aprvl/admin-aprvl.module';
 
-import { CalendarModule } from 'ionic3-calendar-en';
+import { DatePickerModule } from 'ionic3-datepicker';
 
 @NgModule({
   declarations: [
@@ -52,7 +52,7 @@ import { CalendarModule } from 'ionic3-calendar-en';
     HttpModule,
     DriverPageModule,
     ScanPageModule,
-    CalendarModule,
+    DatePickerModule,
 
     IonicModule.forRoot(MyApp, {
       backButtonText: 'Back',

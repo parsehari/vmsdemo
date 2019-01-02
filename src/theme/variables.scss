@@ -1,30 +1,19 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
-
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
 $font-path: "../assets/fonts";
-
-
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
-
-
 @import "ionic.globals";
-
-
 // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -32,7 +21,6 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-
 // $colors: (
 //   primary:    #488aff,
 //   secondary:  #32db64,
@@ -41,58 +29,39 @@ $app-direction: ltr;
 //   dark:       #222
 // );
 $colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #ad081f,
-  light:      #f4f4f4,
-  dark:       #222,
-  red:        #ad081f,
-  grey:       #61636b,
-  white:      #ffffff,
+  primary: #488aff,
+  secondary: #32db64,
+  danger: #ad081f,
+  light: #f4f4f4,
+  dark: #222,
+  red: #ad081f,
+  grey: #61636b,
+  white: #ffffff,
 );
-
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
-
-
-
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
-
-
-
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
-
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
-
 @import "ionic.theme.default";
-
-
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
-
-@import "ionic.ionicons";
-
-
+//@import "ionic.ionicons";
+@import "ionicons";
 // Fonts
 // --------------------------------------------------
-
 @import "roboto";
 @import "noto-sans";
 $toolbar-ios-background: #ad081f;
@@ -101,31 +70,28 @@ $toolbar-wp-background: #ad081f;
 $menu-width: 210px;
 $label-ios-text-color: #999;
 $label-ios-text-color-focused: #ad081f;
-
-$text-input-md-show-success-highlight:  true;
-$text-input-md-show-error-highlight:  true;
+$text-input-md-show-success-highlight: true;
+$text-input-md-show-error-highlight: true;
 $text-input-ios-show-focus-highlight: #ad081f;
-
 $modal-inset-min-width: 768px;
 $modal-inset-min-height-small: 600px;
-
 // $popover-ios-height: 50%;
- $popover-ios-width: 70%;
-
-
+$popover-ios-width: 70%;
 @font-face {
   font-family: 'font-regular';
-  src: url('../assets/custom-font/HelveticaNeue.ttf');
+  src: url("../assets/custom-font/HelveticaNeue.ttf");
   font-style: normal;
   font-weight: 400;
 }
 @font-face {
   font-family: 'font-medium';
-  src: url('../assets/custom-font/HelveticaNeue-Medium.ttf');
+  src: url("../assets/custom-font/HelveticaNeue-Medium.ttf");
   font-style: normal;
   font-weight: 300;
 }
 
-ion-app.cameraView, ion-app.cameraView ion-content, ion-app.cameraView .nav-decor {
+ion-app.cameraView,
+ion-app.cameraView .nav-decor,
+ion-app.cameraView ion-content {
   background: transparent none !important;
 }

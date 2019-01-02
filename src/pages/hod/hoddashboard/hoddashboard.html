@@ -60,8 +60,13 @@
             <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Travel Date</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime>
+            <!-- <ion-label floating>Travel Date</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime> -->
+            <span ion-datepicker (ionChanged)="setDate($event);" [value]="minDate" [min]="minDate" [cancelText]='Today' clear>
+              <span>{{travelDate | date}}
+                <ion-icon name="clipboard" item-left></ion-icon>
+              </span>
+            </span>
           </ion-item>
           <ion-item>
             <ion-label floating>Time</ion-label>
@@ -107,7 +112,7 @@
             <ion-card-content style="padding: 13px 6px 5px;">
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">Update Purpose</span>
+                  <span class="formtitle">Purpose</span>
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.updatepurpose}}
@@ -118,7 +123,8 @@
                   <span class="formtitle">Travel Date</span>
                 </ion-col>
                 <ion-col>
-                  {{bookingForm.value.traveldate | date}}
+                  {{travelDate | date}}
+                  <!-- {{bookingForm.value.traveldate | date}} -->
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -215,8 +221,8 @@
             <span style="color:#ad081f">Booking History</span>
           </ion-list-header>
           <ng-container *ngFor="let hdata of historyData">
-            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
-              <span (click)="openDetail(hdata)">
+            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' " (click)="openDetail(hdata)">
+              <span>
                 <h3 class="reqText">
                   <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
               </span>

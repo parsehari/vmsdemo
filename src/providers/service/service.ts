@@ -18,7 +18,7 @@ export class ServiceProvider {
   private url = 'https://mapps.mahindra.com/vms';
   //  private url = 'http://192.168.42.115';
   //private url = 'http://10.174.55.154:8080/vms';
-  //private url = 'http://10.174.55.203:8080/vms';
+  //  private url = 'http://10.174.50.82:8080/vms';
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;
