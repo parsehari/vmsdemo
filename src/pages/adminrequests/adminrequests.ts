@@ -22,11 +22,19 @@ export class AdminrequestsPage {
   requestSegment: any;
   confirmReqst: boolean = false;
   minDate: any;
+  travelDate: any;
   locations: any;
   approvalList: any;
   historyData: any = [];
   userDetails: any = [];
   dhDetails: any = [];
+  tripData: any;
+  srcSubstr: any;
+  destSubstr: any;
+  tripDetail: any;
+  cabList: any = [];
+  driverList: any = [];
+  vendorList: any = [];
   //traveltype: any = [];
 
   private bookingForm: FormGroup;
@@ -44,20 +52,47 @@ export class AdminrequestsPage {
   ) {
     console.log("params hod", navParams);
     this.userDetails = navParams.data.response;
-    console.log("params ", this.userDetails);
+    console.log("userDetails ", this.userDetails);
 
     this.bookingForm = this.formBuilder.group({
-      updatepurpose: ['', Validators.required],
-      traveldate: ['', Validators.required],
+      usrID: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      usrName: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+
+      ])],
+      usrphone: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[0-9 _!@#$&()\\-`.+,/\]*[0-9!@#$&()\\-`.+,/\][0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      updatepurpose: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
       travelsrc: ['', Validators.required],
-      traveldest: ['', Validators.required],
-      remark: ['', Validators.required],
+      cabs: [],
+      driver: [],
+      vendor: [],
+      traveldest: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      remark: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
       travelType: ['', Validators.required]
     });
     this.requestSegment = "pendingReq";
-    this.minDate = new Date().toISOString();
+    this.minDate = new Date();
+    this.travelDate = new Date();
     console.log('this...', this.minDate)
+    this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
   }
 
 
@@ -115,8 +150,112 @@ export class AdminrequestsPage {
 
   }
 
+  sendRequest() {
+    this.commonProvider.Alert.confirm().then((res) => {
+      this.commonProvider.showLoader('Sending request...');
+      console.log('this.bookingForm.value ', this.bookingForm.value);
+      this.bookingForm.value.cabs ? 'nothing' : this.bookingForm.value.cabs = "";
+      this.bookingForm.value.driver ? 'nothing' : this.bookingForm.value.driver = "";
+      this.bookingForm.value.vendor ? 'nothing' : this.bookingForm.value.vendor = "";
+
+      let reqData = {
+        'source': this.userDetails.location.id,
+        'destination': this.bookingForm.value.traveldest,
+        'purpose': this.bookingForm.value.updatepurpose,
+        'travel_date': new Date(this.travelDate).toDateString(),
+        'travel_time': this.bookingForm.value.traveltime,
+        'remark': this.bookingForm.value.remark,
+        'status': 'Pending with Admin',
+        'travelType': this.bookingForm.value.travelType,
+        'usrID': this.bookingForm.value.usrID,
+        'username': this.bookingForm.value.usrName,
+        'usrphone': this.bookingForm.value.usrphone,
+        'cabs': this.bookingForm.value.cabs,
+        'driver': this.bookingForm.value.driver,
+        'vendor': this.bookingForm.value.vendor
+
+      }
+
+      this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
+        console.log("raise request ", response);
+        this.commonProvider.hideLoader();
+        if (response) {
+          this.confirmReqst = false;
+          this.bookingForm.reset();
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+          this.commonProvider.showToast('Request sent successfully');
+        } else {
+          this.commonProvider.showToast('Request error, Please check with admin');
+        }
+
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast('Request error, Please check with admin');
+      });
+    }, err => {
+      console.log('user cancelled');
+    })
+  }
+
   ionViewWillEnter() {
     console.log('ionViewDidLoad AdminrequestsPage');
     this.getPendingList();
+    this.getAllDetails();
+  }
+
+  setDate(dte: any) {
+    this.travelDate = new Date(dte);
+    console.log("date obj ", this.travelDate);
+  }
+
+  cancelDate(dte: any) {
+    console.log("date obj ", dte);
+    this.minDate = new Date();
+  }
+
+  logForm() {
+    console.log(this.bookingForm.value);
+    this.confirmReqst = true;
+  }
+
+  cancelReq() {
+    this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
+      this.bookingForm.reset();
+      this.confirmReqst = false;
+      this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+    }, err => {
+      console.log('user cancelled');
+    })
+  }
+
+  getAllDetails() {
+    this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
+      if (response.status == 200) {
+        this.tripData = JSON.parse(response._body);
+        this.cabList = this.tripData.cabList;
+        this.vendorList = this.tripData.vendorList;
+        this.driverList = this.tripData.driverList;
+        console.log("cabs details ", this.tripData);
+        console.log("cabs details ", this.cabList);
+
+      }
+    },
+      (err) => {
+        this.commonProvider.showToast(err.message);
+      });
+  }
+  editRequest() {
+    this.confirmReqst = false;
+  }
+
+  typeChange(ev) {
+    console.log("type change ", ev);
+    if (ev == "outstation") {
+      this.bookingForm.get('cabs').setValue(null);
+      this.bookingForm.get('driver').setValue(null);
+    }
+    if (ev == "local") {
+      this.bookingForm.get('vendor').setValue(null);
+    }
   }
 }

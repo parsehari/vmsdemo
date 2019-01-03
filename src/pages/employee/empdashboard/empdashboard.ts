@@ -239,6 +239,23 @@ export class EmpdashboardPage {
     console.log("date obj ", this.travelDate);
   }
 
+  cancelCabReq(event, id: any) {
+    event.stopPropagation();
+    this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
+      this.commonProvider.showLoader()
+      this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Trip cancelled successfully");
+        this.getEmpHistory();
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in cancellation")
+      })
+    }, err => {
+      console.log('user cancelled');
+    })
+
+  }
   // cancelDate(dte: any) {
   //   console.log("date obj ", dte);
   //   //this.minDate = new Date();

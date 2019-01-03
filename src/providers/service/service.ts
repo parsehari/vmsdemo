@@ -15,10 +15,10 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class ServiceProvider {
   // header for json/content-type
-  private url = 'https://mapps.mahindra.com/vms';
-  //  private url = 'http://192.168.42.115';
-  //private url = 'http://10.174.55.154:8080/vms';
-  //  private url = 'http://10.174.50.82:8080/vms';
+
+  //  private url = 'https://mapps.mahindra.com/vms';
+  private url = 'http://10.174.55.154:8080/vms';
+
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;
@@ -92,6 +92,31 @@ export class ServiceProvider {
 
   }
 
+  raiseRequestAdmin(param: any, data: any): Observable<any> {
+
+    this.raiseReq = new FormData();
+    this.raiseReq.append("source", data.source);
+    this.raiseReq.append("destination", data.destination);
+    this.raiseReq.append("purpose", data.purpose);
+    this.raiseReq.append("travel_date", data.travel_date);
+    this.raiseReq.append("travel_time", data.travel_time);
+    this.raiseReq.append("comment", data.remark);
+    this.raiseReq.append("travelType", data.travelType);
+    this.raiseReq.append("emp_userName", data.username);
+    this.raiseReq.append("emp_phoneNo", data.usrphone);
+    this.raiseReq.append("userID", data.usrID);
+    this.raiseReq.append("cabid", data.cabs);
+    this.raiseReq.append("vendorid", data.vendor);
+    this.raiseReq.append("driverid", data.driver);
+
+    let headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    console.log("in service ", this.raiseReq)
+    console.log("in options ", options)
+    return this.http.post(this.url + param, this.raiseReq, options);
+
+  }
+
   getUsrRoleDetails(param: any, ivPernr: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
@@ -144,6 +169,13 @@ export class ServiceProvider {
   }
 
   getReqDetails(params: any, id: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + id, options)
+
+  }
+
+  cancelCab(params: any, id: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + params + "/" + id, options)

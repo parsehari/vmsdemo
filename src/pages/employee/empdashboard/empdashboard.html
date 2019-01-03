@@ -197,7 +197,9 @@
               <span>
                 <h3 class="reqText">
                   <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
+
               </span>
+
               <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
                 {{hdata.travel_date | date}}, {{hdata.travel_time}}
               </span>
@@ -206,6 +208,7 @@
                 <h6 *ngIf="hdata.status == 'Pending with Manager' ">{{hdata.bh_UserName}}
                 </h6>
               </span>
+
               <!-- <span>
               <h3 style="color: #424242;" *ngIf="hdata.travel_date!=null">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>
               <h3 style="color: #424242;">{{hdata.status}}</h3>
@@ -219,10 +222,14 @@
                     <h3>{{hdata.destination}}</h3>
                   </li>
                 </ul>
+
               </div>
-              <!-- <p text-center style="color: #a90e1b;">
-              {{hdata.status}}
-            </p> -->
+              <span class="statusWrds" *ngIf="hdata.status != 'started' ">
+                <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel
+                </button>
+                <!-- <h6 *ngIf="hdata.status == 'started' ">Cancel
+                </h6> -->
+              </span>
             </ion-item>
           </ng-container>
         </ion-list>

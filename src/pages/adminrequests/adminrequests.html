@@ -41,9 +41,9 @@
         <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">
           Pending
         </ion-segment-button>
-        <!-- <ion-segment-button value="raisereq">
+        <ion-segment-button value="raisereq">
           Raise Request
-        </ion-segment-button> -->
+        </ion-segment-button>
         <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
           Approved
         </ion-segment-button>
@@ -53,15 +53,32 @@
     </div>
     <div [ngSwitch]="requestSegment">
 
-      <!-- <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
+      <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
         <div *ngIf="!confirmReqst">
+          <ion-item>
+            <ion-label floating>UserID</ion-label>
+            <ion-input type="text" formControlName="usrID"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>User Name</ion-label>
+            <ion-input type="text" formControlName="usrName"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Phone</ion-label>
+            <ion-input type="number" formControlName="usrphone"></ion-input>
+          </ion-item>
           <ion-item>
             <ion-label floating>Purpose</ion-label>
             <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Travel Date</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime>
+            <!-- <ion-label floating>Travel Date</ion-label>
+            <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate" [max]="2050" formControlName="traveldate"></ion-datetime> -->
+            <span ion-datepicker (ionChanged)="setDate($event);" [value]="minDate" [min]="minDate" [cancelText]='Today' clear>
+              <span>{{travelDate | date}}
+                <ion-icon name="clipboard" item-left></ion-icon>
+              </span>
+            </span>
           </ion-item>
           <ion-item>
             <ion-label floating>Time</ion-label>
@@ -69,11 +86,12 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Source</ion-label>
-            <ion-select formControlName="travelsrc" name="travelsrc">
+            <ion-input type="text" formControlName="travelsrc"></ion-input>
+            <!-- <ion-select formControlName="travelsrc" name="travelsrc">
               <div *ngFor="let locs of locations">
                 <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
               </div>
-            </ion-select>
+            </ion-select> -->
           </ion-item>
           <ion-item>
             <ion-label floating>Destination</ion-label>
@@ -85,9 +103,33 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Travel type</ion-label>
-            <ion-select formControlName="travelType">
+            <ion-select formControlName="travelType" (ionChange)="typeChange($event)">
               <ion-option value="outstation">Outstation</ion-option>
               <ion-option value="local">Local</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Assign Cab</ion-label>
+            <ion-select formControlName="cabs" name="cabs" [disabled]="bookingForm.value.travelType == 'outstation' ">
+              <div *ngFor="let cab of cabList">
+                <ion-option value="{{cab.id}}">{{cab.cab_name}}</ion-option>
+              </div>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Assign Driver</ion-label>
+            <ion-select formControlName="driver" name="driver" [disabled]="bookingForm.value.travelType == 'outstation' ">
+              <div *ngFor="let drvr of driverList">
+                <ion-option value="{{drvr.id}}">{{drvr.first_name}}</ion-option>
+              </div>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-label>Assign Vendor</ion-label>
+            <ion-select formControlName="vendor" name="vendor" [disabled]="bookingForm.value.travelType == 'local' ">
+              <div *ngFor="let vendor of vendorList">
+                <ion-option value="{{vendor.id}}">{{vendor.vName}}</ion-option>
+              </div>
             </ion-select>
           </ion-item>
           <ion-row text-center class="row-height" style="margin-top: 1%">
@@ -107,7 +149,31 @@
             <ion-card-content style="padding: 13px 6px 5px;">
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">Update Purpose</span>
+                  <span class="formtitle">User ID</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.usrID}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">User Name</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.usrName}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">Phone</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.usrphone}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">Purpose</span>
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.updatepurpose}}
@@ -118,7 +184,7 @@
                   <span class="formtitle">Travel Date</span>
                 </ion-col>
                 <ion-col>
-                  {{bookingForm.value.traveldate | date}}
+                  {{travelDate | date}}
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -172,7 +238,7 @@
             </ion-card-content>
           </ion-card>
         </div>
-      </form> -->
+      </form>
       <div *ngSwitchCase="'pendingReq'">
         <ion-list>
           <ion-list-header style="background: #9e9e9e1f !important;">
