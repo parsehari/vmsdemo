@@ -35,7 +35,9 @@ export class AdminrequestsPage {
   cabList: any = [];
   driverList: any = [];
   vendorList: any = [];
-  //traveltype: any = [];
+  pageTitle: any;
+  tdate: any;
+  currTime: any;
 
   private bookingForm: FormGroup;
 
@@ -89,15 +91,23 @@ export class AdminrequestsPage {
       travelType: ['', Validators.required]
     });
     this.requestSegment = "pendingReq";
+    this.pageTitle = "Pending";
     this.minDate = new Date();
     this.travelDate = new Date();
     console.log('this...', this.minDate)
     this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+
+    this.currTime = new Date();
+
+    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    console.log('this.currTime', this.currTime);
+
   }
 
 
   getPendingList() {
     this.commonProvider.showLoader('');
+    this.pageTitle = "Pending";
     this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
       console.log("Locations ", response);
       console.log("Locations ", JSON.parse(response._body));
@@ -126,14 +136,18 @@ export class AdminrequestsPage {
   }
 
   getEmpHistory() {
+    this.commonProvider.showLoader();
+    this.pageTitle = "Approved";
     this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
       console.log("Emplyee history ", response);
       if (response.status == 200) {
         this.historyData = JSON.parse(response._body);
         console.log("Emplyee history ", this.historyData);
       }
+      this.commonProvider.hideLoader();
     },
       (err) => {
+        this.commonProvider.hideLoader();
         this.commonProvider.showToast(err.message);
       });
   }
@@ -158,11 +172,15 @@ export class AdminrequestsPage {
       this.bookingForm.value.driver ? 'nothing' : this.bookingForm.value.driver = "";
       this.bookingForm.value.vendor ? 'nothing' : this.bookingForm.value.vendor = "";
 
+      this.tdate = new Date(this.travelDate);
+      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+
       let reqData = {
         'source': this.userDetails.location.id,
         'destination': this.bookingForm.value.traveldest,
         'purpose': this.bookingForm.value.updatepurpose,
-        'travel_date': new Date(this.travelDate).toDateString(),
+        //        'travel_date': new Date(this.travelDate).toDateString(),
+        'travel_date': this.tdate,
         'travel_time': this.bookingForm.value.traveltime,
         'remark': this.bookingForm.value.remark,
         'status': 'Pending with Admin',
@@ -205,6 +223,14 @@ export class AdminrequestsPage {
 
   setDate(dte: any) {
     this.travelDate = new Date(dte);
+    if (this.travelDate > this.minDate) {
+      this.currTime = "00:00";
+      this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.bookingForm.get('traveltime').setValue('');
+      this.currTime = new Date();
+      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    }
     console.log("date obj ", this.travelDate);
   }
 

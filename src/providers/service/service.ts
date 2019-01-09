@@ -16,8 +16,7 @@ import 'rxjs/add/operator/toPromise';
 export class ServiceProvider {
   // header for json/content-type
 
-  //  private url = 'https://mapps.mahindra.com/vms';
-  private url = 'http://10.174.55.154:8080/vms';
+  private url = 'https://mapps.mahindra.com/vms';
 
   raiseReq: any;
   tripDTO: any;

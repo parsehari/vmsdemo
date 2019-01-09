@@ -27,86 +27,84 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="webToolbar">
   <div *ngIf="tripDetail.length == 0">
     <ion-card class="driverCard">
       <ion-card-header style="text-align: center" color="red">
         No cab is assigned</ion-card-header>
     </ion-card>
   </div>
-  <div *ngIf="tripDetail.length != 0" style="margin-top: 26%;">
-    <div>
-      <ion-card class="driverCard">
-        <ion-card-header style="text-align: center" color="red">
-          Passengers Details</ion-card-header>
-        <ion-card-content>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Passanger Name</span>
-            </ion-col>
-            <ion-col>
-              {{tripDetail.emp_userName}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Mobile Number</span>
-            </ion-col>
-            <ion-col>
-              {{tripDetail.emp_phoneNo}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Email Id</span>
-            </ion-col>
-            <ion-col>
-              {{tripDetail.emp_email}}
-            </ion-col>
-          </ion-row>
+  <div *ngIf="tripDetail.length != 0">
+    <ion-card class="driverCard crdht formcntent">
+      <ion-card-header style="text-align: center" color="red">
+        Passengers Details</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Passanger Name</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_userName}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Mobile Number</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_phoneNo}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Email Id</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.emp_email}}
+          </ion-col>
+        </ion-row>
 
-        </ion-card-content>
-      </ion-card>
+      </ion-card-content>
+    </ion-card>
 
 
-      <ion-card class="driverCard">
-        <ion-card-header style="text-align: center" color="red">
-          Cab Details</ion-card-header>
-        <ion-card-content>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Cab Name</span>
-            </ion-col>
-            <ion-col>
-              {{cabDetail.cab_name}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Cab Number</span>
-            </ion-col>
-            <ion-col>
-              {{cabDetail.cab_no}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <span class="formtitle">Number of seats</span>
-            </ion-col>
-            <ion-col>
-              {{cabDetail.no_of_seats}}
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-      </ion-card>
+    <ion-card class="driverCard formcntent">
+      <ion-card-header style="text-align: center" color="red">
+        Cab Details</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Cab Name</span>
+          </ion-col>
+          <ion-col>
+            {{cabDetail.cab_name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Cab Number</span>
+          </ion-col>
+          <ion-col>
+            {{cabDetail.cab_no}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Number of seats</span>
+          </ion-col>
+          <ion-col>
+            {{cabDetail.no_of_seats}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
 
-      <ion-row text-center class="row-height" style="margin-top: 10%">
-        <ion-col>
-          <qr-code [value]="asd" [size]="200"></qr-code>
-        </ion-col>
-      </ion-row>
+    <ion-row text-center class="row-height" style="margin-top: 10%">
+      <ion-col>
+        <qr-code [value]="asd" [size]="200"></qr-code>
+      </ion-col>
+    </ion-row>
 
-    </div>
     <div *ngIf="tripDetail.length != 0">
       <ion-item>
         <ion-label floating>Enter kms.</ion-label>

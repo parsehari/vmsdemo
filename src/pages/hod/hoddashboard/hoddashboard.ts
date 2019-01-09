@@ -25,11 +25,13 @@ export class HoddashboardPage {
   minDate: any;
   travelDate: any;
   locations: any;
+  pageTitle: any;
   approvalList: any;
   historyData: any = [];
   userDetails: any = [];
   dhDetails: any = [];
-  //traveltype: any = [];
+  tdate: any;
+  currTime: any;
 
   private bookingForm: FormGroup;
 
@@ -67,9 +69,13 @@ export class HoddashboardPage {
       travelType: ['', Validators.required]
     });
     this.requestSegment = "pendingReq";
+    this.pageTitle = "Requests"
     this.minDate = new Date();
     this.travelDate = new Date();
-    console.log('this...', this.minDate)
+    this.currTime = new Date();
+
+    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    console.log('this.currTime', this.currTime);
   }
 
   showNotifn(myEvent) {
@@ -101,6 +107,7 @@ export class HoddashboardPage {
   }
 
   getEmpHistory() {
+    this.pageTitle = "Booking History";
     this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
       console.log("Emplyee history ", response);
       if (response.status == 200) {
@@ -117,13 +124,18 @@ export class HoddashboardPage {
     this.commonProvider.Alert.confirm().then((res) => {
       this.commonProvider.showLoader('Sending request...');
       console.log('this.bookingForm.value ', this.bookingForm.value);
+
+      this.tdate = new Date(this.travelDate);
+      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+
+
       let reqData = {
         'userID': this.userDetails.emp_no,
         'source': this.bookingForm.value.travelsrc,
         'destination': this.bookingForm.value.traveldest,
         'purpose': this.bookingForm.value.updatepurpose,
-        'travel_date': new Date(this.travelDate).toDateString(),
-        // 'travel_date': this.bookingForm.value.traveldate,
+        //  'travel_date': new Date(this.travelDate).toDateString(),
+        'travel_date': this.tdate,
         'travel_time': this.bookingForm.value.traveltime,
         'emp_email': this.userDetails.emp_email,
 
@@ -159,8 +171,9 @@ export class HoddashboardPage {
     })
   }
 
-  reqAction(status: string, obj: any) {
+  reqAction(ev, status: string, obj: any) {
     console.log("obj ", obj);
+    ev.stopPropagation();
     console.log("status ", status);
     if (status == "Rejected") {
 
@@ -279,6 +292,7 @@ export class HoddashboardPage {
 
   getApprovalHistory() {
     this.commonProvider.showLoader('');
+    this.pageTitle = "Requests";
     this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response: any) => {
       console.log("Locations ", response);
       console.log("Locations ", JSON.parse(response._body));
@@ -314,12 +328,38 @@ export class HoddashboardPage {
 
   setDate(dte: any) {
     this.travelDate = new Date(dte);
+    if (this.travelDate > this.minDate) {
+      this.currTime = "00:00";
+      this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.bookingForm.get('traveltime').setValue('');
+      this.currTime = new Date();
+      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    }
     console.log("date obj ", this.travelDate);
   }
 
   cancelDate(dte: any) {
     console.log("date obj ", dte);
     this.minDate = new Date();
+  }
+
+  cancelCabReq(event, id: any) {
+    event.stopPropagation();
+    this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
+      this.commonProvider.showLoader()
+      this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Trip cancelled successfully");
+        this.getEmpHistory();
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in cancellation")
+      })
+    }, err => {
+      console.log('user cancelled');
+    })
+
   }
 
 }

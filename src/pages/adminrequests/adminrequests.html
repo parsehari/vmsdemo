@@ -7,10 +7,10 @@
 <ion-header>
 
   <ion-navbar color="navColor">
-    <ion-title text-center>Dashboard</ion-title>
+    <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-    <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
-    <ion-badge class="cart-badge">5</ion-badge>
+    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
+    <ion-badge class="cart-badge">5</ion-badge> -->
   </ion-navbar>
   <ion-toolbar color="white" class="webToolbar">
     <ion-grid>
@@ -41,7 +41,7 @@
         <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">
           Pending
         </ion-segment-button>
-        <ion-segment-button value="raisereq">
+        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = 'Raise Request'">
           Raise Request
         </ion-segment-button>
         <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
@@ -82,7 +82,7 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Time</ion-label>
-            <ion-datetime displayFormat="hh:mm A" formControlName="traveltime"></ion-datetime>
+            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime"></ion-datetime>
           </ion-item>
           <ion-item>
             <ion-label floating>Source</ion-label>
@@ -287,7 +287,7 @@
                   <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
               </span>
               <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
-                {{hdata.travel_date | date}}, {{hdata.travel_time}}
+                {{hdata.travel_date}}, {{hdata.travel_time}}
               </span>
               <span class="statusWrds">
                 <h6>{{hdata.status}}</h6>

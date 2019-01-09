@@ -39,6 +39,9 @@ export class EmpdashboardPage {
   startDatetimeMin: any;
   endDatetimeMax: any;
   datess: any;
+  pageTitle: any;
+  tdate: any;
+  currTime: any;
 
   private bookingForm: FormGroup;
 
@@ -64,27 +67,30 @@ export class EmpdashboardPage {
     this.bookingForm = this.formBuilder.group({
       updatepurpose: ['', Validators.compose([
         Validators.required,
-        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
       ])],
       // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
       travelsrc: ['', Validators.required],
       traveldest: ['', Validators.compose([
         Validators.required,
-        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
       ])],
       remark: ['', Validators.compose([
         Validators.required,
-        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
       ])],
       travelType: ['', Validators.required]
     });
     this.requestSegment = "raisereq";
+    this.pageTitle = "Raise Request";
     this.minDate = new Date();
     this.travelDate = new Date();
-    // console.log("current time ", this.minDate.getHours());
-    // console.log("current time ", this.minDate.getMinutes());
-    console.log('this...', this.minDate)
+    this.currTime = new Date();
+
+    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    console.log('this.currTime', this.currTime);
+
   }
 
   ionViewDidLoad() {
@@ -149,6 +155,7 @@ export class EmpdashboardPage {
   }
   getEmpHistory() {
     console.log("In Emp History");
+    this.pageTitle = "History";
     this.commonProvider.showLoader();
     this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
       console.log("Emplyee history ", response);
@@ -168,8 +175,11 @@ export class EmpdashboardPage {
       this.commonProvider.showLoader('Sending request...');
       console.log('this.bookingForm.value ', this.bookingForm.value);
       //let ustr = this.userDetails.emp_esg.substring(0, 2);
-      //var tdate = new Date(this.travelDate);
-      //tdate.getHour
+      this.tdate = new Date(this.travelDate);
+      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+      // var mm = tdate.getMonth() + 1;
+      // var yyyy = tdate.getFullYear();
+
       let reqData;
 
       reqData = {
@@ -177,8 +187,8 @@ export class EmpdashboardPage {
         'source': this.bookingForm.value.travelsrc,
         'destination': this.bookingForm.value.traveldest,
         'purpose': this.bookingForm.value.updatepurpose,
-        'travel_date': new Date(this.travelDate).toDateString(),
-        // 'travel_date': this.bookingForm.value.traveldate,
+        //'travel_date': new Date(this.travelDate).toDateString(),
+        'travel_date': this.tdate,
         'travel_time': this.bookingForm.value.traveltime,
         'emp_email': this.userDetails.emp_email,
         'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
@@ -236,6 +246,14 @@ export class EmpdashboardPage {
 
   setDate(dte: any) {
     this.travelDate = new Date(dte);
+    if (this.travelDate > this.minDate) {
+      this.currTime = "00:00";
+      this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.bookingForm.get('traveltime').setValue('');
+      this.currTime = new Date();
+      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    }
     console.log("date obj ", this.travelDate);
   }
 

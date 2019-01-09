@@ -35016,6 +35016,7 @@ page-adminrequests .statusWrds {
   color: #a90e1b;
   float: right;
   display: block;
+  width: 95px;
   word-wrap: break-word;
 }
 
@@ -35056,6 +35057,10 @@ page-driver .driverCard {
   border-radius: 1rem !important;
 }
 
+page-driver .crdht {
+  margin-top: 98px;
+}
+
 page-driver .psgrDetls {
   font-size: 16px;
   font-family: "font-medium";
@@ -35063,6 +35068,21 @@ page-driver .psgrDetls {
 
 page-driver ion-toolbar {
   height: 93px;
+}
+
+@media screen and (min-width: 1024px) {
+  page-driver .gridSize {
+    padding: 3px !important;
+    width: 70% !important;
+  }
+  page-driver .webToolbar {
+    width: 70% !important;
+    margin-left: 15% !important;
+  }
+  page-driver .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
 }
 
 page-empdashboard .formtitle {
@@ -35121,6 +35141,7 @@ page-empdashboard .statusWrds {
   float: right;
   display: block;
   word-wrap: break-word;
+  width: 95px;
 }
 
 page-empdashboard .reqText {
@@ -35203,6 +35224,7 @@ page-hoddashboard .statusWrds {
   float: right;
   display: block;
   word-wrap: break-word;
+  width: 95px;
 }
 
 page-hoddashboard .reqText {
@@ -35272,7 +35294,7 @@ page-requesthistory .statusWrds {
   color: #a90e1b;
   float: right;
   display: block;
-  width: 93px;
+  width: 95px;
   word-wrap: break-word;
 }
 
