@@ -98,7 +98,7 @@ export class DriverPage {
     if (this.startkm) {
       this.commonProvider.showLoader('Updating Kms..');
       let today = new Date();
-      let cdate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '/' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      let cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
       console.log("ctime ", cdate);
       console.log("this.tripDetail ", this.tripDetail);
       this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {

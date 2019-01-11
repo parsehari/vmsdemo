@@ -17,6 +17,7 @@ export class ServiceProvider {
   // header for json/content-type
 
   private url = 'https://mapps.mahindra.com/vms';
+  //private url = 'http://10.174.55.86:8080/vms';
 
   raiseReq: any;
   tripDTO: any;

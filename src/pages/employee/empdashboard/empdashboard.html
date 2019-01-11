@@ -201,7 +201,7 @@
                 </ul>
 
               </div>
-              <span class="statusWrds" *ngIf="hdata.status != 'started' ">
+              <span class="statusWrds" *ngIf="hdata.status != 'started' && hdata.status != 'Completed' && hdata.status != 'Rejected'">
                 <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel
                 </button>
               </span>
