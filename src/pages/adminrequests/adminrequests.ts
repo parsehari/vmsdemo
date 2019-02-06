@@ -84,6 +84,10 @@ export class AdminrequestsPage {
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
       ])],
+      pickpoint: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
       remark: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
@@ -99,7 +103,7 @@ export class AdminrequestsPage {
 
     this.currTime = new Date();
 
-    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
 
   }
@@ -190,7 +194,8 @@ export class AdminrequestsPage {
         'usrphone': this.bookingForm.value.usrphone,
         'cabs': this.bookingForm.value.cabs,
         'driver': this.bookingForm.value.driver,
-        'vendor': this.bookingForm.value.vendor
+        'vendor': this.bookingForm.value.vendor,
+        'pickpoint': this.bookingForm.value.pickpoint
 
       }
 

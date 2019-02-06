@@ -17,7 +17,7 @@ export class ServiceProvider {
   // header for json/content-type
 
   private url = 'https://mapps.mahindra.com/vms';
-  //private url = 'http://10.174.55.86:8080/vms';
+  //private url = 'http://10.174.50.54:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -60,6 +60,7 @@ export class ServiceProvider {
     this.raiseReq.append("userID", data.userID);
     this.raiseReq.append("source", data.source);
     this.raiseReq.append("destination", data.destination);
+    this.raiseReq.append("pickupPoint", data.pickpoint);
     this.raiseReq.append("purpose", data.purpose);
     this.raiseReq.append("travel_date", data.travel_date);
     this.raiseReq.append("travel_time", data.travel_time);
@@ -97,6 +98,7 @@ export class ServiceProvider {
     this.raiseReq = new FormData();
     this.raiseReq.append("source", data.source);
     this.raiseReq.append("destination", data.destination);
+    this.raiseReq.append("pickupPoint", data.pickpoint);
     this.raiseReq.append("purpose", data.purpose);
     this.raiseReq.append("travel_date", data.travel_date);
     this.raiseReq.append("travel_time", data.travel_time);
@@ -172,7 +174,6 @@ export class ServiceProvider {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + params + "/" + id, options)
-
   }
 
   cancelCab(params: any, id: any): Observable<any> {

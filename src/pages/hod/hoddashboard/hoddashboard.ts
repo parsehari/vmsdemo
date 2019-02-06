@@ -1,8 +1,9 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Events } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PopoverController, ModalController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
+import { TermsconditionPage } from '../../termscondition/termscondition';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { RequesthistoryPage } from '../../hod/requesthistory/requesthistory';
@@ -43,7 +44,8 @@ export class HoddashboardPage {
     public commonProvider: CommonProvider,
     public alertCtrl: AlertController,
     public zone: NgZone,
-    public modal: ModalController
+    public modal: ModalController,
+    public events: Events
 
   ) {
     console.log("params hod", navParams);
@@ -62,6 +64,10 @@ export class HoddashboardPage {
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
       ])],
+      pickpoint: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
       remark: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
@@ -74,8 +80,13 @@ export class HoddashboardPage {
     this.travelDate = new Date();
     this.currTime = new Date();
 
-    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
+
+    this.events.subscribe('actionReq', (ev, status, obj) => {
+      this.reqAction(ev, status, obj);
+    })
+
   }
 
   showNotifn(myEvent) {
@@ -86,6 +97,15 @@ export class HoddashboardPage {
         ev: myEvent
       }
     )
+  }
+
+  showTermsCondition(myEvent) {
+    // let popvr = this.popoverController.create(TermsconditionPage);
+    // popvr.present({
+    //   ev: myEvent
+    // })
+    const popvr = this.modal.create('TermsconditionPage', {});
+    popvr.present();
   }
 
   logForm() {
@@ -133,6 +153,7 @@ export class HoddashboardPage {
         'userID': this.userDetails.emp_no,
         'source': this.bookingForm.value.travelsrc,
         'destination': this.bookingForm.value.traveldest,
+        'pickpoint': this.bookingForm.value.pickpoint,
         'purpose': this.bookingForm.value.updatepurpose,
         //  'travel_date': new Date(this.travelDate).toDateString(),
         'travel_date': this.tdate,
@@ -171,8 +192,10 @@ export class HoddashboardPage {
     })
   }
 
-  reqAction(ev, status: string, obj: any) {
+  reqAction(ev: any, status: string, obj: any) {
     console.log("obj ", obj);
+    console.log("status ", status);
+
     ev.stopPropagation();
     console.log("status ", status);
     if (status == "Rejected") {
@@ -222,6 +245,7 @@ export class HoddashboardPage {
       'userID': obj.userID,
       'source': obj.source,
       'destination': obj.destination,
+      'pickpoint': obj.pickupPoint,
       'purpose': obj.purpose,
       'travel_date': obj.travel_date,
       'travel_time': obj.travel_time,
@@ -247,6 +271,7 @@ export class HoddashboardPage {
       this.commonProvider.hideLoader();
       if (response) {
         this.getApprovalHistory();
+        this.events.publish('closeModalev');
         this.commonProvider.showToast('Request sent successfully');
       } else {
         this.commonProvider.showToast('Request error, Please check with admin');
@@ -320,9 +345,10 @@ export class HoddashboardPage {
     });
   }
 
-  openDetail(obj: any) {
+  openDetail(obj: any, vw: any) {
     console.log("open modal")
-    const myModal = this.modal.create('ModalDetailPage', { data: obj });
+    console.log("open modal", vw)
+    const myModal = this.modal.create('ModalDetailPage', { data: obj, viewName: vw });
     myModal.present();
   }
 
@@ -361,5 +387,7 @@ export class HoddashboardPage {
     })
 
   }
+
+
 
 }

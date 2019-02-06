@@ -78,7 +78,7 @@ export class LoginPage {
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.userid).subscribe((response: any) => {
         response = JSON.parse(response._body);
         console.log("response ", response);
-        let str = response.emp_esg;
+        let str = response.emp_esgdesc;
         if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head") {
           this.commonProvider.hideLoader();
           this.navCtrl.setRoot(HoddashboardPage, { response });
@@ -114,8 +114,9 @@ export class LoginPage {
             response = JSON.parse(response._body);
             console.log("response ", response);
             this.commonProvider.hideLoader();
-            let str = response.emp_esg;
-            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive") {
+            //  let str = response.emp_esg;
+            let str = response.emp_esgdesc;
+            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
               this.navCtrl.setRoot(HoddashboardPage, { response });
               //this.navCtrl.setRoot(EmpdashboardPage, { response });
             } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {

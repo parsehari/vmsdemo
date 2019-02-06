@@ -19,6 +19,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 //page
 import { EmpdashboardPageModule } from '../pages/employee/empdashboard/empdashboard.module';
 import { NotificationPageModule } from '../pages/notification/notification.module';
+import { TermsconditionPageModule } from '../pages/termscondition/termscondition.module';
 import { NotificationDetailPageModule } from '../pages/notification-detail/notification-detail.module';
 import { ScanPageModule } from '../pages/scan/scan.module';
 //hod Dashboard
@@ -48,6 +49,7 @@ import { DatePickerModule } from 'ionic3-datepicker';
     RequesthistoryPageModule,
     UsersDashboardPageModule,
     AdminrequestsPageModule,
+    TermsconditionPageModule,
     AdminAprvlPageModule,
     HttpModule,
     DriverPageModule,

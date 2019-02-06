@@ -9,6 +9,8 @@
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
+    <!-- <ion-icon name="information-circle-outline" class="infoIcon" (click)="showTermsCondition($event)"></ion-icon> -->
+    <span class="icon-info" style="float:right; margin-right: 11px;" (click)="showTermsCondition($event)"></span>
     <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
     <ion-badge class="cart-badge">5</ion-badge> -->
   </ion-navbar>
@@ -73,7 +75,7 @@
             <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label floating>Source</ion-label>
+            <ion-label floating>My Location</ion-label>
             <ion-select formControlName="travelsrc" name="travelsrc">
               <div *ngFor="let locs of locations">
                 <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
@@ -83,6 +85,10 @@
           <ion-item>
             <ion-label floating>Destination</ion-label>
             <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Pickup point</ion-label>
+            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Remark</ion-label>
@@ -137,7 +143,7 @@
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">Source</span>
+                  <span class="formtitle">My Location</span>
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.travelsrc}}
@@ -149,6 +155,14 @@
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.traveldest}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">Pickup point</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.pickpoint}}
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -185,7 +199,7 @@
             <span style="color:#ad081f">Pending for approval</span>
             <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span>
           </ion-list-header>
-          <ion-item *ngFor="let applh of approvalList" (click)="openDetail(applh)">
+          <ion-item *ngFor="let applh of approvalList" (click)="openDetail(applh,'hodView')">
             <span>
               <h3 class="reqText">
                 <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
@@ -196,7 +210,7 @@
               <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction($event,'Rejected', applh);">Decline</button>
             </div>
             <span>
-              <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>
+              <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date}}, {{applh.travel_time}}</h3>
             </span>
             <div>
               <ul class="bar">
@@ -221,7 +235,7 @@
             <span style="color:#ad081f">Booking History</span>
           </ion-list-header>
           <ng-container *ngFor="let hdata of historyData">
-            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' " (click)="openDetail(hdata)">
+            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' " (click)="openDetail(hdata, 'none')">
               <span>
                 <h3 class="reqText">
                   <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>

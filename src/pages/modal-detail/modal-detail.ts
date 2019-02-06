@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
 
 /**
  * Generated class for the ModalDetailPage page.
@@ -17,11 +17,26 @@ export class ModalDetailPage {
   tripDetail: any;
   srcSubstr: any;
   destSubstr: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public view: ViewController) {
+  viewName: any;
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public view: ViewController,
+    public events: Events) {
+
+    this.events.subscribe('closeModalev', () => {
+      this.view.dismiss();
+    })
+
   }
+
 
   ionViewWillLoad() {
     this.tripDetail = this.navParams.get('data');
+    if (this.navParams.get('viewName')) {
+      this.viewName = this.navParams.get('viewName');
+
+    }
+    console.log("viewName ", this.viewName);
     console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
@@ -30,5 +45,10 @@ export class ModalDetailPage {
   closeModal() {
     this.view.dismiss();
   }
+
+  reqAction(ev, status: any) {
+    this.events.publish('actionReq', ev, status, this.tripDetail);
+  }
+
 
 }

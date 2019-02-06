@@ -6,7 +6,7 @@ import { NotificationPage } from '../../notification/notification';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { LoginPage } from '../../login/login';
-
+import { TermsconditionPage } from '../../termscondition/termscondition';
 
 // import { Calendar } from '@ionic-native/calendar';
 //import { FCM } from '@ionic-native/fcm';
@@ -76,6 +76,10 @@ export class EmpdashboardPage {
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
       ])],
+      pickpoint: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
       remark: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
@@ -88,7 +92,7 @@ export class EmpdashboardPage {
     this.travelDate = new Date();
     this.currTime = new Date();
 
-    this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
 
   }
@@ -186,6 +190,7 @@ export class EmpdashboardPage {
         'userID': this.userDetails.emp_no,
         'source': this.bookingForm.value.travelsrc,
         'destination': this.bookingForm.value.traveldest,
+        'pickpoint': this.bookingForm.value.pickpoint,
         'purpose': this.bookingForm.value.updatepurpose,
         //'travel_date': new Date(this.travelDate).toDateString(),
         'travel_date': this.tdate,
@@ -273,6 +278,14 @@ export class EmpdashboardPage {
       console.log('user cancelled');
     })
 
+  }
+  showTermsCondition(myEvent) {
+    // let popvr = this.popoverController.create(TermsconditionPage);
+    // popvr.present({
+    //   ev: myEvent
+    // })
+    const popvr = this.modal.create('TermsconditionPage', {});
+    popvr.present();
   }
   // cancelDate(dte: any) {
   //   console.log("date obj ", dte);
