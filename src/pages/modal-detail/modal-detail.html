@@ -90,7 +90,7 @@
           <ion-col>
             <span class="formtitle">Mobile Number</span>
           </ion-col>
-          <ion-col>
+          <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">
             {{tripDetail.emp_phoneNo}}
           </ion-col>
         </ion-row>

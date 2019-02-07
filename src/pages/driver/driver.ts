@@ -5,7 +5,7 @@ import { PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { CommonProvider } from '../../providers/common/common';
 import { ServiceProvider } from '../../providers/service/service';
-
+import { CallNumber } from '@ionic-native/call-number';
 /**
  * Generated class for the DriverPage page.
  *
@@ -32,7 +32,8 @@ export class DriverPage {
     public navParams: NavParams,
     public popoverController: PopoverController,
     public commonProvider: CommonProvider,
-    public serviceProvider: ServiceProvider
+    public serviceProvider: ServiceProvider,
+    public callnumber: CallNumber
   ) {
     console.log('driver driverNumber page', this.navParams.get('driverNumber'));
     this.driverphno = this.navParams.get('driverNumber');
@@ -118,6 +119,18 @@ export class DriverPage {
       this.commonProvider.hideLoader();
       this.commonProvider.showToast("Please enter kms");
     }
+  }
+
+  callnum(num) {
+    console.log("inside call number function");
+    this.callnumber.callNumber(num, true).then(
+      (res) => {
+        console.log('Dialer opened', res);
+      })
+      .catch((err) => {
+        this.commonProvider.showToast(err);
+        console.log('Error launching dialer', err);
+      })
   }
 
 

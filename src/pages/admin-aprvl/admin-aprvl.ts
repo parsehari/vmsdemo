@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { CommonProvider } from '../../providers/common/common';
-
+import { CallNumber } from '@ionic-native/call-number';
 /**
  * Generated class for the AdminAprvlPage page.
  *
@@ -31,7 +31,8 @@ export class AdminAprvlPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public serviceProvider: ServiceProvider,
-    public commonProvider: CommonProvider
+    public commonProvider: CommonProvider,
+    public callnumber: CallNumber
   ) {
     console.log("navparams ", NavParams);
     console.log("location ", this.navParams.get('adminLocation'));
@@ -85,6 +86,18 @@ export class AdminAprvlPage {
     }, err => {
       console.log('user cancelled');
     })
+  }
+
+  callnum(num) {
+    console.log("inside call number function");
+    this.callnumber.callNumber(num, true).then(
+      (res) => {
+        console.log('Dialer opened', res);
+      })
+      .catch((err) => {
+        this.commonProvider.showToast(err);
+        console.log('Error launching dialer', err);
+      })
   }
 
 }

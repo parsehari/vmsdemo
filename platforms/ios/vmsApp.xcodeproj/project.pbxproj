@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -38,6 +37,7 @@
 		CCDD1D398BA74402AC13BD3E /* CordovaHttpPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C132B0FF3D47BA9BF49521 /* CordovaHttpPlugin.m */; };
 		CFC6D995232F460EAB3435B6 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B4A61CB5C8164E99B047F4F9 /* CDVSplashScreen.m */; };
 		E47FF87615C3493BA324A2C6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 507FAE7C09044FCD88B9C655 /* Security.framework */; };
+		97A73E2513064DE68EE9C5CA /* CFCallNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 274E36170F7940D2B20BC8B2 /* CFCallNumber.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +131,8 @@
 		F7CF36BD0CFE4FE889063812 /* TextResponseSerializer.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = TextResponseSerializer.m; path = "cordova-plugin-advanced-http/TextResponseSerializer.m"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = vmsApp/config.xml; sourceTree = "<group>"; };
 		FE6674B3DFA44D8493516D62 /* CDVIonicKeyboard.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVIonicKeyboard.h; path = "cordova-plugin-ionic-keyboard/CDVIonicKeyboard.h"; sourceTree = "<group>"; };
+		274E36170F7940D2B20BC8B2 /* CFCallNumber.m */ = {isa = PBXFileReference; name = "CFCallNumber.m"; path = "mx.ferreyra.callnumber/CFCallNumber.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		7C5E53C07B1242AAB36C8325 /* CFCallNumber.h */ = {isa = PBXFileReference; name = "CFCallNumber.h"; path = "mx.ferreyra.callnumber/CFCallNumber.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,8 @@
 				23AFED0E22884E76BCB625E8 /* CDVViewController+SplashScreen.m */,
 				52273925DB594726A968009C /* CDVSplashScreen.h */,
 				001C6968989D42C4968AE13B /* CDVViewController+SplashScreen.h */,
+				274E36170F7940D2B20BC8B2 /* CFCallNumber.m */,
+				7C5E53C07B1242AAB36C8325 /* CFCallNumber.h */,
 			);
 			name = Plugins;
 			path = vmsApp/Plugins;
@@ -441,6 +445,7 @@
 				83332608986448BCA480AE90 /* QRScanner.swift in Sources */,
 				CFC6D995232F460EAB3435B6 /* CDVSplashScreen.m in Sources */,
 				52749D9D8EE341B183A6A403 /* CDVViewController+SplashScreen.m in Sources */,
+				97A73E2513064DE68EE9C5CA /* CFCallNumber.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

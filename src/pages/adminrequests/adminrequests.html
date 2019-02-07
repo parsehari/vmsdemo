@@ -9,6 +9,7 @@
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
+    <span class="icon-info" style="float:right; margin-right: 11px;" (click)="showTermsCondition($event)"></span>
     <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
     <ion-badge class="cart-badge">5</ion-badge> -->
   </ion-navbar>
@@ -257,14 +258,14 @@
             <span style="color:#ad081f">Pending for approval</span>
             <!-- <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span> -->
           </ion-list-header>
-          <ion-item *ngFor="let applh of approvalList">
-            <span (click)="openDetail(applh)">
+          <ion-item *ngFor="let applh of approvalList" (click)="openDetail(applh)">
+            <span>
               <h3 class="reqText">
                 <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
             </span>
 
             <div style="float: right">
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="viewRequest(applh);">View</button>
+              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="viewRequest($event,applh);">View</button>
               <!-- <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button> -->
             </div>
             <span>

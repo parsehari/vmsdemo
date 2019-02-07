@@ -280,10 +280,6 @@ export class EmpdashboardPage {
 
   }
   showTermsCondition(myEvent) {
-    // let popvr = this.popoverController.create(TermsconditionPage);
-    // popvr.present({
-    //   ev: myEvent
-    // })
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }

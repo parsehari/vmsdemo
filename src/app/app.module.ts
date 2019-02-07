@@ -15,7 +15,7 @@ import { CommonProvider } from '../providers/common/common';
 // import { FCM } from '@ionic-native/fcm';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-
+import { CallNumber } from '@ionic-native/call-number';
 //page
 import { EmpdashboardPageModule } from '../pages/employee/empdashboard/empdashboard.module';
 import { NotificationPageModule } from '../pages/notification/notification.module';
@@ -77,7 +77,8 @@ import { DatePickerModule } from 'ionic3-datepicker';
     //  FCM,
     Network,
     InAppBrowser,
-    QRScanner
+    QRScanner,
+    CallNumber
 
   ]
 })

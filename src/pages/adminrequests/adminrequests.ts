@@ -6,6 +6,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { CommonProvider } from '../../providers/common/common';
 import { LoginPage } from '../login/login';
 import { AdminAprvlPage } from '../admin-aprvl/admin-aprvl';
+import { TermsconditionPage } from '../termscondition/termscondition';
 /**
  * Generated class for the AdminrequestsPage page.
  *
@@ -162,8 +163,8 @@ export class AdminrequestsPage {
     myModal.present();
   }
 
-  viewRequest(obj: any) {
-
+  viewRequest(event, obj: any) {
+    event.stopPropagation();
     this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id })
 
   }
@@ -288,5 +289,10 @@ export class AdminrequestsPage {
     if (ev == "local") {
       this.bookingForm.get('vendor').setValue(null);
     }
+  }
+
+  showTermsCondition(myEvent) {
+    const popvr = this.modal.create('TermsconditionPage', {});
+    popvr.present();
   }
 }
