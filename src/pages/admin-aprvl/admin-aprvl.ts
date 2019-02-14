@@ -66,6 +66,21 @@ export class AdminAprvlPage {
   }
 
   assignRequest() {
+    if (this.tripDetail.travelType == 'local') {
+      if (!this.cabs) {
+        this.commonProvider.showToast("Please assign Cab");
+        return false;
+      }
+    } else {
+      if (!this.vendor) {
+        this.commonProvider.showToast("Please assign Vendor");
+        return false;
+      }
+    }
+    if (!this.driver) {
+      this.commonProvider.showToast("Please assign Driver");
+      return false;
+    }
     this.commonProvider.Alert.confirm().then((res) => {
       this.cabs ? 'nothing' : this.cabs = "";
       this.driver ? 'nothing' : this.driver = "";

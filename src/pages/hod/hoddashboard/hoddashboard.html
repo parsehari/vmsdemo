@@ -10,7 +10,7 @@
     <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
     <!-- <ion-icon name="information-circle-outline" class="infoIcon" (click)="showTermsCondition($event)"></ion-icon> -->
-    <span class="icon-info" style="float:right; margin-right: 11px;" (click)="showTermsCondition($event)"></span>
+    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span>
     <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
     <ion-badge class="cart-badge">5</ion-badge> -->
   </ion-navbar>
@@ -58,7 +58,7 @@
       <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
         <div *ngIf="!confirmReqst">
           <ion-item>
-            <ion-label floating>Purpose</ion-label>
+            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
@@ -71,11 +71,11 @@
             </span>
           </ion-item>
           <ion-item>
-            <ion-label floating>Time</ion-label>
+            <ion-label floating>Time<sup style="color:red">*</sup></ion-label>
             <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label floating>My Location</ion-label>
+            <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="travelsrc" name="travelsrc">
               <div *ngFor="let locs of locations">
                 <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
@@ -83,19 +83,19 @@
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label floating>Destination</ion-label>
+            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Pickup point</ion-label>
+            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Remark</ion-label>
+            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="remark"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Travel type</ion-label>
+            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="travelType">
               <ion-option value="outstation">Outstation</ion-option>
               <ion-option value="local">Local</ion-option>
@@ -129,7 +129,7 @@
                   <span class="formtitle">Travel Date</span>
                 </ion-col>
                 <ion-col>
-                  {{travelDate}}
+                  {{travelDate | date}}
                   <!-- {{bookingForm.value.traveldate | date}} -->
                 </ion-col>
               </ion-row>
@@ -212,8 +212,8 @@
             <span>
               <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date}}, {{applh.travel_time}}</h3>
             </span>
-            <div>
-              <ul class="bar">
+            <div style="width: 50%;">
+              <ul class=" bar">
                 <li style="color:green">
                   <h3>{{applh.source}}</h3>
                 </li>
@@ -222,10 +222,6 @@
                 </li>
               </ul>
             </div>
-            <!-- <div>
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Pending with Admin', applh);">Accept</button>
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
-            </div> -->
           </ion-item>
         </ion-list>
       </div>

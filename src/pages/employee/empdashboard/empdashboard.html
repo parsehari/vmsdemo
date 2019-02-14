@@ -2,7 +2,7 @@
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-    <span class="icon-info" style="float:right; margin-right: 11px;" (click)="showTermsCondition($event)"></span>
+    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span>
     <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span> -->
     <!-- <ion-icon name="information-circle-outline" style="float:right"></ion-icon> -->
   </ion-navbar>
@@ -40,8 +40,9 @@
     <div [ngSwitch]="requestSegment">
       <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
         <div *ngIf="!confirmReqst">
+
           <ion-item>
-            <ion-label floating>Purpose</ion-label>
+            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
@@ -52,12 +53,12 @@
             </span>
           </ion-item>
           <ion-item>
-            <ion-label floating>Time</ion-label>
+            <ion-label floating>Time<sup style="color:red">*</sup></ion-label>
             <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">
             </ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label floating>My Location</ion-label>
+            <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="travelsrc" name="travelsrc">
               <div *ngFor="let locs of locations">
                 <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
@@ -67,19 +68,19 @@
         <ion-input type="text" formControlName="travelsrc"></ion-input> -->
           </ion-item>
           <ion-item>
-            <ion-label floating>Destination</ion-label>
+            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Pickup point</ion-label>
+            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Remark</ion-label>
+            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="remark"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Travel type</ion-label>
+            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="travelType">
               <ion-option value="outstation">Outstation</ion-option>
               <ion-option value="local">Local</ion-option>
@@ -185,41 +186,42 @@
             <span style="color:#ad081f">Booking History</span>
           </ion-list-header>
           <ng-container *ngFor="let hdata of historyData">
-            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' " (click)="openDetail(hdata)">
-              <span>
-                <h3 class="reqText">
-                  <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
+            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
+              <div (click)="openDetail(hdata)">
+                <span>
+                  <h3 class="reqText">
+                    <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
 
-              </span>
+                </span>
 
-              <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
-                {{hdata.travel_date}}, {{hdata.travel_time}}
-              </span>
-              <span class="statusWrds">
-                <h6>{{hdata.status}}</h6>
-                <h6 *ngIf="hdata.status == 'Pending with Manager' ">{{hdata.bh_UserName}}
-                </h6>
-              </span>
+                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
+                  {{hdata.travel_date}}, {{hdata.travel_time}}
+                </span>
+                <span class="statusWrds">
+                  <h6>{{hdata.status}}</h6>
+                  <h6 *ngIf="hdata.status == 'Pending with Manager' ">{{hdata.bh_UserName}}
+                  </h6>
+                </span>
+                <div>
+                  <ul class="bar">
+                    <li style="color:green">
+                      <h3>{{hdata.source}}</h3>
+                    </li>
+                    <li style="color:#a90e1b">
+                      <h3>{{hdata.destination}}</h3>
+                    </li>
+                  </ul>
 
-              <!-- <span>
-              <h3 style="color: #424242;" *ngIf="hdata.travel_date!=null">{{hdata.travel_date | date}}, {{hdata.travel_time}}</h3>
-              <h3 style="color: #424242;">{{hdata.status}}</h3>
-            </span> -->
-              <div>
-                <ul class="bar">
-                  <li style="color:green">
-                    <h3>{{hdata.source}}</h3>
-                  </li>
-                  <li style="color:#a90e1b">
-                    <h3>{{hdata.destination}}</h3>
-                  </li>
-                </ul>
-
+                </div>
               </div>
-              <span class="statusWrds" *ngIf="hdata.status != 'started' && hdata.status != 'Completed' && hdata.status != 'Rejected'">
+              <span class="statusWrds" *ngIf="hdata.status != 'started' && hdata.status != 'Completed' && hdata.status != 'Rejected' && hdata.status != 'Approved'">
                 <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel
                 </button>
               </span>
+              <!-- <span style="float:right; margin-top: -10px;" *ngIf="hdata.status == 'Completed'">
+                <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="rating">
+                </ionic3-star-rating>
+              </span> -->
             </ion-item>
           </ng-container>
         </ion-list>

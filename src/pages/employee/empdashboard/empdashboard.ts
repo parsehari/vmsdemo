@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PopoverController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
@@ -51,11 +51,14 @@ export class EmpdashboardPage {
     public popoverController: PopoverController,
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
-    public modal: ModalController
+    public modal: ModalController,
+    public events: Events
     //  public calendar: Calendar
     //  public fcm: FCM
   ) {
-
+    // events.subscribe('star-rating:changed', (starRating) => {
+    //   console.log('rating changed', starRating);
+    // })
     console.log("params ", navParams);
     //  this.userDetails = navParams.data.EmployeeDetail;
     this.userDetails = navParams.data.response;
@@ -90,7 +93,7 @@ export class EmpdashboardPage {
     this.pageTitle = "Raise Request";
     this.minDate = new Date();
     this.travelDate = new Date();
-    this.currTime = new Date();
+    this.currTime = new Date(this.minDate);
 
     this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
@@ -143,6 +146,10 @@ export class EmpdashboardPage {
 
   logForm() {
     console.log(this.bookingForm.value);
+    // if (this.bookingForm.value.updatepurpose != null) {
+    //   this.commonProvider.showToast("not save");
+    // }
+    // return false;
     this.confirmReqst = true;
   }
   editRequest() {
@@ -180,7 +187,7 @@ export class EmpdashboardPage {
       console.log('this.bookingForm.value ', this.bookingForm.value);
       //let ustr = this.userDetails.emp_esg.substring(0, 2);
       this.tdate = new Date(this.travelDate);
-      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+      this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
       // var mm = tdate.getMonth() + 1;
       // var yyyy = tdate.getFullYear();
 
@@ -250,14 +257,18 @@ export class EmpdashboardPage {
   }
 
   setDate(dte: any) {
+    console.log("dte ", dte);
+    console.log("minDate ", this.minDate);
     this.travelDate = new Date(dte);
+
     if (this.travelDate > this.minDate) {
       this.currTime = "00:00";
       this.bookingForm.get('traveltime').setValue('');
     } else {
-      this.bookingForm.get('traveltime').setValue('');
+      //    this.currTime = '';
+      //this.bookingForm.get('traveltime').setValue('');
       this.currTime = new Date();
-      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+      this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
     console.log("date obj ", this.travelDate);
   }

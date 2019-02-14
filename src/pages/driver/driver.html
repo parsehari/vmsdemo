@@ -31,9 +31,19 @@
   <div *ngIf="tripDetail.length == 0">
     <ion-card class="driverCard">
       <ion-card-header style="text-align: center" color="red">
-        No cab is assigned</ion-card-header>
+        {{driverText}}</ion-card-header>
     </ion-card>
   </div>
+  <!-- <div *ngIf="feedbackform">
+    <ion-card class="driverCard">
+      <ion-card-header style="text-align: center" color="red">
+        Please give your feedback {{rating}}</ion-card-header>
+      <ion-card-content style="text-align: center;">
+        <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="rating">
+        </ionic3-star-rating>
+      </ion-card-content>
+    </ion-card>
+  </div> -->
   <div *ngIf="tripDetail.length != 0">
     <ion-card class="driverCard crdht formcntent">
       <ion-card-header style="text-align: center" color="red">
@@ -51,9 +61,15 @@
           <ion-col>
             <span class="formtitle">Mobile Number</span>
           </ion-col>
-          <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">
-            {{tripDetail.emp_phoneNo}}
+          <ion-col (click)="callnum(tripDetail.emp_phoneNo);">
+            <u style="color: blue;">{{tripDetail.emp_phoneNo}}
+            </u>
+
           </ion-col>
+          <!-- <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">
+            {{tripDetail.emp_phoneNo}}
+          </ion-col> -->
+
         </ion-row>
         <ion-row>
           <ion-col>
@@ -118,6 +134,8 @@
           </button>
         </ion-col>
       </ion-row>
+
+
     </div>
 
   </div>

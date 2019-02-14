@@ -102,7 +102,7 @@ export class AdminrequestsPage {
     console.log('this...', this.minDate)
     this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
 
-    this.currTime = new Date();
+    this.currTime = new Date(this.minDate);
 
     this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
@@ -163,11 +163,12 @@ export class AdminrequestsPage {
     myModal.present();
   }
 
-  viewRequest(event, obj: any) {
+  viewRequest(event: any, obj: any) {
+
     event.stopPropagation();
     this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id })
-
   }
+
 
   sendRequest() {
     this.commonProvider.Alert.confirm().then((res) => {
@@ -178,7 +179,7 @@ export class AdminrequestsPage {
       this.bookingForm.value.vendor ? 'nothing' : this.bookingForm.value.vendor = "";
 
       this.tdate = new Date(this.travelDate);
-      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+      this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
 
       let reqData = {
         'source': this.userDetails.location.id,
@@ -235,7 +236,7 @@ export class AdminrequestsPage {
     } else {
       this.bookingForm.get('traveltime').setValue('');
       this.currTime = new Date();
-      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+      this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
     console.log("date obj ", this.travelDate);
   }

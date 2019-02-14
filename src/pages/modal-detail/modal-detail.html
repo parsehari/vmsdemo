@@ -48,7 +48,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <span class="formtitle">Source</span>
+            <span class="formtitle">My Location</span>
           </ion-col>
           <ion-col>
             {{tripDetail.source}}
@@ -90,8 +90,13 @@
           <ion-col>
             <span class="formtitle">Mobile Number</span>
           </ion-col>
-          <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">
+          <!-- <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">
             {{tripDetail.emp_phoneNo}}
+          </ion-col> -->
+          <ion-col (click)="callnum(tripDetail.emp_phoneNo);">
+            <u style="color: blue;">{{tripDetail.emp_phoneNo}}
+            </u>
+
           </ion-col>
         </ion-row>
         <ion-row>

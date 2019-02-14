@@ -9,7 +9,7 @@
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
     <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-    <span class="icon-info" style="float:right; margin-right: 11px;" (click)="showTermsCondition($event)"></span>
+    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span>
     <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
     <ion-badge class="cart-badge">5</ion-badge> -->
   </ion-navbar>
@@ -57,19 +57,19 @@
       <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
         <div *ngIf="!confirmReqst">
           <ion-item>
-            <ion-label floating>UserID</ion-label>
+            <ion-label floating>UserID<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="usrID"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>User Name</ion-label>
+            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="usrName"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Phone</ion-label>
+            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>
             <ion-input type="number" formControlName="usrphone"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Purpose</ion-label>
+            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
@@ -82,11 +82,11 @@
             </span>
           </ion-item>
           <ion-item>
-            <ion-label floating>Time</ion-label>
+            <ion-label floating>Time<sup style="color:red">*</sup></ion-label>
             <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label floating>My Location</ion-label>
+            <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="travelsrc"></ion-input>
             <!-- <ion-select formControlName="travelsrc" name="travelsrc">
               <div *ngFor="let locs of locations">
@@ -95,26 +95,26 @@
             </ion-select> -->
           </ion-item>
           <ion-item>
-            <ion-label floating>Destination</ion-label>
+            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Pickup point</ion-label>
+            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Remark</ion-label>
+            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="remark"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label floating>Travel type</ion-label>
+            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="travelType" (ionChange)="typeChange($event)">
               <ion-option value="outstation">Outstation</ion-option>
               <ion-option value="local">Local</ion-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label>Assign Cab</ion-label>
+            <ion-label>Assign Cab<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="cabs" name="cabs" [disabled]="bookingForm.value.travelType == 'outstation' ">
               <div *ngFor="let cab of cabList">
                 <ion-option value="{{cab.id}}">{{cab.cab_name}}</ion-option>
@@ -122,7 +122,7 @@
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label>Assign Driver</ion-label>
+            <ion-label>Assign Driver<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="driver" name="driver" [disabled]="bookingForm.value.travelType == 'outstation' ">
               <div *ngFor="let drvr of driverList">
                 <ion-option value="{{drvr.id}}">{{drvr.first_name}}</ion-option>
@@ -130,7 +130,7 @@
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label>Assign Vendor</ion-label>
+            <ion-label>Assign Vendor<sup style="color:red">*</sup></ion-label>
             <ion-select formControlName="vendor" name="vendor" [disabled]="bookingForm.value.travelType == 'local' ">
               <div *ngFor="let vendor of vendorList">
                 <ion-option value="{{vendor.id}}">{{vendor.vName}}</ion-option>
@@ -256,22 +256,22 @@
         <ion-list>
           <ion-list-header style="background: #9e9e9e1f !important;">
             <span style="color:#ad081f">Pending for approval</span>
-            <!-- <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span> -->
           </ion-list-header>
-          <ion-item *ngFor="let applh of approvalList" (click)="openDetail(applh)">
-            <span>
-              <h3 class="reqText">
-                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
-            </span>
 
-            <div style="float: right">
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="viewRequest($event,applh);">View</button>
-              <!-- <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button> -->
+          <ion-item *ngFor="let applh of approvalList">
+            <div (click)="openDetail(applh)">
+              <span>
+                <h3 class="reqText">
+                  <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
+              </span>
+              <span>
+                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>
+              </span>
             </div>
-            <span>
-              <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date | date}}, {{applh.travel_time}}</h3>
-            </span>
-            <div>
+            <div style="float:right">
+              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;" (click)="viewRequest($event,applh);">View</button>
+            </div>
+            <div style="width: 70%">
               <ul class="bar">
                 <li style="color:green">
                   <h3>{{applh.source}}</h3>
@@ -281,10 +281,6 @@
                 </li>
               </ul>
             </div>
-            <!-- <div>
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction('Pending with Admin', applh);">Accept</button>
-              <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction('Rejected', applh);">Decline</button>
-            </div> -->
           </ion-item>
         </ion-list>
       </div>

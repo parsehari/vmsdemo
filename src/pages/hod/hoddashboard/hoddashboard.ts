@@ -78,7 +78,7 @@ export class HoddashboardPage {
     this.pageTitle = "Requests"
     this.minDate = new Date();
     this.travelDate = new Date();
-    this.currTime = new Date();
+    this.currTime = new Date(this.minDate);
 
     this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     console.log('this.currTime', this.currTime);
@@ -146,7 +146,7 @@ export class HoddashboardPage {
       console.log('this.bookingForm.value ', this.bookingForm.value);
 
       this.tdate = new Date(this.travelDate);
-      this.tdate = this.tdate.getDate() + '/' + this.tdate.getMonth() + 1 + '/' + this.tdate.getFullYear();
+      this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
 
 
       let reqData = {
@@ -360,7 +360,7 @@ export class HoddashboardPage {
     } else {
       this.bookingForm.get('traveltime').setValue('');
       this.currTime = new Date();
-      this.currTime = this.currTime.getHours() + ':' + this.currTime.getMinutes();
+      this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
     console.log("date obj ", this.travelDate);
   }

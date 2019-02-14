@@ -67,7 +67,7 @@ export class CommonProvider {
   showToast(msg, time?) {
     this.toaster = this.toast.create({
       message: msg,
-      duration: time || 8000,
+      duration: time || 2000,
       position: 'bottom'
     });
     this.toaster.onDidDismiss(() => {

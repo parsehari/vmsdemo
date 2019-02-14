@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { NotificationPage } from '../notification/notification';
 import { PopoverController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
@@ -27,16 +27,25 @@ export class DriverPage {
   driverphno: any;
   startkm: any;
   endkm: any;
+  rating: any;
+  feedbackform: boolean = false;
+  driverText: any = 'No cab is assigned';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public popoverController: PopoverController,
     public commonProvider: CommonProvider,
     public serviceProvider: ServiceProvider,
-    public callnumber: CallNumber
+    public callnumber: CallNumber,
+    public events: Events
   ) {
     console.log('driver driverNumber page', this.navParams.get('driverNumber'));
     this.driverphno = this.navParams.get('driverNumber');
+
+    events.subscribe('star-rating:changed', (starRating) => {
+      console.log('rating changed', starRating);
+    })
+
   }
 
   logout() {
@@ -94,7 +103,7 @@ export class DriverPage {
   }
 
   startTrip(type) {
-
+    console.log('type ', type);
     console.log(this.startkm)
     if (this.startkm) {
       this.commonProvider.showLoader('Updating Kms..');
@@ -105,10 +114,12 @@ export class DriverPage {
       this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
         console.log("response ", resp);
         this.commonProvider.hideLoader();
-        // if (type == 'endTrip') {
+        if (type == 'endTrip') {
+          this.feedbackform = true;
+          this.driverText = 'You have completed your trip!!'
+        }
         console.log("end trip");
         this.getTrip();
-        // }
 
       }, (err) => {
         console.log("error", err);
