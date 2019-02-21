@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
-    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
-    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span>
+    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>
+    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>
     <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span> -->
     <!-- <ion-icon name="information-circle-outline" style="float:right"></ion-icon> -->
   </ion-navbar>

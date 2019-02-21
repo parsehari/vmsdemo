@@ -27,6 +27,7 @@ export class AdminAprvlPage {
   cabList: any = [];
   driverList: any = [];
   vendorList: any = [];
+  adminID: any;
   admincomment: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -37,6 +38,8 @@ export class AdminAprvlPage {
     console.log("navparams ", NavParams);
     console.log("location ", this.navParams.get('adminLocation'));
     this.adminLocationID = this.navParams.get('adminLocation');
+    this.adminID = this.navParams.get('adminID');
+    console.log("admin id ", this.adminID);
     //  this.getCabDriverDetails();
   }
 
@@ -87,7 +90,7 @@ export class AdminAprvlPage {
       this.vendor ? 'nothing' : this.vendor = "";
 
       this.commonProvider.showLoader('Approving trip...');
-      this.serviceProvider.assignReq('/approvependingrequestadmin', this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment).subscribe((response: any) => {
+      this.serviceProvider.assignReq('/approvependingrequestadmin', this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
         console.log("response ", response);
         if (response) {
           this.commonProvider.hideLoader();

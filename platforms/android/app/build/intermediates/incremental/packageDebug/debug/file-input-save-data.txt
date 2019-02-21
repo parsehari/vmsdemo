@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Feb 14 14:32:37 IST 2019
+#Wed Feb 20 16:22:19 IST 2019
 20.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 143.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 340.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/cordova-js-src/plugin/android/app.js
@@ -24,7 +24,7 @@
 43.set=ANDROID_RESOURCE
 133.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 304.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-330.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_btn_switch_to_on_mtrl_00001.9.png
+330.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_dialog_title_material.xml
 43.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 166.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 60.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/service-worker.js
@@ -61,7 +61,7 @@
 130.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/support_simple_spinner_dropdown_item.xml
 301.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/fonts/icomoon.ttf
 14.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-163.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
+163.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
 40.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png
 379.set=ANDROID_RESOURCE
 317.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -109,7 +109,7 @@
 364.set=ASSET
 17.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 34.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/notification_template_big_media.xml
-337.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/mipmap-xxxhdpi-v4/icon.png
+337.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_btn_check_to_on_mtrl_015.png
 287.set=ANDROID_RESOURCE
 199.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_list_menu_item_icon.xml
 210.set=ANDROID_RESOURCE
@@ -123,7 +123,7 @@
 267.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 114.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_btn_default_mtrl_shape.xml
 264.set=ANDROID_RESOURCE
-24.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_list_pressed_holo_dark.9.png
+24.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_list_selector_holo_light.xml
 142.set=ASSET
 57.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/ic_action_previous_item.png
 187.set=ASSET
@@ -134,7 +134,7 @@
 241.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-advanced-http/www/lodash.js
 241.set=ASSET
 257.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-104.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_popup_background_mtrl_mult.9.png
+104.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_cab_background_internal_bg.xml
 137.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 308.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_btn_borderless_material.xml
 47.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_list_focused_holo.9.png
@@ -145,7 +145,7 @@
 384.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 3.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 231.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_menu_share_mtrl_alpha.png
-402.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_popup_menu_item_layout.xml
+402.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_000.png
 264.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_expanded_menu_layout.xml
 418.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 297.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_cab_background_top_mtrl_alpha.9.png
@@ -167,7 +167,7 @@
 380.set=ANDROID_RESOURCE
 381.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_spinner_textfield_background_material.xml
 24.set=ANDROID_RESOURCE
-0.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_list_selector_background_transition_holo_light.xml
+0.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png
 94.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 218.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 415.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
@@ -197,7 +197,7 @@
 215.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 405.set=ANDROID_RESOURCE
 32.set=ANDROID_RESOURCE
-248.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
+248.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png
 206.set=ANDROID_RESOURCE
 112.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 145.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -209,7 +209,7 @@
 337.set=ANDROID_RESOURCE
 358.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 375.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_list_pressed_holo_light.9.png
-205.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
+205.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_clear_mtrl_alpha.png
 88.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 238.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-port-xxhdpi-v4/screen.png
 409.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/custom-font/HelveticaNeue-Medium.ttf
@@ -241,12 +241,12 @@
 142.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/fonts/icomoon.woff
 169.set=ASSET
 158.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-52.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_slide_out_top.xml
+52.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_go_search_api_mtrl_alpha.png
 329.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 355.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_btn_rating_star_off_mtrl_alpha.png
 68.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 85.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-port-hdpi-v4/screen.png
-388.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/xml/config.xml
+388.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_grow_fade_in_from_bottom.xml
 94.set=ANDROID_RESOURCE
 345.set=ANDROID_RESOURCE
 7.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/index.html
@@ -286,13 +286,13 @@
 223.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 353.set=ANDROID_RESOURCE
 420.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-file/www/Entry.js
-282.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png
+282.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/ic_action_previous_item.png
 276.set=ANDROID_RESOURCE
 154.set=ANDROID_RESOURCE
 119.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 13.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_action_mode_close_item_material.xml
 8.set=ANDROID_RESOURCE
-316.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_textfield_search_default_mtrl_alpha.9.png
+316.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xxxhdpi-v4/abc_spinner_mtrl_am_alpha.9.png
 199.set=ANDROID_RESOURCE
 29.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 178.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_action_menu_item_layout.xml
@@ -301,7 +301,7 @@
 330.set=ANDROID_RESOURCE
 213.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 253.set=ASSET
-410.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_ic_go_search_api_mtrl_alpha.png
+410.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/color/switch_thumb_material_dark.xml
 131.set=ASSET
 246.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 176.set=ANDROID_RESOURCE
@@ -322,7 +322,7 @@
 269.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 116.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_textfield_default_mtrl_alpha.9.png
 284.set=ANDROID_RESOURCE
-26.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_list_selector_holo_light.xml
+26.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-land-xhdpi-v4/screen.png
 162.set=ANDROID_RESOURCE
 59.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/cordova.js
 330.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -344,7 +344,7 @@
 392.set=ANDROID_RESOURCE
 36.set=ANDROID_RESOURCE
 50.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-370.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_alert_dialog_button_bar_material.xml
+370.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/color/abc_secondary_text_material_dark.xml
 200.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xxhdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
 83.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 386.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
@@ -429,7 +429,7 @@
 83.set=ASSET
 334.set=ANDROID_RESOURCE
 137.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-31.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_switch_track_mtrl_alpha.9.png
+31.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_screen_toolbar.xml
 308.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 334.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png
 47.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -443,7 +443,7 @@
 60.set=ASSET
 311.set=ANDROID_RESOURCE
 264.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-111.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_scrubber_track_mtrl_alpha.9.png
+111.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-hdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
 297.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 234.set=ANDROID_RESOURCE
 127.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -452,7 +452,7 @@
 112.set=ANDROID_RESOURCE
 54.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-land-xxxhdpi-v4/screen.png
 357.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-land-xxhdpi-v4/screen.png
-87.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
+87.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/mipmap-hdpi-v4/icon.png
 410.set=ANDROID_RESOURCE
 365.set=ANDROID_RESOURCE
 9.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js
@@ -465,7 +465,7 @@
 101.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_list_divider_mtrl_alpha.9.png
 287.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 134.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_textfield_activated_mtrl_alpha.9.png
-305.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png
+305.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/ic_action_remove.png
 44.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png
 167.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_scrubber_track_mtrl_alpha.9.png
 91.set=ANDROID_RESOURCE
@@ -504,7 +504,7 @@
 91.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 215.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 273.set=ANDROID_RESOURCE
-412.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_switch_track_mtrl_alpha.9.png
+412.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 151.set=ASSET
 248.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 274.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/icon/favicon.ico
@@ -547,7 +547,7 @@
 388.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 235.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/fonts/icomoon.svg
 7.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-406.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
+406.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_015.png
 108.set=ASSET
 181.set=ASSET
 268.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-v21/abc_action_bar_item_background_material.xml
@@ -586,7 +586,7 @@
 300.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_action_bar_title_item.xml
 13.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 414.set=ANDROID_RESOURCE
-162.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
+162.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
 369.set=ANDROID_RESOURCE
 316.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 41.set=ANDROID_RESOURCE
@@ -603,7 +603,7 @@
 36.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 147.set=ASSET
 62.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-network-information/www/network.js
-185.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_btn_colored_material.xml
+185.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
 339.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 95.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_list_selector_background_transition_holo_dark.xml
 219.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_list_menu_item_radio.xml
@@ -617,7 +617,7 @@
 313.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/manifest.json
 26.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 175.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
-346.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_cab_background_top_mtrl_alpha.9.png
+346.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-mdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
 422.set=ASSET
 59.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 377.set=ANDROID_RESOURCE
@@ -637,7 +637,7 @@
 277.set=ASSET
 198.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_popup_background_mtrl_mult.9.png
 200.set=ANDROID_RESOURCE
-369.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/color/abc_secondary_text_material_dark.xml
+369.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 155.set=ANDROID_RESOURCE
 9.set=ASSET
 370.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -679,7 +679,7 @@
 163.set=ANDROID_RESOURCE
 230.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_popup_exit.xml
 2.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-401.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_000.png
+401.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_popup_menu_item_layout.xml
 263.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_screen_content_include.xml
 417.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 279.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -733,10 +733,10 @@
 196.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 90.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_list_selector_disabled_holo_dark.9.png
 367.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-214.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
+214.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_select_dialog_material.xml
 99.set=ANDROID_RESOURCE
 22.set=ANDROID_RESOURCE
-247.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png
+247.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png
 111.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 144.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 21.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
@@ -747,7 +747,7 @@
 327.set=ANDROID_RESOURCE
 357.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 374.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-splashscreen/www/splashscreen.js
-204.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_clear_mtrl_alpha.png
+204.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
 87.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 237.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/fonts/ionicons.woff2
 9.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
@@ -779,7 +779,7 @@
 124.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 159.set=ANDROID_RESOURCE
 157.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-51.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_go_search_api_mtrl_alpha.png
+51.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_slide_out_top.xml
 328.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 354.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-mdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 67.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -824,7 +824,7 @@
 92.set=ANDROID_RESOURCE
 222.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 343.set=ANDROID_RESOURCE
-281.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/ic_action_previous_item.png
+281.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png
 266.set=ANDROID_RESOURCE
 144.set=ANDROID_RESOURCE
 118.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
@@ -856,7 +856,7 @@
 268.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 115.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/notification_template_lines.xml
 274.set=ASSET
-25.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-land-xhdpi-v4/screen.png
+25.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_list_pressed_holo_dark.9.png
 152.set=ASSET
 58.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/build/1.js
 6.set=ANDROID_RESOURCE
@@ -867,7 +867,7 @@
 242.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png
 251.set=ANDROID_RESOURCE
 258.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-105.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_cab_background_internal_bg.xml
+105.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_popup_background_mtrl_mult.9.png
 174.set=ANDROID_RESOURCE
 138.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/assets/imgs/bell1.png
 48.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_scrubber_control_to_pressed_mtrl_005.png
@@ -902,7 +902,7 @@
 390.set=ANDROID_RESOURCE
 382.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_slide_in_top.xml
 34.set=ANDROID_RESOURCE
-1.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_voice_search_api_mtrl_alpha.png
+1.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_list_selector_background_transition_holo_light.xml
 95.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 219.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 416.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png
@@ -932,7 +932,7 @@
 198.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 92.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/color-v11/abc_background_cache_hint_selector_material_dark.xml
 369.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-216.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_select_dialog_material.xml
+216.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
 415.set=ANDROID_RESOURCE
 42.set=ASSET
 249.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-hdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
@@ -975,7 +975,7 @@
 50.set=ANDROID_RESOURCE
 301.set=ASSET
 263.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-110.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-hdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
+110.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_scrubber_track_mtrl_alpha.9.png
 296.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 224.set=ANDROID_RESOURCE
 126.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -986,9 +986,9 @@
 53.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_list_pressed_holo_light.9.png
 356.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_btn_rating_star_on_mtrl_alpha.png
 69.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-86.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/mipmap-hdpi-v4/icon.png
+86.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
 400.set=ANDROID_RESOURCE
-389.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/anim/abc_grow_fade_in_from_bottom.xml
+389.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/xml/config.xml
 355.set=ANDROID_RESOURCE
 8.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_tab_indicator_mtrl_alpha.9.png
 390.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
@@ -1000,7 +1000,7 @@
 100.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xhdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
 286.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 133.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_cab_background_top_mtrl_alpha.9.png
-304.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/ic_action_remove.png
+304.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_btn_check_to_on_mtrl_000.png
 166.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-port-xxxhdpi-v4/screen.png
 149.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 43.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-mdpi-v4/abc_spinner_mtrl_am_alpha.9.png
@@ -1033,7 +1033,7 @@
 286.set=ANDROID_RESOURCE
 164.set=ANDROID_RESOURCE
 14.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-file/www/FileReader.js
-317.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xxxhdpi-v4/abc_spinner_mtrl_am_alpha.9.png
+317.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_textfield_search_default_mtrl_alpha.9.png
 179.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/plugins/cordova-plugin-file/www/ProgressEvent.js
 180.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 351.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
@@ -1041,7 +1041,7 @@
 90.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 214.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 263.set=ANDROID_RESOURCE
-411.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/color/switch_thumb_material_dark.xml
+411.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_ic_go_search_api_mtrl_alpha.png
 141.set=ANDROID_RESOURCE
 247.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 273.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_menu_copy_mtrl_am_alpha.png
@@ -1079,14 +1079,14 @@
 419.set=ANDROID_RESOURCE
 46.set=ANDROID_RESOURCE
 51.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-371.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
+371.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_alert_dialog_button_bar_material.xml
 354.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 201.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_scrubber_control_to_pressed_mtrl_000.png
 84.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 387.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 234.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_switch_thumb_material.xml
 6.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
-405.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_btn_radio_to_on_mtrl_015.png
+405.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
 171.set=ANDROID_RESOURCE
 267.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
 23.set=ASSET
@@ -1135,7 +1135,7 @@ count=423
 322.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_scrubber_primary_mtrl_alpha.9.png
 35.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 137.set=ANDROID_RESOURCE
-184.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_ic_menu_paste_mtrl_am_alpha.png
+184.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable/abc_btn_colored_material.xml
 338.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 94.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/ic_action_next_item.png
 218.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_list_selector_disabled_holo_light.9.png
@@ -1147,7 +1147,7 @@ count=423
 312.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_ab_share_pack_mtrl_alpha.9.png
 25.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 174.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png
-345.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-mdpi-v4/abc_ic_ab_back_mtrl_am_alpha.png
+345.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_cab_background_top_mtrl_alpha.9.png
 412.set=ANDROID_RESOURCE
 58.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 367.set=ANDROID_RESOURCE
@@ -1160,8 +1160,8 @@ count=423
 93.set=ANDROID_RESOURCE
 344.set=ASSET
 138.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
-32.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_screen_toolbar.xml
-335.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_btn_check_to_on_mtrl_015.png
+32.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-mdpi-v4/abc_switch_track_mtrl_alpha.9.png
+335.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/mipmap-xxxhdpi-v4/icon.png
 48.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 267.set=ANDROID_RESOURCE
 197.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_ic_menu_selectall_mtrl_alpha.png
@@ -1212,7 +1212,7 @@ count=423
 278.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug
 125.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxhdpi-v4/abc_ic_commit_search_api_mtrl_alpha.png
 158.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/assets/debug/www/cordova-js-src/android/promptbasednativeapi.js
-329.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/layout/abc_dialog_title_material.xml
+329.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-hdpi-v4/abc_btn_switch_to_on_mtrl_00001.9.png
 252.set=ANDROID_RESOURCE
 68.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_btn_rating_star_off_mtrl_alpha.png
 130.set=ANDROID_RESOURCE
@@ -1232,7 +1232,7 @@ count=423
 92.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 216.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 283.set=ASSET
-413.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-ldrtl-xxxhdpi-v4/abc_ic_menu_cut_mtrl_alpha.png
+413.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xxxhdpi-v4/abc_switch_track_mtrl_alpha.9.png
 161.set=ASSET
 249.base=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_
 275.file=/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/res/debug/resources-debug.ap_/res/drawable-xhdpi-v4/abc_btn_switch_to_on_mtrl_00001.9.png

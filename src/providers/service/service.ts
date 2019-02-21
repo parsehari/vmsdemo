@@ -17,12 +17,13 @@ export class ServiceProvider {
   // header for json/content-type
 
   private url = 'https://mapps.mahindra.com/vms';
-  //private url = 'http://10.174.50.94:8080/vms';
+  //private url = 'http://10.174.55.244:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;
   assignTripDto: any;
+
 
   constructor(public http: Http) {
     console.log('Hello ServiceProvider Provider');
@@ -183,7 +184,7 @@ export class ServiceProvider {
 
   }
 
-  assignReq(params: any, tripID: any, cabs: any, driver: any, vendor: any, admincomment: any): Observable<any> {
+  assignReq(params: any, tripID: any, cabs: any, driver: any, vendor: any, admincomment: any, adminId: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     this.assignTripDto = new FormData();
@@ -192,6 +193,7 @@ export class ServiceProvider {
     this.assignTripDto.append('driverId', driver);
     this.assignTripDto.append('vendorId', vendor);
     this.assignTripDto.append('admincomment', admincomment);
+    this.assignTripDto.append('adminapproverId', adminId);
 
     return this.http.post(this.url + params, this.assignTripDto, options);
   }

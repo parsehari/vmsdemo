@@ -10,7 +10,7 @@
         <span>
           {{srcSubstr}}
         </span><br>
-        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.source}} </span>
+        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.pickupPoint}} </span>
       </ion-col>
       <ion-col text-center>
         <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>
@@ -55,6 +55,30 @@
           </ion-col>
           <ion-col>
             {{tripDetail.emp_userName}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Pick up point</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.pickupPoint}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Source</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.source}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Destination</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.destination}}
           </ion-col>
         </ion-row>
         <ion-row>

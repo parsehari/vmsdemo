@@ -208,7 +208,7 @@ export class EmpdashboardPage {
         'status': 'Pending with Manager',
         'bh_Id': this.dhDetails.pernr,
         'bh_UserName': this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
-        'bh_email': this.dhDetails.email,
+        'bh_email': this.dhUsrDetails.emp_email,
 
         'remark': this.bookingForm.value.remark,
         'location': this.userDetails.emp_psa,
