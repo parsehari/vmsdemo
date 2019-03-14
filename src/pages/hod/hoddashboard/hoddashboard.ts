@@ -33,6 +33,10 @@ export class HoddashboardPage {
   dhDetails: any = [];
   tdate: any;
   currTime: any;
+  endtravelDate: any;
+  EndcurrTime: any;
+  edate: any;
+  endDate: any;
 
   private bookingForm: FormGroup;
 
@@ -48,11 +52,15 @@ export class HoddashboardPage {
     public events: Events
 
   ) {
-    console.log("params hod", navParams);
     this.userDetails = navParams.data.response;
+    console.log("params hod", navParams);
     console.log("params ", this.userDetails);
 
     this.bookingForm = this.formBuilder.group({
+      costid: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
       updatepurpose: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
@@ -60,6 +68,8 @@ export class HoddashboardPage {
       // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
       travelsrc: ['', Validators.required],
+      endtraveltime: [''],
+      isRoundTrip: ['', Validators.required],
       traveldest: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
@@ -79,9 +89,15 @@ export class HoddashboardPage {
     this.minDate = new Date();
     this.travelDate = new Date();
     this.currTime = new Date(this.minDate);
+    this.currTime = this.formatDate(this.currTime);
 
-    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+    this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
     console.log('this.currTime', this.currTime);
+
+    this.endDate = new Date();
+    this.endtravelDate = new Date();
+
+    this.bookingForm.get('isRoundTrip').setValue('Yes');
 
     this.events.subscribe('actionReq', (ev, status, obj) => {
       this.reqAction(ev, status, obj);
@@ -121,6 +137,7 @@ export class HoddashboardPage {
       this.bookingForm.reset();
       this.confirmReqst = false;
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }, err => {
       console.log('user cancelled');
     })
@@ -148,6 +165,13 @@ export class HoddashboardPage {
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
 
+      if (this.bookingForm.value.isRoundTrip == 'No') {
+        this.edate = "NA";
+        this.bookingForm.value.endtraveltime = "NA";
+      } else {
+        this.edate = new Date(this.endtravelDate);
+        this.edate = this.edate.getDate() + '/' + (this.edate.getMonth() + 1) + '/' + this.edate.getFullYear();
+      }
 
       let reqData = {
         'userID': this.userDetails.emp_no,
@@ -155,20 +179,25 @@ export class HoddashboardPage {
         'destination': this.bookingForm.value.traveldest,
         'pickpoint': this.bookingForm.value.pickpoint,
         'purpose': this.bookingForm.value.updatepurpose,
-        //  'travel_date': new Date(this.travelDate).toDateString(),
+        //'travel_date': new Date(this.travelDate).toDateString(),
         'travel_date': this.tdate,
         'travel_time': this.bookingForm.value.traveltime,
         'emp_email': this.userDetails.emp_email,
 
         'remark': this.bookingForm.value.remark,
         'location': this.userDetails.emp_psa,
-        'cost_id': this.userDetails.emp_cosid,
+        //'cost_id': this.userDetails.emp_cosid,
+        'cost_id': this.bookingForm.value.costid,
         'cost_center': this.userDetails.emp_cost,
 
         'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
         'emp_phoneNo': this.userDetails.emp_cell,
         'status': 'Pending with Admin',
-        'travelType': this.bookingForm.value.travelType
+        'travelType': this.bookingForm.value.travelType,
+        'isRoundTrip': this.bookingForm.value.isRoundTrip,
+        'returnDate': this.edate,
+        //'returnDate': new Date(this.endtravelDate).toDateString(),
+        'returnTime': this.bookingForm.value.endtraveltime
 
       }
 
@@ -179,6 +208,7 @@ export class HoddashboardPage {
           this.confirmReqst = false;
           this.bookingForm.reset();
           this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -265,6 +295,9 @@ export class HoddashboardPage {
       'cost_id': obj.cost_id,
       'cost_center': obj.cost_center,
       'travelType': obj.travelType,
+      'isRoundTrip': obj.isRoundTrip,
+      'returnDate': obj.returnDate,
+      'returnTime': obj.returnTime
     }
     console.log("raise request ", reqData);
     //return;
@@ -314,6 +347,7 @@ export class HoddashboardPage {
         this.commonProvider.showToast(err.message);
       });
     console.log('ionViewDidLoad EmpdashboardPage');
+    this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
   }
 
   getApprovalHistory() {
@@ -355,6 +389,7 @@ export class HoddashboardPage {
 
   setDate(dte: any) {
     this.travelDate = new Date(dte);
+    this.endtravelDate = new Date(dte);
     if (this.travelDate > this.minDate) {
       this.currTime = "00:00";
       this.bookingForm.get('traveltime').setValue('');
@@ -365,6 +400,12 @@ export class HoddashboardPage {
     }
     console.log("date obj ", this.travelDate);
   }
+
+  setEndDate(dte: any) {
+    console.log("dte ", dte);
+    this.endtravelDate = new Date(dte);
+  }
+
 
   cancelDate(dte: any) {
     console.log("date obj ", dte);
@@ -387,6 +428,63 @@ export class HoddashboardPage {
       console.log('user cancelled');
     })
 
+  }
+
+
+  // cancelDate(dte: any) {
+  //   console.log("date obj ", dte);
+  //   //this.minDate = new Date();
+  // }
+  rating(val, tripid) {
+    console.log("rating val", val);
+    console.log("trip id", tripid);
+    if (val <= 2) {
+      const prompt = this.alertCtrl.create({
+        title: '',
+        message: "Please enter any reason",
+        inputs: [
+          {
+            name: 'comment',
+            placeholder: 'Your reason'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Send',
+            handler: data => {
+              console.log('Saved clicked', data);
+              this.giveRating(val, tripid, data.comment);
+            }
+          }
+        ]
+      });
+      prompt.present();
+    } else {
+      this.giveRating(val, tripid);
+    }
+  }
+
+  giveRating(ratings, tripid, reason = null) {
+    console.log("reason ", reason);
+    this.commonProvider.showLoader();
+    this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
+      this.commonProvider.hideLoader();
+      this.commonProvider.showToast("Thank you for your feedback");
+      this.getEmpHistory();
+    }, (error) => {
+      this.commonProvider.hideLoader();
+      this.commonProvider.showToast("Error in update rating");
+    })
+  }
+
+  formatDate(date) {
+    let d = new Date(date),
+      day = '' + d.getDate(),
+      month = '' + (d.getMonth() + 1),
+      year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
   }
 
 

@@ -36,7 +36,9 @@
 
     <ion-card class="driverCard">
       <ion-card-header style="text-align: center" color="red">
-        Request Details</ion-card-header>
+        <span *ngIf=" tripDetail.isRoundTrip == 'Yes'">Round Trip</span>
+        <span *ngIf=" tripDetail.isRoundTrip == 'No'">One Way</span>
+      </ion-card-header>
       <ion-card-content>
         <ion-row>
           <ion-col>
@@ -62,7 +64,7 @@
             {{tripDetail.purpose}}
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="tripDetail.remark != null">
           <ion-col>
             <span class="formtitle">Remark</span>
           </ion-col>
@@ -83,7 +85,7 @@
             <span class="formtitle">Employee Location</span>
           </ion-col>
           <ion-col>
-            {{tripDetail.emp_location}}
+            {{tripDetail.source}}
           </ion-col>
         </ion-row>
         <ion-row>
@@ -107,6 +109,22 @@
             {{tripDetail.emp_email}}
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="tripDetail.isRoundTrip == 'Yes'">
+          <ion-col>
+            <span class="formtitle">Return Date</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.returnDate}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="tripDetail.isRoundTrip == 'Yes'">
+          <ion-col>
+            <span class="formtitle">Return Time</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.returnTime}}
+          </ion-col>
+        </ion-row>
         <ion-row>
           <ion-col>
             <span class="formtitle">Status</span>
@@ -115,7 +133,69 @@
             {{tripDetail.status}} {{tripDetail.bh_UserName}}
           </ion-col>
         </ion-row>
+        <ion-row *ngIf="tripDetail.comment != null">
+          <ion-col>
+            <span class="formtitle">Comment</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.comment}}
+          </ion-col>
+        </ion-row>
 
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="driverCard" *ngIf="tripDetail.cab">
+      <ion-card-header style="text-align: center" color="red">
+        Cab Details</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Cab Name</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.cab.cab_name}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Cab Number</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.cab.cab_no}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Number of seats</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.cab.no_of_seats}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="driverCard" *ngIf="tripDetail.driver">
+      <ion-card-header style="text-align: center" color="red">
+        Driver Details</ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Driver Name</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.driver.first_name}} {{ tripDetail.driver.last_name }}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Driver Number</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.driver.mobile_no}}
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
     <div *ngIf="viewName == 'hodView'">

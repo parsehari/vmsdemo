@@ -3,8 +3,6 @@
     <ion-title text-center>{{pageTitle}}</ion-title>
     <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>
     <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>
-    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span> -->
-    <!-- <ion-icon name="information-circle-outline" style="float:right"></ion-icon> -->
   </ion-navbar>
   <ion-toolbar color="white" class="webToolbar">
     <ion-grid>
@@ -40,36 +38,60 @@
     <div [ngSwitch]="requestSegment">
       <form *ngSwitchCase="'raisereq'" [formGroup]="bookingForm">
         <div *ngIf="!confirmReqst">
-
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
+                <ion-select formControlName="travelsrc" name="travelsrc">
+                  <div *ngFor="let locs of locations">
+                    <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
+                  </div>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>
+                <ion-select formControlName="isRoundTrip" name="isRoundTrip">
+                  <!-- <div *ngFor="let locs of locations"> -->
+                  <ion-option value="No">One Way</ion-option>
+                  <ion-option value="Yes">Round Trip</ion-option>
+                  <!-- </div> -->
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
           <ion-item>
-            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>
-            <ion-input type="text" formControlName="updatepurpose"></ion-input>
+            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>
+            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <span ion-datepicker (ionChanged)="setDate($event);" [value]="minDate" [min]="minDate" [cancelText]='Today' clear>
-              <span>{{travelDate | date}}
+            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate" [cancelText]='Today' clear>
+              <span>Start Date : {{travelDate | date}}
                 <ion-icon name="clipboard" item-left></ion-icon>
               </span>
             </span>
           </ion-item>
           <ion-item>
-            <ion-label floating>Time<sup style="color:red">*</sup></ion-label>
+            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>
             <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">
             </ion-datetime>
           </ion-item>
-          <ion-item>
-            <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
-            <ion-select formControlName="travelsrc" name="travelsrc">
-              <div *ngFor="let locs of locations">
-                <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>
-              </div>
-            </ion-select>
-            <!-- <ion-label floating>My Location</ion-label>
-        <ion-input type="text" formControlName="travelsrc"></ion-input> -->
+          <ion-item *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
+            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate" [cancelText]='Today' clear>
+              <span>Return Date : {{endtravelDate | date}}
+                <ion-icon name="clipboard" item-left></ion-icon>
+              </span>
+            </span>
+          </ion-item>
+          <ion-item *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
+            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>
+            <ion-datetime displayFormat="HH:mm" [min]="bookingForm.value.traveltime" formControlName="endtraveltime">
+            </ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>
-            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
+            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>
+            <ion-input type="text" formControlName="updatepurpose"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>
@@ -78,6 +100,10 @@
           <ion-item>
             <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>
             <ion-input type="text" formControlName="remark"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Cost ID<sup style="color:red">*</sup></ion-label>
+            <ion-input type="text" formControlName="costid"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>
@@ -96,11 +122,24 @@
         <div *ngIf="confirmReqst">
           <ion-card>
             <ion-card-header style="text-align: center" color="red">
-
-              <span>Confirm Request</span>
+              Confirm Request
+              <span *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
+                (Round Trip)
+              </span>
+              <span *ngIf="bookingForm.value.isRoundTrip == 'No'">
+                (One-Way Trip)
+              </span>
               <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>
             </ion-card-header>
             <ion-card-content style="padding: 13px 6px 5px;">
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">Cost Id</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.costid}}
+                </ion-col>
+              </ion-row>
               <ion-row>
                 <ion-col>
                   <span class="formtitle">Purpose</span>
@@ -111,19 +150,34 @@
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">Travel Date</span>
+                  <span class="formtitle">Start Date</span>
                 </ion-col>
                 <ion-col>
                   {{travelDate | date}}
-                  <!-- {{bookingForm.value.traveldate | date}} -->
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">Travel Time</span>
+                  <span class="formtitle">Start Time</span>
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.traveltime}}
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
+                <ion-col>
+                  <span class="formtitle">Return Date</span>
+                </ion-col>
+                <ion-col>
+                  {{endtravelDate | date}}
+                </ion-col>
+              </ion-row>
+              <ion-row *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
+                <ion-col>
+                  <span class="formtitle">Return Time</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.endtraveltime}}
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -150,14 +204,7 @@
                   {{bookingForm.value.pickpoint}}
                 </ion-col>
               </ion-row>
-              <ion-row>
-                <ion-col>
-                  <span class="formtitle">Remark</span>
-                </ion-col>
-                <ion-col>
-                  {{bookingForm.value.remark}}
-                </ion-col>
-              </ion-row>
+
               <ion-row>
                 <ion-col>
                   <span class="formtitle">Travel Type</span>
@@ -166,6 +213,16 @@
                   {{bookingForm.value.travelType}}
                 </ion-col>
               </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <span class="formtitle">Remark</span>
+                </ion-col>
+                <ion-col>
+                  {{bookingForm.value.remark}}
+                </ion-col>
+              </ion-row>
+
 
               <ion-row text-center class="row-height" style="margin-top: 1%">
                 <ion-col>
@@ -218,10 +275,14 @@
                 <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel
                 </button>
               </span>
-              <!-- <span style="float:right; margin-top: -10px;" *ngIf="hdata.status == 'Completed'">
-                <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="rating">
-                </ionic3-star-rating>
-              </span> -->
+              <span style="float:right; margin-top: -25px;" *ngIf="hdata.status == 'Completed'">
+                <!-- <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="hdata.feedbackRating">
+                </ionic3-star-rating> -->
+                <rating [(ngModel)]="hdata.feedbackRating" [(readOnly)]="hdata.feedbackStatus" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="true" (ngModelChange)="rating($event,hdata.id)">
+                  <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->
+                </rating>
+
+              </span>
             </ion-item>
           </ng-container>
         </ion-list>

@@ -1,9 +1,3 @@
-<!-- <ion-header no-border>
-  <ion-navbar>
-    <ion-title text-center></ion-title>
-  </ion-navbar>
-</ion-header> -->
-
 <ion-content class="page-content">
   <ion-grid class="gridSize">
     <ion-row text-center>
@@ -13,50 +7,33 @@
     </ion-row>
     <ion-row text-center>
       <ion-col>
-        <div class="reset-title">VEHICLE MANAGEMENT SYSTEM</div>
+        <div class="reset-title">ASK CAB</div>
       </ion-col>
     </ion-row>
 
-
-    <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
-      <!-- <ion-row text-center class="row-height" style="margin-top: 1%">
-        <ion-col class="input-height">
-          <input type="text" class="login-input1" formControlName="email" placeholder="Mobile number" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
-          <div class="form-control-feedback">
-            <p style="margin: 7px;font-family: font-medium; color: white; ">If your Driver login, please enter your mobile number here, otherwise click login button</p>
-          </div>
-        </ion-col>
-      </ion-row> -->
-
-      <ion-row text-center class="row-height" style="margin-top: 1%">
-        <ion-col class="input-height">
-          <input type="email" class="login-input1" formControlName="email" placeholder="Username" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
-          <!-- <div class="form-control-feedback" *ngIf="email.errors && (email.dirty || email.touched)">
-            <p *ngIf="email.errors.pattern" style="margin: 7px;font-size: 12px">Please enter valid email</p>
-          </div> -->
-        </ion-col>
-      </ion-row>
-      <ion-row text-center class="row-height" style="margin-top: 7%">
-        <ion-col class="input-height">
-          <input type="password" class="login-input1" formControlName="password" [ngClass]="{'typed':password.length>1}" placeholder="Password" required [style.background-color]="(!password.errors) ? '#C24857' : ''" [style.color]="(!password.errors) ? '#f8f8f8' : ''" />
-          <!-- <div class="form-control-feedback" *ngIf="password.errors && (password.dirty || password.touched)">
-            <p *ngIf="password.errors.minlength" style="margin:7px;font-size: 12px">
-              Passsword must be at least 8 characters long.
-            </p>
-          </div> -->
-        </ion-col>
-      </ion-row>
-      <!-- <ion-row text-center class="row-height">
-        <ion-col>
-          <p class="forgot-password">FORGOT PASSWORD?</p>
-        </ion-col>
-      </ion-row> -->
-      <ion-row text-center style="padding-top:7%">
-        <ion-col>
-          <button [ngClass]="{'login-button':(!email.errors),'login-button-dynamic':(email.errors)}">LOGIN
-          </button>
-        </ion-col>
-      </ion-row>
-    </form>
+    <div *ngIf="showLogin">
+      <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">
+        <ion-row text-center class="row-height" style="margin-top: 1%">
+          <ion-col class="input-height">
+            <input type="email" class="login-input1" formControlName="email" placeholder="Username" required [style.background-color]="(!email.errors) ? '#C24857' : ''" [style.color]="(!email.errors) ? '#f8f8f8' : ''" />
+          </ion-col>
+        </ion-row>
+        <ion-row text-center class="row-height" style="margin-top: 7%">
+          <!-- <ion-icon [name]="isActive?'eye':'eye-off'" item-right (click)="isActive=!isActive;" isActive=true>
+          </ion-icon>
+          type="{{ isActive ? 'password' : 'text' }}"
+        -->
+          <ion-col class="input-height">
+            <input type="password" class="login-input1" formControlName="password" [ngClass]="{'typed':password.length>1}" placeholder="Password" required [style.background-color]="(!password.errors) ? '#C24857' : ''" [style.color]="(!password.errors) ? '#f8f8f8' : ''" />
+          </ion-col>
+        </ion-row>
+        <ion-row text-center style="padding-top:7%">
+          <ion-col>
+            <button [ngClass]="{'login-button':(!email.errors),'login-button-dynamic':(email.errors)}">LOGIN
+            </button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </div>
   </ion-grid>
 </ion-content>

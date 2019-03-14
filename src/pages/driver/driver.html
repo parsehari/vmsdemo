@@ -34,20 +34,13 @@
         {{driverText}}</ion-card-header>
     </ion-card>
   </div>
-  <!-- <div *ngIf="feedbackform">
-    <ion-card class="driverCard">
-      <ion-card-header style="text-align: center" color="red">
-        Please give your feedback {{rating}}</ion-card-header>
-      <ion-card-content style="text-align: center;">
-        <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="rating">
-        </ionic3-star-rating>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
   <div *ngIf="tripDetail.length != 0">
     <ion-card class="driverCard crdht formcntent">
       <ion-card-header style="text-align: center" color="red">
-        Passengers Details</ion-card-header>
+        Passengers Details
+        <span *ngIf="tripDetail.isRoundTrip=='Yes'"> (Round Trip)</span>
+        <span *ngIf="tripDetail.isRoundTrip=='No'"> (One-Way Trip)</span>
+      </ion-card-header>
       <ion-card-content>
         <ion-row>
           <ion-col>
@@ -139,9 +132,34 @@
       </ion-card-content>
     </ion-card>
 
+    <ion-card class="driverCard formcntent" *ngIf="tripDetail.isRoundTrip == 'Yes'">
+      <ion-card-header style="text-align: center" color="red">
+        Return Trip details
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Return Date</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.returnDate}}
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="formtitle">Return Time</span>
+          </ion-col>
+          <ion-col>
+            {{tripDetail.returnTime}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+
     <ion-row text-center class="row-height" style="margin-top: 10%">
       <ion-col>
-        <qr-code [value]="asd" [size]="200"></qr-code>
+        <qr-code [value]="nothing" [size]="200"></qr-code>
       </ion-col>
     </ion-row>
 

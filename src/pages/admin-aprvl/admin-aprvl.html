@@ -113,27 +113,34 @@
 
       </ion-card-content>
     </ion-card>
+
     <ion-item>
       <ion-label>Assign Cab</ion-label>
-      <ion-select [(ngModel)]="cabs" [disabled]="tripDetail.travelType == 'outstation' ">
+      <ion-select [(ngModel)]="cabs">
+        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == 'outstation' " -->
+        <ion-option value="select" [selected]="true">select</ion-option>
         <div *ngFor="let cab of cabList">
-          <ion-option value="{{cab.id}}">{{cab.cab_name}}</ion-option>
+          <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>
         </div>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Assign Driver</ion-label>
-      <ion-select [(ngModel)]="driver" [disabled]="tripDetail.travelType == 'outstation' ">
+      <ion-select [(ngModel)]="driver">
+        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == 'outstation' " -->
+        <ion-option value="select" [selected]="true">select</ion-option>
         <div *ngFor="let drvr of driverList">
-          <ion-option value="{{drvr.id}}">{{drvr.first_name}}</ion-option>
+          <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>
         </div>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Assign Vendor</ion-label>
-      <ion-select [(ngModel)]="vendor" [disabled]="tripDetail.travelType == 'local' ">
+      <ion-select [(ngModel)]="vendor">
+        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == 'outstation' " -->
+        <ion-option value="select" [selected]="true">select</ion-option>
         <div *ngFor="let vendor of vendorList">
-          <ion-option value="{{vendor.id}}">{{vendor.vName}}</ion-option>
+          <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>
         </div>
       </ion-select>
     </ion-item>
@@ -144,6 +151,7 @@
     <ion-row text-center>
       <ion-col>
         <button ion-button small="true" color="red" (click)="assignRequest()">Assign</button>
+        <button ion-button small="true" color="red" (click)="cancelReqAdmin()">Reject</button>
       </ion-col>
     </ion-row>
   </div>

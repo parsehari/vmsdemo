@@ -66,13 +66,20 @@ page-empdashboard {
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  // ::-webkit-scrollbar {
-  //   width: auto;
-  // }
-  //
-  // ::-webkit-scrollbar-thumb {
-  //   background: color($colors, 'primary');
-  // }
+
+  ul {
+    padding: 0;
+
+    &.rating li {
+      padding: 5px 10px !important;
+      background: none;
+      color: #74b923;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
+  }
   @media screen and (min-width: 1024px) {
     // .gridSize {
     //   padding: 3px !important;

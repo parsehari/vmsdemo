@@ -16,8 +16,9 @@ import 'rxjs/add/operator/toPromise';
 export class ServiceProvider {
   // header for json/content-type
 
+  //private url = 'https://gmc.mahindra.com/vms';
   private url = 'https://mapps.mahindra.com/vms';
-  //private url = 'http://10.174.55.244:8080/vms';
+  //private url = 'http://10.174.50.134:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -55,8 +56,7 @@ export class ServiceProvider {
   }
 
   raiseRequest(param: any, data: any, datastatus: any = "default"): Observable<any> {
-    //  var params = "userID=" + data.userID + "&source=" + data.userID + "&destination=" + data.destination + "&purpose=" + data.purpose +"&travel_date="+ data.travel_date +"&travel_time"+ data.travel_time;
-    console.log("datastatus ", data);
+
     this.raiseReq = new FormData();
     this.raiseReq.append("userID", data.userID);
     this.raiseReq.append("source", data.source);
@@ -78,14 +78,19 @@ export class ServiceProvider {
     this.raiseReq.append("cost_id", data.cost_id);
     this.raiseReq.append("cost_center", data.cost_center);
     this.raiseReq.append("travelType", data.travelType);
+    this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+    this.raiseReq.append("returnDate", data.returnDate);
+    this.raiseReq.append("returnTime", data.returnTime);
+
     this.raiseReq.append("isactive", 'Y');
+
 
     if (datastatus == "hodAction") {
       this.raiseReq.append("id", data.id);
       this.raiseReq.append("modifiedby", data.modified_by);
       this.raiseReq.append("comment", data.comment);
     }
-
+    console.log("call api ", data);
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     console.log("in service ", this.raiseReq)
@@ -111,12 +116,17 @@ export class ServiceProvider {
     this.raiseReq.append("cabid", data.cabs);
     this.raiseReq.append("vendorid", data.vendor);
     this.raiseReq.append("driverid", data.driver);
+    this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+    this.raiseReq.append("returnDate", data.returnDate);
+    this.raiseReq.append("returnTime", data.returnTime);
+    this.raiseReq.append("adminapproverId", data.adminapproverId);
+
 
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     console.log("in service ", this.raiseReq)
     console.log("in options ", options)
-    return this.http.post(this.url + param, this.raiseReq, options);
+    return this.http.post(this.url + param, this.raiseReq);
 
   }
 
@@ -197,6 +207,28 @@ export class ServiceProvider {
 
     return this.http.post(this.url + params, this.assignTripDto, options);
   }
+
+  submitRating(params: any, tripId: any, ratings: any, reason: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    this.tripDTO = new FormData();
+    this.tripDTO.append('id', tripId);
+    this.tripDTO.append('feedbackRating', ratings);
+    this.tripDTO.append('feedbackComment', reason);
+    return this.http.post(this.url + params, this.tripDTO, options);
+  }
+
+  adminCancelReq(params: any, cmnt: any, tripId: any, adminId: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    this.tripDTO = new FormData();
+    this.tripDTO.append('tripId', tripId);
+    this.tripDTO.append('adminapproverId', adminId);
+    this.tripDTO.append('rejectComment', cmnt);
+    return this.http.post(this.url + params, this.tripDTO, options);
+  }
+
+
 
 }
 

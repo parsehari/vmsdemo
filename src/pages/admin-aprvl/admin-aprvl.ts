@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import { CommonProvider } from '../../providers/common/common';
 import { CallNumber } from '@ionic-native/call-number';
+//import { CalendarComponentOptions } from 'ion2-calendar';
 /**
  * Generated class for the AdminAprvlPage page.
  *
@@ -30,10 +31,12 @@ export class AdminAprvlPage {
   adminID: any;
   admincomment: any;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
-    public callnumber: CallNumber
+    public callnumber: CallNumber,
+    public alertCtrl: AlertController
   ) {
     console.log("navparams ", NavParams);
     console.log("location ", this.navParams.get('adminLocation'));
@@ -69,25 +72,38 @@ export class AdminAprvlPage {
   }
 
   assignRequest() {
-    if (this.tripDetail.travelType == 'local') {
+    // if (this.tripDetail.travelType == 'local') {
+    //   if (!this.cabs) {
+    //     this.commonProvider.showToast("Please assign Cab");
+    //     return false;
+    //   }
+    // } else {
+    //   if (!this.vendor) {
+    //     this.commonProvider.showToast("Please assign Vendor");
+    //     return false;
+    //   }
+    // }
+    // if (!this.driver) {
+    //   this.commonProvider.showToast("Please assign Driver");
+    //   return false;
+    // }
+    if (!this.vendor) {
+      if (!this.driver) {
+        this.commonProvider.showToast("Please assign Driver");
+        return false;
+      }
       if (!this.cabs) {
         this.commonProvider.showToast("Please assign Cab");
         return false;
       }
     } else {
-      if (!this.vendor) {
-        this.commonProvider.showToast("Please assign Vendor");
-        return false;
-      }
+
     }
-    if (!this.driver) {
-      this.commonProvider.showToast("Please assign Driver");
-      return false;
-    }
+
     this.commonProvider.Alert.confirm().then((res) => {
-      this.cabs ? 'nothing' : this.cabs = "";
-      this.driver ? 'nothing' : this.driver = "";
-      this.vendor ? 'nothing' : this.vendor = "";
+      this.cabs != 'select' ? 'nothing' : this.cabs = "";
+      this.driver != 'select' ? 'nothing' : this.driver = "";
+      this.vendor != 'select' ? 'nothing' : this.vendor = "";
 
       this.commonProvider.showLoader('Approving trip...');
       this.serviceProvider.assignReq('/approvependingrequestadmin', this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
@@ -116,6 +132,67 @@ export class AdminAprvlPage {
         this.commonProvider.showToast(err);
         console.log('Error launching dialer', err);
       })
+  }
+  setCab() {
+    this.cabs = 'select';
+    this.driver = 'select';
+  }
+
+  setVendor() {
+    this.vendor = 'select';
+  }
+
+  cancelReqAdmin() {
+    const prompt = this.alertCtrl.create({
+      title: '',
+      message: "Please enter comments for rejection",
+      inputs: [
+        {
+          name: 'comment',
+          placeholder: 'Your reason'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked', data);
+          }
+        },
+        {
+          text: 'Send',
+          handler: data => {
+            console.log('Saved clicked', data);
+            this.rejectRequest(data.comment);
+          }
+        }
+      ]
+    });
+    prompt.present();
+    return;
+  }
+
+  rejectRequest(cmnt: any) {
+    this.commonProvider.showLoader('Rejecting trip...');
+    console.log('cmnt ', cmnt);
+    console.log('this.tripDetail.id ', this.tripDetail.id);
+    console.log('adminID ', this.adminID);
+    this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe((response: any) => {
+      console.log("response ", response);
+      if (response) {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Request cancelled successfully");
+        this.navCtrl.pop();
+      } else {
+        this.commonProvider.showToast("Error in request cancellation");
+        this.commonProvider.hideLoader();
+      }
+    }, err => {
+      this.commonProvider.showToast("Request error");
+      this.commonProvider.hideLoader();
+    })
+
+
   }
 
 }

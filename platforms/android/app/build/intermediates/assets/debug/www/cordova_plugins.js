@@ -276,6 +276,14 @@ module.exports = [
     "clobbers": [
       "call"
     ]
+  },
+  {
+    "id": "cordova-plugin-aes256-encryption.AES256",
+    "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
+    "pluginId": "cordova-plugin-aes256-encryption",
+    "clobbers": [
+      "cordova.plugins.AES256"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -291,7 +299,8 @@ module.exports.metadata =
   "cordova-plugin-qrscanner": "2.6.0",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",
-  "mx.ferreyra.callnumber": "0.0.2"
+  "mx.ferreyra.callnumber": "0.0.2",
+  "cordova-plugin-aes256-encryption": "1.1.0"
 };
 // BOTTOM OF METADATA
 });

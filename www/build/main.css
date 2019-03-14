@@ -34852,7 +34852,7 @@ body {
 }
 
 .list-ios > .item-block:first-child {
-  border-top: 0px solid #8a8a8e !important;
+  border-top: 0 solid #8a8a8e !important;
 }
 
 .title-ios {
@@ -34863,7 +34863,7 @@ body {
 
 .title.title-md {
   position: absolute;
-  left: 0%;
+  left: 0;
   top: 0;
   height: 100%;
   width: 100%;
@@ -34872,9 +34872,9 @@ body {
 }
 
 .back-button-md {
-  margin: 0px;
-  min-width: 0px;
-  padding: 0px !important;
+  margin: 0;
+  min-width: 0;
+  padding: 0 !important;
   z-index: 100;
 }
 
@@ -35059,6 +35059,69 @@ page-adminrequests .reqText {
   }
 }
 
+page-admin-history ul.bar {
+  margin: 0;
+  padding: 0 0 0 3px;
+  position: relative;
+}
+
+page-admin-history ul.bar:before {
+  border-left: #f00 1px solid;
+  position: absolute;
+  content: " ";
+  width: 2px;
+  height: 56%;
+  top: 9px;
+  /* bottom: 39px; */
+  margin-left: 2px;
+}
+
+page-admin-history ul.bar li {
+  list-style: none;
+  position: relative;
+  padding-left: 15px;
+  /* line-height: 30px; */
+  padding-bottom: 10px;
+}
+
+page-admin-history ion-label {
+  white-space: initial !important;
+}
+
+page-admin-history ul.bar li:before {
+  background: #f00;
+  position: absolute;
+  content: " ";
+  width: 5px;
+  height: 5px;
+  left: 0;
+  top: 6px;
+}
+
+page-admin-history .statusWrds {
+  color: #a90e1b;
+  float: right;
+  display: block;
+  width: 95px;
+  word-wrap: break-word;
+}
+
+page-admin-history .reqText {
+  font-weight: 500;
+  margin-bottom: 5px;
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (min-width: 1024px) {
+  page-admin-history .formcntent {
+    margin-left: 15%;
+    width: 70%;
+  }
+}
+
 page-driver .cart-badge {
   position: absolute !important;
   top: 0 !important;
@@ -35168,6 +35231,20 @@ page-empdashboard .reqText {
   text-overflow: ellipsis;
 }
 
+page-empdashboard ul {
+  padding: 0;
+}
+
+page-empdashboard ul.rating li {
+  padding: 5px 10px !important;
+  background: none;
+  color: #74b923;
+}
+
+page-empdashboard ul.rating li ion-icon {
+  font-size: 30px;
+}
+
 @media screen and (min-width: 1024px) {
   page-empdashboard .gridSize {
     padding: 3px !important;
@@ -35245,6 +35322,7 @@ page-hoddashboard .statusWrds {
   display: block;
   word-wrap: break-word;
   width: 95px;
+  margin-top: -17px;
 }
 
 page-hoddashboard .reqText {
@@ -35254,6 +35332,20 @@ page-hoddashboard .reqText {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+page-hoddashboard ul {
+  padding: 0;
+}
+
+page-hoddashboard ul.rating li {
+  padding: 5px 10px !important;
+  background: none;
+  color: #74b923;
+}
+
+page-hoddashboard ul.rating li ion-icon {
+  font-size: 30px;
 }
 
 @media screen and (min-width: 1024px) {
@@ -35349,7 +35441,7 @@ page-login .row-height {
 page-login .reset-title {
   color: white !important;
   margin: 8px 0;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 page-login .page-content {

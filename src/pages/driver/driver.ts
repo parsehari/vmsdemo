@@ -42,10 +42,6 @@ export class DriverPage {
     console.log('driver driverNumber page', this.navParams.get('driverNumber'));
     this.driverphno = this.navParams.get('driverNumber');
 
-    events.subscribe('star-rating:changed', (starRating) => {
-      console.log('rating changed', starRating);
-    })
-
   }
 
   logout() {

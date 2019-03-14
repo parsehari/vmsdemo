@@ -8,6 +8,7 @@ import { AdminAprvlPage } from './admin-aprvl';
   ],
   imports: [
     IonicPageModule.forChild(AdminAprvlPage),
+
   ],
 })
-export class AdminAprvlPageModule {}
+export class AdminAprvlPageModule { }

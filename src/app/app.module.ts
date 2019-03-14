@@ -30,9 +30,11 @@ import { DriverPageModule } from '../pages/driver/driver.module';
 import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboard.module';
 //Admin page
 import { AdminrequestsPageModule } from '../pages/adminrequests/adminrequests.module';
+import { AdminHistoryPageModule } from '../pages/adminrequests/admin-history/admin-history.module';
 import { AdminAprvlPageModule } from '../pages/admin-aprvl/admin-aprvl.module';
 
 import { DatePickerModule } from 'ionic3-datepicker';
+
 
 @NgModule({
   declarations: [
@@ -41,6 +43,7 @@ import { DatePickerModule } from 'ionic3-datepicker';
   ],
   imports: [
     BrowserModule,
+
     //  HttpClientModule,
     EmpdashboardPageModule,
     NotificationPageModule,
@@ -49,6 +52,7 @@ import { DatePickerModule } from 'ionic3-datepicker';
     RequesthistoryPageModule,
     UsersDashboardPageModule,
     AdminrequestsPageModule,
+    AdminHistoryPageModule,
     TermsconditionPageModule,
     AdminAprvlPageModule,
     HttpModule,
@@ -79,6 +83,7 @@ import { DatePickerModule } from 'ionic3-datepicker';
     InAppBrowser,
     QRScanner,
     CallNumber
+
 
   ]
 })

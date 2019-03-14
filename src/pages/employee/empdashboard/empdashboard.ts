@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { PopoverController } from 'ionic-angular';
 import { NotificationPage } from '../../notification/notification';
@@ -29,6 +29,7 @@ export class EmpdashboardPage {
   confirmReqst: boolean = false;
   minDate: any;
   travelDate: any;
+  endtravelDate: any;
   locations: any;
   historyData: any = [];
   userDetails: any = [];
@@ -36,12 +37,14 @@ export class EmpdashboardPage {
   dhUsrDetails: any = [];
   travelType: any = [];
   userName: any;
-  startDatetimeMin: any;
-  endDatetimeMax: any;
+  endDate: any;
+
   datess: any;
   pageTitle: any;
   tdate: any;
+  edate: any;
   currTime: any;
+  EndcurrTime: any;
 
   private bookingForm: FormGroup;
 
@@ -52,29 +55,31 @@ export class EmpdashboardPage {
     public serviceProvider: ServiceProvider,
     public commonProvider: CommonProvider,
     public modal: ModalController,
-    public events: Events
+    public events: Events,
+    public alertCtrl: AlertController
     //  public calendar: Calendar
     //  public fcm: FCM
   ) {
-    // events.subscribe('star-rating:changed', (starRating) => {
-    //   console.log('rating changed', starRating);
-    // })
+
     console.log("params ", navParams);
-    //  this.userDetails = navParams.data.EmployeeDetail;
+
     this.userDetails = navParams.data.response;
     this.userName = navParams.get('userId');
     this.userName = navParams.get('response');
-    //alert(this.userName)
-    console.log("params ", this.userDetails);
-    console.log("params ", this.userDetails);
     this.bookingForm = this.formBuilder.group({
       updatepurpose: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
       ])],
+      costid: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
       // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
+      endtraveltime: [''],
       travelsrc: ['', Validators.required],
+      isRoundTrip: ['', Validators.required],
       traveldest: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
@@ -91,12 +96,20 @@ export class EmpdashboardPage {
     });
     this.requestSegment = "raisereq";
     this.pageTitle = "Raise Request";
+
     this.minDate = new Date();
     this.travelDate = new Date();
-    this.currTime = new Date(this.minDate);
 
-    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
-    console.log('this.currTime', this.currTime);
+    this.currTime = new Date(this.minDate);
+    this.currTime = this.formatDate(this.currTime);
+    this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+
+    this.endDate = new Date();
+    this.endtravelDate = new Date();
+    this.EndcurrTime = new Date();
+    this.EndcurrTime = this.formatDate(this.EndcurrTime);
+    this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    this.bookingForm.get('isRoundTrip').setValue('Yes');
 
   }
 
@@ -126,16 +139,11 @@ export class EmpdashboardPage {
         this.commonProvider.showToast(err.message);
       });
 
-    this.startDatetimeMin = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString();// set the current date time
-    this.endDatetimeMax = (new Date((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).getTime() + 30 * 24 * 60 * 60 * 1000).toISOString()) // sets the 30 days from the current date time
-    console.log('ionViewDidLoad EmpdashboardPage ', this.startDatetimeMin);
-    console.log('ionViewDidLoad EmpdashboardPage ', this.endDatetimeMax);
-
-
+    this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    console.log('ionViewDidLoad EmpdashboardPage ', this.endDate);
   }
 
   showNotifn(myEvent) {
-
     let popover = this.popoverController.create(NotificationPage);
     popover.present(
       {
@@ -160,6 +168,7 @@ export class EmpdashboardPage {
       this.bookingForm.reset();
       this.confirmReqst = false;
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }, err => {
       console.log('user cancelled');
     })
@@ -185,11 +194,17 @@ export class EmpdashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
       this.commonProvider.showLoader('Sending request...');
       console.log('this.bookingForm.value ', this.bookingForm.value);
-      //let ustr = this.userDetails.emp_esg.substring(0, 2);
+
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
-      // var mm = tdate.getMonth() + 1;
-      // var yyyy = tdate.getFullYear();
+
+      if (this.bookingForm.value.isRoundTrip == 'No') {
+        this.edate = "NA";
+        this.bookingForm.value.endtraveltime = "NA";
+      } else {
+        this.edate = new Date(this.endtravelDate);
+        this.edate = this.edate.getDate() + '/' + (this.edate.getMonth() + 1) + '/' + this.edate.getFullYear();
+      }
 
       let reqData;
 
@@ -212,9 +227,14 @@ export class EmpdashboardPage {
 
         'remark': this.bookingForm.value.remark,
         'location': this.userDetails.emp_psa,
-        'cost_id': this.userDetails.emp_cosid,
+        //'cost_id': this.userDetails.emp_cosid,
+        'cost_id': this.bookingForm.value.costid,
         'cost_center': this.userDetails.emp_cost,
-        'travelType': this.bookingForm.value.travelType
+        'travelType': this.bookingForm.value.travelType,
+        'isRoundTrip': this.bookingForm.value.isRoundTrip,
+        //'returnDate': new Date(this.endtravelDate).toDateString(),
+        'returnDate': this.edate,
+        'returnTime': this.bookingForm.value.endtraveltime,
       }
       console.log("ustr", reqData);
       //   reqData.bh_Id = '00211779' ;
@@ -228,6 +248,7 @@ export class EmpdashboardPage {
           this.confirmReqst = false;
           this.bookingForm.reset();
           this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
           this.commonProvider.showToast('Request sent successfully');
         } else {
           this.commonProvider.showToast('Request error, Please check with admin');
@@ -260,17 +281,21 @@ export class EmpdashboardPage {
     console.log("dte ", dte);
     console.log("minDate ", this.minDate);
     this.travelDate = new Date(dte);
+    this.endtravelDate = new Date(dte);
 
     if (this.travelDate > this.minDate) {
       this.currTime = "00:00";
       this.bookingForm.get('traveltime').setValue('');
     } else {
-      //    this.currTime = '';
-      //this.bookingForm.get('traveltime').setValue('');
       this.currTime = new Date();
       this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
     console.log("date obj ", this.travelDate);
+  }
+
+  setEndDate(dte: any) {
+    console.log("dte ", dte);
+    this.endtravelDate = new Date(dte);
   }
 
   cancelCabReq(event, id: any) {
@@ -294,10 +319,57 @@ export class EmpdashboardPage {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }
-  // cancelDate(dte: any) {
-  //   console.log("date obj ", dte);
-  //   //this.minDate = new Date();
-  // }
+  rating(val, tripid) {
+    console.log("rating val", val);
+    console.log("trip id", tripid);
+    if (val <= 2) {
+      const prompt = this.alertCtrl.create({
+        title: '',
+        message: "Please enter any reason",
+        inputs: [
+          {
+            name: 'comment',
+            placeholder: 'Your reason'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Send',
+            handler: data => {
+              console.log('Saved clicked', data);
+              this.giveRating(val, tripid, data.comment);
+            }
+          }
+        ]
+      });
+      prompt.present();
+    } else {
+      this.giveRating(val, tripid);
+    }
+  }
+
+  giveRating(ratings, tripid, reason = null) {
+    console.log("reason ", reason);
+    this.commonProvider.showLoader();
+    this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
+      this.commonProvider.hideLoader();
+      this.commonProvider.showToast("Thank you for your feedback");
+      this.getEmpHistory();
+    }, (error) => {
+      this.commonProvider.hideLoader();
+      this.commonProvider.showToast("Error in update rating");
+    })
+  }
+
+  formatDate(date) {
+    let d = new Date(date),
+      day = '' + d.getDate(),
+      month = '' + (d.getMonth() + 1),
+      year = d.getFullYear();
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+    return [year, month, day].join('-');
+  }
 
 
 }

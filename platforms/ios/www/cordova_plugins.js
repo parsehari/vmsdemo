@@ -212,6 +212,14 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-aes256-encryption.AES256",
+    "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
+    "pluginId": "cordova-plugin-aes256-encryption",
+    "clobbers": [
+      "cordova.plugins.AES256"
+    ]
+  },
+  {
     "id": "cordova-plugin-device.device",
     "file": "plugins/cordova-plugin-device/www/device.js",
     "pluginId": "cordova-plugin-device",
@@ -284,6 +292,7 @@ module.exports.metadata =
   "cordova-plugin-add-swift-support": "1.7.2",
   "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
+  "cordova-plugin-aes256-encryption": "1.1.0",
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-ionic-keyboard": "2.0.5",

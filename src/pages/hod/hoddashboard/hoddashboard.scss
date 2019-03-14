@@ -61,6 +61,7 @@ page-hoddashboard {
     display: block;
     word-wrap: break-word;
     width: 95px;
+    margin-top: -17px;
   }
 
   .reqText {
@@ -70,6 +71,20 @@ page-hoddashboard {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  ul {
+    padding: 0;
+
+    &.rating li {
+      padding: 5px 10px !important;
+      background: none;
+      color: #74b923;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
   }
   @media screen and (min-width: 1024px) {
     .gridSize {

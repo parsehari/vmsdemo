@@ -1,0 +1,63 @@
+page-admin-history {
+  ul.bar {
+    margin: 0;
+    padding: 0 0 0 3px;
+    position: relative;
+  }
+
+  ul.bar:before {
+    border-left: #f00 1px solid;
+    position: absolute;
+    content: " ";
+    width: 2px;
+    height: 56%;
+    top: 9px;
+    /* bottom: 39px; */
+    margin-left: 2px;
+  }
+
+  ul.bar li {
+    list-style: none;
+    position: relative;
+    padding-left: 15px;
+    /* line-height: 30px; */
+    padding-bottom: 10px;
+  }
+
+  ion-label {
+    white-space: initial !important;
+  }
+
+  ul.bar li:before {
+    background: #f00;
+    position: absolute;
+    content: " ";
+    width: 5px;
+    height: 5px;
+    left: 0;
+    top: 6px;
+  }
+
+  .statusWrds {
+    color: #a90e1b;
+    float: right;
+    display: block;
+    width: 95px;
+    word-wrap: break-word;
+  }
+
+  .reqText {
+    font-weight: 500;
+    margin-bottom: 5px;
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media screen and (min-width: 1024px) {
+    .formcntent {
+      margin-left: 15%;
+      width: 70%;
+    }
+  }
+}

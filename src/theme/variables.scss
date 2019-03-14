@@ -2,13 +2,11 @@
 // http://ionicframework.com/docs/theming/
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
-$font-path: "../assets/fonts";
-// The app direction is used to include
+$font-path: "../assets/fonts"; // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
-@import "ionic.globals";
-// Shared Variables
+@import "ionic.globals"; // Shared Variables
 // --------------------------------------------------
 // To customize the look and feel of this app, you can override
 // the Sass variables found in Ionic's source scss files.
@@ -37,8 +35,7 @@ $colors: (
   red: #ad081f,
   grey: #61636b,
   white: #ffffff,
-);
-// App iOS Variables
+); // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 // App Material Design Variables
@@ -53,14 +50,12 @@ $colors: (
 // then be future customized. This import comes last
 // so that the above variables are used and Ionic's
 // default are overridden.
-@import "ionic.theme.default";
-// Ionicons
+@import "ionic.theme.default"; // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 //@import "ionic.ionicons";
-@import "ionicons";
-// Fonts
+@import "ionicons"; // Fonts
 // --------------------------------------------------
 @import "roboto";
 @import "noto-sans";
@@ -74,8 +69,7 @@ $text-input-md-show-success-highlight: true;
 $text-input-md-show-error-highlight: true;
 $text-input-ios-show-focus-highlight: #ad081f;
 $modal-inset-min-width: 768px;
-$modal-inset-min-height-small: 600px;
-// $popover-ios-height: 50%;
+$modal-inset-min-height-small: 600px; // $popover-ios-height: 50%;
 $popover-ios-width: 70%;
 @font-face {
   font-family: 'font-regular';

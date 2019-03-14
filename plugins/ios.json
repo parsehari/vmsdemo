@@ -10,6 +10,9 @@
     "cordova-plugin-advanced-http": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
+    "cordova-plugin-aes256-encryption": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },

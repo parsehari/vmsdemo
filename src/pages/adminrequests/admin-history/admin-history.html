@@ -1,0 +1,53 @@
+<!--
+  Generated template for the RequesthistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Request History</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-grid class="formcntent">
+    <ion-list>
+      <ion-list-header style="background: #9e9e9e1f !important;">
+        <span style="color:#ad081f">Trip Completed</span>
+      </ion-list-header>
+      <ng-container *ngFor="let hdata of tripHistory">
+        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
+          <div (click)="openDetail(hdata)">
+            <span>
+              <h3 class="reqText">
+                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
+            </span>
+            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
+              {{hdata.travel_date}}, {{hdata.travel_time}}
+            </span>
+            <span class="statusWrds">
+              <h6>{{hdata.status}}</h6>
+            </span>
+          </div>
+          <div>
+            <ul class="bar">
+              <li style="color:green">
+                <h3>{{hdata.source}}</h3>
+              </li>
+              <li style="color:#a90e1b">
+                <h3>{{hdata.destination}}</h3>
+              </li>
+            </ul>
+          </div>
+          <span class="statusWrds" (click)="viewRequest($event,hdata);">
+            <h6>Edit</h6>
+          </span>
+        </ion-item>
+      </ng-container>
+    </ion-list>
+  </ion-grid>
+</ion-content>

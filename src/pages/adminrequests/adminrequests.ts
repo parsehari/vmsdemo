@@ -7,6 +7,7 @@ import { CommonProvider } from '../../providers/common/common';
 import { LoginPage } from '../login/login';
 import { AdminAprvlPage } from '../admin-aprvl/admin-aprvl';
 import { TermsconditionPage } from '../termscondition/termscondition';
+import { AdminHistoryPage } from './admin-history/admin-history';
 /**
  * Generated class for the AdminrequestsPage page.
  *
@@ -39,6 +40,10 @@ export class AdminrequestsPage {
   pageTitle: any;
   tdate: any;
   currTime: any;
+  endtravelDate: any;
+  EndcurrTime: any;
+  edate: any;
+  endDate: any;
 
   private bookingForm: FormGroup;
 
@@ -58,6 +63,10 @@ export class AdminrequestsPage {
     console.log("userDetails ", this.userDetails);
 
     this.bookingForm = this.formBuilder.group({
+      // costid: ['', Validators.compose([
+      //   Validators.required,
+      //   Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      // ])],
       usrID: ['', Validators.compose([
         Validators.required,
         Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
@@ -78,6 +87,8 @@ export class AdminrequestsPage {
       // traveldate: ['', Validators.required],
       traveltime: ['', Validators.required],
       travelsrc: ['', Validators.required],
+      endtraveltime: [''],
+      isRoundTrip: ['', Validators.required],
       cabs: [],
       driver: [],
       vendor: [],
@@ -102,9 +113,16 @@ export class AdminrequestsPage {
     console.log('this...', this.minDate)
     this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
 
+
     this.currTime = new Date(this.minDate);
 
     this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+
+    this.endDate = new Date();
+    this.endtravelDate = new Date();
+
+    this.bookingForm.get('isRoundTrip').setValue('Yes');
+
     console.log('this.currTime', this.currTime);
 
   }
@@ -173,19 +191,26 @@ export class AdminrequestsPage {
   sendRequest() {
     this.commonProvider.Alert.confirm().then((res) => {
       this.commonProvider.showLoader('Sending request...');
-      console.log('this.bookingForm.value ', this.bookingForm.value);
-      this.bookingForm.value.cabs ? 'nothing' : this.bookingForm.value.cabs = "";
-      this.bookingForm.value.driver ? 'nothing' : this.bookingForm.value.driver = "";
-      this.bookingForm.value.vendor ? 'nothing' : this.bookingForm.value.vendor = "";
 
+      this.bookingForm.value.cabs != 'select' ? 'nothing' : this.bookingForm.get('cabs').setValue("");
+      this.bookingForm.value.driver != 'select' ? 'nothing' : this.bookingForm.get('driver').setValue("");
+      this.bookingForm.value.vendor != 'select' ? 'nothing' : this.bookingForm.get('vendor').setValue("");
+      console.log('this.bookingForm.value ', this.bookingForm.value);
       this.tdate = new Date(this.travelDate);
-      this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
+      this.tdate = this.tdate.getDate() + '-' + (this.tdate.getMonth() + 1) + '-' + this.tdate.getFullYear();
+      if (this.bookingForm.value.isRoundTrip == 'No') {
+        this.edate = "NA";
+        this.bookingForm.value.endtraveltime = "NA";
+      } else {
+        this.edate = new Date(this.endtravelDate);
+        this.edate = this.edate.getDate() + '-' + (this.edate.getMonth() + 1) + '-' + this.edate.getFullYear();
+      }
 
       let reqData = {
         'source': this.userDetails.location.id,
         'destination': this.bookingForm.value.traveldest,
         'purpose': this.bookingForm.value.updatepurpose,
-        //        'travel_date': new Date(this.travelDate).toDateString(),
+        //'travel_date': new Date(this.travelDate).toDateString(),
         'travel_date': this.tdate,
         'travel_time': this.bookingForm.value.traveltime,
         'remark': this.bookingForm.value.remark,
@@ -197,8 +222,12 @@ export class AdminrequestsPage {
         'cabs': this.bookingForm.value.cabs,
         'driver': this.bookingForm.value.driver,
         'vendor': this.bookingForm.value.vendor,
-        'pickpoint': this.bookingForm.value.pickpoint
-
+        'pickpoint': this.bookingForm.value.pickpoint,
+        'isRoundTrip': this.bookingForm.value.isRoundTrip,
+        //'returnDate': new Date(this.endtravelDate).toDateString(),
+        'returnDate': this.edate,
+        'returnTime': this.bookingForm.value.endtraveltime,
+        'adminapproverId': this.userDetails.id
       }
 
       this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
@@ -230,6 +259,7 @@ export class AdminrequestsPage {
 
   setDate(dte: any) {
     this.travelDate = new Date(dte);
+    this.endtravelDate = new Date(dte);
     if (this.travelDate > this.minDate) {
       this.currTime = "00:00";
       this.bookingForm.get('traveltime').setValue('');
@@ -281,19 +311,67 @@ export class AdminrequestsPage {
     this.confirmReqst = false;
   }
 
-  typeChange(ev) {
-    console.log("type change ", ev);
-    if (ev == "outstation") {
-      this.bookingForm.get('cabs').setValue(null);
-      this.bookingForm.get('driver').setValue(null);
-    }
-    if (ev == "local") {
-      this.bookingForm.get('vendor').setValue(null);
-    }
+  viewReqHistory() {
+    this.navCtrl.push(AdminHistoryPage, { EmployeeDetail: this.userDetails });
   }
+
+  // typeChange(ev) {
+  //   console.log("type change ", ev);
+  //   if (ev == "outstation") {
+  //     this.bookingForm.get('cabs').setValue(null);
+  //     this.bookingForm.get('driver').setValue(null);
+  //   }
+  //   if (ev == "local") {
+  //     this.bookingForm.get('vendor').setValue(null);
+  //   }
+  // }
 
   showTermsCondition(myEvent) {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }
+  setEndDate(dte: any) {
+    console.log("dte ", dte);
+    this.endtravelDate = new Date(dte);
+  }
+
+  // editFrom(obj: any) {
+  //   this.requestSegment = "raisereq";
+  //   this.pageTitle = 'Raise Request';
+  //
+  //   console.log("edit object ", obj);
+  //   console.log("edit isRoundTrip ", obj.isRoundTrip);
+  //   this.bookingForm.get('isRoundTrip').setValue(obj.isRoundTrip);
+  //   this.bookingForm.get('travelsrc').setValue(obj.source);
+  //   this.bookingForm.get('traveldest').setValue(obj.destination);
+  //   this.bookingForm.get('updatepurpose').setValue(obj.purpose);
+  //   this.bookingForm.get('travelType').setValue(obj.travelType);
+  //   this.bookingForm.get('usrID').setValue(obj.userID);
+  //   this.bookingForm.get('usrName').setValue(obj.emp_userName);
+  //   this.bookingForm.get('usrphone').setValue(obj.emp_phoneNo);
+  //   this.bookingForm.get('remark').setValue(obj.remark);
+  //   this.bookingForm.get('cabs').setValue(obj.cabid);
+  //   this.bookingForm.get('driver').setValue(obj.driverid);
+  //   this.bookingForm.get('vendor').setValue(obj.vendorid);
+  //   this.bookingForm.get('pickpoint').setValue(obj.pickupPoint);
+  //   this.currTime = obj.travel_time;
+  //   this.bookingForm.get('traveltime').setValue(obj.travel_time);
+  //   this.bookingForm.get('remark').setValue(obj.comment);
+  //   this.bookingForm.get('endtraveltime').setValue(obj.travel_time);
+  //   this.endtravelDate = new Date(obj.returnDate);
+  //   this.travelDate = new Date(obj.travel_date);
+  //
+  // }
+
+  setCab() {
+    this.bookingForm.get('cabs').setValue('select');
+    this.bookingForm.get('driver').setValue('select');
+  }
+
+  setVendor() {
+    this.bookingForm.get('vendor').setValue('select');
+
+  }
+
+
 }
