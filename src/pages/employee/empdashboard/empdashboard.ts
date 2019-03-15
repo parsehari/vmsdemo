@@ -101,13 +101,15 @@ export class EmpdashboardPage {
     this.travelDate = new Date();
 
     this.currTime = new Date(this.minDate);
-    this.currTime = this.formatDate(this.currTime);
+    this.currTime = this.currTime.toISOString();
+    console.log('this.currTime iso format ', this.currTime);
     this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
 
     this.endDate = new Date();
     this.endtravelDate = new Date();
     this.EndcurrTime = new Date();
-    this.EndcurrTime = this.formatDate(this.EndcurrTime);
+    this.EndcurrTime = this.EndcurrTime.toISOString()
+
     this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
     this.bookingForm.get('isRoundTrip').setValue('Yes');
 
@@ -294,8 +296,14 @@ export class EmpdashboardPage {
   }
 
   setEndDate(dte: any) {
-    console.log("dte ", dte);
     this.endtravelDate = new Date(dte);
+    if (this.endtravelDate > this.minDate) {
+      this.EndcurrTime = "00:00";
+      //this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.EndcurrTime = new Date().toISOString;
+      this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    }
   }
 
   cancelCabReq(event, id: any) {
@@ -361,15 +369,15 @@ export class EmpdashboardPage {
     })
   }
 
-  formatDate(date) {
-    let d = new Date(date),
-      day = '' + d.getDate(),
-      month = '' + (d.getMonth() + 1),
-      year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, month, day].join('-');
-  }
+  // formatDate(date: any) {
+  //   let d = new Date(date),
+  //     day = '' + d.getDate(),
+  //     month = '' + (d.getMonth() + 1),
+  //     year = d.getFullYear();
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [year, month, day].join('-');
+  // }
 
 
 }

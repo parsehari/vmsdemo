@@ -182,9 +182,8 @@ export class AdminrequestsPage {
   }
 
   viewRequest(event: any, obj: any) {
-
     event.stopPropagation();
-    this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id })
+    this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'createRequest' })
   }
 
 

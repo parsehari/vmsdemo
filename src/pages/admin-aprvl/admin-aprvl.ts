@@ -30,6 +30,7 @@ export class AdminAprvlPage {
   vendorList: any = [];
   adminID: any;
   admincomment: any;
+  editUrl: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -38,10 +39,10 @@ export class AdminAprvlPage {
     public callnumber: CallNumber,
     public alertCtrl: AlertController
   ) {
-    console.log("navparams ", NavParams);
     console.log("location ", this.navParams.get('adminLocation'));
     this.adminLocationID = this.navParams.get('adminLocation');
     this.adminID = this.navParams.get('adminID');
+    this.editUrl = this.navParams.get('viewName');
     console.log("admin id ", this.adminID);
     //  this.getCabDriverDetails();
   }
@@ -52,6 +53,7 @@ export class AdminAprvlPage {
 
   getAllDetails() {
     this.tripDetail = this.navParams.get('viewData');
+    this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
     console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
@@ -99,14 +101,14 @@ export class AdminAprvlPage {
     } else {
 
     }
-
+    this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';  
     this.commonProvider.Alert.confirm().then((res) => {
       this.cabs != 'select' ? 'nothing' : this.cabs = "";
       this.driver != 'select' ? 'nothing' : this.driver = "";
       this.vendor != 'select' ? 'nothing' : this.vendor = "";
-
+      
       this.commonProvider.showLoader('Approving trip...');
-      this.serviceProvider.assignReq('/approvependingrequestadmin', this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
+      this.serviceProvider.assignReq(this.editUrl, this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
         console.log("response ", response);
         if (response) {
           this.commonProvider.hideLoader();

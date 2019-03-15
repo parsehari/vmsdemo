@@ -89,16 +89,15 @@ export class HoddashboardPage {
     this.minDate = new Date();
     this.travelDate = new Date();
     this.currTime = new Date(this.minDate);
-    this.currTime = this.formatDate(this.currTime);
-
+    this.currTime = this.currTime.toISOString();
     this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
-    console.log('this.currTime', this.currTime);
-
     this.endDate = new Date();
     this.endtravelDate = new Date();
-
+    this.EndcurrTime = new Date();
+    this.EndcurrTime = this.EndcurrTime.toISOString()
+    this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    console.log('this.EndcurrTime ', this.EndcurrTime);
     this.bookingForm.get('isRoundTrip').setValue('Yes');
-
     this.events.subscribe('actionReq', (ev, status, obj) => {
       this.reqAction(ev, status, obj);
     })
@@ -402,10 +401,15 @@ export class HoddashboardPage {
   }
 
   setEndDate(dte: any) {
-    console.log("dte ", dte);
     this.endtravelDate = new Date(dte);
-  }
+    if (this.endtravelDate > this.minDate) {
+      this.EndcurrTime = "00:00";
 
+    } else {
+      this.EndcurrTime = new Date().toISOString;
+      this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    }
+  }
 
   cancelDate(dte: any) {
     console.log("date obj ", dte);
@@ -477,15 +481,15 @@ export class HoddashboardPage {
     })
   }
 
-  formatDate(date) {
-    let d = new Date(date),
-      day = '' + d.getDate(),
-      month = '' + (d.getMonth() + 1),
-      year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [year, month, day].join('-');
-  }
+  // formatDate(date) {
+  //   let d = new Date(date),
+  //     day = '' + d.getDate(),
+  //     month = '' + (d.getMonth() + 1),
+  //     year = d.getFullYear();
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [year, month, day].join('-');
+  // }
 
 
 

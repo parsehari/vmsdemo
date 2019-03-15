@@ -22,6 +22,7 @@ import { NotificationPageModule } from '../pages/notification/notification.modul
 import { TermsconditionPageModule } from '../pages/termscondition/termscondition.module';
 import { NotificationDetailPageModule } from '../pages/notification-detail/notification-detail.module';
 import { ScanPageModule } from '../pages/scan/scan.module';
+
 //hod Dashboard
 import { HoddashboardPageModule } from '../pages/hod/hoddashboard/hoddashboard.module';
 import { RequesthistoryPageModule } from '../pages/hod/requesthistory/requesthistory.module';

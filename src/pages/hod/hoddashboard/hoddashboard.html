@@ -104,7 +104,7 @@
           </ion-item>
           <ion-item *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
             <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>
-            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="endtraveltime">
+            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">
             </ion-datetime>
           </ion-item>
           <ion-item>

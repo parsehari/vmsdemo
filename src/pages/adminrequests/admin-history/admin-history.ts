@@ -26,13 +26,18 @@ export class AdminHistoryPage {
     public commonProvider: CommonProvider,
     public modal: ModalController
   ) {
-    this.userDetails = navParams.get('EmployeeDetail');
-    console.log("nav params ", this.userDetails);
+
+    //this.loadUserData();
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter(){
+    this.loadUserData();
+  }
+  loadUserData() {
+    this.userDetails = this.navParams.get('EmployeeDetail');
+    console.log("nav params ", this.userDetails);
     this.commonProvider.showLoader('');
-    this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+    this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
       console.log("getAllTripHistory ", response);
       console.log("getAllTripHistory ", JSON.parse(response._body));
       this.tripHistory = JSON.parse(response._body);
@@ -51,8 +56,9 @@ export class AdminHistoryPage {
     myModal.present();
   }
 
-  viewRequest(event: any, obj: any) {
-    this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id })
+  editRequest(event: any, obj: any) {
+    console.log("edit requet ", obj);
+    this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' })
   }
 
 }

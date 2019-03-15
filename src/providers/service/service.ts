@@ -18,7 +18,7 @@ export class ServiceProvider {
 
   //private url = 'https://gmc.mahindra.com/vms';
   private url = 'https://mapps.mahindra.com/vms';
-  //private url = 'http://10.174.50.134:8080/vms';
+  //private url = 'http://10.174.50.75:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -204,7 +204,7 @@ export class ServiceProvider {
     this.assignTripDto.append('vendorId', vendor);
     this.assignTripDto.append('admincomment', admincomment);
     this.assignTripDto.append('adminapproverId', adminId);
-
+    
     return this.http.post(this.url + params, this.assignTripDto, options);
   }
 
@@ -231,6 +231,3 @@ export class ServiceProvider {
 
 
 }
-
-
-// https://appstore.mahindra.com/saml <https://appstore.mahindra.com/saml>

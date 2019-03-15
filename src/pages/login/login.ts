@@ -142,7 +142,7 @@ export class LoginPage {
   }
 
   generateSecureKeyAndIV(session: any) {
-    var promise = new Promise(function(resolve, reject) {
+    var promise = new Promise(function (resolve, reject) {
       var key = CryptoJS.enc.Utf8.parse('M@h1ndra$1234567');
       var iv = CryptoJS.enc.Utf8.parse('0001000100010001');
       var decrypted = CryptoJS.AES.decrypt(session, key, {
@@ -191,7 +191,7 @@ export class LoginPage {
         console.log("response ", response);
 
         if (response._body == "Login success") {
-          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.email.value).subscribe((response: any) => {
+          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', '203442').subscribe((response: any) => {
             response = JSON.parse(response._body);
             console.log("response ", response);
             this.commonProvider.hideLoader();
