@@ -36,16 +36,13 @@ export class ScanPage {
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
           this.qrScanner.show();
-          console.log('Camera Permission Given');
           this.scanSub = this.qrScanner.scan().subscribe((text: string) => {
             this.qrCode = text;
             this.commonProvider.showToast(this.qrCode);
             this.qrScanner.hide();
             this.serviceProvider.saveScan('/tripDetails/barcode', this.qrCode).subscribe((response: any) => {
-              console.log("barcode response ", response);
               this.commonProvider.showToast("PDF is created successfully");
             }, (err) => {
-              alert('error in  pdf');
               this.commonProvider.showToast('Error in save')
             })
             this.navCtrl.last();
@@ -56,19 +53,10 @@ export class ScanPage {
           this.commonProvider.showToast('Permission denied for this runtime.');
         }
       })
-      .catch((e: any) => console.log('Error is', e));
+      .catch((e: any) => {
+        return;
+      });
   }
-
-  // showCamera() {
-  //   (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
-  //   this.startScan();
-  // }
-  //
-  // hideCamera() {
-  //   (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
-  //   this.scanSub.unsubscribe();
-  //   this.navCtrl.last();
-  // }
 
   ionViewDidLoad() {
 
@@ -88,11 +76,4 @@ export class ScanPage {
     (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
   }
 
-  // ionViewWillEnter(){
-  //   this.showCamera();
-  // }
-
-  // ionViewWillLeave(){
-  //   this.hideCamera();
-  // }
 }

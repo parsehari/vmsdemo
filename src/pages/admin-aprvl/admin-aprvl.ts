@@ -39,12 +39,9 @@ export class AdminAprvlPage {
     public callnumber: CallNumber,
     public alertCtrl: AlertController
   ) {
-    console.log("location ", this.navParams.get('adminLocation'));
     this.adminLocationID = this.navParams.get('adminLocation');
     this.adminID = this.navParams.get('adminID');
     this.editUrl = this.navParams.get('viewName');
-    console.log("admin id ", this.adminID);
-    //  this.getCabDriverDetails();
   }
 
   ionViewWillLoad() {
@@ -54,7 +51,6 @@ export class AdminAprvlPage {
   getAllDetails() {
     this.tripDetail = this.navParams.get('viewData');
     this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
-    console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
     this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe((response: any) => {
@@ -63,9 +59,6 @@ export class AdminAprvlPage {
         this.cabList = this.tripData.cabList;
         this.vendorList = this.tripData.vendorList;
         this.driverList = this.tripData.driverList;
-        console.log("cabs details ", this.tripData);
-        console.log("cabs details ", this.cabList);
-
       }
     },
       (err) => {
@@ -74,21 +67,6 @@ export class AdminAprvlPage {
   }
 
   assignRequest() {
-    // if (this.tripDetail.travelType == 'local') {
-    //   if (!this.cabs) {
-    //     this.commonProvider.showToast("Please assign Cab");
-    //     return false;
-    //   }
-    // } else {
-    //   if (!this.vendor) {
-    //     this.commonProvider.showToast("Please assign Vendor");
-    //     return false;
-    //   }
-    // }
-    // if (!this.driver) {
-    //   this.commonProvider.showToast("Please assign Driver");
-    //   return false;
-    // }
     if (!this.vendor) {
       if (!this.driver) {
         this.commonProvider.showToast("Please assign Driver");
@@ -101,15 +79,14 @@ export class AdminAprvlPage {
     } else {
 
     }
-    this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';  
+    this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';
     this.commonProvider.Alert.confirm().then((res) => {
       this.cabs != 'select' ? 'nothing' : this.cabs = "";
       this.driver != 'select' ? 'nothing' : this.driver = "";
       this.vendor != 'select' ? 'nothing' : this.vendor = "";
-      
+
       this.commonProvider.showLoader('Approving trip...');
       this.serviceProvider.assignReq(this.editUrl, this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
-        console.log("response ", response);
         if (response) {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Request assigned successfully");
@@ -120,19 +97,15 @@ export class AdminAprvlPage {
         }
       })
     }, err => {
-      console.log('user cancelled');
     })
   }
 
   callnum(num) {
-    console.log("inside call number function");
     this.callnumber.callNumber(num, true).then(
       (res) => {
-        console.log('Dialer opened', res);
       })
       .catch((err) => {
         this.commonProvider.showToast(err);
-        console.log('Error launching dialer', err);
       })
   }
   setCab() {
@@ -158,13 +131,11 @@ export class AdminAprvlPage {
         {
           text: 'Cancel',
           handler: data => {
-            console.log('Cancel clicked', data);
           }
         },
         {
           text: 'Send',
           handler: data => {
-            console.log('Saved clicked', data);
             this.rejectRequest(data.comment);
           }
         }
@@ -176,11 +147,7 @@ export class AdminAprvlPage {
 
   rejectRequest(cmnt: any) {
     this.commonProvider.showLoader('Rejecting trip...');
-    console.log('cmnt ', cmnt);
-    console.log('this.tripDetail.id ', this.tripDetail.id);
-    console.log('adminID ', this.adminID);
     this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe((response: any) => {
-      console.log("response ", response);
       if (response) {
         this.commonProvider.hideLoader();
         this.commonProvider.showToast("Request cancelled successfully");

@@ -120,7 +120,7 @@
         <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == 'outstation' " -->
         <ion-option value="select" [selected]="true">select</ion-option>
         <div *ngFor="let cab of cabList">
-          <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>
+          <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}, {{cab.cab_no}}</ion-option>
         </div>
       </ion-select>
     </ion-item>

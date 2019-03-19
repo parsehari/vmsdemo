@@ -18,7 +18,7 @@ export class ServiceProvider {
 
   //private url = 'https://gmc.mahindra.com/vms';
   private url = 'https://mapps.mahindra.com/vms';
-  //private url = 'http://10.174.50.75:8080/vms';
+  //public url = 'http://10.174.55.227:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -27,28 +27,23 @@ export class ServiceProvider {
 
 
   constructor(public http: Http) {
-    console.log('Hello ServiceProvider Provider');
+
   }
 
   getBookingHistory(param: any, usrID: any): Observable<any> {
     var headers = new Headers({});
-    //  headers.append()
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + param + "/" + usrID, options);
-    //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
   }
 
   getAllTripHistory(param: any, usrID: any): Observable<any> {
     var headers = new Headers({});
-    //  headers.append()
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.url + param + "/" + usrID, options);
-    //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
   }
 
   getAllLocations(param: any): Observable<any> {
     return this.http.get(this.url + param);
-    //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
   }
 
   getApprovalList(param: any, uid: any): Observable<any> {
@@ -90,13 +85,9 @@ export class ServiceProvider {
       this.raiseReq.append("modifiedby", data.modified_by);
       this.raiseReq.append("comment", data.comment);
     }
-    console.log("call api ", data);
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
-    console.log("in service ", this.raiseReq)
-    console.log("in options ", options)
     return this.http.post(this.url + param, this.raiseReq, options);
-
   }
 
   raiseRequestAdmin(param: any, data: any): Observable<any> {
@@ -124,10 +115,7 @@ export class ServiceProvider {
 
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
-    console.log("in service ", this.raiseReq)
-    console.log("in options ", options)
     return this.http.post(this.url + param, this.raiseReq);
-
   }
 
   getUsrRoleDetails(param: any, ivPernr: any): Observable<any> {
@@ -163,8 +151,6 @@ export class ServiceProvider {
   }
 
   weblogin(params: any, username: any, pwd: any): Observable<any> {
-    console.log("emp ", username)
-    console.log("pwd ", pwd)
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
 
@@ -204,7 +190,7 @@ export class ServiceProvider {
     this.assignTripDto.append('vendorId', vendor);
     this.assignTripDto.append('admincomment', admincomment);
     this.assignTripDto.append('adminapproverId', adminId);
-    
+
     return this.http.post(this.url + params, this.assignTripDto, options);
   }
 

@@ -25,16 +25,12 @@ export class RequesthistoryPage {
     public modal: ModalController
   ) {
     this.userDetails = navParams.get('EmployeeDetail');
-    console.log("nav params ", this.userDetails);
   }
 
   ionViewDidLoad() {
     this.commonProvider.showLoader('');
     this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      console.log("getAllTripHistory ", response);
-      console.log("getAllTripHistory ", JSON.parse(response._body));
       this.tripHistory = JSON.parse(response._body);
-      // this.approvalList = JSON.parse(response._body);
       this.commonProvider.hideLoader();
     },
       (err) => {
@@ -42,11 +38,8 @@ export class RequesthistoryPage {
         this.commonProvider.showToast(err.message);
       });
   }
-
   openDetail(obj: any) {
-    console.log("open modal")
     const myModal = this.modal.create('ModalDetailPage', { data: obj });
     myModal.present();
   }
-
 }

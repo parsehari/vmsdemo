@@ -30,18 +30,14 @@ export class AdminHistoryPage {
     //this.loadUserData();
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.loadUserData();
   }
   loadUserData() {
     this.userDetails = this.navParams.get('EmployeeDetail');
-    console.log("nav params ", this.userDetails);
     this.commonProvider.showLoader('');
     this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      console.log("getAllTripHistory ", response);
-      console.log("getAllTripHistory ", JSON.parse(response._body));
       this.tripHistory = JSON.parse(response._body);
-      // this.approvalList = JSON.parse(response._body);
       this.commonProvider.hideLoader();
     },
       (err) => {
@@ -51,14 +47,11 @@ export class AdminHistoryPage {
   }
 
   openDetail(obj: any) {
-    console.log("open modal")
     const myModal = this.modal.create('ModalDetailPage', { data: obj });
     myModal.present();
   }
 
   editRequest(event: any, obj: any) {
-    console.log("edit requet ", obj);
     this.navCtrl.push(AdminAprvlPage, { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' })
   }
-
 }

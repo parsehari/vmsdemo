@@ -75,24 +75,19 @@ export class LoginPage {
   }
 
   buildURLForLogin() {
-
     let params = new URLSearchParams(window.location.href);
-    console.log("params ", params);
     let someParam = params.rawParams;
-    console.log("someParam ", someParam);
     this.session = this.getQueryString('session', someParam);
     this.commonProvider.showLoader('Please wait..');
     if (this.session) {
       this.showLogin = false;
       var userData = this.generateSecureKeyAndIV(this.session).then((result: any) => {
-        console.log("this.userid ", result);
         this.commonProvider.hideLoader();
         this.loginToApp(result)
       });
     } else {
       this.commonProvider.hideLoader();
       this.showLogin = true;
-      console.log("show login page in application ");
     }
   }
 
@@ -100,16 +95,12 @@ export class LoginPage {
     userData = userData.split(':');
     var unme = userData.splice(0, 1).join("");
     var pwd = userData.join("");
-    console.log('decrypted cc ' + unme);
-    console.log('decrypted cc ' + pwd);
     if (this.session) {
       this.commonProvider.showLoader('Please wait..');
       this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe((response: any) => {
-        console.log("response ", response);
         if (response._body == "Login success") {
           this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe((response: any) => {
             response = JSON.parse(response._body);
-            console.log("response ", response);
             this.commonProvider.hideLoader();
             //  let str = response.emp_esg;
             let str = response.emp_esgdesc;
@@ -156,7 +147,6 @@ export class LoginPage {
       var pwd = cipherUsrCredentials.substring(strln + 4);
       var unme = cipherUsrCredentials.match(/usr=(\d+)/i)[1];
       var unmpwd = unme + ':' + pwd;
-      console.log("usercredetaials from extract ", unmpwd);
       resolve(unmpwd);
     });
     return promise;
@@ -172,28 +162,20 @@ export class LoginPage {
     //     mode: CryptoJS.mode.CBC,
     //     padding: CryptoJS.pad.Pkcs7
     //   });
-    // console.log('pass', encrypted.toString(), encrypted);
     // this.Password = encrypted.toString();
-
   }
 
 
   loginAction() {
-    console.log('this.loginForm ', this.email.value);
-    console.log('this.loginForm password ', this.password);
-
     if (this.password.value == 'driver' || this.password.value == 'Driver') {
       this.mobileNumber = this.email.value;
       this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
     } else {
       this.commonProvider.showLoader('Please wait..');
       this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
-        console.log("response ", response);
-
         if (response._body == "Login success") {
-          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', '203442').subscribe((response: any) => {
+          this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.email.value).subscribe((response: any) => {
             response = JSON.parse(response._body);
-            console.log("response ", response);
             this.commonProvider.hideLoader();
             //  let str = response.emp_esg;
             let str = response.emp_esgdesc;
@@ -233,7 +215,7 @@ export class LoginPage {
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 
-  getQueryString(field, url) {
+  getQueryString(field: any, url: any) {
     var href = url;
     var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
     var string = reg.exec(href);

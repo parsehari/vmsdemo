@@ -33,9 +33,6 @@ export class UsersDashboardPage {
     public serviceProvider: ServiceProvider,
     public qrScanner: QRScanner
   ) {
-    console.log("in user page ", navParams);
-    console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
-    console.log("navParams.get('securitylogin') ", navParams.get('security'));
     if (navParams.get('driverNumber')) {
       this.driverMobileNumber = navParams.get('driverNumber');
     } else if (navParams.get('security')) {
@@ -49,7 +46,6 @@ export class UsersDashboardPage {
 
   showDashboard() {
     this.navCtrl.push('EmpdashboardPage', { 'EmployeeDetail': this.userDetails });
-    //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
   }
   getTripDetails(status: any) {
     this.navCtrl.push('DriverPage', { 'pageOpen': status });
@@ -59,17 +55,4 @@ export class UsersDashboardPage {
     this.navCtrl.push(ScanPage, {});
 
   }
-
-
-
-
-  // logout(){
-  //   this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
-  //     this.nativeStorage.remove('userData');
-  //   this.navCtrl.setRoot(LoginPage,{});
-  // },err=>{
-  //   console.log('user cancelled');
-  // })
-  // }
-
 }

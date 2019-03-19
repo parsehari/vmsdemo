@@ -57,12 +57,7 @@ export class EmpdashboardPage {
     public modal: ModalController,
     public events: Events,
     public alertCtrl: AlertController
-    //  public calendar: Calendar
-    //  public fcm: FCM
   ) {
-
-    console.log("params ", navParams);
-
     this.userDetails = navParams.data.response;
     this.userName = navParams.get('userId');
     this.userName = navParams.get('response');
@@ -102,9 +97,7 @@ export class EmpdashboardPage {
 
     this.currTime = new Date(this.minDate);
     this.currTime = this.currTime.toISOString();
-    console.log('this.currTime iso format ', this.currTime);
     this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
-
     this.endDate = new Date();
     this.endtravelDate = new Date();
     this.EndcurrTime = new Date();
@@ -118,10 +111,10 @@ export class EmpdashboardPage {
   ionViewDidLoad() {
     this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
       this.dhDetails = JSON.parse(response._body);
-      console.log('DH response ', this.dhDetails);
+
       this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
         this.dhUsrDetails = JSON.parse(response._body);
-        console.log("this.dhUsrDetails ", this.dhUsrDetails);
+
       }, (err) => {
         this.commonProvider.showToast("Error in user details");
       })
@@ -130,10 +123,7 @@ export class EmpdashboardPage {
     })
 
     this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
-      console.log("Locations ", response);
-      console.log("Locations ", JSON.parse(response._body));
       this.locations = JSON.parse(response._body);
-      console.log("this.locations[0].loc_name ", this.locations[1].loc_name);
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
     },
       (err) => {
@@ -142,7 +132,6 @@ export class EmpdashboardPage {
       });
 
     this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
-    console.log('ionViewDidLoad EmpdashboardPage ', this.endDate);
   }
 
   showNotifn(myEvent) {
@@ -155,11 +144,6 @@ export class EmpdashboardPage {
   }
 
   logForm() {
-    console.log(this.bookingForm.value);
-    // if (this.bookingForm.value.updatepurpose != null) {
-    //   this.commonProvider.showToast("not save");
-    // }
-    // return false;
     this.confirmReqst = true;
   }
   editRequest() {
@@ -172,15 +156,13 @@ export class EmpdashboardPage {
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
   getEmpHistory() {
-    console.log("In Emp History");
     this.pageTitle = "History";
     this.commonProvider.showLoader();
     this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      console.log("Emplyee history ", response);
       if (response.status == 200) {
         this.historyData = JSON.parse(response._body);
         this.commonProvider.hideLoader();
@@ -195,11 +177,8 @@ export class EmpdashboardPage {
   sendRequest() {
     this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
       this.commonProvider.showLoader('Sending request...');
-      console.log('this.bookingForm.value ', this.bookingForm.value);
-
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
-
       if (this.bookingForm.value.isRoundTrip == 'No') {
         this.edate = "NA";
         this.bookingForm.value.endtraveltime = "NA";
@@ -208,7 +187,7 @@ export class EmpdashboardPage {
         this.edate = this.edate.getDate() + '/' + (this.edate.getMonth() + 1) + '/' + this.edate.getFullYear();
       }
 
-      let reqData;
+      let reqData: any;
 
       reqData = {
         'userID': this.userDetails.emp_no,
@@ -238,13 +217,7 @@ export class EmpdashboardPage {
         'returnDate': this.edate,
         'returnTime': this.bookingForm.value.endtraveltime,
       }
-      console.log("ustr", reqData);
-      //   reqData.bh_Id = '00211779' ;
-
-      console.log("reqraise data", reqData);
-
       this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe((response: any) => {
-        console.log("raise request ", response);
         this.commonProvider.hideLoader();
         if (response) {
           this.confirmReqst = false;
@@ -261,7 +234,7 @@ export class EmpdashboardPage {
         this.commonProvider.showToast('Request error, Please check with admin');
       });
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
 
@@ -269,22 +242,18 @@ export class EmpdashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
       this.navCtrl.setRoot(LoginPage, {});
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
 
   openDetail(obj: any) {
-    console.log("open modal")
     const myModal = this.modal.create('ModalDetailPage', { data: obj });
     myModal.present();
   }
 
   setDate(dte: any) {
-    console.log("dte ", dte);
-    console.log("minDate ", this.minDate);
     this.travelDate = new Date(dte);
     this.endtravelDate = new Date(dte);
-
     if (this.travelDate > this.minDate) {
       this.currTime = "00:00";
       this.bookingForm.get('traveltime').setValue('');
@@ -292,7 +261,6 @@ export class EmpdashboardPage {
       this.currTime = new Date();
       this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
-    console.log("date obj ", this.travelDate);
   }
 
   setEndDate(dte: any) {
@@ -319,7 +287,7 @@ export class EmpdashboardPage {
         this.commonProvider.showToast("Error in cancellation")
       })
     }, err => {
-      console.log('user cancelled');
+      return;
     })
 
   }
@@ -327,9 +295,7 @@ export class EmpdashboardPage {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }
-  rating(val, tripid) {
-    console.log("rating val", val);
-    console.log("trip id", tripid);
+  rating(val: any, tripid: any) {
     if (val <= 2) {
       const prompt = this.alertCtrl.create({
         title: '',
@@ -344,7 +310,6 @@ export class EmpdashboardPage {
           {
             text: 'Send',
             handler: data => {
-              console.log('Saved clicked', data);
               this.giveRating(val, tripid, data.comment);
             }
           }
@@ -356,8 +321,7 @@ export class EmpdashboardPage {
     }
   }
 
-  giveRating(ratings, tripid, reason = null) {
-    console.log("reason ", reason);
+  giveRating(ratings: any, tripid: any, reason = null) {
     this.commonProvider.showLoader();
     this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
       this.commonProvider.hideLoader();
@@ -368,16 +332,4 @@ export class EmpdashboardPage {
       this.commonProvider.showToast("Error in update rating");
     })
   }
-
-  // formatDate(date: any) {
-  //   let d = new Date(date),
-  //     day = '' + d.getDate(),
-  //     month = '' + (d.getMonth() + 1),
-  //     year = d.getFullYear();
-  //   if (month.length < 2) month = '0' + month;
-  //   if (day.length < 2) day = '0' + day;
-  //   return [year, month, day].join('-');
-  // }
-
-
 }

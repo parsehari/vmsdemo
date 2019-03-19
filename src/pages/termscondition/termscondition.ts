@@ -19,7 +19,7 @@ export class TermsconditionPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TermsconditionPage');
+
   }
   closeModal() {
     this.view.dismiss();

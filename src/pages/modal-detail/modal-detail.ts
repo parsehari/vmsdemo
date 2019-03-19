@@ -38,8 +38,6 @@ export class ModalDetailPage {
       this.viewName = this.navParams.get('viewName');
 
     }
-    console.log("viewName ", this.viewName);
-    console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
   }
@@ -48,14 +46,16 @@ export class ModalDetailPage {
     this.view.dismiss();
   }
 
-  reqAction(ev, status: any) {
+  reqAction(ev: any, status: any) {
     this.events.publish('actionReq', ev, status, this.tripDetail);
   }
 
-  callnum(num) {
-    console.log("inside call number function");
-    this.callnumber.callNumber(num, true).then(res =>
-      console.log('Dialer opened', res)).catch(err => console.log('Error launching dialer', err));
+  callnum(num: any) {
+    this.callnumber.callNumber(num, true).then(res => {
+      return;
+    }).catch(err => {
+      return;
+    });
   }
 
 

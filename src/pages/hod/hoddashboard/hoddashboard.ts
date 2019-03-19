@@ -53,9 +53,6 @@ export class HoddashboardPage {
 
   ) {
     this.userDetails = navParams.data.response;
-    console.log("params hod", navParams);
-    console.log("params ", this.userDetails);
-
     this.bookingForm = this.formBuilder.group({
       costid: ['', Validators.compose([
         Validators.required,
@@ -96,7 +93,6 @@ export class HoddashboardPage {
     this.EndcurrTime = new Date();
     this.EndcurrTime = this.EndcurrTime.toISOString()
     this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
-    console.log('this.EndcurrTime ', this.EndcurrTime);
     this.bookingForm.get('isRoundTrip').setValue('Yes');
     this.events.subscribe('actionReq', (ev, status, obj) => {
       this.reqAction(ev, status, obj);
@@ -124,7 +120,7 @@ export class HoddashboardPage {
   }
 
   logForm() {
-    console.log(this.bookingForm.value);
+
     this.confirmReqst = true;
   }
   editRequest() {
@@ -138,17 +134,15 @@ export class HoddashboardPage {
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
 
   getEmpHistory() {
     this.pageTitle = "Booking History";
     this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      console.log("Emplyee history ", response);
       if (response.status == 200) {
         this.historyData = JSON.parse(response._body);
-        console.log("Emplyee history ", this.historyData);
       }
     },
       (err) => {
@@ -159,11 +153,8 @@ export class HoddashboardPage {
   sendRequest() {
     this.commonProvider.Alert.confirm().then((res) => {
       this.commonProvider.showLoader('Sending request...');
-      console.log('this.bookingForm.value ', this.bookingForm.value);
-
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
-
       if (this.bookingForm.value.isRoundTrip == 'No') {
         this.edate = "NA";
         this.bookingForm.value.endtraveltime = "NA";
@@ -201,7 +192,6 @@ export class HoddashboardPage {
       }
 
       this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe((response: any) => {
-        console.log("raise request ", response);
         this.commonProvider.hideLoader();
         if (response) {
           this.confirmReqst = false;
@@ -217,16 +207,12 @@ export class HoddashboardPage {
         this.commonProvider.showToast(err.message);
       });
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
 
   reqAction(ev: any, status: string, obj: any) {
-    console.log("obj ", obj);
-    console.log("status ", status);
-
     ev.stopPropagation();
-    console.log("status ", status);
     if (status == "Rejected") {
 
       const prompt = this.alertCtrl.create({
@@ -242,13 +228,12 @@ export class HoddashboardPage {
           {
             text: 'Cancel',
             handler: data => {
-              console.log('Cancel clicked', data);
+              return;
             }
           },
           {
             text: 'Send',
             handler: data => {
-              console.log('Saved clicked', data);
               this.confirmReqAction(status, obj, data.comment);
             }
           }
@@ -260,15 +245,12 @@ export class HoddashboardPage {
       this.commonProvider.Alert.confirm('').then((res) => {
         this.confirmReqAction(status, obj);
       }, err => {
-        console.log('user cancelled');
         this.commonProvider.hideLoader();
         this.commonProvider.showToast(err.message);
       })
     }
   }
   confirmReqAction(status: string, obj: any, comment: any = "null") {
-    console.log("status ", status)
-    console.log("status obj ", obj);
     this.commonProvider.showLoader('Sending request...');
     let reqData = {
       'userID': obj.userID,
@@ -298,8 +280,6 @@ export class HoddashboardPage {
       'returnDate': obj.returnDate,
       'returnTime': obj.returnTime
     }
-    console.log("raise request ", reqData);
-    //return;
     this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe((response: any) => {
       this.commonProvider.hideLoader();
       if (response) {
@@ -311,7 +291,6 @@ export class HoddashboardPage {
       }
 
     }, (err) => {
-      console.log("error ", err);
       this.commonProvider.hideLoader();
       this.commonProvider.showToast(err.message);
     });
@@ -328,14 +307,12 @@ export class HoddashboardPage {
 
     this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
       this.dhDetails = JSON.parse(response._body);
-      console.log('DH response ', this.dhDetails);
     }, (err) => {
       this.commonProvider.showToast(err.message);
     })
 
     this.commonProvider.showLoader();
     this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
-      console.log("Locations ", JSON.parse(response._body));
       this.locations = JSON.parse(response._body);
       this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
       this.commonProvider.hideLoader();
@@ -345,7 +322,6 @@ export class HoddashboardPage {
         this.commonProvider.hideLoader();
         this.commonProvider.showToast(err.message);
       });
-    console.log('ionViewDidLoad EmpdashboardPage');
     this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
   }
 
@@ -353,8 +329,6 @@ export class HoddashboardPage {
     this.commonProvider.showLoader('');
     this.pageTitle = "Requests";
     this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response: any) => {
-      console.log("Locations ", response);
-      console.log("Locations ", JSON.parse(response._body));
       this.approvalList = JSON.parse(response._body);
       this.commonProvider.hideLoader();
     },
@@ -368,20 +342,17 @@ export class HoddashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
       this.navCtrl.setRoot(LoginPage, {});
     }, err => {
-      console.log('user cancelled');
+      return;
     })
   }
 
   segmentChanged(event) {
-    console.log("Segment clicked! " + event.value, this, event);
     this.zone.run(() => {
       this.requestSegment = event.value;
     });
   }
 
   openDetail(obj: any, vw: any) {
-    console.log("open modal")
-    console.log("open modal", vw)
     const myModal = this.modal.create('ModalDetailPage', { data: obj, viewName: vw });
     myModal.present();
   }
@@ -397,7 +368,6 @@ export class HoddashboardPage {
       this.currTime = new Date();
       this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
-    console.log("date obj ", this.travelDate);
   }
 
   setEndDate(dte: any) {
@@ -412,7 +382,6 @@ export class HoddashboardPage {
   }
 
   cancelDate(dte: any) {
-    console.log("date obj ", dte);
     this.minDate = new Date();
   }
 
@@ -429,19 +398,12 @@ export class HoddashboardPage {
         this.commonProvider.showToast("Error in cancellation")
       })
     }, err => {
-      console.log('user cancelled');
+      return;
     })
 
   }
 
-
-  // cancelDate(dte: any) {
-  //   console.log("date obj ", dte);
-  //   //this.minDate = new Date();
-  // }
   rating(val, tripid) {
-    console.log("rating val", val);
-    console.log("trip id", tripid);
     if (val <= 2) {
       const prompt = this.alertCtrl.create({
         title: '',
@@ -456,7 +418,6 @@ export class HoddashboardPage {
           {
             text: 'Send',
             handler: data => {
-              console.log('Saved clicked', data);
               this.giveRating(val, tripid, data.comment);
             }
           }
@@ -469,7 +430,6 @@ export class HoddashboardPage {
   }
 
   giveRating(ratings, tripid, reason = null) {
-    console.log("reason ", reason);
     this.commonProvider.showLoader();
     this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
       this.commonProvider.hideLoader();
@@ -480,17 +440,4 @@ export class HoddashboardPage {
       this.commonProvider.showToast("Error in update rating");
     })
   }
-
-  // formatDate(date) {
-  //   let d = new Date(date),
-  //     day = '' + d.getDate(),
-  //     month = '' + (d.getMonth() + 1),
-  //     year = d.getFullYear();
-  //   if (month.length < 2) month = '0' + month;
-  //   if (day.length < 2) day = '0' + day;
-  //   return [year, month, day].join('-');
-  // }
-
-
-
 }

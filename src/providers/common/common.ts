@@ -23,26 +23,21 @@ export class CommonProvider {
     public network: Network
   ) {
 
-    console.log('Hello CommonProvider Provider');
     this.network.onConnect().subscribe(data => {
-      console.log('network info ', data);
       this.displayNetworkUpdate(data.type);
     }, (error) => {
-      console.log('network info ', error.message)
+      return;
     });
 
     this.network.onDisconnect().subscribe(data => {
-      console.log('network info ', data);
       this.displayNetworkUpdate(data.type);
     }, (error) => {
-      console.log('network info ', error.message)
+      return;
     });
 
   }
 
   showLoader(msg?) {
-    //this.loading is important to start the loader before outside function make **** loading: any = false; ****
-    console.log('this.loading P', this.loading);
     if (!this.loading) {
       this.loader = this.loadingCtrl.create({
         content: msg || ''
@@ -50,17 +45,16 @@ export class CommonProvider {
       this.loading = true;
       this.loader.present();
     } else {
-      console.log("trying to calling loader two times");
+      return;
     }
   }
 
   hideLoader() {
-    console.log('this.loading D', this.loading);
     if (this.loading) {
       this.loader.dismiss();
       this.loading = false;
     } else {
-      console.log("trying to dismiss loader two times");
+      return;
     }
   }
 
@@ -71,7 +65,7 @@ export class CommonProvider {
       position: 'bottom'
     });
     this.toaster.onDidDismiss(() => {
-      console.log('Dismissed toast');
+      return;
     });
     this.toaster.present()
   }
@@ -112,25 +106,12 @@ export class CommonProvider {
     }
   };
 
-  // checkInternetConnection() {
-  //     console.log("checking network...", this.network.type);
-  //     this.network.onConnect().subscribe(data => {
-  //         console.log(data);
-  //         this.displayNetworkUpdate(data.type);
-  //     }, error => console.error(error));
-  //
-  //     this.network.onDisconnect().subscribe(data => {
-  //         console.log(data);
-  //         this.displayNetworkUpdate(data.type);
-  //     }, error => console.error(error));  // }
-
   displayNetworkUpdate(connectionState: string) {
     if (connectionState == 'online') {
       this.isOnline = true;
     } else {
       this.isOnline = false;
     }
-    // this.showToast(`You are now ${connectionState} via ${networkType}`);
     this.showToast('You are now ' + connectionState, 2500);
   }
 

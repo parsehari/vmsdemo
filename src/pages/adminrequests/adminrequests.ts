@@ -58,10 +58,7 @@ export class AdminrequestsPage {
     public modal: ModalController
 
   ) {
-    console.log("params hod", navParams);
     this.userDetails = navParams.data.response;
-    console.log("userDetails ", this.userDetails);
-
     this.bookingForm = this.formBuilder.group({
       // costid: ['', Validators.compose([
       //   Validators.required,
@@ -108,23 +105,21 @@ export class AdminrequestsPage {
     });
     this.requestSegment = "pendingReq";
     this.pageTitle = "Pending";
+
     this.minDate = new Date();
     this.travelDate = new Date();
-    console.log('this...', this.minDate)
-    this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
-
-
     this.currTime = new Date(this.minDate);
-
-    this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
-
+    this.currTime = this.currTime.toISOString();
+    this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
     this.endDate = new Date();
     this.endtravelDate = new Date();
 
+    this.EndcurrTime = new Date();
+    this.EndcurrTime = this.EndcurrTime.toISOString()
+    this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+
     this.bookingForm.get('isRoundTrip').setValue('Yes');
-
-    console.log('this.currTime', this.currTime);
-
+    this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
   }
 
 
@@ -132,8 +127,6 @@ export class AdminrequestsPage {
     this.commonProvider.showLoader('');
     this.pageTitle = "Pending";
     this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      console.log("Locations ", response);
-      console.log("Locations ", JSON.parse(response._body));
       this.approvalList = JSON.parse(response._body);
       this.commonProvider.hideLoader();
     },
@@ -144,7 +137,6 @@ export class AdminrequestsPage {
   }
 
   segmentChanged(event) {
-    console.log("Segment clicked! " + event.value, this, event);
     this.zone.run(() => {
       this.requestSegment = event.value;
     });
@@ -154,7 +146,7 @@ export class AdminrequestsPage {
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
       this.navCtrl.setRoot(LoginPage, {});
     }, err => {
-      console.log('user cancelled');
+
     })
   }
 
@@ -162,10 +154,8 @@ export class AdminrequestsPage {
     this.commonProvider.showLoader();
     this.pageTitle = "Approved";
     this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      console.log("Emplyee history ", response);
       if (response.status == 200) {
         this.historyData = JSON.parse(response._body);
-        console.log("Emplyee history ", this.historyData);
       }
       this.commonProvider.hideLoader();
     },
@@ -176,7 +166,6 @@ export class AdminrequestsPage {
   }
 
   openDetail(obj: any) {
-    console.log("open modal")
     const myModal = this.modal.create('ModalDetailPage', { data: obj });
     myModal.present();
   }
@@ -194,7 +183,6 @@ export class AdminrequestsPage {
       this.bookingForm.value.cabs != 'select' ? 'nothing' : this.bookingForm.get('cabs').setValue("");
       this.bookingForm.value.driver != 'select' ? 'nothing' : this.bookingForm.get('driver').setValue("");
       this.bookingForm.value.vendor != 'select' ? 'nothing' : this.bookingForm.get('vendor').setValue("");
-      console.log('this.bookingForm.value ', this.bookingForm.value);
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '-' + (this.tdate.getMonth() + 1) + '-' + this.tdate.getFullYear();
       if (this.bookingForm.value.isRoundTrip == 'No') {
@@ -230,7 +218,6 @@ export class AdminrequestsPage {
       }
 
       this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
-        console.log("raise request ", response);
         this.commonProvider.hideLoader();
         if (response) {
           this.confirmReqst = false;
@@ -246,12 +233,10 @@ export class AdminrequestsPage {
         this.commonProvider.showToast('Request error, Please check with admin');
       });
     }, err => {
-      console.log('user cancelled');
     })
   }
 
   ionViewWillEnter() {
-    console.log('ionViewDidLoad AdminrequestsPage');
     this.getPendingList();
     this.getAllDetails();
   }
@@ -267,16 +252,14 @@ export class AdminrequestsPage {
       this.currTime = new Date();
       this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
     }
-    console.log("date obj ", this.travelDate);
+
   }
 
   cancelDate(dte: any) {
-    console.log("date obj ", dte);
     this.minDate = new Date();
   }
 
   logForm() {
-    console.log(this.bookingForm.value);
     this.confirmReqst = true;
   }
 
@@ -286,7 +269,6 @@ export class AdminrequestsPage {
       this.confirmReqst = false;
       this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
     }, err => {
-      console.log('user cancelled');
     })
   }
 
@@ -297,9 +279,6 @@ export class AdminrequestsPage {
         this.cabList = this.tripData.cabList;
         this.vendorList = this.tripData.vendorList;
         this.driverList = this.tripData.driverList;
-        console.log("cabs details ", this.tripData);
-        console.log("cabs details ", this.cabList);
-
       }
     },
       (err) => {
@@ -314,32 +293,25 @@ export class AdminrequestsPage {
     this.navCtrl.push(AdminHistoryPage, { EmployeeDetail: this.userDetails });
   }
 
-  // typeChange(ev) {
-  //   console.log("type change ", ev);
-  //   if (ev == "outstation") {
-  //     this.bookingForm.get('cabs').setValue(null);
-  //     this.bookingForm.get('driver').setValue(null);
-  //   }
-  //   if (ev == "local") {
-  //     this.bookingForm.get('vendor').setValue(null);
-  //   }
-  // }
-
   showTermsCondition(myEvent) {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }
+
   setEndDate(dte: any) {
-    console.log("dte ", dte);
     this.endtravelDate = new Date(dte);
+    if (this.endtravelDate > this.minDate) {
+      this.EndcurrTime = "00:00";
+    } else {
+      this.EndcurrTime = new Date().toISOString;
+      this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    }
   }
 
   // editFrom(obj: any) {
   //   this.requestSegment = "raisereq";
   //   this.pageTitle = 'Raise Request';
   //
-  //   console.log("edit object ", obj);
-  //   console.log("edit isRoundTrip ", obj.isRoundTrip);
   //   this.bookingForm.get('isRoundTrip').setValue(obj.isRoundTrip);
   //   this.bookingForm.get('travelsrc').setValue(obj.source);
   //   this.bookingForm.get('traveldest').setValue(obj.destination);

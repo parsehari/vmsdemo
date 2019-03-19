@@ -9,7 +9,8 @@
   <ion-navbar color="navColor">
     <ion-title text-center>{{pageTitle}}</ion-title>
     <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>
-    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>
+    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>
+    </div>
     <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>
     <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->
     <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>
@@ -80,7 +81,8 @@
             <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>
           </ion-item>
           <ion-item>
-            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate" [cancelText]='Today' clear>
+            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"
+              [cancelText]='Today' clear>
               <span>Start Date : {{travelDate | date}}
                 <ion-icon name="clipboard" item-left></ion-icon>
               </span>
@@ -92,7 +94,8 @@
             </ion-datetime>
           </ion-item>
           <ion-item *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
-            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate" [cancelText]='Today' clear>
+            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"
+              [cancelText]='Today' clear>
               <span>Return Date : {{endtravelDate | date}}
                 <ion-icon name="clipboard" item-left></ion-icon>
               </span>
@@ -100,7 +103,7 @@
           </ion-item>
           <ion-item *ngIf="bookingForm.value.isRoundTrip == 'Yes'">
             <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>
-            <ion-datetime displayFormat="HH:mm" [min]="bookingForm.value.traveltime" formControlName="endtraveltime">
+            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">
             </ion-datetime>
           </ion-item>
           <ion-item>
@@ -187,7 +190,7 @@
             <ion-card-content style="padding: 13px 6px 5px;">
               <ion-row>
                 <ion-col>
-                  <span class="formtitle">User ID</span>
+                  <span class="formtitle">Token Number</span>
                 </ion-col>
                 <ion-col>
                   {{bookingForm.value.usrID}}
@@ -305,21 +308,24 @@
         <ion-list>
           <ion-list-header style="background: #9e9e9e1f !important;">
             <span style="color:#ad081f">Pending for approval</span>
-            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span>
+            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View
+              History</span>
           </ion-list-header>
 
           <ion-item *ngFor="let applh of approvalList">
             <div (click)="openDetail(applh)">
               <span>
                 <h3 class="reqText">
-                  <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
+                  <span class="icon-directions_car"
+                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>
               </span>
               <span>
                 <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>
               </span>
             </div>
             <div style="float:right">
-              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;" (click)="viewRequest($event,applh);">View</button>
+              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"
+                (click)="viewRequest($event,applh);">View</button>
             </div>
             <div style="width: 70%">
               <ul class="bar">
@@ -344,7 +350,8 @@
               <div (click)="openDetail(hdata)">
                 <span>
                   <h3 class="reqText">
-                    <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
+                    <span class="icon-directions_car"
+                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
                 </span>
                 <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
                   {{hdata.travel_date}}, {{hdata.travel_time}}

@@ -30,6 +30,7 @@ export class DriverPage {
   rating: any;
   feedbackform: boolean = false;
   driverText: any = 'No cab is assigned';
+  urlPath: string = 'https://mapps.mahindra.com/images/vms/VMS_PDF37tripDetails.pdf';
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -39,16 +40,13 @@ export class DriverPage {
     public callnumber: CallNumber,
     public events: Events
   ) {
-    console.log('driver driverNumber page', this.navParams.get('driverNumber'));
     this.driverphno = this.navParams.get('driverNumber');
-
   }
 
   logout() {
     this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
       this.navCtrl.setRoot(LoginPage, {});
     }, err => {
-      console.log('user cancelled');
     })
   }
 
@@ -66,30 +64,20 @@ export class DriverPage {
     this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe((resp: any) => {
 
       this.tripDetail = JSON.parse(resp._body);
-      console.log("this.tripDetail ", this.tripDetail.length)
       if (this.tripDetail.length) {
         this.tripDetail[0] ? this.tripDetail = this.tripDetail[0] : 'nothing';
-        console.log("this.tripDetail ", this.tripDetail.length);
+
         this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
         this.driverDetail = this.tripDetail.driver;
         this.srcSubstr = this.tripDetail.source.substring(0, 3);
         this.destSubstr = this.tripDetail.destination.substring(0, 3);
-
+        //this.urlPath = this.urlPath + this.tripDetail.filePath;
         this.commonProvider.hideLoader();
-        console.log("trip response ", this.tripDetail);
-        console.log("cabDetail response ", this.cabDetail);
-        console.log("driver Detail response ", this.driverDetail);
-
       } else {
         this.commonProvider.hideLoader();
-
       }
-      // }else{
-      //   this.commonProvider.hideLoader();
-      // }
     }, (err) => {
       this.commonProvider.hideLoader();
-      console.log("error ", err);
       this.commonProvider.showToast('Service error')
     })
   }
@@ -99,26 +87,22 @@ export class DriverPage {
   }
 
   startTrip(type) {
-    console.log('type ', type);
-    console.log(this.startkm)
     if (this.startkm) {
       this.commonProvider.showLoader('Updating Kms..');
       let today = new Date();
       let cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      console.log("ctime ", cdate);
-      console.log("this.tripDetail ", this.tripDetail);
       this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
-        console.log("response ", resp);
+
         this.commonProvider.hideLoader();
         if (type == 'endTrip') {
           this.feedbackform = true;
           this.driverText = 'You have completed your trip!!'
         }
-        console.log("end trip");
+
         this.getTrip();
 
       }, (err) => {
-        console.log("error", err);
+
         this.commonProvider.showToast(err.message);
         this.commonProvider.hideLoader();
       })
@@ -128,18 +112,13 @@ export class DriverPage {
     }
   }
 
-  callnum(num) {
-    console.log("inside call number function");
+  callnum(num: any) {
     this.callnumber.callNumber(num, true).then(
       (res) => {
-        console.log('Dialer opened', res);
+        return true;
       })
       .catch((err) => {
         this.commonProvider.showToast(err);
-        console.log('Error launching dialer', err);
       })
   }
-
-
-
 }

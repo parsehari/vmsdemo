@@ -1,1 +1,3514 @@
-webpackJsonp([13],{123:function(l,n,u){"use strict";u.d(n,"a",function(){return t});u(2);var e=u(9),t=(u(73),function(){function l(l,n,u,t,a){this.navCtrl=l,this.navParams=n,this.serviceProvider=u,this.commonProvider=t,this.callnumber=a,this.cabList=[],this.driverList=[],this.vendorList=[],console.log("navparams ",e.b),console.log("location ",this.navParams.get("adminLocation")),this.adminLocationID=this.navParams.get("adminLocation"),this.adminID=this.navParams.get("adminID"),console.log("admin id ",this.adminID)}return l.prototype.ionViewWillLoad=function(){this.getAllDetails()},l.prototype.getAllDetails=function(){var l=this;this.tripDetail=this.navParams.get("viewData"),console.log("ionViewDidLoad ModalDetailPage",this.tripDetail),this.srcSubstr=this.tripDetail.source.substring(0,3),this.destSubstr=this.tripDetail.destination.substring(0,3),this.serviceProvider.getReqDetails("/getAllAvailableResources/adminMobile",this.adminLocationID).subscribe(function(n){200==n.status&&(l.tripData=JSON.parse(n._body),l.cabList=l.tripData.cabList,l.vendorList=l.tripData.vendorList,l.driverList=l.tripData.driverList,console.log("cabs details ",l.tripData),console.log("cabs details ",l.cabList))},function(n){l.commonProvider.showToast(n.message)})},l.prototype.assignRequest=function(){var l=this;if("local"==this.tripDetail.travelType){if(!this.cabs)return this.commonProvider.showToast("Please assign Cab"),!1}else if(!this.vendor)return this.commonProvider.showToast("Please assign Vendor"),!1;if(!this.driver)return this.commonProvider.showToast("Please assign Driver"),!1;this.commonProvider.Alert.confirm().then(function(n){l.cabs||(l.cabs=""),l.driver||(l.driver=""),l.vendor||(l.vendor=""),l.commonProvider.showLoader("Approving trip..."),l.serviceProvider.assignReq("/approvependingrequestadmin",l.tripDetail.id,l.cabs,l.driver,l.vendor,l.admincomment,l.adminID).subscribe(function(n){console.log("response ",n),n?(l.commonProvider.hideLoader(),l.commonProvider.showToast("Request assigned successfully"),l.navCtrl.pop()):(l.commonProvider.showToast("Error in request update"),l.commonProvider.hideLoader())})},function(l){console.log("user cancelled")})},l.prototype.callnum=function(l){var n=this;console.log("inside call number function"),this.callnumber.callNumber(l,!0).then(function(l){console.log("Dialer opened",l)}).catch(function(l){n.commonProvider.showToast(l),console.log("Error launching dialer",l)})},l}())},125:function(l,n,u){"use strict";u.d(n,"a",function(){return a});u(2),u(9);var e=u(86),t=u(69),a=(u(73),function(){function l(l,n,u,e,t,a,o){this.navCtrl=l,this.navParams=n,this.popoverController=u,this.commonProvider=e,this.serviceProvider=t,this.callnumber=a,this.events=o,this.tripDetail=[],this.cabDetail=[],this.driverDetail=[],this.feedbackform=!1,this.driverText="No cab is assigned",console.log("driver driverNumber page",this.navParams.get("driverNumber")),this.driverphno=this.navParams.get("driverNumber")}return l.prototype.logout=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to logout?").then(function(n){l.navCtrl.setRoot(t.a,{})},function(l){console.log("user cancelled")})},l.prototype.showNotifn=function(l){this.popoverController.create(e.a).present({ev:l})},l.prototype.getTrip=function(){var l=this;this.commonProvider.showLoader("Getting cab details.."),this.serviceProvider.getDriverTripDetails("/getTripDetails/driver/"+this.driverphno).subscribe(function(n){l.tripDetail=JSON.parse(n._body),console.log("this.tripDetail ",l.tripDetail.length),l.tripDetail.length?(!l.tripDetail[0]||(l.tripDetail=l.tripDetail[0]),console.log("this.tripDetail ",l.tripDetail.length),!l.tripDetail.cab||(l.cabDetail=l.tripDetail.cab),l.driverDetail=l.tripDetail.driver,l.srcSubstr=l.tripDetail.source.substring(0,3),l.destSubstr=l.tripDetail.destination.substring(0,3),l.commonProvider.hideLoader(),console.log("trip response ",l.tripDetail),console.log("cabDetail response ",l.cabDetail),console.log("driver Detail response ",l.driverDetail)):l.commonProvider.hideLoader()},function(n){l.commonProvider.hideLoader(),console.log("error ",n),l.commonProvider.showToast("Service error")})},l.prototype.ionViewDidLoad=function(){this.getTrip()},l.prototype.startTrip=function(l){var n=this;if(console.log("type ",l),console.log(this.startkm),this.startkm){this.commonProvider.showLoader("Updating Kms..");var u=new Date,e=u.getDate()+"/"+(u.getMonth()+1)+"/"+u.getFullYear()+"-"+u.getHours()+":"+u.getMinutes()+":"+u.getSeconds();console.log("ctime ",e),console.log("this.tripDetail ",this.tripDetail),this.serviceProvider.tripStart("/updateOngoingTripDetails",e,l,this.tripDetail.id,this.startkm).subscribe(function(u){console.log("response ",u),n.commonProvider.hideLoader(),"endTrip"==l&&(n.feedbackform=!0,n.driverText="You have completed your trip!!"),console.log("end trip"),n.getTrip()},function(l){console.log("error",l),n.commonProvider.showToast(l.message),n.commonProvider.hideLoader()})}else this.commonProvider.hideLoader(),this.commonProvider.showToast("Please enter kms")},l.prototype.callnum=function(l){var n=this;console.log("inside call number function"),this.callnumber.callNumber(l,!0).then(function(l){console.log("Dialer opened",l)}).catch(function(l){n.commonProvider.showToast(l),console.log("Error launching dialer",l)})},l}())},126:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){function l(l,n){this.navCtrl=l,this.navParams=n}return l.prototype.ionViewDidLoad=function(){console.log("ionViewDidLoad NotificationDetailPage")},l}()},127:function(l,n,u){"use strict";u.d(n,"a",function(){return o});u(2),u(9);var e=u(13),t=u(86),a=u(69),o=function(){function l(l,n,u,t,a,o,i,s,r){this.navCtrl=l,this.navParams=n,this.formBuilder=u,this.popoverController=t,this.serviceProvider=a,this.commonProvider=o,this.modal=i,this.events=s,this.alertCtrl=r,this.confirmReqst=!1,this.historyData=[],this.userDetails=[],this.dhDetails=[],this.dhUsrDetails=[],this.travelType=[],console.log("params ",n),this.userDetails=n.data.response,this.userName=n.get("userId"),this.userName=n.get("response"),this.bookingForm=this.formBuilder.group({updatepurpose:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],costid:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],traveltime:["",e.v.required],endtraveltime:[""],travelsrc:["",e.v.required],isRoundTrip:["",e.v.required],traveldest:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],pickpoint:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],remark:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],travelType:["",e.v.required]}),this.requestSegment="raisereq",this.pageTitle="Raise Request",this.minDate=new Date,this.travelDate=new Date,this.currTime=new Date(this.minDate),this.currTime=this.formatDate(this.currTime),this.currTime=this.minDate.getHours()+2+":"+this.minDate.getMinutes(),this.endDate=new Date,this.endtravelDate=new Date,this.EndcurrTime=new Date,this.EndcurrTime=this.formatDate(this.EndcurrTime),this.EndcurrTime=this.minDate.getHours()+2+":"+this.minDate.getMinutes(),this.bookingForm.get("isRoundTrip").setValue("Yes")}return l.prototype.ionViewDidLoad=function(){var l=this;this.serviceProvider.getDeptHeadUser("/getEmployeeDept",this.userDetails.emp_no).subscribe(function(n){l.dhDetails=JSON.parse(n._body),console.log("DH response ",l.dhDetails),l.serviceProvider.getUsrRoleDetails("/getEmpDetailService",l.dhDetails.pernr).subscribe(function(n){l.dhUsrDetails=JSON.parse(n._body),console.log("this.dhUsrDetails ",l.dhUsrDetails)},function(n){l.commonProvider.showToast("Error in user details")})},function(n){l.commonProvider.showToast("Error in dh details")}),this.serviceProvider.getAllLocations("/getAllLocations").subscribe(function(n){console.log("Locations ",n),console.log("Locations ",JSON.parse(n._body)),l.locations=JSON.parse(n._body),console.log("this.locations[0].loc_name ",l.locations[1].loc_name),l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa)},function(n){l.commonProvider.showToast(n.message)}),this.bookingForm.get("costid").setValue(this.userDetails.emp_cosid),console.log("ionViewDidLoad EmpdashboardPage ",this.endDate)},l.prototype.showNotifn=function(l){this.popoverController.create(t.a).present({ev:l})},l.prototype.logForm=function(){console.log(this.bookingForm.value),this.confirmReqst=!0},l.prototype.editRequest=function(){this.confirmReqst=!1},l.prototype.cancelReq=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to cancel request?").then(function(n){l.bookingForm.reset(),l.confirmReqst=!1,l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa)},function(l){console.log("user cancelled")})},l.prototype.getEmpHistory=function(){var l=this;console.log("In Emp History"),this.pageTitle="History",this.commonProvider.showLoader(),this.serviceProvider.getBookingHistory("/getTripHistory",this.userDetails.emp_no).subscribe(function(n){console.log("Emplyee history ",n),200==n.status&&(l.historyData=JSON.parse(n._body),l.commonProvider.hideLoader())},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)})},l.prototype.sendRequest=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to send request?").then(function(n){l.commonProvider.showLoader("Sending request..."),console.log("this.bookingForm.value ",l.bookingForm.value),l.tdate=new Date(l.travelDate),l.tdate=l.tdate.getDate()+"/"+(l.tdate.getMonth()+1)+"/"+l.tdate.getFullYear(),"No"==l.bookingForm.value.isRoundTrip?(l.edate="NA",l.bookingForm.value.endtraveltime="NA"):(l.edate=new Date(l.endtravelDate),l.edate=l.edate.getDate()+"/"+(l.edate.getMonth()+1)+"/"+l.edate.getFullYear());var u;u={userID:l.userDetails.emp_no,source:l.bookingForm.value.travelsrc,destination:l.bookingForm.value.traveldest,pickpoint:l.bookingForm.value.pickpoint,purpose:l.bookingForm.value.updatepurpose,travel_date:l.tdate,travel_time:l.bookingForm.value.traveltime,emp_email:l.userDetails.emp_email,emp_UserName:l.userDetails.emp_f_name+" "+l.userDetails.emp_l_name,emp_phoneNo:l.userDetails.emp_cell,status:"Pending with Manager",bh_Id:l.dhDetails.pernr,bh_UserName:l.dhUsrDetails.emp_f_name+" "+l.dhUsrDetails.emp_l_name,bh_email:l.dhUsrDetails.emp_email,remark:l.bookingForm.value.remark,location:l.userDetails.emp_psa,cost_id:l.bookingForm.value.costid,cost_center:l.userDetails.emp_cost,travelType:l.bookingForm.value.travelType,isRoundTrip:l.bookingForm.value.isRoundTrip,returnDate:l.edate,returnTime:l.bookingForm.value.endtraveltime},console.log("ustr",u),console.log("reqraise data",u),l.serviceProvider.raiseRequest("/insertTrip",u).subscribe(function(n){console.log("raise request ",n),l.commonProvider.hideLoader(),n?(l.confirmReqst=!1,l.bookingForm.reset(),l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa),l.commonProvider.showToast("Request sent successfully")):l.commonProvider.showToast("Request error, Please check with admin")},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast("Request error, Please check with admin")})},function(l){console.log("user cancelled")})},l.prototype.logout=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to logout?").then(function(n){l.navCtrl.setRoot(a.a,{})},function(l){console.log("user cancelled")})},l.prototype.openDetail=function(l){console.log("open modal");this.modal.create("ModalDetailPage",{data:l}).present()},l.prototype.setDate=function(l){console.log("dte ",l),console.log("minDate ",this.minDate),this.travelDate=new Date(l),this.endtravelDate=new Date(l),this.travelDate>this.minDate?(this.currTime="00:00",this.bookingForm.get("traveltime").setValue("")):(this.currTime=new Date,this.currTime=this.currTime.getHours()+2+":"+this.currTime.getMinutes()),console.log("date obj ",this.travelDate)},l.prototype.setEndDate=function(l){console.log("dte ",l),this.endtravelDate=new Date(l)},l.prototype.cancelCabReq=function(l,n){var u=this;l.stopPropagation(),this.commonProvider.Alert.confirm("Sure you want to cancel request?").then(function(l){u.commonProvider.showLoader(),u.serviceProvider.cancelCab("/employeecanceltrip",n).subscribe(function(l){u.commonProvider.hideLoader(),u.commonProvider.showToast("Trip cancelled successfully"),u.getEmpHistory()},function(l){u.commonProvider.hideLoader(),u.commonProvider.showToast("Error in cancellation")})},function(l){console.log("user cancelled")})},l.prototype.showTermsCondition=function(l){this.modal.create("TermsconditionPage",{}).present()},l.prototype.rating=function(l,n){var u=this;if(console.log("rating val",l),console.log("trip id",n),l<=2){this.alertCtrl.create({title:"",message:"Please enter any reason",inputs:[{name:"comment",placeholder:"Your reason"}],buttons:[{text:"Send",handler:function(e){console.log("Saved clicked",e),u.giveRating(l,n,e.comment)}}]}).present()}else this.giveRating(l,n)},l.prototype.giveRating=function(l,n,u){var e=this;void 0===u&&(u=null),console.log("reason ",u),this.commonProvider.showLoader(),this.serviceProvider.submitRating("/submitEmployeeFeedback",n,l,u).subscribe(function(l){e.commonProvider.hideLoader(),e.commonProvider.showToast("Thank you for your feedback"),e.getEmpHistory()},function(l){e.commonProvider.hideLoader(),e.commonProvider.showToast("Error in update rating")})},l.prototype.formatDate=function(l){var n=new Date(l),u=""+n.getDate(),e=""+(n.getMonth()+1),t=n.getFullYear();return e.length<2&&(e="0"+e),u.length<2&&(u="0"+u),[t,e,u].join("-")},l}()},128:function(l,n,u){"use strict";u.d(n,"a",function(){return i});u(2),u(9);var e=u(13),t=u(86),a=u(129),o=u(69),i=function(){function l(l,n,u,t,a,o,i,s,r,c){var _=this;this.navCtrl=l,this.navParams=n,this.formBuilder=u,this.popoverController=t,this.serviceProvider=a,this.commonProvider=o,this.alertCtrl=i,this.zone=s,this.modal=r,this.events=c,this.confirmReqst=!1,this.historyData=[],this.userDetails=[],this.dhDetails=[],this.userDetails=n.data.response,console.log("params hod",n),console.log("params ",this.userDetails),this.bookingForm=this.formBuilder.group({costid:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],updatepurpose:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],traveltime:["",e.v.required],travelsrc:["",e.v.required],endtraveltime:[""],isRoundTrip:["",e.v.required],traveldest:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],pickpoint:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],remark:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],travelType:["",e.v.required]}),this.requestSegment="pendingReq",this.pageTitle="Requests",this.minDate=new Date,this.travelDate=new Date,this.currTime=new Date(this.minDate),this.currTime=this.formatDate(this.currTime),this.currTime=this.minDate.getHours()+2+":"+this.minDate.getMinutes(),console.log("this.currTime",this.currTime),this.endDate=new Date,this.endtravelDate=new Date,this.bookingForm.get("isRoundTrip").setValue("Yes"),this.events.subscribe("actionReq",function(l,n,u){_.reqAction(l,n,u)})}return l.prototype.showNotifn=function(l){this.popoverController.create(t.a).present({ev:l})},l.prototype.showTermsCondition=function(l){this.modal.create("TermsconditionPage",{}).present()},l.prototype.logForm=function(){console.log(this.bookingForm.value),this.confirmReqst=!0},l.prototype.editRequest=function(){this.confirmReqst=!1},l.prototype.cancelReq=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to cancel request?").then(function(n){l.bookingForm.reset(),l.confirmReqst=!1,l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa)},function(l){console.log("user cancelled")})},l.prototype.getEmpHistory=function(){var l=this;this.pageTitle="Booking History",this.serviceProvider.getBookingHistory("/getTripHistory",this.userDetails.emp_no).subscribe(function(n){console.log("Emplyee history ",n),200==n.status&&(l.historyData=JSON.parse(n._body),console.log("Emplyee history ",l.historyData))},function(n){l.commonProvider.showToast(n.message)})},l.prototype.sendRequest=function(){var l=this;this.commonProvider.Alert.confirm().then(function(n){l.commonProvider.showLoader("Sending request..."),console.log("this.bookingForm.value ",l.bookingForm.value),l.tdate=new Date(l.travelDate),l.tdate=l.tdate.getDate()+"/"+(l.tdate.getMonth()+1)+"/"+l.tdate.getFullYear(),"No"==l.bookingForm.value.isRoundTrip?(l.edate="NA",l.bookingForm.value.endtraveltime="NA"):(l.edate=new Date(l.endtravelDate),l.edate=l.edate.getDate()+"/"+(l.edate.getMonth()+1)+"/"+l.edate.getFullYear());l.serviceProvider.raiseRequest("/insertTrip",{userID:l.userDetails.emp_no,source:l.bookingForm.value.travelsrc,destination:l.bookingForm.value.traveldest,pickpoint:l.bookingForm.value.pickpoint,purpose:l.bookingForm.value.updatepurpose,travel_date:l.tdate,travel_time:l.bookingForm.value.traveltime,emp_email:l.userDetails.emp_email,remark:l.bookingForm.value.remark,location:l.userDetails.emp_psa,cost_id:l.bookingForm.value.costid,cost_center:l.userDetails.emp_cost,emp_UserName:l.userDetails.emp_f_name+" "+l.userDetails.emp_l_name,emp_phoneNo:l.userDetails.emp_cell,status:"Pending with Admin",travelType:l.bookingForm.value.travelType,isRoundTrip:l.bookingForm.value.isRoundTrip,returnDate:l.edate,returnTime:l.bookingForm.value.endtraveltime}).subscribe(function(n){console.log("raise request ",n),l.commonProvider.hideLoader(),n?(l.confirmReqst=!1,l.bookingForm.reset(),l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa),l.commonProvider.showToast("Request sent successfully")):l.commonProvider.showToast("Request error, Please check with admin")},function(n){l.commonProvider.showToast(n.message)})},function(l){console.log("user cancelled")})},l.prototype.reqAction=function(l,n,u){var e=this;if(console.log("obj ",u),console.log("status ",n),l.stopPropagation(),console.log("status ",n),"Rejected"!=n)this.commonProvider.Alert.confirm("").then(function(l){e.confirmReqAction(n,u)},function(l){console.log("user cancelled"),e.commonProvider.hideLoader(),e.commonProvider.showToast(l.message)});else{this.alertCtrl.create({title:"",message:"Please enter comments for rejection",inputs:[{name:"comment",placeholder:"Your reason"}],buttons:[{text:"Cancel",handler:function(l){console.log("Cancel clicked",l)}},{text:"Send",handler:function(l){console.log("Saved clicked",l),e.confirmReqAction(n,u,l.comment)}}]}).present()}},l.prototype.confirmReqAction=function(l,n,u){var e=this;void 0===u&&(u="null"),console.log("status ",l),console.log("status obj ",n),this.commonProvider.showLoader("Sending request...");var t={userID:n.userID,source:n.source,destination:n.destination,pickpoint:n.pickupPoint,purpose:n.purpose,travel_date:n.travel_date,travel_time:n.travel_time,id:n.id,status:l,modified_by:this.userDetails.emp_no,comment:u,emp_email:n.emp_email,emp_UserName:n.emp_userName,emp_phoneNo:n.emp_phoneNo,bh_Id:n.bh_Id,bh_UserName:n.bh_UserName,remark:n.remark,bh_email:n.bh_email,location:n.emp_location,cost_id:n.cost_id,cost_center:n.cost_center,travelType:n.travelType,isRoundTrip:n.isRoundTrip,returnDate:n.returnDate,returnTime:n.returnTime};console.log("raise request ",t),this.serviceProvider.raiseRequest("/approveRequest/hod",t,"hodAction").subscribe(function(l){e.commonProvider.hideLoader(),l?(e.getApprovalHistory(),e.events.publish("closeModalev"),e.commonProvider.showToast("Request sent successfully")):e.commonProvider.showToast("Request error, Please check with admin")},function(l){console.log("error ",l),e.commonProvider.hideLoader(),e.commonProvider.showToast(l.message)})},l.prototype.viewReqHistory=function(){this.navCtrl.push(a.a,{EmployeeDetail:this.userDetails})},l.prototype.ionViewDidLoad=function(){var l=this;this.serviceProvider.getDeptHeadUser("/getEmployeeDept",this.userDetails.emp_no).subscribe(function(n){l.dhDetails=JSON.parse(n._body),console.log("DH response ",l.dhDetails)},function(n){l.commonProvider.showToast(n.message)}),this.commonProvider.showLoader(),this.serviceProvider.getAllLocations("/getAllLocations").subscribe(function(n){console.log("Locations ",JSON.parse(n._body)),l.locations=JSON.parse(n._body),l.bookingForm.get("travelsrc").setValue(l.userDetails.emp_psa),l.commonProvider.hideLoader(),l.getApprovalHistory()},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)}),console.log("ionViewDidLoad EmpdashboardPage"),this.bookingForm.get("costid").setValue(this.userDetails.emp_cosid)},l.prototype.getApprovalHistory=function(){var l=this;this.commonProvider.showLoader(""),this.pageTitle="Requests",this.serviceProvider.getApprovalList("/getApprovalList/hod",this.userDetails.emp_no).subscribe(function(n){console.log("Locations ",n),console.log("Locations ",JSON.parse(n._body)),l.approvalList=JSON.parse(n._body),l.commonProvider.hideLoader()},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)})},l.prototype.logout=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to logout?").then(function(n){l.navCtrl.setRoot(o.a,{})},function(l){console.log("user cancelled")})},l.prototype.segmentChanged=function(l){var n=this;console.log("Segment clicked! "+l.value,this,l),this.zone.run(function(){n.requestSegment=l.value})},l.prototype.openDetail=function(l,n){console.log("open modal"),console.log("open modal",n);this.modal.create("ModalDetailPage",{data:l,viewName:n}).present()},l.prototype.setDate=function(l){this.travelDate=new Date(l),this.endtravelDate=new Date(l),this.travelDate>this.minDate?(this.currTime="00:00",this.bookingForm.get("traveltime").setValue("")):(this.bookingForm.get("traveltime").setValue(""),this.currTime=new Date,this.currTime=this.currTime.getHours()+2+":"+this.currTime.getMinutes()),console.log("date obj ",this.travelDate)},l.prototype.setEndDate=function(l){console.log("dte ",l),this.endtravelDate=new Date(l)},l.prototype.cancelDate=function(l){console.log("date obj ",l),this.minDate=new Date},l.prototype.cancelCabReq=function(l,n){var u=this;l.stopPropagation(),this.commonProvider.Alert.confirm("Sure you want to cancel request?").then(function(l){u.commonProvider.showLoader(),u.serviceProvider.cancelCab("/employeecanceltrip",n).subscribe(function(l){u.commonProvider.hideLoader(),u.commonProvider.showToast("Trip cancelled successfully"),u.getEmpHistory()},function(l){u.commonProvider.hideLoader(),u.commonProvider.showToast("Error in cancellation")})},function(l){console.log("user cancelled")})},l.prototype.rating=function(l,n){var u=this;if(console.log("rating val",l),console.log("trip id",n),l<=2){this.alertCtrl.create({title:"",message:"Please enter any reason",inputs:[{name:"comment",placeholder:"Your reason"}],buttons:[{text:"Send",handler:function(e){console.log("Saved clicked",e),u.giveRating(l,n,e.comment)}}]}).present()}else this.giveRating(l,n)},l.prototype.giveRating=function(l,n,u){var e=this;void 0===u&&(u=null),console.log("reason ",u),this.commonProvider.showLoader(),this.serviceProvider.submitRating("/submitEmployeeFeedback",n,l,u).subscribe(function(l){e.commonProvider.hideLoader(),e.commonProvider.showToast("Thank you for your feedback"),e.getEmpHistory()},function(l){e.commonProvider.hideLoader(),e.commonProvider.showToast("Error in update rating")})},l.prototype.formatDate=function(l){var n=new Date(l),u=""+n.getDate(),e=""+(n.getMonth()+1),t=n.getFullYear();return e.length<2&&(e="0"+e),u.length<2&&(u="0"+u),[t,e,u].join("-")},l}()},129:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){function l(l,n,u,e,t){this.navCtrl=l,this.navParams=n,this.serviceProvider=u,this.commonProvider=e,this.modal=t,this.userDetails=[],this.tripHistory=[],this.userDetails=n.get("EmployeeDetail"),console.log("nav params ",this.userDetails)}return l.prototype.ionViewDidLoad=function(){var l=this;this.commonProvider.showLoader(""),this.serviceProvider.getAllTripHistory("/getAllTripHistory",this.userDetails.emp_no).subscribe(function(n){console.log("getAllTripHistory ",n),console.log("getAllTripHistory ",JSON.parse(n._body)),l.tripHistory=JSON.parse(n._body),l.commonProvider.hideLoader()},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)})},l.prototype.openDetail=function(l){console.log("open modal");this.modal.create("ModalDetailPage",{data:l}).present()},l}()},130:function(l,n,u){"use strict";u.d(n,"a",function(){return o});u(2),u(9);var e=u(13),t=u(69),a=u(123),o=function(){function l(l,n,u,t,a,o,i,s,r){this.navCtrl=l,this.navParams=n,this.formBuilder=u,this.popoverController=t,this.serviceProvider=a,this.commonProvider=o,this.alertCtrl=i,this.zone=s,this.modal=r,this.confirmReqst=!1,this.historyData=[],this.userDetails=[],this.dhDetails=[],this.cabList=[],this.driverList=[],this.vendorList=[],console.log("params hod",n),this.userDetails=n.data.response,console.log("userDetails ",this.userDetails),this.bookingForm=this.formBuilder.group({usrID:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],usrName:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],usrphone:["",e.v.compose([e.v.required,e.v.pattern("^[0-9 _!@#$&()\\-`.+,/]*[0-9!@#$&()\\-`.+,/][0-9 _!@#$&()\\-`.+,/]*$")])],updatepurpose:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],traveltime:["",e.v.required],travelsrc:["",e.v.required],endtraveltime:[""],isRoundTrip:["",e.v.required],cabs:[],driver:[],vendor:[],traveldest:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],pickpoint:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/]*[A-Za-z0-9!?@#$&()\\-`.+,/][A-Za-z0-9 _!?@#$&()\\-`.+,/]*$")])],remark:["",e.v.compose([e.v.required,e.v.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/]*[A-Za-z0-9!@#$&()\\-`.+,/][A-Za-z0-9 _!@#$&()\\-`.+,/]*$")])],travelType:["",e.v.required]}),this.requestSegment="pendingReq",this.pageTitle="Pending",this.minDate=new Date,this.travelDate=new Date,console.log("this...",this.minDate),this.bookingForm.get("travelsrc").setValue(this.userDetails.location.loc_name),this.currTime=new Date(this.minDate),this.currTime=this.currTime.getHours()+2+":"+this.currTime.getMinutes(),this.endDate=new Date,this.endtravelDate=new Date,this.bookingForm.get("isRoundTrip").setValue("Yes"),console.log("this.currTime",this.currTime)}return l.prototype.getPendingList=function(){var l=this;this.commonProvider.showLoader(""),this.pageTitle="Pending",this.serviceProvider.getApprovalList("/getAllPendingRequest/adminMobile",this.userDetails.location.id).subscribe(function(n){console.log("Locations ",n),console.log("Locations ",JSON.parse(n._body)),l.approvalList=JSON.parse(n._body),l.commonProvider.hideLoader()},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)})},l.prototype.segmentChanged=function(l){var n=this;console.log("Segment clicked! "+l.value,this,l),this.zone.run(function(){n.requestSegment=l.value})},l.prototype.logout=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to logout?").then(function(n){l.navCtrl.setRoot(t.a,{})},function(l){console.log("user cancelled")})},l.prototype.getEmpHistory=function(){var l=this;this.commonProvider.showLoader(),this.pageTitle="Approved",this.serviceProvider.getApprovalList("/getAllApprovedRequest/adminMobile",this.userDetails.location.id).subscribe(function(n){console.log("Emplyee history ",n),200==n.status&&(l.historyData=JSON.parse(n._body),console.log("Emplyee history ",l.historyData)),l.commonProvider.hideLoader()},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast(n.message)})},l.prototype.openDetail=function(l){console.log("open modal");this.modal.create("ModalDetailPage",{data:l}).present()},l.prototype.viewRequest=function(l,n){l.stopPropagation(),this.navCtrl.push(a.a,{viewData:n,adminLocation:this.userDetails.location.id,adminID:this.userDetails.id})},l.prototype.sendRequest=function(){var l=this;this.commonProvider.Alert.confirm().then(function(n){l.commonProvider.showLoader("Sending request..."),console.log("this.bookingForm.value ",l.bookingForm.value),l.bookingForm.value.cabs||(l.bookingForm.value.cabs=""),l.bookingForm.value.driver||(l.bookingForm.value.driver=""),l.bookingForm.value.vendor||(l.bookingForm.value.vendor=""),l.tdate=new Date(l.travelDate),l.tdate=l.tdate.getDate()+"/"+(l.tdate.getMonth()+1)+"/"+l.tdate.getFullYear(),"No"==l.bookingForm.value.isRoundTrip?(l.edate="NA",l.bookingForm.value.endtraveltime="NA"):(l.edate=new Date(l.endtravelDate),l.edate=l.edate.getDate()+"/"+(l.edate.getMonth()+1)+"/"+l.edate.getFullYear());l.serviceProvider.raiseRequestAdmin("/adminraisecabrequest/adminMobile",{source:l.userDetails.location.id,destination:l.bookingForm.value.traveldest,purpose:l.bookingForm.value.updatepurpose,travel_date:l.tdate,travel_time:l.bookingForm.value.traveltime,remark:l.bookingForm.value.remark,status:"Pending with Admin",travelType:l.bookingForm.value.travelType,usrID:l.bookingForm.value.usrID,username:l.bookingForm.value.usrName,usrphone:l.bookingForm.value.usrphone,cabs:l.bookingForm.value.cabs,driver:l.bookingForm.value.driver,vendor:l.bookingForm.value.vendor,pickpoint:l.bookingForm.value.pickpoint,isRoundTrip:l.bookingForm.value.isRoundTrip,returnDate:l.edate,returnTime:l.bookingForm.value.endtraveltime,adminapproverId:l.userDetails.id}).subscribe(function(n){console.log("raise request ",n),l.commonProvider.hideLoader(),n?(l.confirmReqst=!1,l.bookingForm.reset(),l.bookingForm.get("travelsrc").setValue(l.userDetails.location.loc_name),l.commonProvider.showToast("Request sent successfully")):l.commonProvider.showToast("Request error, Please check with admin")},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast("Request error, Please check with admin")})},function(l){console.log("user cancelled")})},l.prototype.ionViewWillEnter=function(){console.log("ionViewDidLoad AdminrequestsPage"),this.getPendingList(),this.getAllDetails()},l.prototype.setDate=function(l){this.travelDate=new Date(l),this.endtravelDate=new Date(l),this.travelDate>this.minDate?(this.currTime="00:00",this.bookingForm.get("traveltime").setValue("")):(this.bookingForm.get("traveltime").setValue(""),this.currTime=new Date,this.currTime=this.currTime.getHours()+2+":"+this.currTime.getMinutes()),console.log("date obj ",this.travelDate)},l.prototype.cancelDate=function(l){console.log("date obj ",l),this.minDate=new Date},l.prototype.logForm=function(){console.log(this.bookingForm.value),this.confirmReqst=!0},l.prototype.cancelReq=function(){var l=this;this.commonProvider.Alert.confirm("Sure you want to cancel request?").then(function(n){l.bookingForm.reset(),l.confirmReqst=!1,l.bookingForm.get("travelsrc").setValue(l.userDetails.location.loc_name)},function(l){console.log("user cancelled")})},l.prototype.getAllDetails=function(){var l=this;this.serviceProvider.getReqDetails("/getAllAvailableResources/adminMobile",this.userDetails.location.id).subscribe(function(n){200==n.status&&(l.tripData=JSON.parse(n._body),l.cabList=l.tripData.cabList,l.vendorList=l.tripData.vendorList,l.driverList=l.tripData.driverList,console.log("cabs details ",l.tripData),console.log("cabs details ",l.cabList))},function(n){l.commonProvider.showToast(n.message)})},l.prototype.editRequest=function(){this.confirmReqst=!1},l.prototype.typeChange=function(l){console.log("type change ",l),"outstation"==l&&(this.bookingForm.get("cabs").setValue(null),this.bookingForm.get("driver").setValue(null)),"local"==l&&this.bookingForm.get("vendor").setValue(null)},l.prototype.showTermsCondition=function(l){this.modal.create("TermsconditionPage",{}).present()},l.prototype.setEndDate=function(l){console.log("dte ",l),this.endtravelDate=new Date(l)},l}()},168:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},169:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},170:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},171:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},172:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},173:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},174:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},175:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){function l(l,n,u){this.navCtrl=l,this.navParams=n,this.view=u}return l.prototype.ionViewDidLoad=function(){console.log("ionViewDidLoad TermsconditionPage")},l.prototype.closeModal=function(){this.view.dismiss()},l}()},176:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9);var e=function(){return function(){}}()},177:function(l,n,u){"use strict";u.d(n,"a",function(){return t});u(2),u(9),u(85);var e=u(98),t=function(){function l(l,n,u,e,t){this.navCtrl=l,this.navParams=n,this.commonProvider=u,this.serviceProvider=e,this.qrScanner=t,this.userDetails=[],this.driverMobileNumber="",this.securityCheck="",this.scannig=!1,console.log("in user page ",n),console.log("navParams.get('driverNumber') ",n.get("driverNumber")),console.log("navParams.get('securitylogin') ",n.get("security")),n.get("driverNumber")?this.driverMobileNumber=n.get("driverNumber"):n.get("security")?this.securityCheck=n.get("security"):this.userDetails=n.data.response.EmployeeDetail}return l.prototype.showDashboard=function(){this.navCtrl.push("EmpdashboardPage",{EmployeeDetail:this.userDetails})},l.prototype.getTripDetails=function(l){this.navCtrl.push("DriverPage",{pageOpen:l})},l.prototype.securityScan=function(){this.navCtrl.push(e.a,{})},l}()},178:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9),u(119);var e=function(){return function(){}}()},179:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9),u(119),u(243);var e=function(){return function(){}}()},180:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9),u(119),u(243);var e=function(){return function(){}}()},191:function(l,n){function u(l){return Promise.resolve().then(function(){throw new Error("Cannot find module '"+l+"'.")})}u.keys=function(){return[]},u.resolve=u,l.exports=u,u.id=191},218:function(l,n,u){function e(l){var n=t[l];return n?u.e(n[1]).then(function(){return u(n[0])}):Promise.reject(new Error("Cannot find module '"+l+"'."))}var t={"../pages/admin-aprvl/admin-aprvl.module.ngfactory":[332,12],"../pages/adminrequests/adminrequests.module.ngfactory":[342,11],"../pages/driver/driver.module.ngfactory":[333,10],"../pages/employee/empdashboard/empdashboard.module.ngfactory":[343,9],"../pages/hod/hoddashboard/hoddashboard.module.ngfactory":[344,8],"../pages/hod/requesthistory/requesthistory.module.ngfactory":[334,7],"../pages/modal-detail/modal-detail.module.ngfactory":[335,6],"../pages/notification-detail/notification-detail.module.ngfactory":[336,5],"../pages/notification/notification.module.ngfactory":[337,4],"../pages/requestdetails/requestdetails.module.ngfactory":[338,3],"../pages/scan/scan.module.ngfactory":[339,2],"../pages/termscondition/termscondition.module.ngfactory":[340,1],"../pages/users-dashboard/users-dashboard.module.ngfactory":[341,0]};e.keys=function(){return Object.keys(t)},e.id=218,l.exports=e},22:function(l,n,u){"use strict";u.d(n,"a",function(){return i});u(2);var e=u(110),t=u(294),a=(u.n(t),u(295)),o=(u.n(a),u(298)),i=(u.n(o),function(){function l(l){this.http=l,this.url="https://mapps.mahindra.com/vms",console.log("Hello ServiceProvider Provider")}return l.prototype.getBookingHistory=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.getAllTripHistory=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.getAllLocations=function(l){return this.http.get(this.url+l)},l.prototype.getApprovalList=function(l,n){return this.http.get(this.url+l+"/"+n)},l.prototype.raiseRequest=function(l,n,u){void 0===u&&(u="default"),this.raiseReq=new FormData,this.raiseReq.append("userID",n.userID),this.raiseReq.append("source",n.source),this.raiseReq.append("destination",n.destination),this.raiseReq.append("pickupPoint",n.pickpoint),this.raiseReq.append("purpose",n.purpose),this.raiseReq.append("travel_date",n.travel_date),this.raiseReq.append("travel_time",n.travel_time),this.raiseReq.append("status",n.status),this.raiseReq.append("bh_Id",n.bh_Id),this.raiseReq.append("bh_UserName",n.bh_UserName),this.raiseReq.append("bh_email",n.bh_email),this.raiseReq.append("emp_email",n.emp_email),this.raiseReq.append("emp_userName",n.emp_UserName),this.raiseReq.append("emp_phoneNo",n.emp_phoneNo),this.raiseReq.append("remark",n.remark),this.raiseReq.append("locationName",n.location),this.raiseReq.append("cost_id",n.cost_id),this.raiseReq.append("cost_center",n.cost_center),this.raiseReq.append("travelType",n.travelType),this.raiseReq.append("isRoundTrip",n.isRoundTrip),this.raiseReq.append("returnDate",n.returnDate),this.raiseReq.append("returnTime",n.returnTime),this.raiseReq.append("isactive","Y"),"hodAction"==u&&(this.raiseReq.append("id",n.id),this.raiseReq.append("modifiedby",n.modified_by),this.raiseReq.append("comment",n.comment)),console.log("call api ",n);var t=new e.d({}),a=new e.g({headers:t});return console.log("in service ",this.raiseReq),console.log("in options ",a),this.http.post(this.url+l,this.raiseReq,a)},l.prototype.raiseRequestAdmin=function(l,n){this.raiseReq=new FormData,this.raiseReq.append("source",n.source),this.raiseReq.append("destination",n.destination),this.raiseReq.append("pickupPoint",n.pickpoint),this.raiseReq.append("purpose",n.purpose),this.raiseReq.append("travel_date",n.travel_date),this.raiseReq.append("travel_time",n.travel_time),this.raiseReq.append("comment",n.remark),this.raiseReq.append("travelType",n.travelType),this.raiseReq.append("emp_userName",n.username),this.raiseReq.append("emp_phoneNo",n.usrphone),this.raiseReq.append("userID",n.usrID),this.raiseReq.append("cabid",n.cabs),this.raiseReq.append("vendorid",n.vendor),this.raiseReq.append("driverid",n.driver),this.raiseReq.append("isRoundTrip",n.isRoundTrip),this.raiseReq.append("returnDate",n.returnDate),this.raiseReq.append("returnTime",n.returnTime),this.raiseReq.append("adminapproverId",n.adminapproverId);var u=new e.d({}),t=new e.g({headers:u});return console.log("in service ",this.raiseReq),console.log("in options ",t),this.http.post(this.url+l,this.raiseReq,t)},l.prototype.getUsrRoleDetails=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.getDeptHeadUser=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.getDriverTripDetails=function(l){return this.http.get(this.url+l)},l.prototype.tripStart=function(l,n,u,t,a){var o=new e.d({}),i=new e.g({headers:o});return this.tripDTO=new FormData,this.tripDTO.append("id",t),"startTrip"==u?(this.tripDTO.append("startTrip",n),this.tripDTO.append("startKm",a)):(this.tripDTO.append("endTrip",n),this.tripDTO.append("endKm",a)),this.http.post(this.url+l,this.tripDTO,i)},l.prototype.weblogin=function(l,n,u){console.log("emp ",n),console.log("pwd ",u);var t=new e.d({}),a=new e.g({headers:t});return this.lgnDTO=new FormData,this.lgnDTO.append("employeeId",n),this.lgnDTO.append("pwd",u),this.http.post(this.url+l,this.lgnDTO,a)},l.prototype.saveScan=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.getReqDetails=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.cancelCab=function(l,n){var u=new e.d({}),t=new e.g({headers:u});return this.http.get(this.url+l+"/"+n,t)},l.prototype.assignReq=function(l,n,u,t,a,o,i){var s=new e.d({}),r=new e.g({headers:s});return this.assignTripDto=new FormData,this.assignTripDto.append("tripId",n),this.assignTripDto.append("cabId",u),this.assignTripDto.append("driverId",t),this.assignTripDto.append("vendorId",a),this.assignTripDto.append("admincomment",o),this.assignTripDto.append("adminapproverId",i),this.http.post(this.url+l,this.assignTripDto,r)},l.prototype.submitRating=function(l,n,u,t){var a=new e.d({}),o=new e.g({headers:a});return this.tripDTO=new FormData,this.tripDTO.append("id",n),this.tripDTO.append("feedbackRating",u),this.tripDTO.append("feedbackComment",t),this.http.post(this.url+l,this.tripDTO,o)},l}())},23:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9),u(144);var e=function(){function l(l,n,u,e){var t=this;this.loadingCtrl=l,this.toast=n,this.alertCtrl=u,this.network=e,this.loading=!1,this.isOnline=!0,this.Alert={confirm:function(l,n){return new Promise(function(u,e){t.alertCtrl.create({title:n||"Confirm",message:l||"",buttons:[{text:"Cancel",role:"cancel",handler:function(){e(!1)}},{text:"Ok",handler:function(){u(!0)}}]}).present()})},alert:function(l,n){t.alertCtrl.create({title:n||"Alert",subTitle:l,buttons:["Dismiss"]}).present()}},console.log("Hello CommonProvider Provider"),this.network.onConnect().subscribe(function(l){console.log("network info ",l),t.displayNetworkUpdate(l.type)},function(l){console.log("network info ",l.message)}),this.network.onDisconnect().subscribe(function(l){console.log("network info ",l),t.displayNetworkUpdate(l.type)},function(l){console.log("network info ",l.message)})}return l.prototype.showLoader=function(l){console.log("this.loading P",this.loading),this.loading?console.log("trying to calling loader two times"):(this.loader=this.loadingCtrl.create({content:l||""}),this.loading=!0,this.loader.present())},l.prototype.hideLoader=function(){console.log("this.loading D",this.loading),this.loading?(this.loader.dismiss(),this.loading=!1):console.log("trying to dismiss loader two times")},l.prototype.showToast=function(l,n){this.toaster=this.toast.create({message:l,duration:n||2e3,position:"bottom"}),this.toaster.onDidDismiss(function(){console.log("Dismissed toast")}),this.toaster.present()},l.prototype.displayNetworkUpdate=function(l){this.isOnline="online"==l,this.showToast("You are now "+l,2500)},l}()},256:function(l,n,u){"use strict";function e(l){return i._22(0,[(l()(),i.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),i.Y(3,16384,[[4,4]],0,s.a,[i.j],{value:[0,"value"]},null),(l()(),i._20(4,null,["",""])),(l()(),i._20(-1,null,["\n        "]))],function(l,n){l(n,3,0,i._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.cab_name)})}function t(l){return i._22(0,[(l()(),i.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),i.Y(3,16384,[[8,4]],0,s.a,[i.j],{value:[0,"value"]},null),(l()(),i._20(4,null,["",""])),(l()(),i._20(-1,null,["\n        "]))],function(l,n){l(n,3,0,i._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.first_name)})}function a(l){return i._22(0,[(l()(),i.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),i.Y(3,16384,[[12,4]],0,s.a,[i.j],{value:[0,"value"]},null),(l()(),i._20(4,null,["",""])),(l()(),i._20(-1,null,["\n        "]))],function(l,n){l(n,3,0,i._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.vName)})}function o(l){return i._22(0,[(l()(),i.Z(0,0,null,null,55,"ion-header",[],null,null,null,null,null)),i.Y(1,16384,null,0,r.a,[c.a,i.j,i.z,[2,_.a]],null,null),(l()(),i._20(-1,null,["\n  "])),(l()(),i.Z(3,0,null,null,7,"ion-navbar",[["class","toolbar"],["color","navColor"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,d.b,d.a)),i.Y(4,49152,null,0,p.a,[g.a,[2,_.a],[2,m.a],c.a,i.j,i.z],{color:[0,"color"]},null),(l()(),i._20(-1,3,["\n    "])),(l()(),i.Z(6,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,h.b,h.a)),i.Y(7,49152,null,0,f.a,[c.a,i.j,i.z,[2,v.a],[2,p.a]],null,null),(l()(),i._20(-1,0,["Request Details"])),(l()(),i._20(-1,3,["\n    "])),(l()(),i._20(-1,3,["\n  "])),(l()(),i._20(-1,null,["\n  "])),(l()(),i.Z(12,0,null,null,42,"ion-toolbar",[["class","toolbar"],["style","color: white;"]],[[2,"statusbar-padding",null]],null,null,b.b,b.a)),i.Y(13,49152,null,0,v.a,[c.a,i.j,i.z],null,null),(l()(),i._20(-1,3,["\n    "])),(l()(),i.Z(15,0,null,3,38,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(16,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(18,0,null,null,9,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),i.Y(19,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(21,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),i._20(22,null,["\n          ","\n        "])),(l()(),i.Z(23,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(25,0,null,null,1,"span",[["style","font-size: 1.5em;font-weight: bold;"]],null,null,null,null,null)),(l()(),i._20(26,null,[""," "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(29,0,null,null,12,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),i.Y(30,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(32,0,null,null,1,"span",[["style","font-size: 1.0em;font-weight: bold;"]],null,null,null,null,null)),(l()(),i._20(33,null,["",""])),(l()(),i.Z(34,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(36,0,null,null,0,"span",[["class","icon-automobile"],["style","font-size: 1.5em"]],null,null,null,null,null)),(l()(),i.Z(37,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(39,0,null,null,1,"span",[["style","font-size: 1.0em;font-weight: bold;"]],null,null,null,null,null)),(l()(),i._20(40,null,["",""])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(43,0,null,null,9,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),i.Y(44,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(46,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),i._20(47,null,["\n          ","\n        "])),(l()(),i.Z(48,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(50,0,null,null,1,"span",[["style","font-size: 1.5em;font-weight: bold;"]],null,null,null,null,null)),(l()(),i._20(51,null,[" "," "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,3,["\n  "])),(l()(),i._20(-1,null,["\n"])),(l()(),i._20(-1,null,["\n\n"])),(l()(),i.Z(57,0,null,null,257,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,Y.b,Y.a)),i.Y(58,4374528,null,0,C.a,[c.a,k.a,D.a,i.j,i.z,g.a,w.a,i.u,[2,_.a],[2,m.a]],null,null),(l()(),i._20(-1,1,["\n  "])),(l()(),i.Z(60,0,null,1,253,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n\n    "])),(l()(),i.Z(62,0,null,null,148,"ion-card",[["class","driverCard"]],null,null,null,null,null)),i.Y(63,16384,null,0,P.a,[c.a,i.j,i.z],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(65,0,null,null,2,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),i.Y(66,16384,null,0,T.a,[c.a,i.j,i.z],{color:[0,"color"]},null),(l()(),i._20(-1,null,["\n        Request Details"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(69,0,null,null,140,"ion-card-content",[],null,null,null,null,null)),i.Y(70,16384,null,0,j.a,[c.a,i.j,i.z],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(72,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(73,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(75,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(76,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(78,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Pick up point"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(82,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(83,16384,null,0,y.a,[],null,null),(l()(),i._20(84,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(87,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(88,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(90,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(91,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(93,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["My Location"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(97,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(98,16384,null,0,y.a,[],null,null),(l()(),i._20(99,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(102,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(103,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(105,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(106,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(108,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Purpose"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(112,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(113,16384,null,0,y.a,[],null,null),(l()(),i._20(114,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(117,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(118,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(120,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(121,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(123,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Remark"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(127,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(128,16384,null,0,y.a,[],null,null),(l()(),i._20(129,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(132,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(133,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(135,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(136,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(138,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Employee Name"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(142,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(143,16384,null,0,y.a,[],null,null),(l()(),i._20(144,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(147,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(148,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(150,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(151,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(153,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Employee Location"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(157,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(158,16384,null,0,y.a,[],null,null),(l()(),i._20(159,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(162,0,null,null,16,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(163,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(165,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(166,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(168,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Mobile Number"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(172,0,null,null,5,"ion-col",[["class","col"]],null,[[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==t.callnum(t.tripDetail.emp_phoneNo)&&e}return e},null,null)),i.Y(173,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(175,0,null,null,1,"u",[["style","color: blue;"]],null,null,null,null,null)),(l()(),i._20(176,null,["","\n            "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(180,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(181,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(183,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(184,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(186,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Email Id"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(190,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(191,16384,null,0,y.a,[],null,null),(l()(),i._20(192,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(195,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(196,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(198,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(199,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(201,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Travel Type"])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(205,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(206,16384,null,0,y.a,[],null,null),(l()(),i._20(207,null,["\n            ","\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n\n    "])),(l()(),i.Z(212,0,null,null,22,"ion-item",[["class","item item-block"]],null,null,null,x.b,x.a)),i.Y(213,1097728,null,3,z.a,[q.a,c.a,i.j,i.z,[2,R.a]],null,null),i._18(335544320,1,{contentLabel:0}),i._18(603979776,2,{_buttons:1}),i._18(603979776,3,{_icons:1}),i.Y(217,16384,null,0,F.a,[],null,null),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(219,0,null,1,2,"ion-label",[],null,null,null,null,null)),i.Y(220,16384,[[1,4]],0,I.a,[c.a,i.j,i.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),i._20(-1,null,["Assign Cab"])),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(223,0,null,3,10,"ion-select",[],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"],[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==i._11(l,224)._click(u)&&e}if("keyup.space"===n){e=!1!==i._11(l,224)._keyup()&&e}if("ngModelChange"===n){e=!1!==(t.cabs=u)&&e}return e},L.b,L.a)),i.Y(224,1228800,null,1,S.a,[g.a,q.a,c.a,i.j,i.z,[2,z.a],N.a],{disabled:[0,"disabled"]},null),i._18(603979776,4,{options:1}),i._16(1024,null,A.m,function(l){return[l]},[S.a]),i.Y(227,671744,null,0,A.q,[[8,null],[8,null],[8,null],[2,A.m]],{isDisabled:[0,"isDisabled"],model:[1,"model"]},{update:"ngModelChange"}),i._16(2048,null,A.n,null,[A.q]),i.Y(229,16384,null,0,A.o,[A.n],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.U(16777216,null,null,1,null,e)),i.Y(232,802816,null,0,$.i,[i.I,i.F,i.p],{ngForOf:[0,"ngForOf"]},null),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,2,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(236,0,null,null,22,"ion-item",[["class","item item-block"]],null,null,null,x.b,x.a)),i.Y(237,1097728,null,3,z.a,[q.a,c.a,i.j,i.z,[2,R.a]],null,null),i._18(335544320,5,{contentLabel:0}),i._18(603979776,6,{_buttons:1}),i._18(603979776,7,{_icons:1}),i.Y(241,16384,null,0,F.a,[],null,null),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(243,0,null,1,2,"ion-label",[],null,null,null,null,null)),i.Y(244,16384,[[5,4]],0,I.a,[c.a,i.j,i.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),i._20(-1,null,["Assign Driver"])),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(247,0,null,3,10,"ion-select",[],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"],[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==i._11(l,248)._click(u)&&e}if("keyup.space"===n){e=!1!==i._11(l,248)._keyup()&&e}if("ngModelChange"===n){e=!1!==(t.driver=u)&&e}return e},L.b,L.a)),i.Y(248,1228800,null,1,S.a,[g.a,q.a,c.a,i.j,i.z,[2,z.a],N.a],{disabled:[0,"disabled"]},null),i._18(603979776,8,{options:1}),i._16(1024,null,A.m,function(l){return[l]},[S.a]),i.Y(251,671744,null,0,A.q,[[8,null],[8,null],[8,null],[2,A.m]],{isDisabled:[0,"isDisabled"],model:[1,"model"]},{update:"ngModelChange"}),i._16(2048,null,A.n,null,[A.q]),i.Y(253,16384,null,0,A.o,[A.n],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.U(16777216,null,null,1,null,t)),i.Y(256,802816,null,0,$.i,[i.I,i.F,i.p],{ngForOf:[0,"ngForOf"]},null),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,2,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(260,0,null,null,22,"ion-item",[["class","item item-block"]],null,null,null,x.b,x.a)),i.Y(261,1097728,null,3,z.a,[q.a,c.a,i.j,i.z,[2,R.a]],null,null),i._18(335544320,9,{contentLabel:0}),i._18(603979776,10,{_buttons:1}),i._18(603979776,11,{_icons:1}),i.Y(265,16384,null,0,F.a,[],null,null),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(267,0,null,1,2,"ion-label",[],null,null,null,null,null)),i.Y(268,16384,[[9,4]],0,I.a,[c.a,i.j,i.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),i._20(-1,null,["Assign Vendor"])),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(271,0,null,3,10,"ion-select",[],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"],[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==i._11(l,272)._click(u)&&e}if("keyup.space"===n){e=!1!==i._11(l,272)._keyup()&&e}if("ngModelChange"===n){e=!1!==(t.vendor=u)&&e}return e},L.b,L.a)),i.Y(272,1228800,null,1,S.a,[g.a,q.a,c.a,i.j,i.z,[2,z.a],N.a],{disabled:[0,"disabled"]},null),i._18(603979776,12,{options:1}),i._16(1024,null,A.m,function(l){return[l]},[S.a]),i.Y(275,671744,null,0,A.q,[[8,null],[8,null],[8,null],[2,A.m]],{isDisabled:[0,"isDisabled"],model:[1,"model"]},{update:"ngModelChange"}),i._16(2048,null,A.n,null,[A.q]),i.Y(277,16384,null,0,A.o,[A.n],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.U(16777216,null,null,1,null,a)),i.Y(280,802816,null,0,$.i,[i.I,i.F,i.p],{ngForOf:[0,"ngForOf"]},null),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,2,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(284,0,null,null,16,"ion-item",[["class","item item-block"]],null,null,null,x.b,x.a)),i.Y(285,1097728,null,3,z.a,[q.a,c.a,i.j,i.z,[2,R.a]],null,null),i._18(335544320,13,{contentLabel:0}),i._18(603979776,14,{_buttons:1}),i._18(603979776,15,{_icons:1}),i.Y(289,16384,null,0,F.a,[],null,null),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(291,0,null,1,2,"ion-label",[["floating",""]],null,null,null,null,null)),i.Y(292,16384,[[13,4]],0,I.a,[c.a,i.j,i.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),i._20(-1,null,["Admin note"])),(l()(),i._20(-1,2,["\n      "])),(l()(),i.Z(295,0,null,3,4,"ion-input",[["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0;if("ngModelChange"===n){e=!1!==(l.component.admincomment=u)&&e}return e},U.b,U.a)),i.Y(296,671744,null,0,A.q,[[8,null],[8,null],[8,null],[8,null]],{model:[0,"model"]},{update:"ngModelChange"}),i._16(2048,null,A.n,null,[A.q]),i.Y(298,16384,null,0,A.o,[A.n],null,null),i.Y(299,5423104,null,0,M.a,[c.a,k.a,q.a,g.a,i.j,i.z,[2,C.a],[2,z.a],[2,A.n],D.a],{type:[0,"type"]},null),(l()(),i._20(-1,2,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(302,0,null,null,10,"ion-row",[["class","row"],["text-center",""]],null,null,null,null,null)),i.Y(303,16384,null,0,Z.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(305,0,null,null,6,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(306,16384,null,0,y.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(308,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.assignRequest()&&e}return e},V.b,V.a)),i.Y(309,1097728,null,0,H.a,[[8,""],c.a,i.j,i.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),i._20(-1,0,["Assign"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n  "])),(l()(),i._20(-1,1,["\n\n"]))],function(l,n){var u=n.component;l(n,4,0,"navColor");l(n,66,0,"red");l(n,224,0,"outstation"==u.tripDetail.travelType);l(n,227,0,"outstation"==u.tripDetail.travelType,u.cabs);l(n,232,0,u.cabList);l(n,248,0,"outstation"==u.tripDetail.travelType);l(n,251,0,"outstation"==u.tripDetail.travelType,u.driver);l(n,256,0,u.driverList);l(n,272,0,"local"==u.tripDetail.travelType);l(n,275,0,"local"==u.tripDetail.travelType,u.vendor);l(n,280,0,u.vendorList);l(n,296,0,u.admincomment);l(n,299,0,"text");l(n,309,0,"red","true")},function(l,n){var u=n.component;l(n,3,0,i._11(n,4)._hidden,i._11(n,4)._sbPadding);l(n,12,0,i._11(n,13)._sbPadding);l(n,22,0,u.srcSubstr);l(n,26,0,u.tripDetail.pickupPoint);l(n,33,0,u.tripDetail.travel_date);l(n,40,0,u.tripDetail.travel_time);l(n,47,0,u.destSubstr);l(n,51,0,u.tripDetail.destination);l(n,57,0,i._11(n,58).statusbarPadding,i._11(n,58)._hasRefresher);l(n,84,0,u.tripDetail.pickupPoint);l(n,99,0,u.tripDetail.source);l(n,114,0,u.tripDetail.purpose);l(n,129,0,u.tripDetail.remark);l(n,144,0,u.tripDetail.emp_userName);l(n,159,0,u.tripDetail.emp_location);l(n,176,0,u.tripDetail.emp_phoneNo);l(n,192,0,u.tripDetail.emp_email);l(n,207,0,u.tripDetail.travelType);l(n,223,0,i._11(n,224)._disabled,i._11(n,229).ngClassUntouched,i._11(n,229).ngClassTouched,i._11(n,229).ngClassPristine,i._11(n,229).ngClassDirty,i._11(n,229).ngClassValid,i._11(n,229).ngClassInvalid,i._11(n,229).ngClassPending);l(n,247,0,i._11(n,248)._disabled,i._11(n,253).ngClassUntouched,i._11(n,253).ngClassTouched,i._11(n,253).ngClassPristine,i._11(n,253).ngClassDirty,i._11(n,253).ngClassValid,i._11(n,253).ngClassInvalid,i._11(n,253).ngClassPending);l(n,271,0,i._11(n,272)._disabled,i._11(n,277).ngClassUntouched,i._11(n,277).ngClassTouched,i._11(n,277).ngClassPristine,i._11(n,277).ngClassDirty,i._11(n,277).ngClassValid,i._11(n,277).ngClassInvalid,i._11(n,277).ngClassPending);l(n,295,0,i._11(n,298).ngClassUntouched,i._11(n,298).ngClassTouched,i._11(n,298).ngClassPristine,i._11(n,298).ngClassDirty,i._11(n,298).ngClassValid,i._11(n,298).ngClassInvalid,i._11(n,298).ngClassPending)})}u.d(n,"a",function(){return K});var i=u(0),s=u(64),r=u(33),c=u(1),_=u(5),d=u(36),p=u(25),g=u(6),m=u(16),h=u(37),f=u(31),v=u(27),b=u(74),Z=u(41),y=u(40),Y=u(34),C=u(18),k=u(4),D=u(7),w=u(24),P=u(57),T=u(59),j=u(58),x=u(45),z=u(17),q=u(15),R=u(32),F=u(35),I=u(39),L=u(116),S=u(65),N=u(21),A=u(13),$=u(12),U=u(93),M=u(56),V=u(29),H=u(20),O=u(123),E=u(14),B=u(22),J=u(23),W=u(73),X=i.X({encapsulation:2,styles:[],data:{}}),K=i.V("page-admin-aprvl",O.a,function(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"page-admin-aprvl",[],null,null,null,o,X)),i.Y(1,49152,null,0,O.a,[m.a,E.a,B.a,J.a,W.a],null,null)],null,null)},{},{},[])},257:function(l,n,u){"use strict";function e(l){return _._22(0,[(l()(),_.Z(0,0,null,null,42,"ion-toolbar",[["class","toolbar"],["style","color: white;"]],[[2,"statusbar-padding",null]],null,null,d.b,d.a)),_.Y(1,49152,null,0,p.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,3,["\n    "])),(l()(),_.Z(3,0,null,3,38,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(4,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(6,0,null,null,9,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),_.Y(7,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(9,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),_._20(10,null,["\n          ","\n        "])),(l()(),_.Z(11,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(13,0,null,null,1,"span",[["style","font-size: 1.5em;font-weight: bold;"]],null,null,null,null,null)),(l()(),_._20(14,null,[""," "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(17,0,null,null,12,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),_.Y(18,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(20,0,null,null,1,"span",[["style","font-size: 1.0em;font-weight: bold;"]],null,null,null,null,null)),(l()(),_._20(21,null,["",""])),(l()(),_.Z(22,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(24,0,null,null,0,"span",[["class","icon-automobile"],["style","font-size: 1.5em"]],null,null,null,null,null)),(l()(),_.Z(25,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(27,0,null,null,1,"span",[["style","font-size: 1.0em;font-weight: bold;"]],null,null,null,null,null)),(l()(),_._20(28,null,["",""])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(31,0,null,null,9,"ion-col",[["class","col"],["text-center",""]],null,null,null,null,null)),_.Y(32,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(34,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),_._20(35,null,["\n          ","\n        "])),(l()(),_.Z(36,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(38,0,null,null,1,"span",[["style","font-size: 1.5em;font-weight: bold;"]],null,null,null,null,null)),(l()(),_._20(39,null,[" "," "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n    "])),(l()(),_._20(-1,3,["\n  "]))],null,function(l,n){var u=n.component;l(n,0,0,_._11(n,1)._sbPadding);l(n,10,0,u.srcSubstr);l(n,14,0,u.tripDetail.pickupPoint);l(n,21,0,u.tripDetail.travel_date);l(n,28,0,u.tripDetail.travel_time);l(n,35,0,u.destSubstr);l(n,39,0,u.tripDetail.destination)})}function t(l){return _._22(0,[(l()(),_.Z(0,0,null,null,9,"div",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n    "])),(l()(),_.Z(2,0,null,null,6,"ion-card",[["class","driverCard"]],null,null,null,null,null)),_.Y(3,16384,null,0,f.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(5,0,null,null,2,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),_.Y(6,16384,null,0,v.a,[g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(7,null,["\n        ",""])),(l()(),_._20(-1,null,["\n    "])),(l()(),_._20(-1,null,["\n  "]))],function(l,n){l(n,6,0,"red")},function(l,n){l(n,7,0,n.component.driverText)})}function a(l){return _._22(0,[(l()(),_.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),_._20(-1,null,[" (Round Trip)"]))],null,null)}function o(l){return _._22(0,[(l()(),_.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),_._20(-1,null,[" (One-Way Trip)"]))],null,null)}function i(l){return _._22(0,[(l()(),_.Z(0,0,null,null,40,"ion-card",[["class","driverCard formcntent"]],null,null,null,null,null)),_.Y(1,16384,null,0,f.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(3,0,null,null,2,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),_.Y(4,16384,null,0,v.a,[g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,null,["\n        Return Trip details\n      "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(7,0,null,null,32,"ion-card-content",[],null,null,null,null,null)),_.Y(8,16384,null,0,b.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(10,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(11,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(13,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(14,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(16,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Return Date"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(20,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(21,16384,null,0,h.a,[],null,null),(l()(),_._20(22,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(25,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(26,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(28,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(29,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(31,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Return Time"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(35,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(36,16384,null,0,h.a,[],null,null),(l()(),_._20(37,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n    "]))],function(l,n){l(n,4,0,"red")},function(l,n){var u=n.component;l(n,22,0,u.tripDetail.returnDate);l(n,37,0,u.tripDetail.returnTime)})}function s(l){return _._22(0,[(l()(),_.Z(0,0,null,null,35,"div",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(2,0,null,null,16,"ion-item",[["class","item item-block"]],null,null,null,Z.b,Z.a)),_.Y(3,1097728,null,3,y.a,[Y.a,g.a,_.j,_.z,[2,C.a]],null,null),_._18(335544320,1,{contentLabel:0}),_._18(603979776,2,{_buttons:1}),_._18(603979776,3,{_icons:1}),_.Y(7,16384,null,0,k.a,[],null,null),(l()(),_._20(-1,2,["\n        "])),(l()(),_.Z(9,0,null,1,2,"ion-label",[["floating",""]],null,null,null,null,null)),_.Y(10,16384,[[1,4]],0,D.a,[g.a,_.j,_.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),_._20(-1,null,["Enter kms."])),(l()(),_._20(-1,2,["\n        "])),(l()(),_.Z(13,0,null,3,4,"ion-input",[["type","number"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0;if("ngModelChange"===n){e=!1!==(l.component.startkm=u)&&e}return e},w.b,w.a)),_.Y(14,671744,null,0,P.q,[[8,null],[8,null],[8,null],[8,null]],{model:[0,"model"]},{update:"ngModelChange"}),_._16(2048,null,P.n,null,[P.q]),_.Y(16,16384,null,0,P.o,[P.n],null,null),_.Y(17,5423104,null,0,T.a,[g.a,j.a,Y.a,x.a,_.j,_.z,[2,z.a],[2,y.a],[2,P.n],q.a],{type:[0,"type"]},null),(l()(),_._20(-1,2,["\n      "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(20,0,null,null,14,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),_.Y(21,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(23,0,null,null,10,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(24,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(26,0,null,null,2,"button",[["color","red"],["ion-button",""]],[[8,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.startTrip("startTrip")&&e}return e},R.b,R.a)),_.Y(27,1097728,null,0,F.a,[[8,""],g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,0,["Start Trip\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(30,0,null,null,2,"button",[["color","red"],["ion-button",""]],[[8,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.startTrip("endTrip")&&e}return e},R.b,R.a)),_.Y(31,1097728,null,0,F.a,[[8,""],g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,0,["End Trip\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n\n\n    "]))],function(l,n){l(n,14,0,n.component.startkm);l(n,17,0,"number");l(n,27,0,"red");l(n,31,0,"red")},function(l,n){var u=n.component;l(n,13,0,_._11(n,16).ngClassUntouched,_._11(n,16).ngClassTouched,_._11(n,16).ngClassPristine,_._11(n,16).ngClassDirty,_._11(n,16).ngClassValid,_._11(n,16).ngClassInvalid,_._11(n,16).ngClassPending);l(n,26,0,0!=u.tripDetail.startKm);l(n,30,0,0==u.tripDetail.startKm)})}function r(l){return _._22(0,[(l()(),_.Z(0,0,null,null,187,"div",[],null,null,null,null,null)),(l()(),_._20(-1,null,["\n    "])),(l()(),_.Z(2,0,null,null,110,"ion-card",[["class","driverCard crdht formcntent"]],null,null,null,null,null)),_.Y(3,16384,null,0,f.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(5,0,null,null,8,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),_.Y(6,16384,null,0,v.a,[g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,null,["\n        Passengers Details\n        "])),(l()(),_.U(16777216,null,null,1,null,a)),_.Y(9,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.U(16777216,null,null,1,null,o)),_.Y(12,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(15,0,null,null,96,"ion-card-content",[],null,null,null,null,null)),_.Y(16,16384,null,0,b.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(18,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(19,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(21,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(22,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(24,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Passanger Name"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(28,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(29,16384,null,0,h.a,[],null,null),(l()(),_._20(30,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(33,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(34,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(36,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(37,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(39,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Pick up point"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(43,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(44,16384,null,0,h.a,[],null,null),(l()(),_._20(45,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(48,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(49,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(51,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(52,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(54,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Source"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(58,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(59,16384,null,0,h.a,[],null,null),(l()(),_._20(60,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(63,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(64,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(66,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(67,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(69,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Destination"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(73,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(74,16384,null,0,h.a,[],null,null),(l()(),_._20(75,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(78,0,null,null,17,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(79,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(81,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(82,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(84,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Mobile Number"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(88,0,null,null,5,"ion-col",[["class","col"]],null,[[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==t.callnum(t.tripDetail.emp_phoneNo)&&e}return e},null,null)),_.Y(89,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(91,0,null,null,1,"u",[["style","color: blue;"]],null,null,null,null,null)),(l()(),_._20(92,null,["","\n            "])),(l()(),_._20(-1,null,["\n\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(97,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(98,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(100,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(101,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(103,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Email Id"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(107,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(108,16384,null,0,h.a,[],null,null),(l()(),_._20(109,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n\n      "])),(l()(),_._20(-1,null,["\n    "])),(l()(),_._20(-1,null,["\n\n\n    "])),(l()(),_.Z(114,0,null,null,55,"ion-card",[["class","driverCard formcntent"]],null,null,null,null,null)),_.Y(115,16384,null,0,f.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(117,0,null,null,2,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),_.Y(118,16384,null,0,v.a,[g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,null,["\n        Cab Details"])),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(121,0,null,null,47,"ion-card-content",[],null,null,null,null,null)),_.Y(122,16384,null,0,b.a,[g.a,_.j,_.z],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(124,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(125,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(127,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(128,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(130,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Cab Name"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(134,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(135,16384,null,0,h.a,[],null,null),(l()(),_._20(136,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(139,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(140,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(142,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(143,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(145,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Cab Number"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(149,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(150,16384,null,0,h.a,[],null,null),(l()(),_._20(151,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(154,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),_.Y(155,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(157,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(158,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n            "])),(l()(),_.Z(160,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),_._20(-1,null,["Number of seats"])),(l()(),_._20(-1,null,["\n          "])),(l()(),_._20(-1,null,["\n          "])),(l()(),_.Z(164,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(165,16384,null,0,h.a,[],null,null),(l()(),_._20(166,null,["\n            ","\n          "])),(l()(),_._20(-1,null,["\n        "])),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n    "])),(l()(),_._20(-1,null,["\n\n    "])),(l()(),_.U(16777216,null,null,1,null,i)),_.Y(172,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,null,["\n\n\n    "])),(l()(),_.Z(174,0,null,null,9,"ion-row",[["class","row-height row"],["style","margin-top: 10%"],["text-center",""]],null,null,null,null,null)),_.Y(175,16384,null,0,m.a,[],null,null),(l()(),_._20(-1,null,["\n      "])),(l()(),_.Z(177,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),_.Y(178,16384,null,0,h.a,[],null,null),(l()(),_._20(-1,null,["\n        "])),(l()(),_.Z(180,0,null,null,1,"qr-code",[],null,null,null,L.b,L.a)),_.Y(181,573440,null,0,S.a,[_.j],{size:[0,"size"],value:[1,"value"]},null),(l()(),_._20(-1,null,["\n      "])),(l()(),_._20(-1,null,["\n    "])),(l()(),_._20(-1,null,["\n\n    "])),(l()(),_.U(16777216,null,null,1,null,s)),_.Y(186,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,null,["\n\n  "]))],function(l,n){var u=n.component;l(n,6,0,"red");l(n,9,0,"Yes"==u.tripDetail.isRoundTrip);l(n,12,0,"No"==u.tripDetail.isRoundTrip);l(n,118,0,"red");l(n,172,0,"Yes"==u.tripDetail.isRoundTrip);l(n,181,0,200,u.asd);l(n,186,0,0!=u.tripDetail.length)},function(l,n){var u=n.component;l(n,30,0,u.tripDetail.emp_userName);l(n,45,0,u.tripDetail.pickupPoint);l(n,60,0,u.tripDetail.source);l(n,75,0,u.tripDetail.destination);l(n,92,0,u.tripDetail.emp_phoneNo);l(n,109,0,u.tripDetail.emp_email);l(n,136,0,u.cabDetail.cab_name);l(n,151,0,u.cabDetail.cab_no);l(n,166,0,u.cabDetail.no_of_seats)})}function c(l){return _._22(0,[(l()(),_.Z(0,0,null,null,15,"ion-header",[],null,null,null,null,null)),_.Y(1,16384,null,0,N.a,[g.a,_.j,_.z,[2,A.a]],null,null),(l()(),_._20(-1,null,["\n  "])),(l()(),_.Z(3,0,null,null,8,"ion-navbar",[["class","toolbar"],["color","navColor"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,$.b,$.a)),_.Y(4,49152,null,0,U.a,[x.a,[2,A.a],[2,M.a],g.a,_.j,_.z],{color:[0,"color"]},null),(l()(),_._20(-1,3,["\n    "])),(l()(),_.Z(6,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,V.b,V.a)),_.Y(7,49152,null,0,H.a,[g.a,_.j,_.z,[2,p.a],[2,U.a]],null,null),(l()(),_._20(-1,0,["Trip Details"])),(l()(),_._20(-1,3,["\n    "])),(l()(),_.Z(10,0,null,3,0,"span",[["class","icon-switch"],["style","float:right"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logout(u)&&e}return e},null,null)),(l()(),_._20(-1,3,["\n\n  "])),(l()(),_._20(-1,null,["\n  "])),(l()(),_.U(16777216,null,null,1,null,e)),_.Y(14,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,null,["\n"])),(l()(),_._20(-1,null,["\n\n"])),(l()(),_.Z(17,0,null,null,8,"ion-content",[["class","webToolbar"]],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,O.b,O.a)),_.Y(18,4374528,null,0,z.a,[g.a,j.a,q.a,_.j,_.z,x.a,E.a,_.u,[2,A.a],[2,M.a]],null,null),(l()(),_._20(-1,1,["\n  "])),(l()(),_.U(16777216,null,1,1,null,t)),_.Y(21,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,1,["\n  "])),(l()(),_.U(16777216,null,1,1,null,r)),_.Y(24,16384,null,0,I.j,[_.I,_.F],{ngIf:[0,"ngIf"]},null),(l()(),_._20(-1,1,["\n"]))],function(l,n){var u=n.component;l(n,4,0,"navColor");l(n,14,0,0!=u.tripDetail.length);l(n,21,0,0==u.tripDetail.length);l(n,24,0,0!=u.tripDetail.length)},function(l,n){l(n,3,0,_._11(n,4)._hidden,_._11(n,4)._sbPadding);l(n,17,0,_._11(n,18).statusbarPadding,_._11(n,18)._hasRefresher)})}u.d(n,"a",function(){return nl});var _=u(0),d=u(74),p=u(27),g=u(1),m=u(41),h=u(40),f=u(57),v=u(59),b=u(58),Z=u(45),y=u(17),Y=u(15),C=u(32),k=u(35),D=u(39),w=u(93),P=u(13),T=u(56),j=u(4),x=u(6),z=u(18),q=u(7),R=u(29),F=u(20),I=u(12),L=u(330),S=u(97),N=u(33),A=u(5),$=u(36),U=u(25),M=u(16),V=u(37),H=u(31),O=u(34),E=u(24),B=u(125),J=u(14),W=u(67),X=u(23),K=u(22),G=u(73),Q=u(75),ll=_.X({encapsulation:2,styles:[],data:{}}),nl=_.V("page-driver",B.a,function(l){return _._22(0,[(l()(),_.Z(0,0,null,null,1,"page-driver",[],null,null,null,c,ll)),_.Y(1,49152,null,0,B.a,[M.a,J.a,W.a,X.a,K.a,G.a,Q.a],null,null)],null,null)},{},{},[])},258:function(l,n,u){"use strict";function e(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"span",[["style","color: #a90e1b;"],["text-left",""]],null,null,null,null,null)),(l()(),i._20(1,null,["\n            ",", ","\n          "]))],null,function(l,n){l(n,1,0,n.parent.parent.context.$implicit.travel_date,n.parent.parent.context.$implicit.travel_time)})}function t(l){return i._22(0,[(l()(),i.Z(0,0,null,null,41,"ion-item",[["class","item item-block"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.parent.context.$implicit)&&e}return e},s.b,s.a)),i.Y(1,1097728,null,3,r.a,[c.a,_.a,i.j,i.z,[2,d.a]],null,null),i._18(335544320,4,{contentLabel:0}),i._18(603979776,5,{_buttons:1}),i._18(603979776,6,{_icons:1}),i.Y(5,16384,null,0,p.a,[],null,null),(l()(),i._20(-1,2,["\n          "])),(l()(),i.Z(7,0,null,2,6,"span",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(9,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n              "])),(l()(),i.Z(11,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),i._20(12,null,["",""])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,2,["\n          "])),(l()(),i.U(16777216,null,2,1,null,e)),i.Y(16,16384,null,0,g.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,2,["\n          "])),(l()(),i.Z(18,0,null,2,4,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(20,0,null,null,1,"h6",[],null,null,null,null,null)),(l()(),i._20(21,null,["",""])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,2,["\n          "])),(l()(),i.Z(24,0,null,2,16,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(26,0,null,null,13,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n              "])),(l()(),i.Z(28,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n                "])),(l()(),i.Z(30,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),i._20(31,null,["",""])),(l()(),i._20(-1,null,["\n              "])),(l()(),i._20(-1,null,["\n              "])),(l()(),i.Z(34,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n                "])),(l()(),i.Z(36,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),i._20(37,null,["",""])),(l()(),i._20(-1,null,["\n              "])),(l()(),i._20(-1,null,["\n            "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,2,["\n        "]))],function(l,n){l(n,16,0,null!=n.parent.context.$implicit.travel_date)},function(l,n){l(n,12,0,n.parent.context.$implicit.purpose);l(n,21,0,n.parent.context.$implicit.status);l(n,31,0,n.parent.context.$implicit.source);l(n,37,0,n.parent.context.$implicit.destination)})}function a(l){return i._22(0,[(l()(),i.Z(0,0,null,null,4,null,null,null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.U(16777216,null,null,1,null,t)),i.Y(3,16384,null,0,g.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,null,["\n      "]))],function(l,n){l(n,3,0,n.context.$implicit.travel_date&&"null"!=n.context.$implicit.travel_date)},null)}function o(l){return i._22(0,[(l()(),i._20(-1,null,["\n"])),(l()(),i.Z(1,0,null,null,10,"ion-header",[],null,null,null,null,null)),i.Y(2,16384,null,0,m.a,[_.a,i.j,i.z,[2,h.a]],null,null),(l()(),i._20(-1,null,["\n\n  "])),(l()(),i.Z(4,0,null,null,6,"ion-navbar",[["class","toolbar"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,f.b,f.a)),i.Y(5,49152,null,0,v.a,[b.a,[2,h.a],[2,Z.a],_.a,i.j,i.z],null,null),(l()(),i._20(-1,3,["\n    "])),(l()(),i.Z(7,0,null,3,2,"ion-title",[],null,null,null,y.b,y.a)),i.Y(8,49152,null,0,Y.a,[_.a,i.j,i.z,[2,C.a],[2,v.a]],null,null),(l()(),i._20(-1,0,["Request History"])),(l()(),i._20(-1,3,["\n  "])),(l()(),i._20(-1,null,["\n\n"])),(l()(),i._20(-1,null,["\n\n\n"])),(l()(),i.Z(13,0,null,null,24,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,k.b,k.a)),i.Y(14,4374528,null,0,D.a,[_.a,w.a,P.a,i.j,i.z,b.a,T.a,i.u,[2,h.a],[2,Z.a]],null,null),(l()(),i._20(-1,1,["\n  "])),(l()(),i.Z(16,0,null,1,20,"ion-grid",[["class","formcntent grid"]],null,null,null,null,null)),i.Y(17,16384,null,0,j.a,[],null,null),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(19,0,null,null,16,"ion-list",[],null,null,null,null,null)),i.Y(20,16384,null,0,x.a,[_.a,i.j,i.z,w.a,z.l,P.a],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(22,0,null,null,9,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important;"]],null,null,null,s.b,s.a)),i.Y(23,1097728,null,3,r.a,[c.a,_.a,i.j,i.z,[2,d.a]],null,null),i._18(335544320,1,{contentLabel:0}),i._18(603979776,2,{_buttons:1}),i._18(603979776,3,{_icons:1}),i.Y(27,16384,null,0,q.a,[_.a,i.z,i.j,[8,null]],null,null),(l()(),i._20(-1,2,["\n        "])),(l()(),i.Z(29,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Trip Completed"])),(l()(),i._20(-1,2,["\n      "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.U(16777216,null,null,1,null,a)),i.Y(34,802816,null,0,g.i,[i.I,i.F,i.p],{ngForOf:[0,"ngForOf"]},null),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n  "])),(l()(),i._20(-1,1,["\n"]))],function(l,n){l(n,34,0,n.component.tripHistory)},function(l,n){l(n,4,0,i._11(n,5)._hidden,i._11(n,5)._sbPadding);l(n,13,0,i._11(n,14).statusbarPadding,i._11(n,14)._hasRefresher)})}u.d(n,"a",function(){return A});var i=u(0),s=u(45),r=u(17),c=u(15),_=u(1),d=u(32),p=u(35),g=u(12),m=u(33),h=u(5),f=u(36),v=u(25),b=u(6),Z=u(16),y=u(37),Y=u(31),C=u(27),k=u(34),D=u(18),w=u(4),P=u(7),T=u(24),j=u(55),x=u(44),z=u(8),q=u(62),R=u(129),F=u(14),I=u(22),L=u(23),S=u(66),N=i.X({encapsulation:2,styles:[],data:{}}),A=i.V("page-requesthistory",R.a,function(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"page-requesthistory",[],null,null,null,o,N)),i.Y(1,49152,null,0,R.a,[Z.a,F.a,I.a,L.a,S.a],null,null)],null,null)},{},{},[])},259:function(l,n,u){"use strict";function e(l){return t._22(0,[(l()(),t.Z(0,0,null,null,10,"ion-header",[],null,null,null,null,null)),t.Y(1,16384,null,0,a.a,[o.a,t.j,t.z,[2,i.a]],null,null),(l()(),t._20(-1,null,["\n\n  "])),(l()(),t.Z(3,0,null,null,6,"ion-navbar",[["class","toolbar"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,s.b,s.a)),t.Y(4,49152,null,0,r.a,[c.a,[2,i.a],[2,_.a],o.a,t.j,t.z],null,null),(l()(),t._20(-1,3,["\n    "])),(l()(),t.Z(6,0,null,3,2,"ion-title",[],null,null,null,d.b,d.a)),t.Y(7,49152,null,0,p.a,[o.a,t.j,t.z,[2,g.a],[2,r.a]],null,null),(l()(),t._20(-1,0,["Trip Details"])),(l()(),t._20(-1,3,["\n  "])),(l()(),t._20(-1,null,["\n\n"])),(l()(),t._20(-1,null,["\n\n\n"])),(l()(),t.Z(12,0,null,null,51,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,m.b,m.a)),t.Y(13,4374528,null,0,h.a,[o.a,f.a,v.a,t.j,t.z,c.a,b.a,t.u,[2,i.a],[2,_.a]],null,null),(l()(),t._20(-1,1,["\n    "])),(l()(),t.Z(15,0,null,1,11,"ion-item",[["class","item item-block"]],null,null,null,Z.b,Z.a)),t.Y(16,1097728,null,3,y.a,[Y.a,o.a,t.j,t.z,[2,C.a]],null,null),t._18(335544320,1,{contentLabel:0}),t._18(603979776,2,{_buttons:1}),t._18(603979776,3,{_icons:1}),t.Y(20,16384,null,0,k.a,[],null,null),(l()(),t._20(-1,2,["\n    "])),(l()(),t.Z(22,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(24,0,null,2,1,"h2",[["style","float:left; padding-left: 12px;font-weight: 500;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n      "])),(l()(),t._20(-1,1,["\n      "])),(l()(),t.Z(28,0,null,1,15,"ion-item",[["class","item item-block"]],null,null,null,Z.b,Z.a)),t.Y(29,1097728,null,3,y.a,[Y.a,o.a,t.j,t.z,[2,C.a]],null,null),t._18(335544320,4,{contentLabel:0}),t._18(603979776,5,{_buttons:1}),t._18(603979776,6,{_icons:1}),t.Y(33,16384,null,0,k.a,[],null,null),(l()(),t._20(-1,2,["\n    "])),(l()(),t.Z(35,0,null,2,0,"span",[["class","icon-user"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(37,0,null,2,1,"h2",[["style","float:left; padding-left: 12px;font-weight: 500;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["ABCD XYZ/9890123345"])),(l()(),t.Z(39,0,null,2,0,"br",[],null,null,null,null,null)),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(41,0,null,2,1,"h3",[["style","float:left; padding-left: 29px;color: #424242;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n      "])),(l()(),t._20(-1,1,["\n  "])),(l()(),t.Z(45,0,null,1,17,"ion-item",[["class","item item-block"]],null,null,null,Z.b,Z.a)),t.Y(46,1097728,null,3,y.a,[Y.a,o.a,t.j,t.z,[2,C.a]],null,null),t._18(335544320,7,{contentLabel:0}),t._18(603979776,8,{_buttons:1}),t._18(603979776,9,{_icons:1}),t.Y(50,16384,null,0,k.a,[],null,null),(l()(),t._20(-1,2,["\n    "])),(l()(),t.Z(52,0,null,2,9,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(54,0,null,null,2,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),t.Z(55,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),t._20(-1,null,["Reay Road"])),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(58,0,null,null,2,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),t.Z(59,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),t._20(-1,null,["CSMT"])),(l()(),t._20(-1,null,["\n    "])),(l()(),t._20(-1,2,["\n  "])),(l()(),t._20(-1,1,["\n"])),(l()(),t._20(-1,null,["\n"]))],null,function(l,n){l(n,3,0,t._11(n,4)._hidden,t._11(n,4)._sbPadding);l(n,12,0,t._11(n,13).statusbarPadding,t._11(n,13)._hasRefresher)})}u.d(n,"a",function(){return T});var t=u(0),a=u(33),o=u(1),i=u(5),s=u(36),r=u(25),c=u(6),_=u(16),d=u(37),p=u(31),g=u(27),m=u(34),h=u(18),f=u(4),v=u(7),b=u(24),Z=u(45),y=u(17),Y=u(15),C=u(32),k=u(35),D=u(126),w=u(14),P=t.X({encapsulation:2,styles:[],data:{}}),T=t.V("page-notification-detail",D.a,function(l){return t._22(0,[(l()(),t.Z(0,0,null,null,1,"page-notification-detail",[],null,null,null,e,P)),t.Y(1,49152,null,0,D.a,[_.a,w.a],null,null)],null,null)},{},{},[])},260:function(l,n,u){"use strict";function e(l){return t._22(0,[(l()(),t._20(-1,null,["\n\n"])),(l()(),t.Z(1,0,null,null,101,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,a.b,a.a)),t.Y(2,4374528,null,0,o.a,[i.a,s.a,r.a,t.j,t.z,c.a,_.a,t.u,[2,d.a],[2,p.a]],null,null),(l()(),t._20(-1,1,["\n  "])),(l()(),t.Z(4,0,null,1,97,"ion-list",[],null,null,null,null,null)),t.Y(5,16384,null,0,g.a,[i.a,t.j,t.z,s.a,m.l,r.a],null,null),(l()(),t._20(-1,null,["\n   "])),(l()(),t.Z(7,0,null,null,17,"ion-item",[["class","item item-block"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showDetails()&&e}return e},h.b,h.a)),t.Y(8,1097728,null,3,f.a,[v.a,i.a,t.j,t.z,[2,b.a]],null,null),t._18(335544320,1,{contentLabel:0}),t._18(603979776,2,{_buttons:1}),t._18(603979776,3,{_icons:1}),t.Y(12,16384,null,0,Z.a,[],null,null),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(14,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(16,0,null,2,1,"p",[["style","padding-left: 3px; color:#9b0c1a"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Your request is Accepted"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(19,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(22,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n   "])),(l()(),t._20(-1,null,["\n   "])),(l()(),t.Z(26,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,h.b,h.a)),t.Y(27,1097728,null,3,f.a,[v.a,i.a,t.j,t.z,[2,b.a]],null,null),t._18(335544320,4,{contentLabel:0}),t._18(603979776,5,{_buttons:1}),t._18(603979776,6,{_icons:1}),t.Y(31,16384,null,0,Z.a,[],null,null),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(33,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(35,0,null,2,1,"p",[["style","padding-left: 3px; color:#9b0c1a"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Your request is Accepted"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(38,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(41,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n   "])),(l()(),t._20(-1,null,["\n   "])),(l()(),t.Z(45,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,h.b,h.a)),t.Y(46,1097728,null,3,f.a,[v.a,i.a,t.j,t.z,[2,b.a]],null,null),t._18(335544320,7,{contentLabel:0}),t._18(603979776,8,{_buttons:1}),t._18(603979776,9,{_icons:1}),t.Y(50,16384,null,0,Z.a,[],null,null),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(52,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(54,0,null,2,1,"p",[["style","padding-left: 3px; color:#9b0c1a"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Your request is Accepted"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(57,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(60,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n   "])),(l()(),t._20(-1,null,["\n   "])),(l()(),t.Z(64,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,h.b,h.a)),t.Y(65,1097728,null,3,f.a,[v.a,i.a,t.j,t.z,[2,b.a]],null,null),t._18(335544320,10,{contentLabel:0}),t._18(603979776,11,{_buttons:1}),t._18(603979776,12,{_icons:1}),t.Y(69,16384,null,0,Z.a,[],null,null),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(71,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(73,0,null,2,1,"p",[["style","padding-left: 3px; color:#9b0c1a"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Your request is Accepted"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(76,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(79,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n   "])),(l()(),t._20(-1,null,["\n   "])),(l()(),t.Z(83,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,h.b,h.a)),t.Y(84,1097728,null,3,f.a,[v.a,i.a,t.j,t.z,[2,b.a]],null,null),t._18(335544320,13,{contentLabel:0}),t._18(603979776,14,{_buttons:1}),t._18(603979776,15,{_icons:1}),t.Y(88,16384,null,0,Z.a,[],null,null),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(90,0,null,2,0,"span",[["class","icon-directions_car"],["style","float:left"]],null,null,null,null,null)),(l()(),t._20(-1,2,["\n      "])),(l()(),t.Z(92,0,null,2,1,"p",[["style","padding-left: 3px; color:#9b0c1a"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Your request is Accepted"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(95,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Mon, Sep 03, 06:49AM"])),(l()(),t._20(-1,2,["\n        "])),(l()(),t.Z(98,0,null,2,1,"h6",[["style","color: #424242;padding-left: 22px;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Micro . CRN 22312312"])),(l()(),t._20(-1,2,["\n   "])),(l()(),t._20(-1,null,["\n"])),(l()(),t._20(-1,1,["\n"])),(l()(),t._20(-1,null,["\n"]))],null,function(l,n){l(n,1,0,t._11(n,2).statusbarPadding,t._11(n,2)._hasRefresher)})}u.d(n,"a",function(){return k});var t=u(0),a=u(34),o=u(18),i=u(1),s=u(4),r=u(7),c=u(6),_=u(24),d=u(5),p=u(16),g=u(44),m=u(8),h=u(45),f=u(17),v=u(15),b=u(32),Z=u(35),y=u(86),Y=u(14),C=t.X({encapsulation:2,styles:[],data:{}}),k=t.V("page-notification",y.a,function(l){return t._22(0,[(l()(),t.Z(0,0,null,null,1,"page-notification",[],null,null,null,e,C)),t.Y(1,49152,null,0,y.a,[p.a,Y.a],null,null)],null,null)},{},{},[])},261:function(l,n,u){"use strict";function e(l){return t._22(0,[(l()(),t._20(-1,null,["\n"])),(l()(),t.Z(1,0,null,null,10,"ion-header",[],null,null,null,null,null)),t.Y(2,16384,null,0,a.a,[o.a,t.j,t.z,[2,i.a]],null,null),(l()(),t._20(-1,null,["\n\n  "])),(l()(),t.Z(4,0,null,null,6,"ion-navbar",[["class","toolbar"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,s.b,s.a)),t.Y(5,49152,null,0,r.a,[c.a,[2,i.a],[2,_.a],o.a,t.j,t.z],null,null),(l()(),t._20(-1,3,["\n    "])),(l()(),t.Z(7,0,null,3,2,"ion-title",[],null,null,null,d.b,d.a)),t.Y(8,49152,null,0,p.a,[o.a,t.j,t.z,[2,g.a],[2,r.a]],null,null),(l()(),t._20(-1,0,["scan"])),(l()(),t._20(-1,3,["\n  "])),(l()(),t._20(-1,null,["\n\n"])),(l()(),t._20(-1,null,["\n\n\n"])),(l()(),t.Z(13,0,null,null,2,"ion-content",[["style","background: none transparent;"]],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,m.b,m.a)),t.Y(14,4374528,null,0,h.a,[o.a,f.a,v.a,t.j,t.z,c.a,b.a,t.u,[2,i.a],[2,_.a]],null,null),(l()(),t._20(-1,1,["\n\n"])),(l()(),t._20(-1,null,["\n"]))],null,function(l,n){l(n,4,0,t._11(n,5)._hidden,t._11(n,5)._sbPadding);l(n,13,0,t._11(n,14).statusbarPadding,t._11(n,14)._hasRefresher)})}u.d(n,"a",function(){return w});var t=u(0),a=u(33),o=u(1),i=u(5),s=u(36),r=u(25),c=u(6),_=u(16),d=u(37),p=u(31),g=u(27),m=u(34),h=u(18),f=u(4),v=u(7),b=u(24),Z=u(98),y=u(14),Y=u(23),C=u(22),k=u(85),D=t.X({encapsulation:2,styles:[],data:{}}),w=t.V("page-scan",Z.a,function(l){return t._22(0,[(l()(),t.Z(0,0,null,null,1,"page-scan",[],null,null,null,e,D)),t.Y(1,49152,null,0,Z.a,[_.a,y.a,Y.a,C.a,k.a],null,null)],null,null)},{},{},[])},262:function(l,n,u){"use strict";function e(l){return t._22(0,[(l()(),t._20(-1,null,["\n"])),(l()(),t.Z(1,0,null,null,19,"ion-header",[],null,null,null,null,null)),t.Y(2,16384,null,0,a.a,[o.a,t.j,t.z,[2,i.a]],null,null),(l()(),t._20(-1,null,["\n\n  "])),(l()(),t.Z(4,0,null,null,15,"ion-navbar",[["class","toolbar"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,s.b,s.a)),t.Y(5,49152,null,0,r.a,[c.a,[2,i.a],[2,_.a],o.a,t.j,t.z],null,null),(l()(),t._20(-1,3,["\n    "])),(l()(),t.Z(7,0,null,3,2,"ion-title",[],null,null,null,d.b,d.a)),t.Y(8,49152,null,0,p.a,[o.a,t.j,t.z,[2,g.a],[2,r.a]],null,null),(l()(),t._20(-1,0,["Terms & Condtitions"])),(l()(),t._20(-1,3,["\n    "])),(l()(),t.Z(11,0,null,2,7,"ion-buttons",[["end",""]],null,null,null,null,null)),t.Y(12,16384,null,1,m.a,[o.a,t.j,t.z,[2,g.a],[2,r.a]],null,null),t._18(603979776,1,{_buttons:1}),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(15,0,null,null,2,"button",[["ion-button",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.closeModal()&&e}return e},h.b,h.a)),t.Y(16,1097728,[[1,4]],0,f.a,[[8,""],o.a,t.j,t.z],null,null),(l()(),t._20(-1,0,["\n        Close\n      "])),(l()(),t._20(-1,null,["\n    "])),(l()(),t._20(-1,3,["\n  "])),(l()(),t._20(-1,null,["\n\n"])),(l()(),t._20(-1,null,["\n\n\n"])),(l()(),t.Z(22,0,null,null,43,"ion-content",[["padding",""]],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,v.b,v.a)),t.Y(23,4374528,null,0,b.a,[o.a,Z.a,y.a,t.j,t.z,c.a,Y.a,t.u,[2,i.a],[2,_.a]],null,null),(l()(),t._20(-1,1,["\n  "])),(l()(),t.Z(25,0,null,1,1,"h4",[["style","color: #a90e1b;"]],null,null,null,null,null)),(l()(),t._20(-1,null,[" Disclaimer as below"])),(l()(),t._20(-1,1,["\n  "])),(l()(),t.Z(28,0,null,1,35,"div",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n    "])),(l()(),t.Z(30,0,null,null,31,"ul",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(32,0,null,null,4,"li",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n        "])),(l()(),t.Z(34,0,null,null,1,"h6",[["style","color: #100f0fcc;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["\n          Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n        "])),(l()(),t._20(-1,null,["\n      "])),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(38,0,null,null,4,"li",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n        "])),(l()(),t.Z(40,0,null,null,1,"h6",[["style","color: #100f0fcc;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["\n          Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day."])),(l()(),t._20(-1,null,["\n      "])),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(44,0,null,null,4,"li",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n        "])),(l()(),t.Z(46,0,null,null,1,"h6",[["style","color: #100f0fcc;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination."])),(l()(),t._20(-1,null,["\n      "])),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(50,0,null,null,4,"li",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n        "])),(l()(),t.Z(52,0,null,null,1,"h6",[["style","color: #100f0fcc;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["Travel Request must be approved by your HOD who is L5DH or above."])),(l()(),t._20(-1,null,["\n      "])),(l()(),t._20(-1,null,["\n      "])),(l()(),t.Z(56,0,null,null,4,"li",[],null,null,null,null,null)),(l()(),t._20(-1,null,["\n        "])),(l()(),t.Z(58,0,null,null,1,"h6",[["style","color: #100f0fcc;"]],null,null,null,null,null)),(l()(),t._20(-1,null,["For L5DH and above, the Travel Request will be self-approved."])),(l()(),t._20(-1,null,["\n      "])),(l()(),t._20(-1,null,["\n    "])),(l()(),t._20(-1,null,["\n    "])),(l()(),t._20(-1,null,["\n  "])),(l()(),t._20(-1,1,["\n  "])),(l()(),t._20(-1,1,["\n"]))],null,function(l,n){l(n,4,0,t._11(n,5)._hidden,t._11(n,5)._sbPadding);l(n,22,0,t._11(n,23).statusbarPadding,t._11(n,23)._hasRefresher)})}u.d(n,"a",function(){return w});var t=u(0),a=u(33),o=u(1),i=u(5),s=u(36),r=u(25),c=u(6),_=u(16),d=u(37),p=u(31),g=u(27),m=u(124),h=u(29),f=u(20),v=u(34),b=u(18),Z=u(4),y=u(7),Y=u(24),C=u(175),k=u(14),D=t.X({encapsulation:2,styles:[],data:{}}),w=t.V("page-termscondition",C.a,function(l){return t._22(0,[(l()(),t.Z(0,0,null,null,1,"page-termscondition",[],null,null,null,e,D)),t.Y(1,49152,null,0,C.a,[_.a,k.a,i.a],null,null)],null,null)},{},{},[])},263:function(l,n,u){"use strict";function e(l){return i._22(0,[(l()(),i.Z(0,0,null,null,37,"ion-grid",[["class","grid"]],null,null,null,null,null)),i.Y(1,16384,null,0,s.a,[],null,null),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(3,0,null,null,20,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(4,16384,null,0,r.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(6,0,null,null,7,"ion-col",[["class","col"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showDashboard()&&e}return e},null,null)),i.Y(7,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(9,0,null,null,0,"img",[["alt",""],["src","assets/imgs/ani/bell2.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(11,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Notifications"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(15,0,null,null,7,"ion-col",[["class","col"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showDashboard()&&e}return e},null,null)),i.Y(16,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(18,0,null,null,0,"img",[["alt",""],["src","assets/imgs/ani/cab1.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(20,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Cabs History"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(25,0,null,null,11,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(26,16384,null,0,r.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(28,0,null,null,7,"ion-col",[["class","col"],["col-6",""],["offset-3",""],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showDashboard()&&e}return e},null,null)),i.Y(29,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(31,0,null,null,0,"img",[["alt",""],["src","assets/imgs/ani/create1.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(33,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Create Request"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n  "]))],null,null)}function t(l){return i._22(0,[(l()(),i.Z(0,0,null,null,24,"ion-grid",[["class","grid"]],null,null,null,null,null)),i.Y(1,16384,null,0,s.a,[],null,null),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(3,0,null,null,20,"ion-row",[["class","row"]],null,null,null,null,null)),i.Y(4,16384,null,0,r.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(6,0,null,null,7,"ion-col",[["class","col"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.getTripDetails("tripPage")&&e}return e},null,null)),i.Y(7,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(9,0,null,null,0,"img",[["alt",""],["class","height: 50%"],["src","assets/imgs/ani/create1.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(11,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Trip Details"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(15,0,null,null,7,"ion-col",[["class","col"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.getTripDetails("ticketPage")&&e}return e},null,null)),i.Y(16,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(18,0,null,null,0,"img",[["alt",""],["src","assets/imgs/ani/raise1.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(20,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Scan Code"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n  "]))],null,null)}function a(l){return i._22(0,[(l()(),i.Z(0,0,null,null,15,"ion-grid",[["class","grid"]],null,null,null,null,null)),i.Y(1,16384,null,0,s.a,[],null,null),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(3,0,null,null,11,"ion-row",[["class","row"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.securityScan()&&e}return e},null,null)),i.Y(4,16384,null,0,r.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(6,0,null,null,7,"ion-col",[["class","col"],["col-6",""],["offset-3",""],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.securityScan()&&e}return e},null,null)),i.Y(7,16384,null,0,c.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(9,0,null,null,0,"img",[["alt",""],["src","assets/imgs/ani/raise1.png"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(11,0,null,null,1,"span",[["class","userText"]],null,null,null,null,null)),(l()(),i._20(-1,null,["Scan Code"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n\n  "]))],null,null)}function o(l){return i._22(0,[(l()(),i.Z(0,0,null,null,44,"ion-header",[],null,null,null,null,null)),i.Y(1,16384,null,0,_.a,[d.a,i.j,i.z,[2,p.a]],null,null),(l()(),i._20(-1,null,["\n  "])),(l()(),i.Z(3,0,null,null,6,"ion-navbar",[["class","toolbar"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,g.b,g.a)),i.Y(4,49152,null,0,m.a,[h.a,[2,p.a],[2,f.a],d.a,i.j,i.z],null,null),(l()(),i._20(-1,3,["\n    "])),(l()(),i.Z(6,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,v.b,v.a)),i.Y(7,49152,null,0,b.a,[d.a,i.j,i.z,[2,Z.a],[2,m.a]],null,null),(l()(),i._20(-1,0,["(M&M)"])),(l()(),i._20(-1,3,["\n  "])),(l()(),i._20(-1,null,["\n  "])),(l()(),i.Z(11,0,null,null,32,"ion-toolbar",[["class","toolbar"]],[[2,"statusbar-padding",null]],null,null,y.b,y.a)),i.Y(12,49152,null,0,Z.a,[d.a,i.j,i.z],null,null),(l()(),i._20(-1,3,["\n    "])),(l()(),i.Z(14,0,null,3,28,"section",[["class","bgclr bgimg"],["text-center",""]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(16,0,null,null,0,"span",[["class","icon-noimage-icon"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n\n      "])),(l()(),i.Z(18,0,null,null,23,"div",[["class","header-content"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(20,0,null,null,7,"h1",[["style","margin-top: 0rem !important;"]],null,null,null,null,null)),(l()(),i.Z(21,0,null,null,1,"b",[],null,null,null,null,null)),(l()(),i._20(-1,null,["Welcome,"])),(l()(),i._20(-1,null,[" "])),(l()(),i.Z(24,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(26,0,null,null,1,"b",[],null,null,null,null,null)),(l()(),i._20(27,null,["Mr. "," ",""])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(29,0,null,null,4,"span",[["class","userText"],["text-center",""]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(31,0,null,null,1,"b",[],null,null,null,null,null)),(l()(),i._20(32,null,[" ",""])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(34,0,null,null,0,"br",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(36,0,null,null,4,"span",[["class","userText"],["text-center",""]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(38,0,null,null,1,"b",[],null,null,null,null,null)),(l()(),i._20(39,null,[" ",""])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,3,["\n  "])),(l()(),i._20(-1,null,["\n"])),(l()(),i._20(-1,null,["\n"])),(l()(),i.Z(46,0,null,null,11,"ion-content",[["style","background-color: #7c8185c2;"]],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,Y.b,Y.a)),i.Y(47,4374528,null,0,C.a,[d.a,k.a,D.a,i.j,i.z,h.a,w.a,i.u,[2,p.a],[2,f.a]],null,null),(l()(),i._20(-1,1,["\n  "])),(l()(),i.U(16777216,null,1,1,null,e)),i.Y(50,16384,null,0,P.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,1,["\n\n  "])),(l()(),i.U(16777216,null,1,1,null,t)),i.Y(53,16384,null,0,P.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,1,["\n\n  "])),(l()(),i.U(16777216,null,1,1,null,a)),i.Y(56,16384,null,0,P.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,1,["\n"]))],function(l,n){var u=n.component;l(n,50,0,!u.driverMobileNumber&&!u.securityCheck);l(n,53,0,u.driverMobileNumber);l(n,56,0,u.securityCheck)},function(l,n){var u=n.component;l(n,3,0,i._11(n,4)._hidden,i._11(n,4)._sbPadding);l(n,11,0,i._11(n,12)._sbPadding);l(n,27,0,u.userDetails.emp_f_name,u.userDetails.emp_l_name);l(n,32,0,u.userDetails.emp_cost);l(n,39,0,u.userDetails.emp_esg);l(n,46,0,i._11(n,47).statusbarPadding,i._11(n,47)._hasRefresher)})}u.d(n,"a",function(){return F});var i=u(0),s=u(55),r=u(41),c=u(40),_=u(33),d=u(1),p=u(5),g=u(36),m=u(25),h=u(6),f=u(16),v=u(37),b=u(31),Z=u(27),y=u(74),Y=u(34),C=u(18),k=u(4),D=u(7),w=u(24),P=u(12),T=u(177),j=u(14),x=u(23),z=u(22),q=u(85),R=i.X({encapsulation:2,styles:[],data:{}}),F=i.V("page-users-dashboard",T.a,function(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"page-users-dashboard",[],null,null,null,o,R)),i.Y(1,49152,null,0,T.a,[f.a,j.a,x.a,z.a,q.a],null,null)],null,null)},{},{},[])},264:function(l,n,u){"use strict";function e(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(1,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,18,{contentLabel:0}),Y._18(603979776,19,{_buttons:1}),Y._18(603979776,20,{_icons:1}),Y.Y(5,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(7,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==Y._11(l,8)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setEndDate(u)&&e}return e},null,null)),Y.Y(8,16384,null,0,j.a,[x.a,z.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(10,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),Y._20(11,null,["Return Date : ","\n                "])),Y._15(12,1),(l()(),Y.Z(13,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),Y.Y(14,147456,null,0,q.a,[w.a,Y.j,Y.z],{name:[0,"name"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "]))],function(l,n){var u=n.component;l(n,8,0,u.travelDate,u.Today,u.endtravelDate);l(n,14,0,"clipboard")},function(l,n){var u=n.component;l(n,11,0,Y._21(n,11,0,l(n,12,0,Y._11(n.parent.parent.parent,0),u.endtravelDate)));l(n,13,0,Y._11(n,14)._hidden)})}function t(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(1,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,21,{contentLabel:0}),Y._18(603979776,22,{_buttons:1}),Y._18(603979776,23,{_icons:1}),Y.Y(5,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(7,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(8,16384,[[21,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Return Time"])),(l()(),Y.Z(10,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(13,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","endtraveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,14)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,14)._keyup()&&e}return e},F.b,F.a)),Y.Y(14,1228800,null,0,I.a,[D.a,w.a,Y.j,Y.z,[2,k.a],[2,L.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),Y._16(1024,null,S.m,function(l){return[l]},[I.a]),Y.Y(16,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(18,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "]))],function(l,n){l(n,14,0,n.component.bookingForm.value.traveltime,"HH:mm");l(n,16,0,"endtraveltime")},function(l,n){l(n,13,0,Y._11(n,14)._disabled,Y._11(n,18).ngClassUntouched,Y._11(n,18).ngClassTouched,Y._11(n,18).ngClassPristine,Y._11(n,18).ngClassDirty,Y._11(n,18).ngClassValid,Y._11(n,18).ngClassInvalid,Y._11(n,18).ngClassPending)})}function a(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),Y.Y(3,16384,[[49,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(4,null,["",""])),(l()(),Y._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,Y._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.cab_name)})}function o(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),Y.Y(3,16384,[[53,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(4,null,["",""])),(l()(),Y._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,Y._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.first_name)})}function i(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),Y.Y(3,16384,[[57,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(4,null,["",""])),(l()(),Y._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,Y._2(1,"",n.context.$implicit.id,""))},function(l,n){l(n,4,0,n.context.$implicit.vName)})}function s(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,376,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(2,0,null,null,61,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(3,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.Z(5,0,null,null,22,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(6,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(8,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(9,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,2,{contentLabel:0}),Y._18(603979776,3,{_buttons:1}),Y._18(603979776,4,{_icons:1}),Y.Y(13,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n                "])),(l()(),Y.Z(15,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(16,16384,[[2,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["My Location"])),(l()(),Y.Z(18,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n                "])),(l()(),Y.Z(21,0,null,3,4,"ion-input",[["formControlName","travelsrc"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(22,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(24,16384,null,0,S.o,[S.n],null,null),Y.Y(25,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.Z(29,0,null,null,33,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(30,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(32,0,null,null,29,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(33,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,5,{contentLabel:0}),Y._18(603979776,6,{_buttons:1}),Y._18(603979776,7,{_icons:1}),Y.Y(37,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n                "])),(l()(),Y.Z(39,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(40,16384,[[5,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Trip Type"])),(l()(),Y.Z(42,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n                "])),(l()(),Y.Z(45,0,null,3,15,"ion-select",[["formControlName","isRoundTrip"],["name","isRoundTrip"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,46)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,46)._keyup()&&e}return e},B.b,B.a)),Y.Y(46,1228800,null,1,J.a,[H.a,D.a,w.a,Y.j,Y.z,[2,k.a],W.a],null,null),Y._18(603979776,8,{options:1}),Y._16(1024,null,S.m,function(l){return[l]},[J.a]),Y.Y(49,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(51,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(53,0,null,null,2,"ion-option",[["value","No"]],null,null,null,null,null)),Y.Y(54,16384,[[8,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(-1,null,["One Way"])),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(57,0,null,null,2,"ion-option",[["value","Yes"]],null,null,null,null,null)),Y.Y(58,16384,[[8,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(-1,null,["Round Trip"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(65,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(66,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,9,{contentLabel:0}),Y._18(603979776,10,{_buttons:1}),Y._18(603979776,11,{_icons:1}),Y.Y(70,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(72,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(73,16384,[[9,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Destination"])),(l()(),Y.Z(75,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(78,0,null,3,6,"ion-input",[["formControlName","traveldest"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(79,540672,null,0,S.k,[],{maxlength:[0,"maxlength"]},null),Y._16(1024,null,S.l,function(l){return[l]},[S.k]),Y.Y(81,671744,null,0,S.g,[[3,S.b],[2,S.l],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(83,16384,null,0,S.o,[S.n],null,null),Y.Y(84,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(87,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(88,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,12,{contentLabel:0}),Y._18(603979776,13,{_buttons:1}),Y._18(603979776,14,{_icons:1}),Y.Y(92,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(94,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==Y._11(l,95)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setDate(u)&&e}return e},null,null)),Y.Y(95,16384,null,0,j.a,[x.a,z.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(97,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),Y._20(98,null,["Start Date : ","\n                "])),Y._15(99,1),(l()(),Y.Z(100,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),Y.Y(101,147456,null,0,q.a,[w.a,Y.j,Y.z],{name:[0,"name"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(106,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(107,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,15,{contentLabel:0}),Y._18(603979776,16,{_buttons:1}),Y._18(603979776,17,{_icons:1}),Y.Y(111,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(113,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(114,16384,[[15,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Start Time"])),(l()(),Y.Z(116,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(119,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","traveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,120)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,120)._keyup()&&e}return e},F.b,F.a)),Y.Y(120,1228800,null,0,I.a,[D.a,w.a,Y.j,Y.z,[2,k.a],[2,L.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),Y._16(1024,null,S.m,function(l){return[l]},[I.a]),Y.Y(122,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(124,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.U(16777216,null,null,1,null,e)),Y.Y(129,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.U(16777216,null,null,1,null,t)),Y.Y(132,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(134,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(135,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,24,{contentLabel:0}),Y._18(603979776,25,{_buttons:1}),Y._18(603979776,26,{_icons:1}),Y.Y(139,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(141,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(142,16384,[[24,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["UserID"])),(l()(),Y.Z(144,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(147,0,null,3,4,"ion-input",[["formControlName","usrID"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(148,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(150,16384,null,0,S.o,[S.n],null,null),Y.Y(151,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(154,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(155,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,27,{contentLabel:0}),Y._18(603979776,28,{_buttons:1}),Y._18(603979776,29,{_icons:1}),Y.Y(159,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(161,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(162,16384,[[27,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["User Name"])),(l()(),Y.Z(164,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(167,0,null,3,4,"ion-input",[["formControlName","usrName"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(168,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(170,16384,null,0,S.o,[S.n],null,null),Y.Y(171,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(174,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(175,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,30,{contentLabel:0}),Y._18(603979776,31,{_buttons:1}),Y._18(603979776,32,{_icons:1}),Y.Y(179,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(181,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(182,16384,[[30,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Phone"])),(l()(),Y.Z(184,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(187,0,null,3,4,"ion-input",[["formControlName","usrphone"],["type","number"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(188,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(190,16384,null,0,S.o,[S.n],null,null),Y.Y(191,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(194,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(195,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,33,{contentLabel:0}),Y._18(603979776,34,{_buttons:1}),Y._18(603979776,35,{_icons:1}),Y.Y(199,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(201,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(202,16384,[[33,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Purpose"])),(l()(),Y.Z(204,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(207,0,null,3,4,"ion-input",[["formControlName","updatepurpose"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(208,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(210,16384,null,0,S.o,[S.n],null,null),Y.Y(211,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(214,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(215,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,36,{contentLabel:0}),Y._18(603979776,37,{_buttons:1}),Y._18(603979776,38,{_icons:1}),Y.Y(219,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(221,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(222,16384,[[36,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Pickup point"])),(l()(),Y.Z(224,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(227,0,null,3,6,"ion-input",[["formControlName","pickpoint"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(228,540672,null,0,S.k,[],{maxlength:[0,"maxlength"]},null),Y._16(1024,null,S.l,function(l){return[l]},[S.k]),Y.Y(230,671744,null,0,S.g,[[3,S.b],[2,S.l],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(232,16384,null,0,S.o,[S.n],null,null),Y.Y(233,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(236,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(237,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,39,{contentLabel:0}),Y._18(603979776,40,{_buttons:1}),Y._18(603979776,41,{_icons:1}),Y.Y(241,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(243,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(244,16384,[[39,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Remark"])),(l()(),Y.Z(246,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(249,0,null,3,4,"ion-input",[["formControlName","remark"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,U.b,U.a)),Y.Y(250,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(252,16384,null,0,S.o,[S.n],null,null),Y.Y(253,5423104,null,0,M.a,[w.a,V.a,D.a,H.a,Y.j,Y.z,[2,O.a],[2,k.a],[2,S.n],E.a],{type:[0,"type"]},null),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n\n          "])),(l()(),Y.Z(256,0,null,null,29,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(257,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,42,{contentLabel:0}),Y._18(603979776,43,{_buttons:1}),Y._18(603979776,44,{_icons:1}),Y.Y(261,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(263,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),Y.Y(264,16384,[[42,4]],0,R.a,[w.a,Y.j,Y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Travel type"])),(l()(),Y.Z(266,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(269,0,null,3,15,"ion-select",[["formControlName","travelType"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ionChange"],[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==Y._11(l,270)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,270)._keyup()&&e}if("ionChange"===n){e=!1!==t.typeChange(u)&&e}return e},B.b,B.a)),Y.Y(270,1228800,null,1,J.a,[H.a,D.a,w.a,Y.j,Y.z,[2,k.a],W.a],null,{ionChange:"ionChange"}),Y._18(603979776,45,{options:1}),Y._16(1024,null,S.m,function(l){return[l]},[J.a]),Y.Y(273,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(275,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(277,0,null,null,2,"ion-option",[["value","outstation"]],null,null,null,null,null)),Y.Y(278,16384,[[45,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(-1,null,["Outstation"])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(281,0,null,null,2,"ion-option",[["value","local"]],null,null,null,null,null)),Y.Y(282,16384,[[45,4]],0,N.a,[Y.j],{value:[0,"value"]},null),(l()(),Y._20(-1,null,["Local"])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(287,0,null,null,24,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(288,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,46,{contentLabel:0}),Y._18(603979776,47,{_buttons:1}),Y._18(603979776,48,{_icons:1}),Y.Y(292,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(294,0,null,1,4,"ion-label",[],null,null,null,null,null)),Y.Y(295,16384,[[46,4]],0,R.a,[w.a,Y.j,Y.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Assign Cab"])),(l()(),Y.Z(297,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(300,0,null,3,10,"ion-select",[["formControlName","cabs"],["name","cabs"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,301)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,301)._keyup()&&e}return e},B.b,B.a)),Y.Y(301,1228800,null,1,J.a,[H.a,D.a,w.a,Y.j,Y.z,[2,k.a],W.a],{disabled:[0,"disabled"]},null),Y._18(603979776,49,{options:1}),Y._16(1024,null,S.m,function(l){return[l]},[J.a]),Y.Y(304,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"],isDisabled:[1,"isDisabled"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(306,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,a)),Y.Y(309,802816,null,0,X.i,[Y.I,Y.F,Y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(313,0,null,null,24,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(314,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,50,{contentLabel:0}),Y._18(603979776,51,{_buttons:1}),Y._18(603979776,52,{_icons:1}),Y.Y(318,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(320,0,null,1,4,"ion-label",[],null,null,null,null,null)),Y.Y(321,16384,[[50,4]],0,R.a,[w.a,Y.j,Y.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Assign Driver"])),(l()(),Y.Z(323,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(326,0,null,3,10,"ion-select",[["formControlName","driver"],["name","driver"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,327)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,327)._keyup()&&e}return e},B.b,B.a)),Y.Y(327,1228800,null,1,J.a,[H.a,D.a,w.a,Y.j,Y.z,[2,k.a],W.a],{disabled:[0,"disabled"]},null),Y._18(603979776,53,{options:1}),Y._16(1024,null,S.m,function(l){return[l]},[J.a]),Y.Y(330,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"],isDisabled:[1,"isDisabled"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(332,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,o)),Y.Y(335,802816,null,0,X.i,[Y.I,Y.F,Y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(339,0,null,null,24,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(340,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,54,{contentLabel:0}),Y._18(603979776,55,{_buttons:1}),Y._18(603979776,56,{_icons:1}),Y.Y(344,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(346,0,null,1,4,"ion-label",[],null,null,null,null,null)),Y.Y(347,16384,[[54,4]],0,R.a,[w.a,Y.j,Y.z,[8,null],[8,null],[8,null],[8,null]],null,null),(l()(),Y._20(-1,null,["Assign Vendor"])),(l()(),Y.Z(349,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["*"])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(352,0,null,3,10,"ion-select",[["formControlName","vendor"],["name","vendor"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==Y._11(l,353)._click(u)&&e}if("keyup.space"===n){e=!1!==Y._11(l,353)._keyup()&&e}return e},B.b,B.a)),Y.Y(353,1228800,null,1,J.a,[H.a,D.a,w.a,Y.j,Y.z,[2,k.a],W.a],{disabled:[0,"disabled"]},null),Y._18(603979776,57,{options:1}),Y._16(1024,null,S.m,function(l){return[l]},[J.a]),Y.Y(356,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"],isDisabled:[1,"isDisabled"]},null),Y._16(2048,null,S.n,null,[S.g]),Y.Y(358,16384,null,0,S.o,[S.n],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,i)),Y.Y(361,802816,null,0,X.i,[Y.I,Y.F,Y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(365,0,null,null,10,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),Y.Y(366,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.Z(368,0,null,null,6,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(369,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(371,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],[[8,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logForm()&&e}return e},K.b,K.a)),Y.Y(372,1097728,null,0,G.a,[[8,""],w.a,Y.j,Y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),Y._20(-1,0,["Next\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,22,0,"travelsrc");l(n,25,0,"text");l(n,49,0,"isRoundTrip");l(n,54,0,"No");l(n,58,0,"Yes");l(n,79,0,"30");l(n,81,0,"traveldest");l(n,84,0,"text");l(n,95,0,u.minDate,u.Today,u.travelDate);l(n,101,0,"clipboard");l(n,120,0,u.currTime,"HH:mm");l(n,122,0,"traveltime");l(n,129,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,132,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,148,0,"usrID");l(n,151,0,"text");l(n,168,0,"usrName");l(n,171,0,"text");l(n,188,0,"usrphone");l(n,191,0,"number");l(n,208,0,"updatepurpose");l(n,211,0,"text");l(n,228,0,"30");l(n,230,0,"pickpoint");l(n,233,0,"text");l(n,250,0,"remark");l(n,253,0,"text");l(n,273,0,"travelType");l(n,278,0,"outstation");l(n,282,0,"local");l(n,301,0,"outstation"==u.bookingForm.value.travelType);l(n,304,0,"cabs","outstation"==u.bookingForm.value.travelType);l(n,309,0,u.cabList);l(n,327,0,"outstation"==u.bookingForm.value.travelType);l(n,330,0,"driver","outstation"==u.bookingForm.value.travelType);l(n,335,0,u.driverList);l(n,353,0,"local"==u.bookingForm.value.travelType);l(n,356,0,"vendor","local"==u.bookingForm.value.travelType);l(n,361,0,u.vendorList);l(n,372,0,"red","true")},function(l,n){var u=n.component;l(n,21,0,Y._11(n,24).ngClassUntouched,Y._11(n,24).ngClassTouched,Y._11(n,24).ngClassPristine,Y._11(n,24).ngClassDirty,Y._11(n,24).ngClassValid,Y._11(n,24).ngClassInvalid,Y._11(n,24).ngClassPending);l(n,45,0,Y._11(n,46)._disabled,Y._11(n,51).ngClassUntouched,Y._11(n,51).ngClassTouched,Y._11(n,51).ngClassPristine,Y._11(n,51).ngClassDirty,Y._11(n,51).ngClassValid,Y._11(n,51).ngClassInvalid,Y._11(n,51).ngClassPending);l(n,78,0,Y._11(n,79).maxlength?Y._11(n,79).maxlength:null,Y._11(n,83).ngClassUntouched,Y._11(n,83).ngClassTouched,Y._11(n,83).ngClassPristine,Y._11(n,83).ngClassDirty,Y._11(n,83).ngClassValid,Y._11(n,83).ngClassInvalid,Y._11(n,83).ngClassPending);l(n,98,0,Y._21(n,98,0,l(n,99,0,Y._11(n.parent.parent,0),u.travelDate)));l(n,100,0,Y._11(n,101)._hidden);l(n,119,0,Y._11(n,120)._disabled,Y._11(n,124).ngClassUntouched,Y._11(n,124).ngClassTouched,Y._11(n,124).ngClassPristine,Y._11(n,124).ngClassDirty,Y._11(n,124).ngClassValid,Y._11(n,124).ngClassInvalid,Y._11(n,124).ngClassPending);l(n,147,0,Y._11(n,150).ngClassUntouched,Y._11(n,150).ngClassTouched,Y._11(n,150).ngClassPristine,Y._11(n,150).ngClassDirty,Y._11(n,150).ngClassValid,Y._11(n,150).ngClassInvalid,Y._11(n,150).ngClassPending);l(n,167,0,Y._11(n,170).ngClassUntouched,Y._11(n,170).ngClassTouched,Y._11(n,170).ngClassPristine,Y._11(n,170).ngClassDirty,Y._11(n,170).ngClassValid,Y._11(n,170).ngClassInvalid,Y._11(n,170).ngClassPending);l(n,187,0,Y._11(n,190).ngClassUntouched,Y._11(n,190).ngClassTouched,Y._11(n,190).ngClassPristine,Y._11(n,190).ngClassDirty,Y._11(n,190).ngClassValid,Y._11(n,190).ngClassInvalid,Y._11(n,190).ngClassPending);l(n,207,0,Y._11(n,210).ngClassUntouched,Y._11(n,210).ngClassTouched,Y._11(n,210).ngClassPristine,Y._11(n,210).ngClassDirty,Y._11(n,210).ngClassValid,Y._11(n,210).ngClassInvalid,Y._11(n,210).ngClassPending);l(n,227,0,Y._11(n,228).maxlength?Y._11(n,228).maxlength:null,Y._11(n,232).ngClassUntouched,Y._11(n,232).ngClassTouched,Y._11(n,232).ngClassPristine,Y._11(n,232).ngClassDirty,Y._11(n,232).ngClassValid,Y._11(n,232).ngClassInvalid,Y._11(n,232).ngClassPending);l(n,249,0,Y._11(n,252).ngClassUntouched,Y._11(n,252).ngClassTouched,Y._11(n,252).ngClassPristine,Y._11(n,252).ngClassDirty,Y._11(n,252).ngClassValid,Y._11(n,252).ngClassInvalid,Y._11(n,252).ngClassPending);l(n,269,0,Y._11(n,270)._disabled,Y._11(n,275).ngClassUntouched,Y._11(n,275).ngClassTouched,Y._11(n,275).ngClassPristine,Y._11(n,275).ngClassDirty,Y._11(n,275).ngClassValid,Y._11(n,275).ngClassInvalid,Y._11(n,275).ngClassPending);l(n,300,0,Y._11(n,301)._disabled,Y._11(n,306).ngClassUntouched,Y._11(n,306).ngClassTouched,Y._11(n,306).ngClassPristine,Y._11(n,306).ngClassDirty,Y._11(n,306).ngClassValid,Y._11(n,306).ngClassInvalid,Y._11(n,306).ngClassPending);l(n,326,0,Y._11(n,327)._disabled,Y._11(n,332).ngClassUntouched,Y._11(n,332).ngClassTouched,Y._11(n,332).ngClassPristine,Y._11(n,332).ngClassDirty,Y._11(n,332).ngClassValid,Y._11(n,332).ngClassInvalid,Y._11(n,332).ngClassPending);l(n,352,0,Y._11(n,353)._disabled,Y._11(n,358).ngClassUntouched,Y._11(n,358).ngClassTouched,Y._11(n,358).ngClassPristine,Y._11(n,358).ngClassDirty,Y._11(n,358).ngClassValid,Y._11(n,358).ngClassInvalid,Y._11(n,358).ngClassPending);l(n,371,0,!u.bookingForm.valid)})}function r(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                (Round Trip)\n              "]))],null,null)}function c(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                (One-Way Trip)\n              "]))],null,null)}function _(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(1,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(4,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Return Date"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(10,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(11,16384,null,0,$.a,[],null,null),(l()(),Y._20(12,null,["\n                  ","\n                "])),Y._15(13,1),(l()(),Y._20(-1,null,["\n              "]))],null,function(l,n){var u=n.component;l(n,12,0,Y._21(n,12,0,l(n,13,0,Y._11(n.parent.parent.parent,0),u.endtravelDate)))})}function d(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(1,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(4,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Return Time"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(10,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(11,16384,null,0,$.a,[],null,null),(l()(),Y._20(12,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "]))],null,function(l,n){l(n,12,0,n.component.bookingForm.value.endtraveltime)})}function p(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,209,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(2,0,null,null,206,"ion-card",[],null,null,null,null,null)),Y.Y(3,16384,null,0,Q.a,[w.a,Y.j,Y.z],null,null),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.Z(5,0,null,null,10,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),Y.Y(6,16384,null,0,ll.a,[w.a,Y.j,Y.z],{color:[0,"color"]},null),(l()(),Y._20(-1,null,["\n              Confirm Request\n              "])),(l()(),Y.U(16777216,null,null,1,null,r)),Y.Y(9,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,c)),Y.Y(12,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(14,0,null,null,0,"span",[["class","icon-pencil"],["style","float: right;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.editRequest()&&e}return e},null,null)),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.Z(17,0,null,null,190,"ion-card-content",[["style","padding: 13px 6px 5px;"]],null,null,null,null,null)),Y.Y(18,16384,null,0,nl.a,[w.a,Y.j,Y.z],null,null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(20,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(21,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(23,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(24,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(26,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["User ID"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(30,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(31,16384,null,0,$.a,[],null,null),(l()(),Y._20(32,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(35,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(36,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(38,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(39,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(41,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["User Name"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(45,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(46,16384,null,0,$.a,[],null,null),(l()(),Y._20(47,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(50,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(51,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(53,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(54,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(56,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Phone"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(60,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(61,16384,null,0,$.a,[],null,null),(l()(),Y._20(62,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(65,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(66,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(68,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(69,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(71,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Purpose"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(75,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(76,16384,null,0,$.a,[],null,null),(l()(),Y._20(77,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(80,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(81,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(83,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(84,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(86,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Start Date"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(90,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(91,16384,null,0,$.a,[],null,null),(l()(),Y._20(92,null,["\n                  ","\n                "])),Y._15(93,1),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(96,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(97,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(99,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(100,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(102,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Start Time"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(106,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(107,16384,null,0,$.a,[],null,null),(l()(),Y._20(108,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,_)),Y.Y(112,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.U(16777216,null,null,1,null,d)),Y.Y(115,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(117,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(118,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(120,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(121,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(123,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["My Location"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(127,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(128,16384,null,0,$.a,[],null,null),(l()(),Y._20(129,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(132,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(133,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(135,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(136,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(138,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Destination"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(142,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(143,16384,null,0,$.a,[],null,null),(l()(),Y._20(144,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(147,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(148,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(150,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(151,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(153,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Pickup point"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(157,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(158,16384,null,0,$.a,[],null,null),(l()(),Y._20(159,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(162,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(163,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(165,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(166,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(168,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Travel Type"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(172,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(173,16384,null,0,$.a,[],null,null),(l()(),Y._20(174,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(177,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(178,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(180,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(181,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(183,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Remark"])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(187,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(188,16384,null,0,$.a,[],null,null),(l()(),Y._20(189,null,["\n                  ","\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(192,0,null,null,14,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),Y.Y(193,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(195,0,null,null,10,"ion-col",[["class","col"]],null,null,null,null,null)),Y.Y(196,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(198,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.cancelReq()&&e}return e},K.b,K.a)),Y.Y(199,1097728,null,0,G.a,[[8,""],w.a,Y.j,Y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),Y._20(-1,0,["Cancel Request\n                  "])),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(202,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.sendRequest()&&e}return e},K.b,K.a)),Y.Y(203,1097728,null,0,G.a,[[8,""],w.a,Y.j,Y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),Y._20(-1,0,["Send Request\n                  "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,6,0,"red");l(n,9,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,12,0,"No"==u.bookingForm.value.isRoundTrip);l(n,112,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,115,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,199,0,"red","true");l(n,203,0,"red","true")},function(l,n){var u=n.component;l(n,32,0,u.bookingForm.value.usrID);l(n,47,0,u.bookingForm.value.usrName);l(n,62,0,u.bookingForm.value.usrphone);l(n,77,0,u.bookingForm.value.updatepurpose);l(n,92,0,Y._21(n,92,0,l(n,93,0,Y._11(n.parent.parent,0),u.travelDate)));l(n,108,0,u.bookingForm.value.traveltime);l(n,129,0,u.bookingForm.value.travelsrc);l(n,144,0,u.bookingForm.value.traveldest);l(n,159,0,u.bookingForm.value.pickpoint);l(n,174,0,u.bookingForm.value.travelType);l(n,189,0,u.bookingForm.value.remark)})}function g(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,11,"form",[["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0;if("submit"===n){e=!1!==Y._11(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==Y._11(l,2).onReset()&&e}return e},null,null)),Y.Y(1,16384,null,0,S.x,[],null,null),Y.Y(2,540672,null,0,S.i,[[8,null],[8,null]],{form:[0,"form"]},null),Y._16(2048,null,S.b,null,[S.i]),Y.Y(4,16384,null,0,S.p,[S.b],null,null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.U(16777216,null,null,1,null,s)),Y.Y(7,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.U(16777216,null,null,1,null,p)),Y.Y(10,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n      "]))],function(l,n){var u=n.component;l(n,2,0,u.bookingForm);l(n,7,0,!u.confirmReqst);l(n,10,0,u.confirmReqst)},function(l,n){l(n,0,0,Y._11(n,4).ngClassUntouched,Y._11(n,4).ngClassTouched,Y._11(n,4).ngClassPristine,Y._11(n,4).ngClassDirty,Y._11(n,4).ngClassValid,Y._11(n,4).ngClassInvalid,Y._11(n,4).ngClassPending)})}function m(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,48,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),Y.Y(1,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,61,{contentLabel:0}),Y._18(603979776,62,{_buttons:1}),Y._18(603979776,63,{_icons:1}),Y.Y(5,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(7,0,null,2,15,"div",[],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.context.$implicit)&&e}return e},null,null)),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(9,0,null,null,6,"span",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(11,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(13,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),Y._20(14,null,["",""])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(17,0,null,null,4,"span",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(19,0,null,null,1,"h3",[["style","color: #424242;"]],null,null,null,null,null)),(l()(),Y._20(20,null,["",", ",""])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(24,0,null,2,5,"div",[["style","float:right"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(26,0,null,null,2,"button",[["ion-button",""],["item-right",""],["small","true"],["solid","true"],["style","background-color: #398b00;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.viewRequest(u,l.context.$implicit)&&e}return e},K.b,K.a)),Y.Y(27,1097728,[[62,4]],0,G.a,[[8,""],w.a,Y.j,Y.z],{small:[0,"small"],solid:[1,"solid"]},null),(l()(),Y._20(-1,0,["View"])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(31,0,null,2,16,"div",[["style","width: 70%"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y.Z(33,0,null,null,13,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(35,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(37,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),Y._20(38,null,["",""])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(41,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(43,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),Y._20(44,null,["",""])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y._20(-1,2,["\n          "]))],function(l,n){l(n,27,0,"true","true")},function(l,n){l(n,14,0,n.context.$implicit.purpose);l(n,20,0,n.context.$implicit.travel_date,n.context.$implicit.travel_time);l(n,38,0,n.context.$implicit.source);l(n,44,0,n.context.$implicit.destination)})}function h(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,19,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(2,0,null,null,16,"ion-list",[],null,null,null,null,null)),Y.Y(3,16384,null,0,ul.a,[w.a,Y.j,Y.z,V.a,el.l,E.a],null,null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(5,0,null,null,9,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important;"]],null,null,null,C.b,C.a)),Y.Y(6,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,58,{contentLabel:0}),Y._18(603979776,59,{_buttons:1}),Y._18(603979776,60,{_icons:1}),Y.Y(10,16384,null,0,tl.a,[w.a,Y.z,Y.j,[8,null]],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(12,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Pending for approval"])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n\n          "])),(l()(),Y.U(16777216,null,null,1,null,m)),Y.Y(17,802816,null,0,X.i,[Y.I,Y.F,Y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y._20(-1,null,["\n      "]))],function(l,n){l(n,17,0,n.component.approvalList)},null)}function f(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,1,"span",[["style","color: #a90e1b;"],["text-left",""]],null,null,null,null,null)),(l()(),Y._20(1,null,["\n                ",", ","\n              "]))],null,function(l,n){l(n,1,0,n.parent.parent.context.$implicit.travel_date,n.parent.parent.context.$implicit.travel_time)})}function v(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,41,"ion-item",[["class","item item-block"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.parent.context.$implicit)&&e}return e},C.b,C.a)),Y.Y(1,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,67,{contentLabel:0}),Y._18(603979776,68,{_buttons:1}),Y._18(603979776,69,{_icons:1}),Y.Y(5,16384,null,0,T.a,[],null,null),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y.Z(7,0,null,2,6,"span",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(9,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(11,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),Y._20(12,null,["",""])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y.U(16777216,null,2,1,null,f)),Y.Y(16,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y.Z(18,0,null,2,4,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(20,0,null,null,1,"h6",[],null,null,null,null,null)),(l()(),Y._20(21,null,["",""])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,2,["\n              "])),(l()(),Y.Z(24,0,null,2,16,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y.Z(26,0,null,null,13,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(28,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                    "])),(l()(),Y.Z(30,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),Y._20(31,null,["",""])),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y.Z(34,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n                    "])),(l()(),Y.Z(36,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),Y._20(37,null,["",""])),(l()(),Y._20(-1,null,["\n                  "])),(l()(),Y._20(-1,null,["\n                "])),(l()(),Y._20(-1,null,["\n              "])),(l()(),Y._20(-1,2,["\n            "]))],function(l,n){l(n,16,0,null!=n.parent.context.$implicit.travel_date)},function(l,n){l(n,12,0,n.parent.context.$implicit.purpose);l(n,21,0,n.parent.context.$implicit.status);l(n,31,0,n.parent.context.$implicit.source);l(n,37,0,n.parent.context.$implicit.destination)})}function b(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,4,null,null,null,null,null,null,null)),(l()(),Y._20(-1,null,["\n            "])),(l()(),Y.U(16777216,null,null,1,null,v)),Y.Y(3,16384,null,0,X.j,[Y.I,Y.F],{ngIf:[0,"ngIf"]},null),(l()(),Y._20(-1,null,["\n          "]))],function(l,n){l(n,3,0,n.context.$implicit.travel_date&&"null"!=n.context.$implicit.travel_date)},null)}function Z(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,19,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(2,0,null,null,16,"ion-list",[],null,null,null,null,null)),Y.Y(3,16384,null,0,ul.a,[w.a,Y.j,Y.z,V.a,el.l,E.a],null,null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(5,0,null,null,9,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important;  margin-bottom: 0px;"]],null,null,null,C.b,C.a)),Y.Y(6,1097728,null,3,k.a,[D.a,w.a,Y.j,Y.z,[2,P.a]],null,null),Y._18(335544320,64,{contentLabel:0}),Y._18(603979776,65,{_buttons:1}),Y._18(603979776,66,{_icons:1}),Y.Y(10,16384,null,0,tl.a,[w.a,Y.z,Y.j,[8,null]],null,null),(l()(),Y._20(-1,2,["\n            "])),(l()(),Y.Z(12,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),Y._20(-1,null,["Booking History"])),(l()(),Y._20(-1,2,["\n          "])),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.U(16777216,null,null,1,null,b)),Y.Y(17,802816,null,0,X.i,[Y.I,Y.F,Y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y._20(-1,null,["\n      "]))],function(l,n){l(n,17,0,n.component.historyData)},null)}function y(l){return Y._22(0,[Y._13(0,X.d,[Y.r]),(l()(),Y._20(-1,null,["\n"])),(l()(),Y.Z(2,0,null,null,55,"ion-header",[],null,null,null,null,null)),Y.Y(3,16384,null,0,al.a,[w.a,Y.j,Y.z,[2,ol.a]],null,null),(l()(),Y._20(-1,null,["\n\n  "])),(l()(),Y.Z(5,0,null,null,14,"ion-navbar",[["class","toolbar"],["color","navColor"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,il.b,il.a)),Y.Y(6,49152,null,0,sl.a,[H.a,[2,ol.a],[2,rl.a],w.a,Y.j,Y.z],{color:[0,"color"]},null),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y.Z(8,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,cl.b,cl.a)),Y.Y(9,49152,null,0,_l.a,[w.a,Y.j,Y.z,[2,dl.a],[2,sl.a]],null,null),(l()(),Y._20(10,0,["",""])),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y.Z(12,0,null,3,1,"div",[["style","float:right"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logout(u)&&e}return e},null,null)),(l()(),Y.Z(13,0,null,null,0,"span",[["class","icon-switch"]],null,null,null,null,null)),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y.Z(15,0,null,3,1,"div",[["style","float:right; padding-right: 20px;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showTermsCondition(u)&&e}return e},null,null)),(l()(),Y.Z(16,0,null,null,0,"span",[["class","icon-info"]],null,null,null,null,null)),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y._20(-1,3,["\n  "])),(l()(),Y._20(-1,null,["\n  "])),(l()(),Y.Z(21,0,null,null,35,"ion-toolbar",[["class","webToolbar toolbar"],["color","white"]],[[2,"statusbar-padding",null]],null,null,pl.b,pl.a)),Y.Y(22,49152,null,0,dl.a,[w.a,Y.j,Y.z],{color:[0,"color"]},null),(l()(),Y._20(-1,3,["\n    "])),(l()(),Y.Z(24,0,null,3,31,"ion-grid",[["class","grid"]],null,null,null,null,null)),Y.Y(25,16384,null,0,gl.a,[],null,null),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y.Z(27,0,null,null,16,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(28,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(30,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["text-left",""]],null,null,null,null,null)),Y.Y(31,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(33,0,null,null,1,"span",[["style","font-size: 17px;"]],null,null,null,null,null)),(l()(),Y._20(34,null,["","/",""])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(37,0,null,null,5,"ion-col",[["class","col"],["col-4",""],["text-right",""]],null,null,null,null,null)),Y.Y(38,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(40,0,null,null,1,"span",[["style","color:#ad081f; font-family: font-medium"]],null,null,null,null,null)),(l()(),Y._20(41,null,[" "," "])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y.Z(45,0,null,null,9,"ion-row",[["class","row"]],null,null,null,null,null)),Y.Y(46,16384,null,0,A.a,[],null,null),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(48,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["style","padding-top: 0px;"],["text-left",""]],null,null,null,null,null)),Y.Y(49,16384,null,0,$.a,[],null,null),(l()(),Y._20(-1,null,["\n          "])),(l()(),Y.Z(51,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),Y._20(52,null,[" "," "])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y._20(-1,null,["\n    "])),(l()(),Y._20(-1,3,["\n\n  "])),(l()(),Y._20(-1,null,["\n\n"])),(l()(),Y._20(-1,null,["\n\n\n"])),(l()(),Y.Z(59,0,null,null,42,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,ml.b,ml.a)),Y.Y(60,4374528,null,0,O.a,[w.a,V.a,E.a,Y.j,Y.z,H.a,hl.a,Y.u,[2,ol.a],[2,rl.a]],null,null),(l()(),Y._20(-1,1,["\n  "])),(l()(),Y.Z(62,0,null,1,38,"ion-grid",[["class","formcntent grid"]],null,null,null,null,null)),Y.Y(63,16384,null,0,gl.a,[],null,null),(l()(),Y._20(-1,null,["\n    "])),(l()(),Y.Z(65,0,null,null,21,"div",[],null,null,null,null,null)),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y.Z(67,0,null,null,18,"ion-segment",[["color","red"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[2,"segment-disabled",null]],[[null,"ngModelChange"],[null,"ionSelect"]],function(l,n,u){var e=!0,t=l.component;if("ngModelChange"===n){e=!1!==(t.requestSegment=u)&&e}if("ionSelect"===n){e=!1!==t.segmentChanged(u)&&e}return e},null,null)),Y.Y(68,671744,null,0,S.q,[[8,null],[8,null],[8,null],[8,null]],{model:[0,"model"]},{update:"ngModelChange"}),Y._16(2048,null,S.n,null,[S.q]),Y.Y(70,16384,null,0,S.o,[S.n],null,null),Y.Y(71,1196032,null,1,fl.a,[w.a,Y.j,Y.z,[2,S.n]],{color:[0,"color"]},null),Y._18(603979776,1,{_buttons:1}),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(74,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","pendingReq"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==Y._11(l,75).onClick()&&e}if("ionSelect"===n){e=!1!==t.getPendingList()&&e}return e},vl.b,vl.a)),Y.Y(75,114688,[[1,4]],0,bl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),Y._20(-1,0,["\n          Pending\n        "])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(78,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","raisereq"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==Y._11(l,79).onClick()&&e}if("ionSelect"===n){e=!1!==(t.pageTitle="Raise Request")&&e}return e},vl.b,vl.a)),Y.Y(79,114688,[[1,4]],0,bl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),Y._20(-1,0,["\n          Raise Request\n        "])),(l()(),Y._20(-1,null,["\n        "])),(l()(),Y.Z(82,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","history"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==Y._11(l,83).onClick()&&e}if("ionSelect"===n){e=!1!==t.getEmpHistory()&&e}return e},vl.b,vl.a)),Y.Y(83,114688,[[1,4]],0,bl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),Y._20(-1,0,["\n          Approved\n        "])),(l()(),Y._20(-1,null,["\n\n      "])),(l()(),Y._20(-1,null,["\n\n    "])),(l()(),Y._20(-1,null,["\n    "])),(l()(),Y.Z(88,0,null,null,11,"div",[],null,null,null,null,null)),Y.Y(89,16384,null,0,X.n,[],{ngSwitch:[0,"ngSwitch"]},null),(l()(),Y._20(-1,null,["\n\n      "])),(l()(),Y.U(16777216,null,null,1,null,g)),Y.Y(92,278528,null,0,X.o,[Y.I,Y.F,X.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y.U(16777216,null,null,1,null,h)),Y.Y(95,278528,null,0,X.o,[Y.I,Y.F,X.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),Y._20(-1,null,["\n      "])),(l()(),Y.U(16777216,null,null,1,null,Z)),Y.Y(98,278528,null,0,X.o,[Y.I,Y.F,X.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),Y._20(-1,null,["\n    "])),(l()(),Y._20(-1,null,["\n  "])),(l()(),Y._20(-1,1,["\n"]))],function(l,n){var u=n.component;l(n,6,0,"navColor");l(n,22,0,"white");l(n,68,0,u.requestSegment);l(n,71,0,"red");l(n,75,0,"pendingReq");l(n,79,0,"raisereq");l(n,83,0,"history");l(n,89,0,u.requestSegment);l(n,92,0,"raisereq");l(n,95,0,"pendingReq");l(n,98,0,"history")},function(l,n){var u=n.component;l(n,5,0,Y._11(n,6)._hidden,Y._11(n,6)._sbPadding);l(n,10,0,u.pageTitle);l(n,21,0,Y._11(n,22)._sbPadding);l(n,34,0,u.userDetails.username,u.userDetails.id);l(n,41,0,u.userDetails.role);l(n,52,0,u.userDetails.location.loc_name);l(n,59,0,Y._11(n,60).statusbarPadding,Y._11(n,60)._hasRefresher);l(n,67,0,Y._11(n,70).ngClassUntouched,Y._11(n,70).ngClassTouched,Y._11(n,70).ngClassPristine,Y._11(n,70).ngClassDirty,Y._11(n,70).ngClassValid,Y._11(n,70).ngClassInvalid,Y._11(n,70).ngClassPending,Y._11(n,71)._disabled);l(n,74,0,Y._11(n,75)._disabled,Y._11(n,75).isActive,Y._11(n,75).isActive);l(n,78,0,Y._11(n,79)._disabled,Y._11(n,79).isActive,Y._11(n,79).isActive);l(n,82,0,Y._11(n,83)._disabled,Y._11(n,83).isActive,Y._11(n,83).isActive)})}u.d(n,"a",function(){return Tl});var Y=u(0),C=u(45),k=u(17),D=u(15),w=u(1),P=u(32),T=u(35),j=u(95),x=u(72),z=u(46),q=u(38),R=u(39),F=u(163),I=u(81),L=u(53),S=u(13),N=u(64),A=u(41),$=u(40),U=u(93),M=u(56),V=u(4),H=u(6),O=u(18),E=u(7),B=u(116),J=u(65),W=u(21),X=u(12),K=u(29),G=u(20),Q=u(57),ll=u(59),nl=u(58),ul=u(44),el=u(8),tl=u(62),al=u(33),ol=u(5),il=u(36),sl=u(25),rl=u(16),cl=u(37),_l=u(31),dl=u(27),pl=u(74),gl=u(55),ml=u(34),hl=u(24),fl=u(94),vl=u(164),bl=u(68),Zl=u(130),yl=u(14),Yl=u(67),Cl=u(22),kl=u(23),Dl=u(80),wl=u(66),Pl=Y.X({encapsulation:2,styles:[],data:{}}),Tl=Y.V("page-adminrequests",Zl.a,function(l){return Y._22(0,[(l()(),Y.Z(0,0,null,null,1,"page-adminrequests",[],null,null,null,y,Pl)),Y.Y(1,49152,null,0,Zl.a,[rl.a,yl.a,S.d,Yl.a,Cl.a,kl.a,Dl.a,Y.u,wl.a],null,null)],null,null)},{},{},[])},265:function(l,n,u){"use strict";function e(l){return y._22(0,[(l()(),y.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                    "])),(l()(),y.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),y.Y(3,16384,[[5,4]],0,Y.a,[y.j],{value:[0,"value"]},null),(l()(),y._20(4,null,["",""])),(l()(),y._20(-1,null,["\n                  "]))],function(l,n){l(n,3,0,y._2(1,"",n.context.$implicit.loc_name,""))},function(l,n){l(n,4,0,n.context.$implicit.loc_name)})}function t(l){return y._22(0,[(l()(),y.Z(0,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(1,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,19,{contentLabel:0}),y._18(603979776,20,{_buttons:1}),y._18(603979776,21,{_icons:1}),y.Y(5,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(7,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==y._11(l,8)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setEndDate(u)&&e}return e},null,null)),y.Y(8,16384,null,0,j.a,[x.a,z.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(10,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),y._20(11,null,["Return Date : ","\n                "])),y._15(12,1),(l()(),y.Z(13,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),y.Y(14,147456,null,0,q.a,[w.a,y.j,y.z],{name:[0,"name"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,2,["\n          "]))],function(l,n){var u=n.component;l(n,8,0,u.travelDate,u.Today,u.endtravelDate);l(n,14,0,"clipboard")},function(l,n){var u=n.component;l(n,11,0,y._21(n,11,0,l(n,12,0,y._11(n.parent.parent.parent,0),u.endtravelDate)));l(n,13,0,y._11(n,14)._hidden)})}function a(l){return y._22(0,[(l()(),y.Z(0,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(1,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,22,{contentLabel:0}),y._18(603979776,23,{_buttons:1}),y._18(603979776,24,{_icons:1}),y.Y(5,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(7,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(8,16384,[[22,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Return Time"])),(l()(),y.Z(10,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(13,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","endtraveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==y._11(l,14)._click(u)&&e}if("keyup.space"===n){e=!1!==y._11(l,14)._keyup()&&e}return e},F.b,F.a)),y.Y(14,1228800,null,0,I.a,[D.a,w.a,y.j,y.z,[2,k.a],[2,L.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),y._16(1024,null,S.m,function(l){return[l]},[I.a]),y.Y(16,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(18,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,2,["\n          "]))],function(l,n){l(n,14,0,n.component.bookingForm.value.traveltime,"HH:mm");l(n,16,0,"endtraveltime")},function(l,n){l(n,13,0,y._11(n,14)._disabled,y._11(n,18).ngClassUntouched,y._11(n,18).ngClassTouched,y._11(n,18).ngClassPristine,y._11(n,18).ngClassDirty,y._11(n,18).ngClassValid,y._11(n,18).ngClassInvalid,y._11(n,18).ngClassPending)})}function o(l){return y._22(0,[(l()(),y.Z(0,0,null,null,266,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(2,0,null,null,69,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(3,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n            "])),(l()(),y.Z(5,0,null,null,28,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(6,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(8,0,null,null,24,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(9,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,2,{contentLabel:0}),y._18(603979776,3,{_buttons:1}),y._18(603979776,4,{_icons:1}),y.Y(13,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n                "])),(l()(),y.Z(15,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(16,16384,[[2,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["My Location"])),(l()(),y.Z(18,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n                "])),(l()(),y.Z(21,0,null,3,10,"ion-select",[["formControlName","travelsrc"],["name","travelsrc"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==y._11(l,22)._click(u)&&e}if("keyup.space"===n){e=!1!==y._11(l,22)._keyup()&&e}return e},$.b,$.a)),y.Y(22,1228800,null,1,U.a,[M.a,D.a,w.a,y.j,y.z,[2,k.a],V.a],null,null),y._18(603979776,5,{options:1}),y._16(1024,null,S.m,function(l){return[l]},[U.a]),y.Y(25,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(27,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.U(16777216,null,null,1,null,e)),y.Y(30,802816,null,0,H.i,[y.I,y.F,y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,2,["\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y.Z(35,0,null,null,35,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(36,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(38,0,null,null,31,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(39,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,6,{contentLabel:0}),y._18(603979776,7,{_buttons:1}),y._18(603979776,8,{_icons:1}),y.Y(43,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n                "])),(l()(),y.Z(45,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(46,16384,[[6,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Trip Type"])),(l()(),y.Z(48,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n                "])),(l()(),y.Z(51,0,null,3,17,"ion-select",[["formControlName","isRoundTrip"],["name","isRoundTrip"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==y._11(l,52)._click(u)&&e}if("keyup.space"===n){e=!1!==y._11(l,52)._keyup()&&e}return e},$.b,$.a)),y.Y(52,1228800,null,1,U.a,[M.a,D.a,w.a,y.j,y.z,[2,k.a],V.a],null,null),y._18(603979776,9,{options:1}),y._16(1024,null,S.m,function(l){return[l]},[U.a]),y.Y(55,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(57,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(60,0,null,null,2,"ion-option",[["value","No"]],null,null,null,null,null)),y.Y(61,16384,[[9,4]],0,Y.a,[y.j],{value:[0,"value"]},null),(l()(),y._20(-1,null,["One Way"])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(64,0,null,null,2,"ion-option",[["value","Yes"]],null,null,null,null,null)),y.Y(65,16384,[[9,4]],0,Y.a,[y.j],{value:[0,"value"]},null),(l()(),y._20(-1,null,["Round Trip"])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,2,["\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(73,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(74,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,10,{contentLabel:0}),y._18(603979776,11,{_buttons:1}),y._18(603979776,12,{_icons:1}),y.Y(78,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(80,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(81,16384,[[10,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Destination"])),(l()(),y.Z(83,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(86,0,null,3,6,"ion-input",[["formControlName","traveldest"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,O.b,O.a)),y.Y(87,540672,null,0,S.k,[],{maxlength:[0,"maxlength"]},null),y._16(1024,null,S.l,function(l){return[l]},[S.k]),y.Y(89,671744,null,0,S.g,[[3,S.b],[2,S.l],[8,null],[8,null]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(91,16384,null,0,S.o,[S.n],null,null),y.Y(92,5423104,null,0,E.a,[w.a,B.a,D.a,M.a,y.j,y.z,[2,J.a],[2,k.a],[2,S.n],W.a],{type:[0,"type"]},null),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(95,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(96,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,13,{contentLabel:0}),y._18(603979776,14,{_buttons:1}),y._18(603979776,15,{_icons:1}),y.Y(100,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(102,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==y._11(l,103)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setDate(u)&&e}return e},null,null)),y.Y(103,16384,null,0,j.a,[x.a,z.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(105,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),y._20(106,null,["Start Date : ","\n                "])),y._15(107,1),(l()(),y.Z(108,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),y.Y(109,147456,null,0,q.a,[w.a,y.j,y.z],{name:[0,"name"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(114,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(115,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,16,{contentLabel:0}),y._18(603979776,17,{_buttons:1}),y._18(603979776,18,{_icons:1}),y.Y(119,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(121,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(122,16384,[[16,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Start Time"])),(l()(),y.Z(124,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(127,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","traveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==y._11(l,128)._click(u)&&e}if("keyup.space"===n){e=!1!==y._11(l,128)._keyup()&&e}return e},F.b,F.a)),y.Y(128,1228800,null,0,I.a,[D.a,w.a,y.j,y.z,[2,k.a],[2,L.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),y._16(1024,null,S.m,function(l){return[l]},[I.a]),y.Y(130,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(132,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.U(16777216,null,null,1,null,t)),y.Y(137,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.U(16777216,null,null,1,null,a)),y.Y(140,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(142,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(143,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,25,{contentLabel:0}),y._18(603979776,26,{_buttons:1}),y._18(603979776,27,{_icons:1}),y.Y(147,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(149,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(150,16384,[[25,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Purpose"])),(l()(),y.Z(152,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(155,0,null,3,4,"ion-input",[["formControlName","updatepurpose"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,O.b,O.a)),y.Y(156,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(158,16384,null,0,S.o,[S.n],null,null),y.Y(159,5423104,null,0,E.a,[w.a,B.a,D.a,M.a,y.j,y.z,[2,J.a],[2,k.a],[2,S.n],W.a],{type:[0,"type"]},null),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(162,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(163,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,28,{contentLabel:0}),y._18(603979776,29,{_buttons:1}),y._18(603979776,30,{_icons:1}),y.Y(167,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(169,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(170,16384,[[28,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Pickup point"])),(l()(),y.Z(172,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(175,0,null,3,6,"ion-input",[["formControlName","pickpoint"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,O.b,O.a)),y.Y(176,540672,null,0,S.k,[],{maxlength:[0,"maxlength"]},null),y._16(1024,null,S.l,function(l){return[l]},[S.k]),y.Y(178,671744,null,0,S.g,[[3,S.b],[2,S.l],[8,null],[8,null]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(180,16384,null,0,S.o,[S.n],null,null),y.Y(181,5423104,null,0,E.a,[w.a,B.a,D.a,M.a,y.j,y.z,[2,J.a],[2,k.a],[2,S.n],W.a],{type:[0,"type"]},null),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(184,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(185,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,31,{contentLabel:0}),y._18(603979776,32,{_buttons:1}),y._18(603979776,33,{_icons:1}),y.Y(189,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(191,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(192,16384,[[31,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Remark"])),(l()(),y.Z(194,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(197,0,null,3,4,"ion-input",[["formControlName","remark"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,O.b,O.a)),y.Y(198,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(200,16384,null,0,S.o,[S.n],null,null),y.Y(201,5423104,null,0,E.a,[w.a,B.a,D.a,M.a,y.j,y.z,[2,J.a],[2,k.a],[2,S.n],W.a],{type:[0,"type"]},null),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(204,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(205,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,34,{contentLabel:0}),y._18(603979776,35,{_buttons:1}),y._18(603979776,36,{_icons:1}),y.Y(209,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(211,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(212,16384,[[34,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Cost ID"])),(l()(),y.Z(214,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(217,0,null,3,4,"ion-input",[["formControlName","costid"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,O.b,O.a)),y.Y(218,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(220,16384,null,0,S.o,[S.n],null,null),y.Y(221,5423104,null,0,E.a,[w.a,B.a,D.a,M.a,y.j,y.z,[2,J.a],[2,k.a],[2,S.n],W.a],{type:[0,"type"]},null),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(224,0,null,null,29,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(225,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,37,{contentLabel:0}),y._18(603979776,38,{_buttons:1}),y._18(603979776,39,{_icons:1}),y.Y(229,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(231,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),y.Y(232,16384,[[37,4]],0,R.a,[w.a,y.j,y.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),y._20(-1,null,["Travel type"])),(l()(),y.Z(234,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),y._20(-1,null,["*"])),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(237,0,null,3,15,"ion-select",[["formControlName","travelType"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==y._11(l,238)._click(u)&&e}if("keyup.space"===n){e=!1!==y._11(l,238)._keyup()&&e}return e},$.b,$.a)),y.Y(238,1228800,null,1,U.a,[M.a,D.a,w.a,y.j,y.z,[2,k.a],V.a],null,null),y._18(603979776,40,{options:1}),y._16(1024,null,S.m,function(l){return[l]},[U.a]),y.Y(241,671744,null,0,S.g,[[3,S.b],[8,null],[8,null],[2,S.m]],{name:[0,"name"]},null),y._16(2048,null,S.n,null,[S.g]),y.Y(243,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(245,0,null,null,2,"ion-option",[["value","outstation"]],null,null,null,null,null)),y.Y(246,16384,[[40,4]],0,Y.a,[y.j],{value:[0,"value"]},null),(l()(),y._20(-1,null,["Outstation"])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(249,0,null,null,2,"ion-option",[["value","local"]],null,null,null,null,null)),y.Y(250,16384,[[40,4]],0,Y.a,[y.j],{value:[0,"value"]},null),(l()(),y._20(-1,null,["Local"])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(255,0,null,null,10,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),y.Y(256,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n            "])),(l()(),y.Z(258,0,null,null,6,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(259,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(261,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],[[8,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logForm()&&e}return e},X.b,X.a)),y.Y(262,1097728,null,0,K.a,[[8,""],w.a,y.j,y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),y._20(-1,0,["Next\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,25,0,"travelsrc");l(n,30,0,u.locations);l(n,55,0,"isRoundTrip");l(n,61,0,"No");l(n,65,0,"Yes");l(n,87,0,"30");l(n,89,0,"traveldest");l(n,92,0,"text");l(n,103,0,u.minDate,u.Today,u.travelDate);l(n,109,0,"clipboard");l(n,128,0,u.currTime,"HH:mm");l(n,130,0,"traveltime");l(n,137,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,140,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,156,0,"updatepurpose");l(n,159,0,"text");l(n,176,0,"30");l(n,178,0,"pickpoint");l(n,181,0,"text");l(n,198,0,"remark");l(n,201,0,"text");l(n,218,0,"costid");l(n,221,0,"text");l(n,241,0,"travelType");l(n,246,0,"outstation");l(n,250,0,"local");l(n,262,0,"red","true")},function(l,n){var u=n.component;l(n,21,0,y._11(n,22)._disabled,y._11(n,27).ngClassUntouched,y._11(n,27).ngClassTouched,y._11(n,27).ngClassPristine,y._11(n,27).ngClassDirty,y._11(n,27).ngClassValid,y._11(n,27).ngClassInvalid,y._11(n,27).ngClassPending);l(n,51,0,y._11(n,52)._disabled,y._11(n,57).ngClassUntouched,y._11(n,57).ngClassTouched,y._11(n,57).ngClassPristine,y._11(n,57).ngClassDirty,y._11(n,57).ngClassValid,y._11(n,57).ngClassInvalid,y._11(n,57).ngClassPending);l(n,86,0,y._11(n,87).maxlength?y._11(n,87).maxlength:null,y._11(n,91).ngClassUntouched,y._11(n,91).ngClassTouched,y._11(n,91).ngClassPristine,y._11(n,91).ngClassDirty,y._11(n,91).ngClassValid,y._11(n,91).ngClassInvalid,y._11(n,91).ngClassPending);l(n,106,0,y._21(n,106,0,l(n,107,0,y._11(n.parent.parent,0),u.travelDate)));l(n,108,0,y._11(n,109)._hidden);l(n,127,0,y._11(n,128)._disabled,y._11(n,132).ngClassUntouched,y._11(n,132).ngClassTouched,y._11(n,132).ngClassPristine,y._11(n,132).ngClassDirty,y._11(n,132).ngClassValid,y._11(n,132).ngClassInvalid,y._11(n,132).ngClassPending);l(n,155,0,y._11(n,158).ngClassUntouched,y._11(n,158).ngClassTouched,y._11(n,158).ngClassPristine,y._11(n,158).ngClassDirty,y._11(n,158).ngClassValid,y._11(n,158).ngClassInvalid,y._11(n,158).ngClassPending);l(n,175,0,y._11(n,176).maxlength?y._11(n,176).maxlength:null,y._11(n,180).ngClassUntouched,y._11(n,180).ngClassTouched,y._11(n,180).ngClassPristine,y._11(n,180).ngClassDirty,y._11(n,180).ngClassValid,y._11(n,180).ngClassInvalid,y._11(n,180).ngClassPending);l(n,197,0,y._11(n,200).ngClassUntouched,y._11(n,200).ngClassTouched,y._11(n,200).ngClassPristine,y._11(n,200).ngClassDirty,y._11(n,200).ngClassValid,y._11(n,200).ngClassInvalid,y._11(n,200).ngClassPending);l(n,217,0,y._11(n,220).ngClassUntouched,y._11(n,220).ngClassTouched,y._11(n,220).ngClassPristine,y._11(n,220).ngClassDirty,y._11(n,220).ngClassValid,y._11(n,220).ngClassInvalid,y._11(n,220).ngClassPending);l(n,237,0,y._11(n,238)._disabled,y._11(n,243).ngClassUntouched,y._11(n,243).ngClassTouched,y._11(n,243).ngClassPristine,y._11(n,243).ngClassDirty,y._11(n,243).ngClassValid,y._11(n,243).ngClassInvalid,y._11(n,243).ngClassPending);l(n,261,0,!u.bookingForm.valid)})}function i(l){return y._22(0,[(l()(),y.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                (Round Trip)\n              "]))],null,null)}function s(l){return y._22(0,[(l()(),y.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                (One-Way Trip)\n              "]))],null,null)}function r(l){return y._22(0,[(l()(),y.Z(0,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(1,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(4,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Return Date"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(10,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(11,16384,null,0,A.a,[],null,null),(l()(),y._20(12,null,["\n                  ","\n                "])),y._15(13,1),(l()(),y._20(-1,null,["\n              "]))],null,function(l,n){var u=n.component;l(n,12,0,y._21(n,12,0,l(n,13,0,y._11(n.parent.parent.parent,0),u.endtravelDate)))})}function c(l){return y._22(0,[(l()(),y.Z(0,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(1,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(4,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Return Time"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(10,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(11,16384,null,0,A.a,[],null,null),(l()(),y._20(12,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "]))],null,function(l,n){l(n,12,0,n.component.bookingForm.value.endtraveltime)})}function _(l){return y._22(0,[(l()(),y.Z(0,0,null,null,179,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(2,0,null,null,176,"ion-card",[],null,null,null,null,null)),y.Y(3,16384,null,0,G.a,[w.a,y.j,y.z],null,null),(l()(),y._20(-1,null,["\n            "])),(l()(),y.Z(5,0,null,null,10,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),y.Y(6,16384,null,0,Q.a,[w.a,y.j,y.z],{color:[0,"color"]},null),(l()(),y._20(-1,null,["\n              Confirm Request\n              "])),(l()(),y.U(16777216,null,null,1,null,i)),y.Y(9,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.U(16777216,null,null,1,null,s)),y.Y(12,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(14,0,null,null,0,"span",[["class","icon-pencil"],["style","float: right;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.editRequest()&&e}return e},null,null)),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y.Z(17,0,null,null,160,"ion-card-content",[["style","padding: 13px 6px 5px;"]],null,null,null,null,null)),y.Y(18,16384,null,0,ll.a,[w.a,y.j,y.z],null,null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(20,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(21,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(23,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(24,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(26,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Cost Id"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(30,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(31,16384,null,0,A.a,[],null,null),(l()(),y._20(32,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(35,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(36,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(38,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(39,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(41,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Purpose"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(45,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(46,16384,null,0,A.a,[],null,null),(l()(),y._20(47,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(50,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(51,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(53,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(54,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(56,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Start Date"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(60,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(61,16384,null,0,A.a,[],null,null),(l()(),y._20(62,null,["\n                  ","\n                "])),y._15(63,1),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(66,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(67,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(69,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(70,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(72,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Start Time"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(76,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(77,16384,null,0,A.a,[],null,null),(l()(),y._20(78,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.U(16777216,null,null,1,null,r)),y.Y(82,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.U(16777216,null,null,1,null,c)),y.Y(85,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(87,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(88,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(90,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(91,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(93,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["My Location"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(97,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(98,16384,null,0,A.a,[],null,null),(l()(),y._20(99,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(102,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(103,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(105,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(106,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(108,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Destination"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(112,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(113,16384,null,0,A.a,[],null,null),(l()(),y._20(114,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y.Z(117,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(118,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(120,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(121,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(123,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Pickup point"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(127,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(128,16384,null,0,A.a,[],null,null),(l()(),y._20(129,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n\n              "])),(l()(),y.Z(132,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(133,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(135,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(136,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(138,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Travel Type"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(142,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(143,16384,null,0,A.a,[],null,null),(l()(),y._20(144,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n\n              "])),(l()(),y.Z(147,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(148,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(150,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(151,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(153,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Remark"])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(157,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(158,16384,null,0,A.a,[],null,null),(l()(),y._20(159,null,["\n                  ","\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n\n\n              "])),(l()(),y.Z(162,0,null,null,14,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),y.Y(163,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(165,0,null,null,10,"ion-col",[["class","col"]],null,null,null,null,null)),y.Y(166,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n\n                  "])),(l()(),y.Z(168,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.cancelReq()&&e}return e},X.b,X.a)),y.Y(169,1097728,null,0,K.a,[[8,""],w.a,y.j,y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),y._20(-1,0,["Cancel Request\n                  "])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(172,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.sendRequest()&&e}return e},X.b,X.a)),y.Y(173,1097728,null,0,K.a,[[8,""],w.a,y.j,y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),y._20(-1,0,["Send Request\n                  "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,null,["\n            "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,6,0,"red");l(n,9,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,12,0,"No"==u.bookingForm.value.isRoundTrip);l(n,82,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,85,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,169,0,"red","true");l(n,173,0,"red","true")},function(l,n){var u=n.component;l(n,32,0,u.bookingForm.value.costid);l(n,47,0,u.bookingForm.value.updatepurpose);l(n,62,0,y._21(n,62,0,l(n,63,0,y._11(n.parent.parent,0),u.travelDate)));l(n,78,0,u.bookingForm.value.traveltime);l(n,99,0,u.bookingForm.value.travelsrc);l(n,114,0,u.bookingForm.value.traveldest);l(n,129,0,u.bookingForm.value.pickpoint);l(n,144,0,u.bookingForm.value.travelType);l(n,159,0,u.bookingForm.value.remark)})}function d(l){return y._22(0,[(l()(),y.Z(0,0,null,null,11,"form",[["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0;if("submit"===n){e=!1!==y._11(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==y._11(l,2).onReset()&&e}return e},null,null)),y.Y(1,16384,null,0,S.x,[],null,null),y.Y(2,540672,null,0,S.i,[[8,null],[8,null]],{form:[0,"form"]},null),y._16(2048,null,S.b,null,[S.i]),y.Y(4,16384,null,0,S.p,[S.b],null,null),(l()(),y._20(-1,null,["\n        "])),(l()(),y.U(16777216,null,null,1,null,o)),y.Y(7,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n        "])),(l()(),y.U(16777216,null,null,1,null,_)),y.Y(10,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n      "]))],function(l,n){var u=n.component;l(n,2,0,u.bookingForm);l(n,7,0,!u.confirmReqst);l(n,10,0,u.confirmReqst)},function(l,n){l(n,0,0,y._11(n,4).ngClassUntouched,y._11(n,4).ngClassTouched,y._11(n,4).ngClassPristine,y._11(n,4).ngClassDirty,y._11(n,4).ngClassValid,y._11(n,4).ngClassInvalid,y._11(n,4).ngClassPending)})}function p(l){return y._22(0,[(l()(),y.Z(0,0,null,null,1,"span",[["style","color: #a90e1b;"],["text-left",""]],null,null,null,null,null)),(l()(),y._20(1,null,["\n                  ",", ","\n                "]))],null,function(l,n){l(n,1,0,n.parent.parent.context.$implicit.travel_date,n.parent.parent.context.$implicit.travel_time)})}function g(l){return y._22(0,[(l()(),y.Z(0,0,null,null,1,"h6",[],null,null,null,null,null)),(l()(),y._20(1,null,["","\n                  "]))],null,function(l,n){l(n,1,0,n.parent.parent.context.$implicit.bh_UserName)})}function m(l){return y._22(0,[(l()(),y.Z(0,0,null,null,5,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(2,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.cancelCabReq(u,l.parent.parent.context.$implicit.id)&&e}return e},X.b,X.a)),y.Y(3,1097728,[[45,4]],0,K.a,[[8,""],w.a,y.j,y.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),y._20(-1,0,["Cancel\n                "])),(l()(),y._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,"red","true")},null)}function h(l){return y._22(0,[(l()(),y.Z(0,0,null,null,11,"span",[["style","float:right; margin-top: -25px;"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(3,0,null,null,7,"rating",[["emptyStarIconName","star-outline"],["halfStarIconName","star-half"],["max","5"],["nullable","true"],["starIconName","star"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"],[null,"readOnlyChange"]],function(l,n,u){var e=!0,t=l.component;if("ngModelChange"===n){e=!1!==(l.parent.parent.context.$implicit.feedbackRating=u)&&e}if("readOnlyChange"===n){e=!1!==(l.parent.parent.context.$implicit.feedbackStatus=u)&&e}if("ngModelChange"===n){e=!1!==t.rating(u,l.parent.parent.context.$implicit.id)&&e}return e},nl.b,nl.a)),y.Y(4,114688,null,0,ul.a,[],{max:[0,"max"],readOnly:[1,"readOnly"],emptyStarIconName:[2,"emptyStarIconName"],halfStarIconName:[3,"halfStarIconName"],starIconName:[4,"starIconName"],nullable:[5,"nullable"]},null),y._16(1024,null,S.m,function(l){return[l]},[ul.a]),y.Y(6,671744,null,0,S.q,[[8,null],[8,null],[8,null],[2,S.m]],{model:[0,"model"]},{update:"ngModelChange"}),y._16(2048,null,S.n,null,[S.q]),y.Y(8,16384,null,0,S.o,[S.n],null,null),(l()(),y._20(-1,null,["\n                  "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n\n              "]))],function(l,n){l(n,4,0,"5",n.parent.parent.context.$implicit.feedbackStatus,"star-outline","star-half","star","true");l(n,6,0,n.parent.parent.context.$implicit.feedbackRating)},function(l,n){l(n,3,0,y._11(n,8).ngClassUntouched,y._11(n,8).ngClassTouched,y._11(n,8).ngClassPristine,y._11(n,8).ngClassDirty,y._11(n,8).ngClassValid,y._11(n,8).ngClassInvalid,y._11(n,8).ngClassPending)})}function f(l){return y._22(0,[(l()(),y.Z(0,0,null,null,53,"ion-item",[["class","item item-block"]],null,null,null,C.b,C.a)),y.Y(1,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,44,{contentLabel:0}),y._18(603979776,45,{_buttons:1}),y._18(603979776,46,{_icons:1}),y.Y(5,16384,null,0,T.a,[],null,null),(l()(),y._20(-1,2,["\n              "])),(l()(),y.Z(7,0,null,2,39,"div",[],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.parent.context.$implicit)&&e}return e},null,null)),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(9,0,null,null,6,"span",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(11,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                    "])),(l()(),y.Z(13,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),y._20(14,null,["",""])),(l()(),y._20(-1,null,["\n\n                "])),(l()(),y._20(-1,null,["\n\n                "])),(l()(),y.U(16777216,null,null,1,null,p)),y.Y(18,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(20,0,null,null,7,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(22,0,null,null,1,"h6",[],null,null,null,null,null)),(l()(),y._20(23,null,["",""])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.U(16777216,null,null,1,null,g)),y.Y(26,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n                "])),(l()(),y._20(-1,null,["\n                "])),(l()(),y.Z(29,0,null,null,16,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                  "])),(l()(),y.Z(31,0,null,null,13,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                    "])),(l()(),y.Z(33,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                      "])),(l()(),y.Z(35,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),y._20(36,null,["",""])),(l()(),y._20(-1,null,["\n                    "])),(l()(),y._20(-1,null,["\n                    "])),(l()(),y.Z(39,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),y._20(-1,null,["\n                      "])),(l()(),y.Z(41,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),y._20(42,null,["",""])),(l()(),y._20(-1,null,["\n                    "])),(l()(),y._20(-1,null,["\n                  "])),(l()(),y._20(-1,null,["\n\n                "])),(l()(),y._20(-1,null,["\n              "])),(l()(),y._20(-1,2,["\n              "])),(l()(),y.U(16777216,null,2,1,null,m)),y.Y(49,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,2,["\n              "])),(l()(),y.U(16777216,null,2,1,null,h)),y.Y(52,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,2,["\n            "]))],function(l,n){l(n,18,0,null!=n.parent.context.$implicit.travel_date);l(n,26,0,"Pending with Manager"==n.parent.context.$implicit.status);l(n,49,0,"started"!=n.parent.context.$implicit.status&&"Completed"!=n.parent.context.$implicit.status&&"Rejected"!=n.parent.context.$implicit.status&&"Approved"!=n.parent.context.$implicit.status);l(n,52,0,"Completed"==n.parent.context.$implicit.status)},function(l,n){l(n,14,0,n.parent.context.$implicit.purpose);l(n,23,0,n.parent.context.$implicit.status);l(n,36,0,n.parent.context.$implicit.source);l(n,42,0,n.parent.context.$implicit.destination)})}function v(l){return y._22(0,[(l()(),y.Z(0,0,null,null,4,null,null,null,null,null,null,null)),(l()(),y._20(-1,null,["\n            "])),(l()(),y.U(16777216,null,null,1,null,f)),y.Y(3,16384,null,0,H.j,[y.I,y.F],{ngIf:[0,"ngIf"]},null),(l()(),y._20(-1,null,["\n          "]))],function(l,n){l(n,3,0,n.context.$implicit.travel_date&&"null"!=n.context.$implicit.travel_date)},null)}function b(l){return y._22(0,[(l()(),y.Z(0,0,null,null,19,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(2,0,null,null,16,"ion-list",[],null,null,null,null,null)),y.Y(3,16384,null,0,el.a,[w.a,y.j,y.z,B.a,tl.l,W.a],null,null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(5,0,null,null,9,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important; margin-bottom: 0px;"]],null,null,null,C.b,C.a)),y.Y(6,1097728,null,3,k.a,[D.a,w.a,y.j,y.z,[2,P.a]],null,null),y._18(335544320,41,{contentLabel:0}),y._18(603979776,42,{_buttons:1}),y._18(603979776,43,{_icons:1}),y.Y(10,16384,null,0,al.a,[w.a,y.z,y.j,[8,null]],null,null),(l()(),y._20(-1,2,["\n            "])),(l()(),y.Z(12,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),y._20(-1,null,["Booking History"])),(l()(),y._20(-1,2,["\n          "])),(l()(),y._20(-1,null,["\n          "])),(l()(),y.U(16777216,null,null,1,null,v)),y.Y(17,802816,null,0,H.i,[y.I,y.F,y.p],{ngForOf:[0,"ngForOf"]},null),(l()(),y._20(-1,null,["\n        "])),(l()(),y._20(-1,null,["\n      "]))],function(l,n){l(n,17,0,n.component.historyData)},null)}function Z(l){return y._22(0,[y._13(0,H.d,[y.r]),(l()(),y.Z(1,0,null,null,53,"ion-header",[],null,null,null,null,null)),y.Y(2,16384,null,0,ol.a,[w.a,y.j,y.z,[2,il.a]],null,null),(l()(),y._20(-1,null,["\n  "])),(l()(),y.Z(4,0,null,null,12,"ion-navbar",[["class","toolbar"],["color","navColor"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,sl.b,sl.a)),y.Y(5,49152,null,0,rl.a,[M.a,[2,il.a],[2,cl.a],w.a,y.j,y.z],{color:[0,"color"]},null),(l()(),y._20(-1,3,["\n    "])),(l()(),y.Z(7,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,_l.b,_l.a)),y.Y(8,49152,null,0,dl.a,[w.a,y.j,y.z,[2,pl.a],[2,rl.a]],null,null),(l()(),y._20(9,0,["",""])),(l()(),y._20(-1,3,["\n    "])),(l()(),y.Z(11,0,null,3,1,"div",[["style","float:right"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logout(u)&&e}return e},null,null)),(l()(),y.Z(12,0,null,null,0,"span",[["class","icon-switch"]],null,null,null,null,null)),(l()(),y._20(-1,3,["\n    "])),(l()(),y.Z(14,0,null,3,1,"div",[["style","float:right; padding-right: 20px;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showTermsCondition(u)&&e}return e},null,null)),(l()(),y.Z(15,0,null,null,0,"span",[["class","icon-info"]],null,null,null,null,null)),(l()(),y._20(-1,3,["\n  "])),(l()(),y._20(-1,null,["\n  "])),(l()(),y.Z(18,0,null,null,35,"ion-toolbar",[["class","webToolbar toolbar"],["color","white"]],[[2,"statusbar-padding",null]],null,null,gl.b,gl.a)),y.Y(19,49152,null,0,pl.a,[w.a,y.j,y.z],{color:[0,"color"]},null),(l()(),y._20(-1,3,["\n    "])),(l()(),y.Z(21,0,null,3,31,"ion-grid",[["class","grid"]],null,null,null,null,null)),y.Y(22,16384,null,0,ml.a,[],null,null),(l()(),y._20(-1,null,["\n      "])),(l()(),y.Z(24,0,null,null,16,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(25,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(27,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["text-left",""]],null,null,null,null,null)),y.Y(28,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(30,0,null,null,1,"span",[["style","font-size: 17px;"]],null,null,null,null,null)),(l()(),y._20(31,null,["","/",""])),(l()(),y._20(-1,null,["\n        "])),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(34,0,null,null,5,"ion-col",[["class","col"],["col-4",""],["text-right",""]],null,null,null,null,null)),y.Y(35,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(37,0,null,null,1,"span",[["style","color:#ad081f; font-family: font-medium"]],null,null,null,null,null)),(l()(),y._20(38,null,[" "," "])),(l()(),y._20(-1,null,["\n        "])),(l()(),y._20(-1,null,["\n      "])),(l()(),y._20(-1,null,["\n      "])),(l()(),y.Z(42,0,null,null,9,"ion-row",[["class","row"]],null,null,null,null,null)),y.Y(43,16384,null,0,N.a,[],null,null),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(45,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["style","padding-top: 0px;"],["text-left",""]],null,null,null,null,null)),y.Y(46,16384,null,0,A.a,[],null,null),(l()(),y._20(-1,null,["\n          "])),(l()(),y.Z(48,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),y._20(49,null,[" "," "])),(l()(),y._20(-1,null,["\n        "])),(l()(),y._20(-1,null,["\n      "])),(l()(),y._20(-1,null,["\n    "])),(l()(),y._20(-1,3,["\n\n  "])),(l()(),y._20(-1,null,["\n"])),(l()(),y._20(-1,null,["\n"])),(l()(),y.Z(56,0,null,null,35,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,hl.b,hl.a)),y.Y(57,4374528,null,0,J.a,[w.a,B.a,W.a,y.j,y.z,M.a,fl.a,y.u,[2,il.a],[2,cl.a]],null,null),(l()(),y._20(-1,1,["\n  "])),(l()(),y.Z(59,0,null,1,31,"ion-grid",[["class","formcntent grid"]],null,null,null,null,null)),y.Y(60,16384,null,0,ml.a,[],null,null),(l()(),y._20(-1,null,["\n    "])),(l()(),y.Z(62,0,null,null,17,"div",[],null,null,null,null,null)),(l()(),y._20(-1,null,["\n      "])),(l()(),y.Z(64,0,null,null,14,"ion-segment",[["color","red"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[2,"segment-disabled",null]],[[null,"ngModelChange"]],function(l,n,u){var e=!0;if("ngModelChange"===n){e=!1!==(l.component.requestSegment=u)&&e}return e},null,null)),y.Y(65,671744,null,0,S.q,[[8,null],[8,null],[8,null],[8,null]],{model:[0,"model"]},{update:"ngModelChange"}),y._16(2048,null,S.n,null,[S.q]),y.Y(67,16384,null,0,S.o,[S.n],null,null),y.Y(68,1196032,null,1,vl.a,[w.a,y.j,y.z,[2,S.n]],{color:[0,"color"]},null),y._18(603979776,1,{_buttons:1}),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(71,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","raisereq"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==y._11(l,72).onClick()&&e}if("ionSelect"===n){e=!1!==(t.pageTitle="Raise Request")&&e}return e},bl.b,bl.a)),y.Y(72,114688,[[1,4]],0,Zl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),y._20(-1,0,["\n          Raise Request\n        "])),(l()(),y._20(-1,null,["\n        "])),(l()(),y.Z(75,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","history"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==y._11(l,76).onClick()&&e}if("ionSelect"===n){e=!1!==t.getEmpHistory()&&e}return e},bl.b,bl.a)),y.Y(76,114688,[[1,4]],0,Zl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),y._20(-1,0,["\n          History\n        "])),(l()(),y._20(-1,null,["\n      "])),(l()(),y._20(-1,null,["\n    "])),(l()(),y._20(-1,null,["\n    "])),(l()(),y.Z(81,0,null,null,8,"div",[],null,null,null,null,null)),y.Y(82,16384,null,0,H.n,[],{ngSwitch:[0,"ngSwitch"]},null),(l()(),y._20(-1,null,["\n      "])),(l()(),y.U(16777216,null,null,1,null,d)),y.Y(85,278528,null,0,H.o,[y.I,y.F,H.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),y._20(-1,null,["\n      "])),(l()(),y.U(16777216,null,null,1,null,b)),y.Y(88,278528,null,0,H.o,[y.I,y.F,H.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),y._20(-1,null,["\n    "])),(l()(),y._20(-1,null,["\n  "])),(l()(),y._20(-1,1,["\n"]))],function(l,n){var u=n.component;l(n,5,0,"navColor");l(n,19,0,"white");l(n,65,0,u.requestSegment);l(n,68,0,"red");l(n,72,0,"raisereq");l(n,76,0,"history");l(n,82,0,u.requestSegment);l(n,85,0,"raisereq");l(n,88,0,"history")},function(l,n){var u=n.component;l(n,4,0,y._11(n,5)._hidden,y._11(n,5)._sbPadding);l(n,9,0,u.pageTitle);l(n,18,0,y._11(n,19)._sbPadding);l(n,31,0,u.userDetails.emp_f_name,u.userDetails.emp_no);l(n,38,0,u.userDetails.emp_psa);l(n,49,0,u.userDetails.emp_cost);l(n,56,0,y._11(n,57).statusbarPadding,y._11(n,57)._hasRefresher);l(n,64,0,y._11(n,67).ngClassUntouched,y._11(n,67).ngClassTouched,y._11(n,67).ngClassPristine,y._11(n,67).ngClassDirty,y._11(n,67).ngClassValid,y._11(n,67).ngClassInvalid,y._11(n,67).ngClassPending,y._11(n,68)._disabled);l(n,71,0,y._11(n,72)._disabled,y._11(n,72).isActive,y._11(n,72).isActive);l(n,75,0,y._11(n,76)._disabled,y._11(n,76).isActive,y._11(n,76).isActive)})}u.d(n,"a",function(){return xl});var y=u(0),Y=u(64),C=u(45),k=u(17),D=u(15),w=u(1),P=u(32),T=u(35),j=u(95),x=u(72),z=u(46),q=u(38),R=u(39),F=u(163),I=u(81),L=u(53),S=u(13),N=u(41),A=u(40),$=u(116),U=u(65),M=u(6),V=u(21),H=u(12),O=u(93),E=u(56),B=u(4),J=u(18),W=u(7),X=u(29),K=u(20),G=u(57),Q=u(59),ll=u(58),nl=u(244),ul=u(96),el=u(44),tl=u(8),al=u(62),ol=u(33),il=u(5),sl=u(36),rl=u(25),cl=u(16),_l=u(37),dl=u(31),pl=u(27),gl=u(74),ml=u(55),hl=u(34),fl=u(24),vl=u(94),bl=u(164),Zl=u(68),yl=u(127),Yl=u(14),Cl=u(67),kl=u(22),Dl=u(23),wl=u(66),Pl=u(75),Tl=u(80),jl=y.X({encapsulation:2,styles:[],data:{}}),xl=y.V("page-empdashboard",yl.a,function(l){return y._22(0,[(l()(),y.Z(0,0,null,null,1,"page-empdashboard",[],null,null,null,Z,jl)),y.Y(1,49152,null,0,yl.a,[cl.a,Yl.a,S.d,Cl.a,kl.a,Dl.a,wl.a,Pl.a,Tl.a],null,null)],null,null)},{},{},[])},266:function(l,n,u){"use strict";function e(l){return C._22(0,[(l()(),C.Z(0,0,null,null,5,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                    "])),(l()(),C.Z(2,0,null,null,2,"ion-option",[],null,null,null,null,null)),C.Y(3,16384,[[5,4]],0,k.a,[C.j],{value:[0,"value"]},null),(l()(),C._20(4,null,["",""])),(l()(),C._20(-1,null,["\n                  "]))],function(l,n){l(n,3,0,C._2(1,"",n.context.$implicit.loc_name,""))},function(l,n){l(n,4,0,n.context.$implicit.loc_name)})}function t(l){return C._22(0,[(l()(),C.Z(0,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(1,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,19,{contentLabel:0}),C._18(603979776,20,{_buttons:1}),C._18(603979776,21,{_icons:1}),C.Y(5,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(7,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==C._11(l,8)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setEndDate(u)&&e}return e},null,null)),C.Y(8,16384,null,0,z.a,[q.a,R.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(10,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),C._20(11,null,["Return Date : ","\n                "])),C._15(12,1),(l()(),C.Z(13,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),C.Y(14,147456,null,0,F.a,[T.a,C.j,C.z],{name:[0,"name"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "]))],function(l,n){var u=n.component;l(n,8,0,u.travelDate,u.Today,u.endtravelDate);l(n,14,0,"clipboard")},function(l,n){var u=n.component;l(n,11,0,C._21(n,11,0,l(n,12,0,C._11(n.parent.parent.parent,0),u.endtravelDate)));l(n,13,0,C._11(n,14)._hidden)})}function a(l){return C._22(0,[(l()(),C.Z(0,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(1,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,22,{contentLabel:0}),C._18(603979776,23,{_buttons:1}),C._18(603979776,24,{_icons:1}),C.Y(5,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(7,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(8,16384,[[22,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Return Time"])),(l()(),C.Z(10,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(13,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","endtraveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==C._11(l,14)._click(u)&&e}if("keyup.space"===n){e=!1!==C._11(l,14)._keyup()&&e}return e},L.b,L.a)),C.Y(14,1228800,null,0,S.a,[P.a,T.a,C.j,C.z,[2,w.a],[2,N.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),C._16(1024,null,A.m,function(l){return[l]},[S.a]),C.Y(16,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[2,A.m]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(18,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "]))],function(l,n){l(n,14,0,n.component.currTime,"HH:mm");l(n,16,0,"endtraveltime")},function(l,n){l(n,13,0,C._11(n,14)._disabled,C._11(n,18).ngClassUntouched,C._11(n,18).ngClassTouched,C._11(n,18).ngClassPristine,C._11(n,18).ngClassDirty,C._11(n,18).ngClassValid,C._11(n,18).ngClassInvalid,C._11(n,18).ngClassPending)})}function o(l){return C._22(0,[(l()(),C.Z(0,0,null,null,266,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(2,0,null,null,69,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(3,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n            "])),(l()(),C.Z(5,0,null,null,28,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(6,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(8,0,null,null,24,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(9,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,2,{contentLabel:0}),C._18(603979776,3,{_buttons:1}),C._18(603979776,4,{_icons:1}),C.Y(13,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n                "])),(l()(),C.Z(15,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(16,16384,[[2,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["My Location"])),(l()(),C.Z(18,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n                "])),(l()(),C.Z(21,0,null,3,10,"ion-select",[["formControlName","travelsrc"],["name","travelsrc"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==C._11(l,22)._click(u)&&e}if("keyup.space"===n){e=!1!==C._11(l,22)._keyup()&&e}return e},M.b,M.a)),C.Y(22,1228800,null,1,V.a,[H.a,P.a,T.a,C.j,C.z,[2,w.a],O.a],null,null),C._18(603979776,5,{options:1}),C._16(1024,null,A.m,function(l){return[l]},[V.a]),C.Y(25,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[2,A.m]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(27,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.U(16777216,null,null,1,null,e)),C.Y(30,802816,null,0,E.i,[C.I,C.F,C.p],{ngForOf:[0,"ngForOf"]},null),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,2,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C.Z(35,0,null,null,35,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(36,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(38,0,null,null,31,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(39,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,6,{contentLabel:0}),C._18(603979776,7,{_buttons:1}),C._18(603979776,8,{_icons:1}),C.Y(43,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n                "])),(l()(),C.Z(45,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(46,16384,[[6,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Trip Type"])),(l()(),C.Z(48,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n                "])),(l()(),C.Z(51,0,null,3,17,"ion-select",[["formControlName","isRoundTrip"],["name","isRoundTrip"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==C._11(l,52)._click(u)&&e}if("keyup.space"===n){e=!1!==C._11(l,52)._keyup()&&e}return e},M.b,M.a)),C.Y(52,1228800,null,1,V.a,[H.a,P.a,T.a,C.j,C.z,[2,w.a],O.a],null,null),C._18(603979776,9,{options:1}),C._16(1024,null,A.m,function(l){return[l]},[V.a]),C.Y(55,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[2,A.m]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(57,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(60,0,null,null,2,"ion-option",[["value","No"]],null,null,null,null,null)),C.Y(61,16384,[[9,4]],0,k.a,[C.j],{value:[0,"value"]},null),(l()(),C._20(-1,null,["One Way"])),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(64,0,null,null,2,"ion-option",[["value","Yes"]],null,null,null,null,null)),C.Y(65,16384,[[9,4]],0,k.a,[C.j],{value:[0,"value"]},null),(l()(),C._20(-1,null,["Round Trip"])),(l()(),C._20(-1,null,["\n                  "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,2,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(73,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(74,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,10,{contentLabel:0}),C._18(603979776,11,{_buttons:1}),C._18(603979776,12,{_icons:1}),C.Y(78,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(80,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(81,16384,[[10,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Destination"])),(l()(),C.Z(83,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(86,0,null,3,6,"ion-input",[["formControlName","traveldest"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,B.b,B.a)),C.Y(87,540672,null,0,A.k,[],{maxlength:[0,"maxlength"]},null),C._16(1024,null,A.l,function(l){return[l]},[A.k]),C.Y(89,671744,null,0,A.g,[[3,A.b],[2,A.l],[8,null],[8,null]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(91,16384,null,0,A.o,[A.n],null,null),C.Y(92,5423104,null,0,J.a,[T.a,W.a,P.a,H.a,C.j,C.z,[2,X.a],[2,w.a],[2,A.n],K.a],{type:[0,"type"]},null),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(95,0,null,null,17,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(96,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,13,{contentLabel:0}),C._18(603979776,14,{_buttons:1}),C._18(603979776,15,{_icons:1}),C.Y(100,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(102,0,null,2,9,"span",[["clear",""],["ion-datepicker",""]],null,[[null,"ionChanged"],[null,"tap"]],function(l,n,u){var e=!0,t=l.component;if("tap"===n){e=!1!==C._11(l,103)._click(u)&&e}if("ionChanged"===n){e=!1!==t.setDate(u)&&e}return e},null,null)),C.Y(103,16384,null,0,z.a,[q.a,R.a],{min:[0,"min"],cancelText:[1,"cancelText"],value:[2,"value"]},{changed:"ionChanged"}),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(105,0,null,null,5,"span",[],null,null,null,null,null)),(l()(),C._20(106,null,["Start Date : ","\n                "])),C._15(107,1),(l()(),C.Z(108,0,null,null,1,"ion-icon",[["item-left",""],["name","clipboard"],["role","img"]],[[2,"hide",null]],null,null,null,null)),C.Y(109,147456,null,0,F.a,[T.a,C.j,C.z],{name:[0,"name"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(114,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(115,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,16,{contentLabel:0}),C._18(603979776,17,{_buttons:1}),C._18(603979776,18,{_icons:1}),C.Y(119,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(121,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(122,16384,[[16,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Start Time"])),(l()(),C.Z(124,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(127,0,null,3,6,"ion-datetime",[["displayFormat","HH:mm"],["formControlName","traveltime"]],[[2,"datetime-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==C._11(l,128)._click(u)&&e}if("keyup.space"===n){e=!1!==C._11(l,128)._keyup()&&e}return e},L.b,L.a)),C.Y(128,1228800,null,0,S.a,[P.a,T.a,C.j,C.z,[2,w.a],[2,N.a]],{min:[0,"min"],displayFormat:[1,"displayFormat"]},null),C._16(1024,null,A.m,function(l){return[l]},[S.a]),C.Y(130,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[2,A.m]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(132,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.U(16777216,null,null,1,null,t)),C.Y(137,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.U(16777216,null,null,1,null,a)),C.Y(140,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(142,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(143,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,25,{contentLabel:0}),C._18(603979776,26,{_buttons:1}),C._18(603979776,27,{_icons:1}),C.Y(147,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(149,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(150,16384,[[25,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Purpose"])),(l()(),C.Z(152,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(155,0,null,3,4,"ion-input",[["formControlName","updatepurpose"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,B.b,B.a)),C.Y(156,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(158,16384,null,0,A.o,[A.n],null,null),C.Y(159,5423104,null,0,J.a,[T.a,W.a,P.a,H.a,C.j,C.z,[2,X.a],[2,w.a],[2,A.n],K.a],{type:[0,"type"]},null),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(162,0,null,null,20,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(163,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,28,{contentLabel:0}),C._18(603979776,29,{_buttons:1}),C._18(603979776,30,{_icons:1}),C.Y(167,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(169,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(170,16384,[[28,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Pickup point"])),(l()(),C.Z(172,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(175,0,null,3,6,"ion-input",[["formControlName","pickpoint"],["maxlength","30"],["type","text"]],[[1,"maxlength",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,B.b,B.a)),C.Y(176,540672,null,0,A.k,[],{maxlength:[0,"maxlength"]},null),C._16(1024,null,A.l,function(l){return[l]},[A.k]),C.Y(178,671744,null,0,A.g,[[3,A.b],[2,A.l],[8,null],[8,null]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(180,16384,null,0,A.o,[A.n],null,null),C.Y(181,5423104,null,0,J.a,[T.a,W.a,P.a,H.a,C.j,C.z,[2,X.a],[2,w.a],[2,A.n],K.a],{type:[0,"type"]},null),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(184,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(185,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,31,{contentLabel:0}),C._18(603979776,32,{_buttons:1}),C._18(603979776,33,{_icons:1}),C.Y(189,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(191,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(192,16384,[[31,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Remark"])),(l()(),C.Z(194,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(197,0,null,3,4,"ion-input",[["formControlName","remark"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,B.b,B.a)),C.Y(198,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(200,16384,null,0,A.o,[A.n],null,null),C.Y(201,5423104,null,0,J.a,[T.a,W.a,P.a,H.a,C.j,C.z,[2,X.a],[2,w.a],[2,A.n],K.a],{type:[0,"type"]},null),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(204,0,null,null,18,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(205,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,34,{contentLabel:0}),C._18(603979776,35,{_buttons:1}),C._18(603979776,36,{_icons:1}),C.Y(209,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(211,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(212,16384,[[34,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Cost ID"])),(l()(),C.Z(214,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(217,0,null,3,4,"ion-input",[["formControlName","costid"],["type","text"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],null,null,B.b,B.a)),C.Y(218,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[8,null]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(220,16384,null,0,A.o,[A.n],null,null),C.Y(221,5423104,null,0,J.a,[T.a,W.a,P.a,H.a,C.j,C.z,[2,X.a],[2,w.a],[2,A.n],K.a],{type:[0,"type"]},null),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(224,0,null,null,29,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(225,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,37,{contentLabel:0}),C._18(603979776,38,{_buttons:1}),C._18(603979776,39,{_icons:1}),C.Y(229,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(231,0,null,1,4,"ion-label",[["floating",""]],null,null,null,null,null)),C.Y(232,16384,[[37,4]],0,I.a,[T.a,C.j,C.z,[8,""],[8,null],[8,null],[8,null]],null,null),(l()(),C._20(-1,null,["Travel type"])),(l()(),C.Z(234,0,null,null,1,"sup",[["style","color:red"]],null,null,null,null,null)),(l()(),C._20(-1,null,["*"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(237,0,null,3,15,"ion-select",[["formControlName","travelType"]],[[2,"select-disabled",null],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"click"],[null,"keyup.space"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==C._11(l,238)._click(u)&&e}if("keyup.space"===n){e=!1!==C._11(l,238)._keyup()&&e}return e},M.b,M.a)),C.Y(238,1228800,null,1,V.a,[H.a,P.a,T.a,C.j,C.z,[2,w.a],O.a],null,null),C._18(603979776,40,{options:1}),C._16(1024,null,A.m,function(l){return[l]},[V.a]),C.Y(241,671744,null,0,A.g,[[3,A.b],[8,null],[8,null],[2,A.m]],{name:[0,"name"]},null),C._16(2048,null,A.n,null,[A.g]),C.Y(243,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(245,0,null,null,2,"ion-option",[["value","outstation"]],null,null,null,null,null)),C.Y(246,16384,[[40,4]],0,k.a,[C.j],{value:[0,"value"]},null),(l()(),C._20(-1,null,["Outstation"])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(249,0,null,null,2,"ion-option",[["value","local"]],null,null,null,null,null)),C.Y(250,16384,[[40,4]],0,k.a,[C.j],{value:[0,"value"]},null),(l()(),C._20(-1,null,["Local"])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(255,0,null,null,10,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),C.Y(256,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n            "])),(l()(),C.Z(258,0,null,null,6,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(259,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(261,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],[[8,"disabled",0]],[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logForm()&&e}return e},G.b,G.a)),C.Y(262,1097728,null,0,Q.a,[[8,""],T.a,C.j,C.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),C._20(-1,0,["Next\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,25,0,"travelsrc");l(n,30,0,u.locations);l(n,55,0,"isRoundTrip");l(n,61,0,"No");l(n,65,0,"Yes");l(n,87,0,"30");l(n,89,0,"traveldest");l(n,92,0,"text");l(n,103,0,u.minDate,u.Today,u.travelDate);l(n,109,0,"clipboard");l(n,128,0,u.currTime,"HH:mm");l(n,130,0,"traveltime");l(n,137,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,140,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,156,0,"updatepurpose");l(n,159,0,"text");l(n,176,0,"30");l(n,178,0,"pickpoint");l(n,181,0,"text");l(n,198,0,"remark");l(n,201,0,"text");l(n,218,0,"costid");l(n,221,0,"text");l(n,241,0,"travelType");l(n,246,0,"outstation");l(n,250,0,"local");l(n,262,0,"red","true")},function(l,n){var u=n.component;l(n,21,0,C._11(n,22)._disabled,C._11(n,27).ngClassUntouched,C._11(n,27).ngClassTouched,C._11(n,27).ngClassPristine,C._11(n,27).ngClassDirty,C._11(n,27).ngClassValid,C._11(n,27).ngClassInvalid,C._11(n,27).ngClassPending);l(n,51,0,C._11(n,52)._disabled,C._11(n,57).ngClassUntouched,C._11(n,57).ngClassTouched,C._11(n,57).ngClassPristine,C._11(n,57).ngClassDirty,C._11(n,57).ngClassValid,C._11(n,57).ngClassInvalid,C._11(n,57).ngClassPending);l(n,86,0,C._11(n,87).maxlength?C._11(n,87).maxlength:null,C._11(n,91).ngClassUntouched,C._11(n,91).ngClassTouched,C._11(n,91).ngClassPristine,C._11(n,91).ngClassDirty,C._11(n,91).ngClassValid,C._11(n,91).ngClassInvalid,C._11(n,91).ngClassPending);l(n,106,0,C._21(n,106,0,l(n,107,0,C._11(n.parent.parent,0),u.travelDate)));l(n,108,0,C._11(n,109)._hidden);l(n,127,0,C._11(n,128)._disabled,C._11(n,132).ngClassUntouched,C._11(n,132).ngClassTouched,C._11(n,132).ngClassPristine,C._11(n,132).ngClassDirty,C._11(n,132).ngClassValid,C._11(n,132).ngClassInvalid,C._11(n,132).ngClassPending);l(n,155,0,C._11(n,158).ngClassUntouched,C._11(n,158).ngClassTouched,C._11(n,158).ngClassPristine,C._11(n,158).ngClassDirty,C._11(n,158).ngClassValid,C._11(n,158).ngClassInvalid,C._11(n,158).ngClassPending);l(n,175,0,C._11(n,176).maxlength?C._11(n,176).maxlength:null,C._11(n,180).ngClassUntouched,C._11(n,180).ngClassTouched,C._11(n,180).ngClassPristine,C._11(n,180).ngClassDirty,C._11(n,180).ngClassValid,C._11(n,180).ngClassInvalid,C._11(n,180).ngClassPending);l(n,197,0,C._11(n,200).ngClassUntouched,C._11(n,200).ngClassTouched,C._11(n,200).ngClassPristine,C._11(n,200).ngClassDirty,C._11(n,200).ngClassValid,C._11(n,200).ngClassInvalid,C._11(n,200).ngClassPending);l(n,217,0,C._11(n,220).ngClassUntouched,C._11(n,220).ngClassTouched,C._11(n,220).ngClassPristine,C._11(n,220).ngClassDirty,C._11(n,220).ngClassValid,C._11(n,220).ngClassInvalid,C._11(n,220).ngClassPending);l(n,237,0,C._11(n,238)._disabled,C._11(n,243).ngClassUntouched,C._11(n,243).ngClassTouched,C._11(n,243).ngClassPristine,C._11(n,243).ngClassDirty,C._11(n,243).ngClassValid,C._11(n,243).ngClassInvalid,C._11(n,243).ngClassPending);l(n,261,0,!u.bookingForm.valid)})}function i(l){return C._22(0,[(l()(),C.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                (Round Trip)\n              "]))],null,null)}function s(l){return C._22(0,[(l()(),C.Z(0,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                (One-Way Trip)\n              "]))],null,null)}function r(l){return C._22(0,[(l()(),C.Z(0,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(1,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(4,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Return Date"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(10,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(11,16384,null,0,U.a,[],null,null),(l()(),C._20(12,null,["\n                  ","\n                "])),C._15(13,1),(l()(),C._20(-1,null,["\n              "]))],null,function(l,n){var u=n.component;l(n,12,0,C._21(n,12,0,l(n,13,0,C._11(n.parent.parent.parent,0),u.endtravelDate)))})}function c(l){return C._22(0,[(l()(),C.Z(0,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(1,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(3,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(4,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(6,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Return Time"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(10,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(11,16384,null,0,U.a,[],null,null),(l()(),C._20(12,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "]))],null,function(l,n){l(n,12,0,n.component.bookingForm.value.endtraveltime)})}function _(l){return C._22(0,[(l()(),C.Z(0,0,null,null,179,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(2,0,null,null,176,"ion-card",[],null,null,null,null,null)),C.Y(3,16384,null,0,ll.a,[T.a,C.j,C.z],null,null),(l()(),C._20(-1,null,["\n            "])),(l()(),C.Z(5,0,null,null,10,"ion-card-header",[["color","red"],["style","text-align: center"]],null,null,null,null,null)),C.Y(6,16384,null,0,nl.a,[T.a,C.j,C.z],{color:[0,"color"]},null),(l()(),C._20(-1,null,["Confirm Request\n              "])),(l()(),C.U(16777216,null,null,1,null,i)),C.Y(9,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.U(16777216,null,null,1,null,s)),C.Y(12,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(14,0,null,null,0,"span",[["class","icon-pencil"],["style","float: right;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.editRequest()&&e}return e},null,null)),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C.Z(17,0,null,null,160,"ion-card-content",[["style","padding: 13px 6px 5px;"]],null,null,null,null,null)),C.Y(18,16384,null,0,ul.a,[T.a,C.j,C.z],null,null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(20,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(21,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(23,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(24,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(26,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Cost Id"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(30,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(31,16384,null,0,U.a,[],null,null),(l()(),C._20(32,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(35,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(36,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(38,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(39,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(41,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Purpose"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(45,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(46,16384,null,0,U.a,[],null,null),(l()(),C._20(47,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(50,0,null,null,14,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(51,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(53,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(54,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(56,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Start Date"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(60,0,null,null,3,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(61,16384,null,0,U.a,[],null,null),(l()(),C._20(62,null,["\n                  ","\n\n                "])),C._15(63,1),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(66,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(67,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(69,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(70,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(72,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Start Time"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(76,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(77,16384,null,0,U.a,[],null,null),(l()(),C._20(78,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.U(16777216,null,null,1,null,r)),C.Y(82,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.U(16777216,null,null,1,null,c)),C.Y(85,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(87,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(88,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(90,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(91,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(93,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["My Location"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(97,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(98,16384,null,0,U.a,[],null,null),(l()(),C._20(99,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(102,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(103,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(105,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(106,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(108,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Destination"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(112,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(113,16384,null,0,U.a,[],null,null),(l()(),C._20(114,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(117,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(118,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(120,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(121,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(123,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Pickup point"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(127,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(128,16384,null,0,U.a,[],null,null),(l()(),C._20(129,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(132,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(133,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(135,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(136,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(138,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Travel Type"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(142,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(143,16384,null,0,U.a,[],null,null),(l()(),C._20(144,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(147,0,null,null,13,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(148,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(150,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(151,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(153,0,null,null,1,"span",[["class","formtitle"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Remark"])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(157,0,null,null,2,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(158,16384,null,0,U.a,[],null,null),(l()(),C._20(159,null,["\n                  ","\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n\n              "])),(l()(),C.Z(162,0,null,null,14,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),C.Y(163,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(165,0,null,null,10,"ion-col",[["class","col"]],null,null,null,null,null)),C.Y(166,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(168,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.cancelReq()&&e}return e},G.b,G.a)),C.Y(169,1097728,null,0,Q.a,[[8,""],T.a,C.j,C.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),C._20(-1,0,["Cancel Request\n                  "])),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(172,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.sendRequest()&&e}return e},G.b,G.a)),C.Y(173,1097728,null,0,Q.a,[[8,""],T.a,C.j,C.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),C._20(-1,0,["Send Request\n                  "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C._20(-1,null,["\n        "]))],function(l,n){var u=n.component;l(n,6,0,"red");l(n,9,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,12,0,"No"==u.bookingForm.value.isRoundTrip);l(n,82,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,85,0,"Yes"==u.bookingForm.value.isRoundTrip);l(n,169,0,"red","true");l(n,173,0,"red","true")},function(l,n){var u=n.component;l(n,32,0,u.bookingForm.value.costid);l(n,47,0,u.bookingForm.value.updatepurpose);l(n,62,0,C._21(n,62,0,l(n,63,0,C._11(n.parent.parent,0),u.travelDate)));l(n,78,0,u.bookingForm.value.traveltime);l(n,99,0,u.bookingForm.value.travelsrc);l(n,114,0,u.bookingForm.value.traveldest);l(n,129,0,u.bookingForm.value.pickpoint);l(n,144,0,u.bookingForm.value.travelType);l(n,159,0,u.bookingForm.value.remark)})}function d(l){return C._22(0,[(l()(),C.Z(0,0,null,null,11,"form",[["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0;if("submit"===n){e=!1!==C._11(l,2).onSubmit(u)&&e}if("reset"===n){e=!1!==C._11(l,2).onReset()&&e}return e},null,null)),C.Y(1,16384,null,0,A.x,[],null,null),C.Y(2,540672,null,0,A.i,[[8,null],[8,null]],{form:[0,"form"]},null),C._16(2048,null,A.b,null,[A.i]),C.Y(4,16384,null,0,A.p,[A.b],null,null),(l()(),C._20(-1,null,["\n        "])),(l()(),C.U(16777216,null,null,1,null,o)),C.Y(7,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n        "])),(l()(),C.U(16777216,null,null,1,null,_)),C.Y(10,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n      "]))],function(l,n){var u=n.component;l(n,2,0,u.bookingForm);l(n,7,0,!u.confirmReqst);l(n,10,0,u.confirmReqst)},function(l,n){l(n,0,0,C._11(n,4).ngClassUntouched,C._11(n,4).ngClassTouched,C._11(n,4).ngClassPristine,C._11(n,4).ngClassDirty,C._11(n,4).ngClassValid,C._11(n,4).ngClassInvalid,C._11(n,4).ngClassPending)})}function p(l){return C._22(0,[(l()(),C.Z(0,0,null,null,1,"h3",[["style","color: #424242;"]],null,null,null,null,null)),(l()(),C._20(1,null,["",", ",""]))],null,function(l,n){l(n,1,0,n.parent.context.$implicit.travel_date,n.parent.context.$implicit.travel_time)})}function g(l){return C._22(0,[(l()(),C.Z(0,0,null,null,49,"ion-item",[["class","item item-block"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.context.$implicit,"hodView")&&e}return e},D.b,D.a)),C.Y(1,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,44,{contentLabel:0}),C._18(603979776,45,{_buttons:1}),C._18(603979776,46,{_icons:1}),C.Y(5,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(7,0,null,2,6,"span",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(9,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(11,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),C._20(12,null,["",""])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n\n            "])),(l()(),C.Z(15,0,null,2,9,"div",[["style","float: right"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(17,0,null,null,2,"button",[["ion-button",""],["outline",""],["small","true"],["solid","true"],["style","background-color: #398b00;"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.reqAction(u,"Pending with Admin",l.context.$implicit)&&e}return e},G.b,G.a)),C.Y(18,1097728,[[45,4]],0,Q.a,[[8,""],T.a,C.j,C.z],{small:[0,"small"],outline:[1,"outline"],solid:[2,"solid"]},null),(l()(),C._20(-1,0,["Accept"])),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(21,0,null,null,2,"button",[["ion-button",""],["outline",""],["small","true"],["solid","true"],["style","background-color: #ca3636;"],["text-center",""]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.reqAction(u,"Rejected",l.context.$implicit)&&e}return e},G.b,G.a)),C.Y(22,1097728,[[45,4]],0,Q.a,[[8,""],T.a,C.j,C.z],{small:[0,"small"],outline:[1,"outline"],solid:[2,"solid"]},null),(l()(),C._20(-1,0,["Decline"])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(26,0,null,2,4,"span",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n              "])),(l()(),C.U(16777216,null,null,1,null,p)),C.Y(29,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(32,0,null,2,16,"div",[["style","width: 50%;"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n              "])),(l()(),C.Z(34,0,null,null,13,"ul",[["class"," bar"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(36,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(38,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),C._20(39,null,["",""])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(42,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(44,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),C._20(45,null,["",""])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,null,["\n            "])),(l()(),C._20(-1,2,["\n          "]))],function(l,n){l(n,18,0,"true","","true");l(n,22,0,"true","","true");l(n,29,0,null!=n.context.$implicit.travel_date)},function(l,n){l(n,12,0,n.context.$implicit.purpose);l(n,39,0,n.context.$implicit.source);l(n,45,0,n.context.$implicit.destination)})}function m(l){return C._22(0,[(l()(),C.Z(0,0,null,null,22,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(2,0,null,null,19,"ion-list",[],null,null,null,null,null)),C.Y(3,16384,null,0,el.a,[T.a,C.j,C.z,W.a,tl.l,K.a],null,null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(5,0,null,null,12,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important;"]],null,null,null,D.b,D.a)),C.Y(6,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,41,{contentLabel:0}),C._18(603979776,42,{_buttons:1}),C._18(603979776,43,{_icons:1}),C.Y(10,16384,null,0,al.a,[T.a,C.z,C.j,[8,null]],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(12,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Pending for approval"])),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(15,0,null,2,1,"span",[["style","color:#ad081f; float: right;border-bottom: 1px solid;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.viewReqHistory()&&e}return e},null,null)),(l()(),C._20(-1,null,["View History"])),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.U(16777216,null,null,1,null,g)),C.Y(20,802816,null,0,E.i,[C.I,C.F,C.p],{ngForOf:[0,"ngForOf"]},null),(l()(),C._20(-1,null,["\n        "])),(l()(),C._20(-1,null,["\n      "]))],function(l,n){l(n,20,0,n.component.approvalList)},null)}function h(l){return C._22(0,[(l()(),C.Z(0,0,null,null,1,"span",[["style","color: #a90e1b;"],["text-left",""]],null,null,null,null,null)),(l()(),C._20(1,null,["\n                  ",", ","\n                "]))],null,function(l,n){l(n,1,0,n.parent.parent.context.$implicit.travel_date,n.parent.parent.context.$implicit.travel_time)})}function f(l){return C._22(0,[(l()(),C.Z(0,0,null,null,5,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(2,0,null,null,2,"button",[["color","red"],["ion-button",""],["small","true"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.cancelCabReq(u,l.parent.parent.context.$implicit.id)&&e}return e},G.b,G.a)),C.Y(3,1097728,[[51,4]],0,Q.a,[[8,""],T.a,C.j,C.z],{color:[0,"color"],small:[1,"small"]},null),(l()(),C._20(-1,0,["Cancel\n                "])),(l()(),C._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,"red","true")},null)}function v(l){return C._22(0,[(l()(),C.Z(0,0,null,null,10,"span",[["style","float:right; margin-top: -17px;"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(2,0,null,null,7,"rating",[["emptyStarIconName","star-outline"],["halfStarIconName","star-half"],["max","5"],["nullable","true"],["starIconName","star"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngModelChange"],[null,"readOnlyChange"]],function(l,n,u){var e=!0,t=l.component;if("ngModelChange"===n){e=!1!==(l.parent.parent.context.$implicit.feedbackRating=u)&&e}if("readOnlyChange"===n){e=!1!==(l.parent.parent.context.$implicit.feedbackStatus=u)&&e}if("ngModelChange"===n){e=!1!==t.rating(u,l.parent.parent.context.$implicit.id)&&e}return e},ol.b,ol.a)),C.Y(3,114688,null,0,il.a,[],{max:[0,"max"],readOnly:[1,"readOnly"],emptyStarIconName:[2,"emptyStarIconName"],halfStarIconName:[3,"halfStarIconName"],starIconName:[4,"starIconName"],nullable:[5,"nullable"]},null),C._16(1024,null,A.m,function(l){return[l]},[il.a]),C.Y(5,671744,null,0,A.q,[[8,null],[8,null],[8,null],[2,A.m]],{model:[0,"model"]},{update:"ngModelChange"}),C._16(2048,null,A.n,null,[A.q]),C.Y(7,16384,null,0,A.o,[A.n],null,null),(l()(),C._20(-1,null,["\n                  "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n              "]))],function(l,n){l(n,3,0,"5",n.parent.parent.context.$implicit.feedbackStatus,"star-outline","star-half","star","true");l(n,5,0,n.parent.parent.context.$implicit.feedbackRating)},function(l,n){l(n,2,0,C._11(n,7).ngClassUntouched,C._11(n,7).ngClassTouched,C._11(n,7).ngClassPristine,C._11(n,7).ngClassDirty,C._11(n,7).ngClassValid,C._11(n,7).ngClassInvalid,C._11(n,7).ngClassPending)})}function b(l){return C._22(0,[(l()(),C.Z(0,0,null,null,51,"ion-item",[["class","item item-block"]],null,null,null,D.b,D.a)),C.Y(1,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,50,{contentLabel:0}),C._18(603979776,51,{_buttons:1}),C._18(603979776,52,{_icons:1}),C.Y(5,16384,null,0,x.a,[],null,null),(l()(),C._20(-1,2,["\n              "])),(l()(),C.Z(7,0,null,2,36,"div",[],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.openDetail(l.parent.context.$implicit)&&e}return e},null,null)),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(9,0,null,null,6,"span",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(11,0,null,null,3,"h3",[["class","reqText"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                    "])),(l()(),C.Z(13,0,null,null,0,"span",[["class","icon-directions_car"],["style","padding-right: 10px;margin-bottom: 10px;"]],null,null,null,null,null)),(l()(),C._20(14,null,["",""])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.U(16777216,null,null,1,null,h)),C.Y(18,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(20,0,null,null,4,"span",[["class","statusWrds"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(22,0,null,null,1,"h6",[],null,null,null,null,null)),(l()(),C._20(23,null,["",""])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C.Z(26,0,null,null,16,"div",[["style","width: 70%"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                  "])),(l()(),C.Z(28,0,null,null,13,"ul",[["class","bar"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                    "])),(l()(),C.Z(30,0,null,null,4,"li",[["style","color:green"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                      "])),(l()(),C.Z(32,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),C._20(33,null,["",""])),(l()(),C._20(-1,null,["\n                    "])),(l()(),C._20(-1,null,["\n                    "])),(l()(),C.Z(36,0,null,null,4,"li",[["style","color:#a90e1b"]],null,null,null,null,null)),(l()(),C._20(-1,null,["\n                      "])),(l()(),C.Z(38,0,null,null,1,"h3",[],null,null,null,null,null)),(l()(),C._20(39,null,["",""])),(l()(),C._20(-1,null,["\n                    "])),(l()(),C._20(-1,null,["\n                  "])),(l()(),C._20(-1,null,["\n                "])),(l()(),C._20(-1,null,["\n              "])),(l()(),C._20(-1,2,["\n              "])),(l()(),C._20(-1,2,["\n              "])),(l()(),C.U(16777216,null,2,1,null,f)),C.Y(47,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,2,["\n              "])),(l()(),C.U(16777216,null,2,1,null,v)),C.Y(50,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,2,["\n            "]))],function(l,n){l(n,18,0,null!=n.parent.context.$implicit.travel_date);l(n,47,0,"started"!=n.parent.context.$implicit.status&&"Completed"!=n.parent.context.$implicit.status&&"Rejected"!=n.parent.context.$implicit.status&&"Approved"!=n.parent.context.$implicit.status);l(n,50,0,"Completed"==n.parent.context.$implicit.status)},function(l,n){l(n,14,0,n.parent.context.$implicit.purpose);l(n,23,0,n.parent.context.$implicit.status);l(n,33,0,n.parent.context.$implicit.source);l(n,39,0,n.parent.context.$implicit.destination)})}function Z(l){return C._22(0,[(l()(),C.Z(0,0,null,null,4,null,null,null,null,null,null,null)),(l()(),C._20(-1,null,["\n            "])),(l()(),C.U(16777216,null,null,1,null,b)),C.Y(3,16384,null,0,E.j,[C.I,C.F],{ngIf:[0,"ngIf"]},null),(l()(),C._20(-1,null,["\n          "]))],function(l,n){l(n,3,0,n.context.$implicit.travel_date&&"null"!=n.context.$implicit.travel_date)},null)}function y(l){return C._22(0,[(l()(),C.Z(0,0,null,null,19,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(2,0,null,null,16,"ion-list",[],null,null,null,null,null)),C.Y(3,16384,null,0,el.a,[T.a,C.j,C.z,W.a,tl.l,K.a],null,null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(5,0,null,null,9,"ion-list-header",[["class","item"],["style","background: #9e9e9e1f !important;  margin-bottom: 0px;"]],null,null,null,D.b,D.a)),C.Y(6,1097728,null,3,w.a,[P.a,T.a,C.j,C.z,[2,j.a]],null,null),C._18(335544320,47,{contentLabel:0}),C._18(603979776,48,{_buttons:1}),C._18(603979776,49,{_icons:1}),C.Y(10,16384,null,0,al.a,[T.a,C.z,C.j,[8,null]],null,null),(l()(),C._20(-1,2,["\n            "])),(l()(),C.Z(12,0,null,2,1,"span",[["style","color:#ad081f"]],null,null,null,null,null)),(l()(),C._20(-1,null,["Booking History"])),(l()(),C._20(-1,2,["\n          "])),(l()(),C._20(-1,null,["\n          "])),(l()(),C.U(16777216,null,null,1,null,Z)),C.Y(17,802816,null,0,E.i,[C.I,C.F,C.p],{ngForOf:[0,"ngForOf"]},null),(l()(),C._20(-1,null,["\n        "])),(l()(),C._20(-1,null,["\n      "]))],function(l,n){l(n,17,0,n.component.historyData)},null)}function Y(l){return C._22(0,[C._13(0,E.d,[C.r]),(l()(),C._20(-1,null,["\n"])),(l()(),C.Z(2,0,null,null,54,"ion-header",[],null,null,null,null,null)),C.Y(3,16384,null,0,sl.a,[T.a,C.j,C.z,[2,rl.a]],null,null),(l()(),C._20(-1,null,["\n\n  "])),(l()(),C.Z(5,0,null,null,13,"ion-navbar",[["class","toolbar"],["color","navColor"]],[[8,"hidden",0],[2,"statusbar-padding",null]],null,null,cl.b,cl.a)),C.Y(6,49152,null,0,_l.a,[H.a,[2,rl.a],[2,dl.a],T.a,C.j,C.z],{color:[0,"color"]},null),(l()(),C._20(-1,3,["\n    "])),(l()(),C.Z(8,0,null,3,2,"ion-title",[["text-center",""]],null,null,null,pl.b,pl.a)),C.Y(9,49152,null,0,gl.a,[T.a,C.j,C.z,[2,ml.a],[2,_l.a]],null,null),(l()(),C._20(10,0,["",""])),(l()(),C._20(-1,3,["\n    "])),(l()(),C.Z(12,0,null,3,1,"div",[["style","float:right"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.logout(u)&&e}return e},null,null)),(l()(),C.Z(13,0,null,null,0,"span",[["class","icon-switch"]],null,null,null,null,null)),(l()(),C._20(-1,3,["\n    "])),(l()(),C.Z(15,0,null,3,1,"div",[["style","float:right; padding-right: 20px;"]],null,[[null,"click"]],function(l,n,u){var e=!0;if("click"===n){e=!1!==l.component.showTermsCondition(u)&&e}return e},null,null)),(l()(),C.Z(16,0,null,null,0,"span",[["class","icon-info"]],null,null,null,null,null)),(l()(),C._20(-1,3,["\n    "])),(l()(),C._20(-1,3,["\n  "])),(l()(),C._20(-1,null,["\n  "])),(l()(),C.Z(20,0,null,null,35,"ion-toolbar",[["class","webToolbar toolbar"],["color","white"]],[[2,"statusbar-padding",null]],null,null,hl.b,hl.a)),C.Y(21,49152,null,0,ml.a,[T.a,C.j,C.z],{color:[0,"color"]},null),(l()(),C._20(-1,3,["\n    "])),(l()(),C.Z(23,0,null,3,31,"ion-grid",[["class","grid"]],null,null,null,null,null)),C.Y(24,16384,null,0,fl.a,[],null,null),(l()(),C._20(-1,null,["\n      "])),(l()(),C.Z(26,0,null,null,16,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(27,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(29,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["text-left",""]],null,null,null,null,null)),C.Y(30,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(32,0,null,null,1,"span",[["style","font-size: 17px;"]],null,null,null,null,null)),(l()(),C._20(33,null,["","/",""])),(l()(),C._20(-1,null,["\n        "])),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(36,0,null,null,5,"ion-col",[["class","col"],["col-4",""],["text-right",""]],null,null,null,null,null)),C.Y(37,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(39,0,null,null,1,"span",[["style","color:#ad081f; font-family: font-medium"]],null,null,null,null,null)),(l()(),C._20(40,null,[" "," "])),(l()(),C._20(-1,null,["\n        "])),(l()(),C._20(-1,null,["\n      "])),(l()(),C._20(-1,null,["\n      "])),(l()(),C.Z(44,0,null,null,9,"ion-row",[["class","row"]],null,null,null,null,null)),C.Y(45,16384,null,0,$.a,[],null,null),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(47,0,null,null,5,"ion-col",[["class","col"],["col-8",""],["style","padding-top: 0px;"],["text-left",""]],null,null,null,null,null)),C.Y(48,16384,null,0,U.a,[],null,null),(l()(),C._20(-1,null,["\n          "])),(l()(),C.Z(50,0,null,null,1,"span",[],null,null,null,null,null)),(l()(),C._20(51,null,[" "," "])),(l()(),C._20(-1,null,["\n        "])),(l()(),C._20(-1,null,["\n      "])),(l()(),C._20(-1,null,["\n    "])),(l()(),C._20(-1,3,["\n\n  "])),(l()(),C._20(-1,null,["\n\n"])),(l()(),C._20(-1,null,["\n\n\n"])),(l()(),C.Z(58,0,null,null,42,"ion-content",[],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,vl.b,vl.a)),C.Y(59,4374528,null,0,X.a,[T.a,W.a,K.a,C.j,C.z,H.a,bl.a,C.u,[2,rl.a],[2,dl.a]],null,null),(l()(),C._20(-1,1,["\n  "])),(l()(),C.Z(61,0,null,1,38,"ion-grid",[["class","formcntent grid"]],null,null,null,null,null)),C.Y(62,16384,null,0,fl.a,[],null,null),(l()(),C._20(-1,null,["\n    "])),(l()(),C.Z(64,0,null,null,21,"div",[],null,null,null,null,null)),(l()(),C._20(-1,null,["\n      "])),(l()(),C.Z(66,0,null,null,18,"ion-segment",[["color","red"]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null],[2,"segment-disabled",null]],[[null,"ngModelChange"],[null,"ionSelect"]],function(l,n,u){var e=!0,t=l.component;if("ngModelChange"===n){e=!1!==(t.requestSegment=u)&&e}if("ionSelect"===n){e=!1!==t.segmentChanged(u)&&e}return e},null,null)),C.Y(67,671744,null,0,A.q,[[8,null],[8,null],[8,null],[8,null]],{model:[0,"model"]},{update:"ngModelChange"}),C._16(2048,null,A.n,null,[A.q]),C.Y(69,16384,null,0,A.o,[A.n],null,null),C.Y(70,1196032,null,1,Zl.a,[T.a,C.j,C.z,[2,A.n]],{color:[0,"color"]},null),C._18(603979776,1,{_buttons:1}),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(73,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","pendingReq"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==C._11(l,74).onClick()&&e}if("ionSelect"===n){e=!1!==t.getApprovalHistory()&&e}return e},yl.b,yl.a)),C.Y(74,114688,[[1,4]],0,Yl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),C._20(-1,0,["\n          Requests\n        "])),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(77,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","raisereq"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==C._11(l,78).onClick()&&e}if("ionSelect"===n){e=!1!==(t.pageTitle="Raise Request")&&e}return e},yl.b,yl.a)),C.Y(78,114688,[[1,4]],0,Yl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),C._20(-1,0,["\n          Raise Request\n        "])),(l()(),C._20(-1,null,["\n        "])),(l()(),C.Z(81,0,null,null,2,"ion-segment-button",[["class","segment-button"],["role","button"],["tappable",""],["value","history"]],[[2,"segment-button-disabled",null],[2,"segment-activated",null],[1,"aria-pressed",0]],[[null,"ionSelect"],[null,"click"]],function(l,n,u){var e=!0,t=l.component;if("click"===n){e=!1!==C._11(l,82).onClick()&&e}if("ionSelect"===n){e=!1!==t.getEmpHistory()&&e}return e},yl.b,yl.a)),C.Y(82,114688,[[1,4]],0,Yl.a,[],{value:[0,"value"]},{ionSelect:"ionSelect"}),(l()(),C._20(-1,0,["\n          Booking History\n        "])),(l()(),C._20(-1,null,["\n\n      "])),(l()(),C._20(-1,null,["\n\n    "])),(l()(),C._20(-1,null,["\n    "])),(l()(),C.Z(87,0,null,null,11,"div",[],null,null,null,null,null)),C.Y(88,16384,null,0,E.n,[],{ngSwitch:[0,"ngSwitch"]},null),(l()(),C._20(-1,null,["\n\n      "])),(l()(),C.U(16777216,null,null,1,null,d)),C.Y(91,278528,null,0,E.o,[C.I,C.F,E.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),C._20(-1,null,["\n      "])),(l()(),C.U(16777216,null,null,1,null,m)),C.Y(94,278528,null,0,E.o,[C.I,C.F,E.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),C._20(-1,null,["\n      "])),(l()(),C.U(16777216,null,null,1,null,y)),C.Y(97,278528,null,0,E.o,[C.I,C.F,E.n],{ngSwitchCase:[0,"ngSwitchCase"]},null),(l()(),C._20(-1,null,["\n    "])),(l()(),C._20(-1,null,["\n  "])),(l()(),C._20(-1,1,["\n"]))],function(l,n){var u=n.component;l(n,6,0,"navColor");l(n,21,0,"white");l(n,67,0,u.requestSegment);l(n,70,0,"red");l(n,74,0,"pendingReq");l(n,78,0,"raisereq");l(n,82,0,"history");l(n,88,0,u.requestSegment);l(n,91,0,"raisereq");l(n,94,0,"pendingReq");l(n,97,0,"history")},function(l,n){var u=n.component;l(n,5,0,C._11(n,6)._hidden,C._11(n,6)._sbPadding);l(n,10,0,u.pageTitle);l(n,20,0,C._11(n,21)._sbPadding);l(n,33,0,u.userDetails.emp_f_name,u.userDetails.emp_no);l(n,40,0,u.userDetails.emp_psa);l(n,51,0,u.userDetails.emp_cost);l(n,58,0,C._11(n,59).statusbarPadding,C._11(n,59)._hasRefresher);l(n,66,0,C._11(n,69).ngClassUntouched,C._11(n,69).ngClassTouched,C._11(n,69).ngClassPristine,C._11(n,69).ngClassDirty,C._11(n,69).ngClassValid,C._11(n,69).ngClassInvalid,C._11(n,69).ngClassPending,C._11(n,70)._disabled);l(n,73,0,C._11(n,74)._disabled,C._11(n,74).isActive,C._11(n,74).isActive);l(n,77,0,C._11(n,78)._disabled,C._11(n,78).isActive,C._11(n,78).isActive);l(n,81,0,C._11(n,82)._disabled,C._11(n,82).isActive,C._11(n,82).isActive)})}u.d(n,"a",function(){return ql});var C=u(0),k=u(64),D=u(45),w=u(17),P=u(15),T=u(1),j=u(32),x=u(35),z=u(95),q=u(72),R=u(46),F=u(38),I=u(39),L=u(163),S=u(81),N=u(53),A=u(13),$=u(41),U=u(40),M=u(116),V=u(65),H=u(6),O=u(21),E=u(12),B=u(93),J=u(56),W=u(4),X=u(18),K=u(7),G=u(29),Q=u(20),ll=u(57),nl=u(59),ul=u(58),el=u(44),tl=u(8),al=u(62),ol=u(244),il=u(96),sl=u(33),rl=u(5),cl=u(36),_l=u(25),dl=u(16),pl=u(37),gl=u(31),ml=u(27),hl=u(74),fl=u(55),vl=u(34),bl=u(24),Zl=u(94),yl=u(164),Yl=u(68),Cl=u(128),kl=u(14),Dl=u(67),wl=u(22),Pl=u(23),Tl=u(80),jl=u(66),xl=u(75),zl=C.X({encapsulation:2,styles:[],data:{}}),ql=C.V("page-hoddashboard",Cl.a,function(l){return C._22(0,[(l()(),C.Z(0,0,null,null,1,"page-hoddashboard",[],null,null,null,Y,zl)),C.Y(1,49152,null,0,Cl.a,[dl.a,kl.a,A.d,Dl.a,wl.a,Pl.a,Tl.a,C.u,jl.a,xl.a],null,null)],null,null)},{},{},[])},267:function(l,n,u){"use strict";function e(l){return i._22(0,[(l()(),i.Z(0,0,null,null,2,"ion-nav",[],null,null,null,Q.b,Q.a)),i._16(6144,null,ll.a,null,[nl.a]),i.Y(2,4374528,null,0,nl.a,[[2,ul.a],[2,el.a],tl.a,al.a,ol.a,i.j,i.u,i.z,i.i,il.l,sl.a,[2,rl.a],cl.a,i.k],{root:[0,"root"]},null),(l()(),i._20(-1,null,["\n"]))],function(l,n){l(n,2,0,n.component.rootPage)},null)}function t(l){return i._22(0,[(l()(),i.Z(0,0,null,null,57,"div",[],null,null,null,null,null)),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(2,0,null,null,54,"form",[["novalidate",""]],[[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"ngSubmit"],[null,"submit"],[null,"reset"]],function(l,n,u){var e=!0,t=l.component;if("submit"===n){e=!1!==i._11(l,4).onSubmit(u)&&e}if("reset"===n){e=!1!==i._11(l,4).onReset()&&e}if("ngSubmit"===n){e=!1!==t.loginAction()&&e}return e},null,null)),i.Y(3,16384,null,0,pl.x,[],null,null),i.Y(4,540672,null,0,pl.i,[[8,null],[8,null]],{form:[0,"form"]},{ngSubmit:"ngSubmit"}),i._16(2048,null,pl.b,null,[pl.i]),i.Y(6,16384,null,0,pl.p,[pl.b],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(8,0,null,null,15,"ion-row",[["class","row-height row"],["style","margin-top: 1%"],["text-center",""]],null,null,null,null,null)),i.Y(9,16384,null,0,gl.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(11,0,null,null,11,"ion-col",[["class","input-height col"]],null,null,null,null,null)),i.Y(12,16384,null,0,ml.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(14,0,null,null,7,"input",[["class","login-input1"],["formControlName","email"],["placeholder","Username"],["required",""],["type","email"]],[[4,"background-color",null],[4,"color",null],[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"]],function(l,n,u){var e=!0;if("input"===n){e=!1!==i._11(l,15)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==i._11(l,15).onTouched()&&e}if("compositionstart"===n){e=!1!==i._11(l,15)._compositionStart()&&e}if("compositionend"===n){e=!1!==i._11(l,15)._compositionEnd(u.target.value)&&e}return e},null,null)),i.Y(15,16384,null,0,pl.c,[i.A,i.j,[2,pl.a]],null,null),i.Y(16,16384,null,0,pl.t,[],{required:[0,"required"]},null),i._16(1024,null,pl.l,function(l){return[l]},[pl.t]),i._16(1024,null,pl.m,function(l){return[l]},[pl.c]),i.Y(19,671744,null,0,pl.g,[[3,pl.b],[2,pl.l],[8,null],[2,pl.m]],{name:[0,"name"]},null),i._16(2048,null,pl.n,null,[pl.g]),i.Y(21,16384,null,0,pl.o,[pl.n],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(25,0,null,null,17,"ion-row",[["class","row-height row"],["style","margin-top: 7%"],["text-center",""]],null,null,null,null,null)),i.Y(26,16384,null,0,gl.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(28,0,null,null,13,"ion-col",[["class","input-height col"]],null,null,null,null,null)),i.Y(29,16384,null,0,ml.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(31,0,null,null,9,"input",[["class","login-input1"],["formControlName","password"],["placeholder","Password"],["required",""],["type","password"]],[[4,"background-color",null],[4,"color",null],[1,"required",0],[2,"ng-untouched",null],[2,"ng-touched",null],[2,"ng-pristine",null],[2,"ng-dirty",null],[2,"ng-valid",null],[2,"ng-invalid",null],[2,"ng-pending",null]],[[null,"input"],[null,"blur"],[null,"compositionstart"],[null,"compositionend"]],function(l,n,u){var e=!0;if("input"===n){e=!1!==i._11(l,34)._handleInput(u.target.value)&&e}if("blur"===n){e=!1!==i._11(l,34).onTouched()&&e}if("compositionstart"===n){e=!1!==i._11(l,34)._compositionStart()&&e}if("compositionend"===n){e=!1!==i._11(l,34)._compositionEnd(u.target.value)&&e}return e},null,null)),i.Y(32,278528,null,0,hl.h,[i.p,i.q,i.j,i.A],{klass:[0,"klass"],ngClass:[1,"ngClass"]},null),i._14(33,{typed:0}),i.Y(34,16384,null,0,pl.c,[i.A,i.j,[2,pl.a]],null,null),i.Y(35,16384,null,0,pl.t,[],{required:[0,"required"]},null),i._16(1024,null,pl.l,function(l){return[l]},[pl.t]),i._16(1024,null,pl.m,function(l){return[l]},[pl.c]),i.Y(38,671744,null,0,pl.g,[[3,pl.b],[2,pl.l],[8,null],[2,pl.m]],{name:[0,"name"]},null),i._16(2048,null,pl.n,null,[pl.g]),i.Y(40,16384,null,0,pl.o,[pl.n],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(44,0,null,null,11,"ion-row",[["class","row"],["style","padding-top:7%"],["text-center",""]],null,null,null,null,null)),i.Y(45,16384,null,0,gl.a,[],null,null),(l()(),i._20(-1,null,["\n          "])),(l()(),i.Z(47,0,null,null,7,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(48,16384,null,0,ml.a,[],null,null),(l()(),i._20(-1,null,["\n            "])),(l()(),i.Z(50,0,null,null,3,"button",[],null,null,null,null,null)),i.Y(51,278528,null,0,hl.h,[i.p,i.q,i.j,i.A],{ngClass:[0,"ngClass"]},null),i._14(52,{"login-button":0,"login-button-dynamic":1}),(l()(),i._20(-1,null,["LOGIN\n            "])),(l()(),i._20(-1,null,["\n          "])),(l()(),i._20(-1,null,["\n        "])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "]))],function(l,n){var u=n.component;l(n,4,0,u.loginForm);l(n,16,0,"");l(n,19,0,"email");l(n,32,0,"login-input1",l(n,33,0,u.password.length>1));l(n,35,0,"");l(n,38,0,"password");l(n,51,0,l(n,52,0,!u.email.errors,u.email.errors))},function(l,n){var u=n.component;l(n,2,0,i._11(n,6).ngClassUntouched,i._11(n,6).ngClassTouched,i._11(n,6).ngClassPristine,i._11(n,6).ngClassDirty,i._11(n,6).ngClassValid,i._11(n,6).ngClassInvalid,i._11(n,6).ngClassPending);l(n,14,0,u.email.errors?"":"#C24857",u.email.errors?"":"#f8f8f8",i._11(n,16).required?"":null,i._11(n,21).ngClassUntouched,i._11(n,21).ngClassTouched,i._11(n,21).ngClassPristine,i._11(n,21).ngClassDirty,i._11(n,21).ngClassValid,i._11(n,21).ngClassInvalid,i._11(n,21).ngClassPending);l(n,31,0,u.password.errors?"":"#C24857",u.password.errors?"":"#f8f8f8",i._11(n,35).required?"":null,i._11(n,40).ngClassUntouched,i._11(n,40).ngClassTouched,i._11(n,40).ngClassPristine,i._11(n,40).ngClassDirty,i._11(n,40).ngClassValid,i._11(n,40).ngClassInvalid,i._11(n,40).ngClassPending)})}function a(l){return i._22(0,[(l()(),i.Z(0,0,null,null,30,"ion-content",[["class","page-content"]],[[2,"statusbar-padding",null],[2,"has-refresher",null]],null,null,fl.b,fl.a)),i.Y(1,4374528,null,0,vl.a,[al.a,ol.a,cl.a,i.j,i.z,tl.a,bl.a,i.u,[2,ul.a],[2,el.a]],null,null),(l()(),i._20(-1,1,["\n  "])),(l()(),i.Z(3,0,null,1,26,"ion-grid",[["class","gridSize grid"]],null,null,null,null,null)),i.Y(4,16384,null,0,Zl.a,[],null,null),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(6,0,null,null,8,"ion-row",[["class","row"],["text-center",""]],null,null,null,null,null)),i.Y(7,16384,null,0,gl.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(9,0,null,null,4,"ion-col",[["class","col"],["style","margin-top: 5%;"]],null,null,null,null,null)),i.Y(10,16384,null,0,ml.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(12,0,null,null,0,"img",[["alt",""],["src","assets/imgs/mahindra_logo_white.png"],["style","width: 61%;height: 75%;"]],null,null,null,null,null)),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i.Z(16,0,null,null,9,"ion-row",[["class","row"],["text-center",""]],null,null,null,null,null)),i.Y(17,16384,null,0,gl.a,[],null,null),(l()(),i._20(-1,null,["\n      "])),(l()(),i.Z(19,0,null,null,5,"ion-col",[["class","col"]],null,null,null,null,null)),i.Y(20,16384,null,0,ml.a,[],null,null),(l()(),i._20(-1,null,["\n        "])),(l()(),i.Z(22,0,null,null,1,"div",[["class","reset-title"]],null,null,null,null,null)),(l()(),i._20(-1,null,["ASK CAB"])),(l()(),i._20(-1,null,["\n      "])),(l()(),i._20(-1,null,["\n    "])),(l()(),i._20(-1,null,["\n\n    "])),(l()(),i.U(16777216,null,null,1,null,t)),i.Y(28,16384,null,0,hl.j,[i.I,i.F],{ngIf:[0,"ngIf"]},null),(l()(),i._20(-1,null,["\n  "])),(l()(),i._20(-1,1,["\n"]))],function(l,n){l(n,28,0,n.component.showLogin)},function(l,n){l(n,0,0,i._11(n,1).statusbarPadding,i._11(n,1)._hasRefresher)})}Object.defineProperty(n,"__esModule",{value:!0});var o=u(47),i=u(0),s=(u(2),u(9),u(121)),r=u(122),c=u(144),_=u(110),d=u(69),p=function(){return function(l,n,u){this.rootPage=d.a,l.ready().then(function(){n.styleDefault(),u.hide()})}}(),g=u(22),m=u(23),h=u(117),f=u(85),v=u(73),b=u(179),Z=u(172),y=u(174),Y=u(171),C=u(173),k=u(180),D=u(170),w=u(169),P=u(176),T=u(178),j=u(168),x=(u(119),function(){return function(){}}()),z=u(88),q=u(255),R=u(246),F=u(247),I=u(248),L=u(249),S=u(250),N=u(251),A=u(252),$=u(253),U=u(254),M=u(265),V=u(260),H=u(259),O=u(266),E=u(258),B=u(263),J=u(264),W=u(262),X=u(256),K=u(257),G=u(261),Q=u(331),ll=u(63),nl=u(91),ul=u(5),el=u(16),tl=u(6),al=u(1),ol=u(4),il=u(8),sl=u(51),rl=u(21),cl=u(7),_l=i.X({encapsulation:2,styles:[],data:{}}),dl=i.V("ng-component",p,function(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"ng-component",[],null,null,null,e,_l)),i.Y(1,49152,null,0,p,[ol.a,r.a,s.a],null,null)],null,null)},{},{},[]),pl=u(13),gl=u(41),ml=u(40),hl=u(12),fl=u(34),vl=u(18),bl=u(24),Zl=u(55),yl=i.X({encapsulation:2,styles:[],data:{}}),Yl=i.V("page-login",d.a,function(l){return i._22(0,[(l()(),i.Z(0,0,null,null,1,"page-login",[],null,null,null,a,yl)),i.Y(1,114688,null,0,d.a,[el.a,g.a,m.a,h.a,ol.a],null,null)],function(l,n){l(n,1,0)},null)},{},{},[]),Cl=u(146),kl=u(72),Dl=u(46),wl=u(137),Pl=u(80),Tl=u(75),jl=u(15),xl=u(54),zl=u(142),ql=u(165),Rl=u(89),Fl=u(71),Il=u(66),Ll=u(53),Sl=u(67),Nl=u(148),Al=u(157),$l=u(245),Ul=u(147),Ml=u(49),Vl=u(143),Hl=u(149),Ol=u(166),El=u(167),Bl=u(97),Jl=u(98),Wl=i.W(x,[z.b],function(l){return i._7([i._8(512,i.i,i.S,[[8,[q.a,R.a,F.a,I.a,L.a,S.a,N.a,A.a,$.a,U.a,M.a,V.a,H.a,O.a,E.a,B.a,J.a,W.a,X.a,K.a,G.a,dl,Yl]],[3,i.i],i.s]),i._8(5120,i.r,i._17,[[3,i.r]]),i._8(4608,hl.l,hl.k,[i.r,[2,hl.t]]),i._8(5120,i.b,i._1,[]),i._8(5120,i.p,i._9,[]),i._8(5120,i.q,i._12,[]),i._8(4608,o.c,o.q,[hl.c]),i._8(6144,i.D,null,[o.c]),i._8(4608,o.f,Cl.a,[]),i._8(5120,o.d,function(l,n,u,e,t){return[new o.k(l,n),new o.o(u),new o.n(e,t)]},[hl.c,i.u,hl.c,hl.c,o.f]),i._8(4608,o.e,o.e,[o.d,i.u]),i._8(135680,o.m,o.m,[hl.c]),i._8(4608,o.l,o.l,[o.e,o.m]),i._8(6144,i.B,null,[o.l]),i._8(6144,o.p,null,[o.m]),i._8(4608,i.G,i.G,[i.u]),i._8(4608,o.h,o.h,[hl.c]),i._8(4608,o.i,o.i,[hl.c]),i._8(4608,pl.y,pl.y,[]),i._8(4608,pl.d,pl.d,[]),i._8(4608,kl.a,kl.a,[tl.a,al.a]),i._8(4608,Dl.a,Dl.a,[]),i._8(4608,_.c,_.c,[]),i._8(4608,_.h,_.b,[]),i._8(5120,_.k,_.l,[]),i._8(4608,_.j,_.j,[_.c,_.h,_.k]),i._8(4608,_.g,_.a,[]),i._8(5120,_.e,_.m,[_.j,_.g]),i._8(4608,wl.a,wl.a,[tl.a,al.a]),i._8(4608,Pl.a,Pl.a,[tl.a,al.a]),i._8(4608,Tl.a,Tl.a,[]),i._8(4608,jl.a,jl.a,[]),i._8(4608,xl.a,xl.a,[ol.a]),i._8(4608,bl.a,bl.a,[al.a,ol.a,i.u,cl.a]),i._8(4608,zl.a,zl.a,[tl.a,al.a]),i._8(5120,hl.g,ql.c,[hl.r,[2,hl.a],al.a]),i._8(4608,hl.f,hl.f,[hl.g]),i._8(5120,Rl.b,Rl.d,[tl.a,Rl.a]),i._8(5120,rl.a,rl.b,[tl.a,Rl.b,hl.f,Fl.b,i.i]),i._8(4608,Il.a,Il.a,[tl.a,al.a,rl.a]),i._8(4608,Ll.a,Ll.a,[tl.a,al.a]),i._8(4608,Sl.a,Sl.a,[tl.a,al.a,rl.a]),i._8(4608,Nl.a,Nl.a,[al.a,ol.a,cl.a,tl.a,il.l]),i._8(4608,Al.a,Al.a,[tl.a,al.a]),i._8(4608,sl.a,sl.a,[ol.a,al.a]),i._8(4608,r.a,r.a,[]),i._8(4608,s.a,s.a,[]),i._8(4608,g.a,g.a,[_.e]),i._8(4608,c.a,c.a,[]),i._8(4608,m.a,m.a,[zl.a,Al.a,Pl.a,c.a]),i._8(4608,h.a,h.a,[]),i._8(4608,f.a,f.a,[]),i._8(4608,v.a,v.a,[]),i._8(512,hl.b,hl.b,[]),i._8(512,i.k,$l.a,[]),i._8(256,al.b,{backButtonText:"Back",backButtonIcon:""},[]),i._8(1024,Ul.a,Ul.b,[]),i._8(1024,ol.a,ol.b,[o.b,Ul.a,i.u]),i._8(1024,al.a,al.c,[al.b,ol.a]),i._8(512,cl.a,cl.a,[ol.a]),i._8(512,Ml.a,Ml.a,[]),i._8(512,tl.a,tl.a,[al.a,ol.a,[2,Ml.a]]),i._8(512,il.l,il.l,[tl.a]),i._8(256,Rl.a,{links:[{loadChildren:"../pages/admin-aprvl/admin-aprvl.module.ngfactory#AdminAprvlPageModuleNgFactory",name:"AdminAprvlPage",segment:"admin-aprvl",priority:"low",defaultHistory:[]},{loadChildren:"../pages/driver/driver.module.ngfactory#DriverPageModuleNgFactory",name:"DriverPage",segment:"driver",priority:"low",defaultHistory:[]},{loadChildren:"../pages/hod/requesthistory/requesthistory.module.ngfactory#RequesthistoryPageModuleNgFactory",name:"RequesthistoryPage",segment:"requesthistory",priority:"low",defaultHistory:[]},{loadChildren:"../pages/modal-detail/modal-detail.module.ngfactory#ModalDetailPageModuleNgFactory",name:"ModalDetailPage",segment:"modal-detail",priority:"low",defaultHistory:[]},{loadChildren:"../pages/notification-detail/notification-detail.module.ngfactory#NotificationDetailPageModuleNgFactory",name:"NotificationDetailPage",segment:"notification-detail",priority:"low",defaultHistory:[]},{loadChildren:"../pages/notification/notification.module.ngfactory#NotificationPageModuleNgFactory",name:"NotificationPage",segment:"notification",priority:"low",defaultHistory:[]},{loadChildren:"../pages/requestdetails/requestdetails.module.ngfactory#RequestdetailsPageModuleNgFactory",name:"RequestdetailsPage",segment:"requestdetails",priority:"low",defaultHistory:[]},{loadChildren:"../pages/scan/scan.module.ngfactory#ScanPageModuleNgFactory",name:"ScanPage",segment:"scan",priority:"low",defaultHistory:[]},{loadChildren:"../pages/termscondition/termscondition.module.ngfactory#TermsconditionPageModuleNgFactory",name:"TermsconditionPage",segment:"termscondition",priority:"low",defaultHistory:[]},{loadChildren:"../pages/users-dashboard/users-dashboard.module.ngfactory#UsersDashboardPageModuleNgFactory",name:"UsersDashboardPage",segment:"users-dashboard",priority:"low",defaultHistory:[]},{loadChildren:"../pages/adminrequests/adminrequests.module.ngfactory#AdminrequestsPageModuleNgFactory",name:"AdminrequestsPage",segment:"adminrequests",priority:"low",defaultHistory:[]},{loadChildren:"../pages/employee/empdashboard/empdashboard.module.ngfactory#EmpdashboardPageModuleNgFactory",name:"EmpdashboardPage",segment:"empdashboard",priority:"low",defaultHistory:[]},{loadChildren:"../pages/hod/hoddashboard/hoddashboard.module.ngfactory#HoddashboardPageModuleNgFactory",name:"HoddashboardPage",segment:"hoddashboard",priority:"low",defaultHistory:[]}]},[]),i._8(512,i.h,i.h,[]),i._8(512,Vl.a,Vl.a,[i.h]),i._8(1024,Fl.b,Fl.c,[Vl.a,i.o]),i._8(1024,i.c,function(l,n,u,e,t,a,i,s,r,c,_,d,p){return[o.s(l),Hl.a(n),Tl.b(u,e),Nl.b(t,a,i,s,r),Fl.d(c,_,d,p)]},[[2,i.t],al.a,ol.a,cl.a,al.a,ol.a,cl.a,tl.a,il.l,al.a,Rl.a,Fl.b,i.u]),i._8(512,i.d,i.d,[[2,i.c]]),i._8(131584,i.f,i.f,[i.u,i.T,i.o,i.k,i.i,i.d]),i._8(512,i.e,i.e,[i.f]),i._8(512,o.a,o.a,[[3,o.a]]),i._8(512,pl.w,pl.w,[]),i._8(512,pl.j,pl.j,[]),i._8(512,pl.s,pl.s,[]),i._8(512,Ol.a,Ol.a,[]),i._8(512,ql.a,ql.a,[]),i._8(512,El.a,El.a,[]),i._8(512,ql.b,ql.b,[]),i._8(512,b.a,b.a,[]),i._8(512,Z.a,Z.a,[]),i._8(512,Y.a,Y.a,[]),i._8(512,k.a,k.a,[]),i._8(512,D.a,D.a,[]),i._8(512,P.a,P.a,[]),i._8(512,T.a,T.a,[]),i._8(512,y.a,y.a,[]),i._8(512,j.a,j.a,[]),i._8(512,_.f,_.f,[]),i._8(512,Bl.b,Bl.b,[]),i._8(512,w.a,w.a,[]),i._8(512,C.a,C.a,[]),i._8(512,x,x,[]),i._8(256,Fl.a,Jl.a,[]),i._8(256,z.a,p,[]),i._8(256,hl.a,"/",[])])});Object(i.M)(),Object(o.j)().bootstrapModuleFactory(Wl)},69:function(l,n,u){"use strict";u.d(n,"a",function(){return _});u(2),u(9);var e=u(127),t=u(128),a=u(130),o=u(125),i=u(13),s=(u(117),u(110)),r=u(305),c=u.n(r),_=function(){function l(l,n,u,e,t){this.navCtrl=l,this.serviceProvider=n,this.commonProvider=u,this.iab=e,this.plt=t,this.isLoggedIn=!1,this.users=[],this.showLogin=!1,this.buildURLForLogin()}return l.prototype.ionViewDidLoad=function(){},l.prototype.ngOnInit=function(){this.createFormControls(),this.createForm()},l.prototype.createFormControls=function(){this.email=new i.e(this.email,[i.v.required,i.v.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")]),this.password=new i.e("",[i.v.required,i.v.minLength(4)])},l.prototype.createForm=function(){this.loginForm=new i.h({email:this.email,password:this.password})},l.prototype.buildURLForLogin=function(){var l=this,n=new s.i(window.location.href);console.log("params ",n);var u=n.rawParams;if(console.log("someParam ",u),this.session=this.getQueryString("session",u),this.commonProvider.showLoader("Please wait.."),this.session){this.showLogin=!1;this.generateSecureKeyAndIV(this.session).then(function(n){console.log("this.userid ",n),l.commonProvider.hideLoader(),l.loginToApp(n)})}else this.commonProvider.hideLoader(),this.showLogin=!0,console.log("show login page in application ")},l.prototype.loginToApp=function(l){var n=this,u=(l=l.split(":")).splice(0,1).join(""),o=l.join("");console.log("decrypted cc "+u),console.log("decrypted cc "+o),this.session?(this.commonProvider.showLoader("Please wait.."),this.serviceProvider.weblogin("/login1",u,btoa(o)).subscribe(function(l){console.log("response ",l),"Login success"==l._body?n.serviceProvider.getUsrRoleDetails("/getEmpDetailService",u).subscribe(function(l){l=JSON.parse(l._body),console.log("response ",l),n.commonProvider.hideLoader();var u=l.emp_esgdesc;"L5-Department Head"==u||"L6-Department Head"==u||"L7-Department Head"==u||"L4-Department Head"==u||"HEAD-BUSINESS APPLICATION"==u||"L3-Executive"==u||"L3-Department Head"==u?n.navCtrl.setRoot(t.a,{response:l}):"L5-Managerial"==u||"L6-Managerial"==u||"L7-Managerial"==u||"L4-Managerial"==u?n.navCtrl.setRoot(e.a,{response:l}):n.commonProvider.showToast("User role is not allow to login")}):"false"==l._body?(n.commonProvider.hideLoader(),n.commonProvider.showToast("Please enter correct user credentials")):(n.commonProvider.hideLoader(),l=JSON.parse(l._body),n.navCtrl.setRoot(a.a,{response:l}))},function(l){n.commonProvider.hideLoader(),n.commonProvider.showToast("Error while login")})):this.commonProvider.hideLoader()},l.prototype.generateSecureKeyAndIV=function(l){return new Promise(function(n,u){var e=c.a.enc.Utf8.parse("M@h1ndra$1234567"),t=c.a.enc.Utf8.parse("0001000100010001"),a=c.a.AES.decrypt(l,e,{keySize:16,iv:t,mode:c.a.mode.CBC,padding:c.a.pad.Pkcs7}).toString(c.a.enc.Utf8),o=a.lastIndexOf("pwd="),i=a.substring(o+4),s=a.match(/usr=(\d+)/i)[1]+":"+i;console.log("usercredetaials from extract ",s),n(s)})},l.prototype.loginAction=function(){var l=this;console.log("this.loginForm ",this.email.value),"driver"==this.password.value||"Driver"==this.password.value?(this.mobileNumber=this.email.value,this.navCtrl.setRoot(o.a,{driverNumber:this.mobileNumber})):(this.commonProvider.showLoader("Please wait.."),this.serviceProvider.weblogin("/login1",this.email.value,btoa(this.password.value)).subscribe(function(n){console.log("response ",n),"Login success"==n._body?l.serviceProvider.getUsrRoleDetails("/getEmpDetailService",l.email.value).subscribe(function(n){n=JSON.parse(n._body),console.log("response ",n),l.commonProvider.hideLoader();var u=n.emp_esgdesc;"L5-Department Head"==u||"L6-Department Head"==u||"L7-Department Head"==u||"L4-Department Head"==u||"HEAD-BUSINESS APPLICATION"==u||"L3-Executive"==u||"L3-Department Head"==u?l.navCtrl.setRoot(t.a,{response:n}):"L5-Managerial"==u||"L6-Managerial"==u||"L7-Managerial"==u||"L4-Managerial"==u?l.navCtrl.setRoot(e.a,{response:n}):l.commonProvider.showToast("User role is not allow to login")}):"false"==n._body?(l.commonProvider.hideLoader(),l.commonProvider.showToast("Please enter correct user credentials")):(l.commonProvider.hideLoader(),n=JSON.parse(n._body),l.navCtrl.setRoot(a.a,{response:n}))},function(n){l.commonProvider.hideLoader(),l.commonProvider.showToast("Error while login")}))},l.prototype.getParameterByName=function(l,n){n||(n=window.location.href),l=l.replace(/[\[\]]/g,"\\$&");var u=new RegExp("[?&]"+l+"(=([^&#]*)|&|#|$)").exec(n);return u?u[2]?decodeURIComponent(u[2].replace(/\+/g," ")):"":null},l.prototype.getQueryString=function(l,n){var u=n,e=new RegExp("[?&]"+l+"=([^&#]*)","i").exec(u);return e?e[1]:null},l}()},86:function(l,n,u){"use strict";u.d(n,"a",function(){return t});u(2),u(9);var e=u(126),t=function(){function l(l,n){this.navCtrl=l,this.navParams=n}return l.prototype.showDetails=function(){this.navCtrl.push(e.a,{})},l.prototype.ionViewDidLoad=function(){console.log("ionViewDidLoad NotificationPage")},l}()},98:function(l,n,u){"use strict";u.d(n,"a",function(){return e});u(2),u(9),u(85);var e=function(){function l(l,n,u,e,t){this.navCtrl=l,this.navParams=n,this.commonProvider=u,this.serviceProvider=e,this.qrScanner=t}return l.prototype.startScan=function(){var l=this;this.qrScanner.prepare().then(function(n){n.authorized?(l.qrScanner.show(),console.log("Camera Permission Given"),l.scanSub=l.qrScanner.scan().subscribe(function(n){l.qrCode=n,l.commonProvider.showToast(l.qrCode),l.qrScanner.hide(),l.serviceProvider.saveScan("/tripDetails/barcode",l.qrCode).subscribe(function(n){console.log("barcode response ",n),l.commonProvider.showToast("PDF is created successfully")},function(n){alert("error in  pdf"),l.commonProvider.showToast("Error in save")}),l.navCtrl.last()})):l.commonProvider.showToast(n.denied?"Camera permission denied":"Permission denied for this runtime.")}).catch(function(l){return console.log("Error is",l)})},l.prototype.ionViewDidLoad=function(){},l.prototype.ionViewWillEnter=function(){this.showCamera(),this.startScan()},l.prototype.ionViewWillLeave=function(){this.hideCamera()},l.prototype.showCamera=function(){window.document.querySelector("ion-app").classList.add("cameraView")},l.prototype.hideCamera=function(){window.document.querySelector("ion-app").classList.remove("cameraView")},l}()}},[267]);
+webpackJsonp([2],{
+
+/***/ 129:
+/***/ (function(module, exports) {
+
+function webpackEmptyAsyncContext(req) {
+	// Here Promise.resolve().then() is used instead of new Promise() to prevent
+	// uncatched exception popping up in devtools
+	return Promise.resolve().then(function() {
+		throw new Error("Cannot find module '" + req + "'.");
+	});
+}
+webpackEmptyAsyncContext.keys = function() { return []; };
+webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
+module.exports = webpackEmptyAsyncContext;
+webpackEmptyAsyncContext.id = 129;
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"../pages/admin-aprvl/admin-aprvl.module": [
+		172
+	],
+	"../pages/adminrequests/admin-history/admin-history.module": [
+		175
+	],
+	"../pages/adminrequests/adminrequests.module": [
+		194
+	],
+	"../pages/driver/driver.module": [
+		177
+	],
+	"../pages/employee/empdashboard/empdashboard.module": [
+		198
+	],
+	"../pages/hod/hoddashboard/hoddashboard.module": [
+		201
+	],
+	"../pages/hod/requesthistory/requesthistory.module": [
+		187
+	],
+	"../pages/modal-detail/modal-detail.module": [
+		352,
+		1
+	],
+	"../pages/notification-detail/notification-detail.module": [
+		188
+	],
+	"../pages/notification/notification.module": [
+		189
+	],
+	"../pages/requestdetails/requestdetails.module": [
+		353,
+		0
+	],
+	"../pages/scan/scan.module": [
+		190
+	],
+	"../pages/termscondition/termscondition.module": [
+		192
+	],
+	"../pages/users-dashboard/users-dashboard.module": [
+		193
+	]
+};
+function webpackAsyncContext(req) {
+	var ids = map[req];
+	if(!ids)
+		return Promise.reject(new Error("Cannot find module '" + req + "'."));
+	return Promise.all(ids.slice(1).map(__webpack_require__.e)).then(function() {
+		return __webpack_require__(ids[0]);
+	});
+};
+webpackAsyncContext.keys = function webpackAsyncContextKeys() {
+	return Object.keys(map);
+};
+webpackAsyncContext.id = 171;
+module.exports = webpackAsyncContext;
+
+/***/ }),
+
+/***/ 172:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAprvlPageModule", function() { return AdminAprvlPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__ = __webpack_require__(90);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AdminAprvlPageModule = /** @class */ (function () {
+    function AdminAprvlPageModule() {
+    }
+    AdminAprvlPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */]),
+            ],
+        })
+    ], AdminAprvlPageModule);
+    return AdminAprvlPageModule;
+}());
+
+//# sourceMappingURL=admin-aprvl.module.js.map
+
+/***/ }),
+
+/***/ 175:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(176);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AdminHistoryPageModule = /** @class */ (function () {
+    function AdminHistoryPageModule() {
+    }
+    AdminHistoryPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */]),
+            ],
+        })
+    ], AdminHistoryPageModule);
+    return AdminHistoryPageModule;
+}());
+
+//# sourceMappingURL=admin-history.module.js.map
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminHistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the AdminHistoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AdminHistoryPage = /** @class */ (function () {
+    function AdminHistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.modal = modal;
+        this.userDetails = [];
+        this.tripHistory = [];
+        //this.loadUserData();
+    }
+    AdminHistoryPage.prototype.ionViewWillEnter = function () {
+        this.loadUserData();
+    };
+    AdminHistoryPage.prototype.loadUserData = function () {
+        var _this = this;
+        this.userDetails = this.navParams.get('EmployeeDetail');
+        console.log("nav params ", this.userDetails);
+        this.commonProvider.showLoader('');
+        this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+            console.log("getAllTripHistory ", response);
+            console.log("getAllTripHistory ", JSON.parse(response._body));
+            _this.tripHistory = JSON.parse(response._body);
+            // this.approvalList = JSON.parse(response._body);
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    AdminHistoryPage.prototype.openDetail = function (obj) {
+        console.log("open modal");
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    AdminHistoryPage.prototype.editRequest = function (event, obj) {
+        console.log("edit requet ", obj);
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' });
+    };
+    AdminHistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+    ], AdminHistoryPage);
+    return AdminHistoryPage;
+}());
+
+//# sourceMappingURL=admin-history.js.map
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DriverPageModule", function() { return DriverPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(328);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var DriverPageModule = /** @class */ (function () {
+    function DriverPageModule() {
+    }
+    DriverPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__driver__["a" /* DriverPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__["a" /* QRCodeModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__driver__["a" /* DriverPage */]),
+            ],
+        })
+    ], DriverPageModule);
+    return DriverPageModule;
+}());
+
+//# sourceMappingURL=driver.module.js.map
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DriverPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_notification__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_call_number__ = __webpack_require__(64);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the DriverPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var DriverPage = /** @class */ (function () {
+    function DriverPage(navCtrl, navParams, popoverController, commonProvider, serviceProvider, callnumber, events) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.popoverController = popoverController;
+        this.commonProvider = commonProvider;
+        this.serviceProvider = serviceProvider;
+        this.callnumber = callnumber;
+        this.events = events;
+        this.tripDetail = [];
+        this.cabDetail = [];
+        this.driverDetail = [];
+        this.feedbackform = false;
+        this.driverText = 'No cab is assigned';
+        this.urlPath = 'https://mapps.mahindra.com/images/vms/VMS_PDF37tripDetails.pdf';
+        console.log('driver driverNumber page', this.navParams.get('driverNumber'));
+        this.driverphno = this.navParams.get('driverNumber');
+        //this.urlPath = this.serviceProvider.url+;
+        console.log('url path ', this.urlPath);
+    }
+    DriverPage.prototype.logout = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */], {});
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    DriverPage.prototype.showNotifn = function (myEvent) {
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_2__notification_notification__["a" /* NotificationPage */]);
+        popover.present({
+            ev: myEvent
+        });
+    };
+    DriverPage.prototype.getTrip = function () {
+        var _this = this;
+        this.commonProvider.showLoader('Getting cab details..');
+        this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe(function (resp) {
+            _this.tripDetail = JSON.parse(resp._body);
+            console.log("this.tripDetail ", _this.tripDetail.length);
+            if (_this.tripDetail.length) {
+                _this.tripDetail[0] ? _this.tripDetail = _this.tripDetail[0] : 'nothing';
+                console.log("this.tripDetail ", _this.tripDetail.length);
+                _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
+                _this.driverDetail = _this.tripDetail.driver;
+                _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
+                _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
+                //this.urlPath = this.urlPath + this.tripDetail.filePath;
+                _this.commonProvider.hideLoader();
+                console.log("trip response ", _this.tripDetail);
+                console.log("cabDetail response ", _this.cabDetail);
+                console.log("driver Detail response ", _this.driverDetail);
+                console.log("urlPath Detail response ", _this.urlPath);
+            }
+            else {
+                _this.commonProvider.hideLoader();
+            }
+            // }else{
+            //   this.commonProvider.hideLoader();
+            // }
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            console.log("error ", err);
+            _this.commonProvider.showToast('Service error');
+        });
+    };
+    DriverPage.prototype.ionViewDidLoad = function () {
+        this.getTrip();
+    };
+    DriverPage.prototype.startTrip = function (type) {
+        var _this = this;
+        console.log('type ', type);
+        console.log(this.startkm);
+        if (this.startkm) {
+            this.commonProvider.showLoader('Updating Kms..');
+            var today = new Date();
+            var cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            console.log("ctime ", cdate);
+            console.log("this.tripDetail ", this.tripDetail);
+            this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
+                console.log("response ", resp);
+                _this.commonProvider.hideLoader();
+                if (type == 'endTrip') {
+                    _this.feedbackform = true;
+                    _this.driverText = 'You have completed your trip!!';
+                }
+                console.log("end trip");
+                _this.getTrip();
+            }, function (err) {
+                console.log("error", err);
+                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.hideLoader();
+            });
+        }
+        else {
+            this.commonProvider.hideLoader();
+            this.commonProvider.showToast("Please enter kms");
+        }
+    };
+    DriverPage.prototype.callnum = function (num) {
+        var _this = this;
+        console.log("inside call number function");
+        this.callnumber.callNumber(num, true).then(function (res) {
+            console.log('Dialer opened', res);
+        })
+            .catch(function (err) {
+            _this.commonProvider.showToast(err);
+            console.log('Error launching dialer', err);
+        });
+    };
+    DriverPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-driver',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>Trip Details</ion-title>\n    <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n\n  </ion-navbar>\n  <ion-toolbar style="color: white;" *ngIf="tripDetail.length != 0">\n    <ion-row>\n      <ion-col text-center>\n        <span>\n          {{srcSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.pickupPoint}} </span>\n      </ion-col>\n      <ion-col text-center>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>\n        <span class="icon-automobile" style="font-size: 1.5em"></span><br>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>\n      </ion-col>\n      <ion-col text-center>\n        <span>\n          {{destSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content class="webToolbar">\n  <div *ngIf="tripDetail.length == 0">\n    <ion-card class="driverCard">\n      <ion-card-header style="text-align: center" color="red">\n        {{driverText}}</ion-card-header>\n    </ion-card>\n  </div>\n  <div *ngIf="tripDetail.length != 0">\n    <ion-card class="driverCard crdht formcntent">\n      <ion-card-header style="text-align: center" color="red">\n        Passengers Details\n        <span *ngIf="tripDetail.isRoundTrip==\'Yes\'"> (Round Trip)</span>\n        <span *ngIf="tripDetail.isRoundTrip==\'No\'"> (One-Way Trip)</span>\n      </ion-card-header>\n      <ion-card-content>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Passanger Name</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_userName}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Pick up point</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.pickupPoint}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Source</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.source}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Destination</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.destination}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Mobile Number</span>\n          </ion-col>\n          <ion-col (click)="callnum(tripDetail.emp_phoneNo);">\n            <u style="color: blue;">{{tripDetail.emp_phoneNo}}\n            </u>\n\n          </ion-col>\n          <!-- <ion-col (click)="callnum(tripDetail.emp_phoneNo);" style="text-decoration: underline blue;">\n            {{tripDetail.emp_phoneNo}}\n          </ion-col> -->\n\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Email Id</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_email}}\n          </ion-col>\n        </ion-row>\n\n      </ion-card-content>\n    </ion-card>\n\n\n    <ion-card class="driverCard formcntent">\n      <ion-card-header style="text-align: center" color="red">\n        Cab Details</ion-card-header>\n      <ion-card-content>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Cab Name</span>\n          </ion-col>\n          <ion-col>\n            {{cabDetail.cab_name}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Cab Number</span>\n          </ion-col>\n          <ion-col>\n            {{cabDetail.cab_no}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Number of seats</span>\n          </ion-col>\n          <ion-col>\n            {{cabDetail.no_of_seats}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n\n    <ion-card class="driverCard formcntent" *ngIf="tripDetail.isRoundTrip == \'Yes\'">\n      <ion-card-header style="text-align: center" color="red">\n        Return Trip details\n      </ion-card-header>\n      <ion-card-content>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Return Date</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.returnDate}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Return Time</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.returnTime}}\n          </ion-col>\n        </ion-row>\n      </ion-card-content>\n    </ion-card>\n\n\n    <ion-row text-center class="row-height" style="margin-top: 10%">\n      <ion-col>\n        <qr-code [value]="urlPath" [size]="200"></qr-code>\n      </ion-col>\n    </ion-row>\n\n    <div *ngIf="tripDetail.length != 0">\n      <ion-item>\n        <ion-label floating>Enter kms.</ion-label>\n        <ion-input type="number" [(ngModel)]="startkm"></ion-input>\n      </ion-item>\n      <ion-row text-center class="row-height" style="margin-top: 1%">\n        <ion-col>\n          <button ion-button color="red" (click)="startTrip(\'startTrip\')" [disabled]="tripDetail.startKm != 0">Start\n            Trip\n          </button>\n          <button ion-button color="red" (click)="startTrip(\'endTrip\')" [disabled]="tripDetail.startKm == 0">End Trip\n          </button>\n        </ion-col>\n      </ion-row>\n\n\n    </div>\n\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/driver/driver.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_6__ionic_native_call_number__["a" /* CallNumber */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
+    ], DriverPage);
+    return DriverPage;
+}());
+
+//# sourceMappingURL=driver.js.map
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationDetailPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the NotificationDetailPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var NotificationDetailPage = /** @class */ (function () {
+    function NotificationDetailPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    NotificationDetailPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad NotificationDetailPage');
+    };
+    NotificationDetailPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-notification-detail',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/notification-detail/notification-detail.html"*/'<ion-header>\n\n  <ion-navbar>\n    <ion-title>Trip Details</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n    <ion-item>\n    <span class="icon-directions_car" style="float:left"></span>\n      <h2 style="float:left; padding-left: 12px;font-weight: 500;">Micro . CRN 22312312</h2>\n      </ion-item>\n      <ion-item>\n    <span class="icon-user" style="float:left"></span>\n      <h2 style="float:left; padding-left: 12px;font-weight: 500;">ABCD XYZ/9890123345</h2><br>\n        <h3 style="float:left; padding-left: 29px;color: #424242;">Mon, Sep 03, 06:49AM</h3>\n      </ion-item>\n  <ion-item>\n    <ul class="bar">\n      <li style="color:green"><h3>Reay Road</h3></li>\n      <li style="color:#a90e1b"><h3>CSMT</h3></li>\n    </ul>\n  </ion-item>\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/notification-detail/notification-detail.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]])
+    ], NotificationDetailPage);
+    return NotificationDetailPage;
+}());
+
+//# sourceMappingURL=notification-detail.js.map
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EmpdashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(41);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+// import { Calendar } from '@ionic-native/calendar';
+//import { FCM } from '@ionic-native/fcm';
+/**
+ * Generated class for the EmpdashboardPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var EmpdashboardPage = /** @class */ (function () {
+    function EmpdashboardPage(navCtrl, navParams, formBuilder, popoverController, serviceProvider, commonProvider, modal, events, alertCtrl
+        //  public calendar: Calendar
+        //  public fcm: FCM
+    ) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.popoverController = popoverController;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.modal = modal;
+        this.events = events;
+        this.alertCtrl = alertCtrl;
+        this.confirmReqst = false;
+        this.historyData = [];
+        this.userDetails = [];
+        this.dhDetails = [];
+        this.dhUsrDetails = [];
+        this.travelType = [];
+        console.log("params ", navParams);
+        this.userDetails = navParams.data.response;
+        this.userName = navParams.get('userId');
+        this.userName = navParams.get('response');
+        this.bookingForm = this.formBuilder.group({
+            updatepurpose: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            costid: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            // traveldate: ['', Validators.required],
+            traveltime: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            endtraveltime: [''],
+            travelsrc: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            isRoundTrip: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            traveldest: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            pickpoint: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            remark: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            travelType: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required]
+        });
+        this.requestSegment = "raisereq";
+        this.pageTitle = "Raise Request";
+        this.minDate = new Date();
+        this.travelDate = new Date();
+        this.currTime = new Date(this.minDate);
+        this.currTime = this.currTime.toISOString();
+        console.log('this.currTime iso format ', this.currTime);
+        this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        this.endDate = new Date();
+        this.endtravelDate = new Date();
+        this.EndcurrTime = new Date();
+        this.EndcurrTime = this.EndcurrTime.toISOString();
+        this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        this.bookingForm.get('isRoundTrip').setValue('Yes');
+    }
+    EmpdashboardPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
+            _this.dhDetails = JSON.parse(response._body);
+            console.log('DH response ', _this.dhDetails);
+            _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.dhDetails.pernr).subscribe(function (response) {
+                _this.dhUsrDetails = JSON.parse(response._body);
+                console.log("this.dhUsrDetails ", _this.dhUsrDetails);
+            }, function (err) {
+                _this.commonProvider.showToast("Error in user details");
+            });
+        }, function (err) {
+            _this.commonProvider.showToast("Error in dh details");
+        });
+        this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
+            console.log("Locations ", response);
+            console.log("Locations ", JSON.parse(response._body));
+            _this.locations = JSON.parse(response._body);
+            console.log("this.locations[0].loc_name ", _this.locations[1].loc_name);
+            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+        }, function (err) {
+            _this.commonProvider.showToast(err.message);
+        });
+        this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        console.log('ionViewDidLoad EmpdashboardPage ', this.endDate);
+    };
+    EmpdashboardPage.prototype.showNotifn = function (myEvent) {
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_3__notification_notification__["a" /* NotificationPage */]);
+        popover.present({
+            ev: myEvent
+        });
+    };
+    EmpdashboardPage.prototype.logForm = function () {
+        console.log(this.bookingForm.value);
+        // if (this.bookingForm.value.updatepurpose != null) {
+        //   this.commonProvider.showToast("not save");
+        // }
+        // return false;
+        this.confirmReqst = true;
+    };
+    EmpdashboardPage.prototype.editRequest = function () {
+        this.confirmReqst = false;
+    };
+    EmpdashboardPage.prototype.cancelReq = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
+            _this.bookingForm.reset();
+            _this.confirmReqst = false;
+            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+            _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    EmpdashboardPage.prototype.getEmpHistory = function () {
+        var _this = this;
+        console.log("In Emp History");
+        this.pageTitle = "History";
+        this.commonProvider.showLoader();
+        this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+            console.log("Emplyee history ", response);
+            if (response.status == 200) {
+                _this.historyData = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    EmpdashboardPage.prototype.sendRequest = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to send request?').then(function (res) {
+            _this.commonProvider.showLoader('Sending request...');
+            console.log('this.bookingForm.value ', _this.bookingForm.value);
+            _this.tdate = new Date(_this.travelDate);
+            _this.tdate = _this.tdate.getDate() + '/' + (_this.tdate.getMonth() + 1) + '/' + _this.tdate.getFullYear();
+            if (_this.bookingForm.value.isRoundTrip == 'No') {
+                _this.edate = "NA";
+                _this.bookingForm.value.endtraveltime = "NA";
+            }
+            else {
+                _this.edate = new Date(_this.endtravelDate);
+                _this.edate = _this.edate.getDate() + '/' + (_this.edate.getMonth() + 1) + '/' + _this.edate.getFullYear();
+            }
+            var reqData;
+            reqData = {
+                'userID': _this.userDetails.emp_no,
+                'source': _this.bookingForm.value.travelsrc,
+                'destination': _this.bookingForm.value.traveldest,
+                'pickpoint': _this.bookingForm.value.pickpoint,
+                'purpose': _this.bookingForm.value.updatepurpose,
+                //'travel_date': new Date(this.travelDate).toDateString(),
+                'travel_date': _this.tdate,
+                'travel_time': _this.bookingForm.value.traveltime,
+                'emp_email': _this.userDetails.emp_email,
+                'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                'emp_phoneNo': _this.userDetails.emp_cell,
+                'status': 'Pending with Manager',
+                'bh_Id': _this.dhDetails.pernr,
+                'bh_UserName': _this.dhUsrDetails.emp_f_name + ' ' + _this.dhUsrDetails.emp_l_name,
+                'bh_email': _this.dhUsrDetails.emp_email,
+                'remark': _this.bookingForm.value.remark,
+                'location': _this.userDetails.emp_psa,
+                //'cost_id': this.userDetails.emp_cosid,
+                'cost_id': _this.bookingForm.value.costid,
+                'cost_center': _this.userDetails.emp_cost,
+                'travelType': _this.bookingForm.value.travelType,
+                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                //'returnDate': new Date(this.endtravelDate).toDateString(),
+                'returnDate': _this.edate,
+                'returnTime': _this.bookingForm.value.endtraveltime,
+            };
+            console.log("ustr", reqData);
+            //   reqData.bh_Id = '00211779' ;
+            console.log("reqraise data", reqData);
+            _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
+                console.log("raise request ", response);
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.confirmReqst = false;
+                    _this.bookingForm.reset();
+                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                    _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast('Request error, Please check with admin');
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    EmpdashboardPage.prototype.logout = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    EmpdashboardPage.prototype.openDetail = function (obj) {
+        console.log("open modal");
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    EmpdashboardPage.prototype.setDate = function (dte) {
+        console.log("dte ", dte);
+        console.log("minDate ", this.minDate);
+        this.travelDate = new Date(dte);
+        this.endtravelDate = new Date(dte);
+        if (this.travelDate > this.minDate) {
+            this.currTime = "00:00";
+            this.bookingForm.get('traveltime').setValue('');
+        }
+        else {
+            this.currTime = new Date();
+            this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+        }
+        console.log("date obj ", this.travelDate);
+    };
+    EmpdashboardPage.prototype.setEndDate = function (dte) {
+        this.endtravelDate = new Date(dte);
+        if (this.endtravelDate > this.minDate) {
+            this.EndcurrTime = "00:00";
+            //this.bookingForm.get('traveltime').setValue('');
+        }
+        else {
+            this.EndcurrTime = new Date().toISOString;
+            this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        }
+    };
+    EmpdashboardPage.prototype.cancelCabReq = function (event, id) {
+        var _this = this;
+        event.stopPropagation();
+        this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
+            _this.commonProvider.showLoader();
+            _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Trip cancelled successfully");
+                _this.getEmpHistory();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in cancellation");
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    EmpdashboardPage.prototype.showTermsCondition = function (myEvent) {
+        var popvr = this.modal.create('TermsconditionPage', {});
+        popvr.present();
+    };
+    EmpdashboardPage.prototype.rating = function (val, tripid) {
+        var _this = this;
+        console.log("rating val", val);
+        console.log("trip id", tripid);
+        if (val <= 2) {
+            var prompt_1 = this.alertCtrl.create({
+                title: '',
+                message: "Please enter any reason",
+                inputs: [
+                    {
+                        name: 'comment',
+                        placeholder: 'Your reason'
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Send',
+                        handler: function (data) {
+                            console.log('Saved clicked', data);
+                            _this.giveRating(val, tripid, data.comment);
+                        }
+                    }
+                ]
+            });
+            prompt_1.present();
+        }
+        else {
+            this.giveRating(val, tripid);
+        }
+    };
+    EmpdashboardPage.prototype.giveRating = function (ratings, tripid, reason) {
+        var _this = this;
+        if (reason === void 0) { reason = null; }
+        console.log("reason ", reason);
+        this.commonProvider.showLoader();
+        this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast("Thank you for your feedback");
+            _this.getEmpHistory();
+        }, function (error) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast("Error in update rating");
+        });
+    };
+    EmpdashboardPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-empdashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red">\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle=\'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          History\n        </ion-segment-button>\n      </ion-segment>\n    </div>\n    <div [ngSwitch]="requestSegment">\n      <div >\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="travelsrc" name="travelsrc">\n                  <div *ngFor="let locs of locations">\n                    <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n                  </div>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <!-- <div *ngFor="let locs of locations"> -->\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                  <!-- </div> -->\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate" [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate" [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Cost ID<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="costid"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Cost Id</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.costid}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n\n\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n    </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important; margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n\n                </span>\n\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                  <h6 *ngIf="hdata.status == \'Pending with Manager\' ">{{hdata.bh_UserName}}\n                  </h6>\n                </span>\n                <div>\n                  <ul class="bar">\n                    <li style="color:green">\n                      <h3>{{hdata.source}}</h3>\n                    </li>\n                    <li style="color:#a90e1b">\n                      <h3>{{hdata.destination}}</h3>\n                    </li>\n                  </ul>\n\n                </div>\n              </div>\n              <span class="statusWrds" *ngIf="hdata.status != \'started\' && hdata.status != \'Completed\' && hdata.status != \'Rejected\' && hdata.status != \'Approved\'">\n                <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel\n                </button>\n              </span>\n              <span style="float:right; margin-top: -25px;" *ngIf="hdata.status == \'Completed\'">\n                <!-- <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="hdata.feedbackRating">\n                </ionic3-star-rating> -->\n                <rating [(ngModel)]="hdata.feedbackRating" [(readOnly)]="hdata.feedbackStatus" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="true" (ngModelChange)="rating($event,hdata.id)">\n                  <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->\n                </rating>\n\n              </span>\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n\n  \n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]
+            //  public calendar: Calendar
+            //  public fcm: FCM
+        ])
+    ], EmpdashboardPage);
+    return EmpdashboardPage;
+}());
+
+//# sourceMappingURL=empdashboard.js.map
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HoddashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(41);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the HoddashboardPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var HoddashboardPage = /** @class */ (function () {
+    function HoddashboardPage(navCtrl, navParams, formBuilder, popoverController, serviceProvider, commonProvider, alertCtrl, zone, modal, events) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.popoverController = popoverController;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.alertCtrl = alertCtrl;
+        this.zone = zone;
+        this.modal = modal;
+        this.events = events;
+        this.confirmReqst = false;
+        this.historyData = [];
+        this.userDetails = [];
+        this.dhDetails = [];
+        this.userDetails = navParams.data.response;
+        console.log("params hod", navParams);
+        console.log("params ", this.userDetails);
+        this.bookingForm = this.formBuilder.group({
+            costid: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            updatepurpose: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            // traveldate: ['', Validators.required],
+            traveltime: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            travelsrc: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            endtraveltime: [''],
+            isRoundTrip: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            traveldest: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            pickpoint: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            remark: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            travelType: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required]
+        });
+        this.requestSegment = "pendingReq";
+        this.pageTitle = "Requests";
+        this.minDate = new Date();
+        this.travelDate = new Date();
+        this.currTime = new Date(this.minDate);
+        this.currTime = this.currTime.toISOString();
+        this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        this.endDate = new Date();
+        this.endtravelDate = new Date();
+        this.EndcurrTime = new Date();
+        this.EndcurrTime = this.EndcurrTime.toISOString();
+        this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        console.log('this.EndcurrTime ', this.EndcurrTime);
+        this.bookingForm.get('isRoundTrip').setValue('Yes');
+        this.events.subscribe('actionReq', function (ev, status, obj) {
+            _this.reqAction(ev, status, obj);
+        });
+    }
+    HoddashboardPage.prototype.showNotifn = function (myEvent) {
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_3__notification_notification__["a" /* NotificationPage */]);
+        popover.present({
+            ev: myEvent
+        });
+    };
+    HoddashboardPage.prototype.showTermsCondition = function (myEvent) {
+        // let popvr = this.popoverController.create(TermsconditionPage);
+        // popvr.present({
+        //   ev: myEvent
+        // })
+        var popvr = this.modal.create('TermsconditionPage', {});
+        popvr.present();
+    };
+    HoddashboardPage.prototype.logForm = function () {
+        console.log(this.bookingForm.value);
+        this.confirmReqst = true;
+    };
+    HoddashboardPage.prototype.editRequest = function () {
+        this.confirmReqst = false;
+    };
+    HoddashboardPage.prototype.cancelReq = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
+            _this.bookingForm.reset();
+            _this.confirmReqst = false;
+            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+            _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    HoddashboardPage.prototype.getEmpHistory = function () {
+        var _this = this;
+        this.pageTitle = "Booking History";
+        this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+            console.log("Emplyee history ", response);
+            if (response.status == 200) {
+                _this.historyData = JSON.parse(response._body);
+                console.log("Emplyee history ", _this.historyData);
+            }
+        }, function (err) {
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    HoddashboardPage.prototype.sendRequest = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm().then(function (res) {
+            _this.commonProvider.showLoader('Sending request...');
+            console.log('this.bookingForm.value ', _this.bookingForm.value);
+            _this.tdate = new Date(_this.travelDate);
+            _this.tdate = _this.tdate.getDate() + '/' + (_this.tdate.getMonth() + 1) + '/' + _this.tdate.getFullYear();
+            if (_this.bookingForm.value.isRoundTrip == 'No') {
+                _this.edate = "NA";
+                _this.bookingForm.value.endtraveltime = "NA";
+            }
+            else {
+                _this.edate = new Date(_this.endtravelDate);
+                _this.edate = _this.edate.getDate() + '/' + (_this.edate.getMonth() + 1) + '/' + _this.edate.getFullYear();
+            }
+            var reqData = {
+                'userID': _this.userDetails.emp_no,
+                'source': _this.bookingForm.value.travelsrc,
+                'destination': _this.bookingForm.value.traveldest,
+                'pickpoint': _this.bookingForm.value.pickpoint,
+                'purpose': _this.bookingForm.value.updatepurpose,
+                //'travel_date': new Date(this.travelDate).toDateString(),
+                'travel_date': _this.tdate,
+                'travel_time': _this.bookingForm.value.traveltime,
+                'emp_email': _this.userDetails.emp_email,
+                'remark': _this.bookingForm.value.remark,
+                'location': _this.userDetails.emp_psa,
+                //'cost_id': this.userDetails.emp_cosid,
+                'cost_id': _this.bookingForm.value.costid,
+                'cost_center': _this.userDetails.emp_cost,
+                'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                'emp_phoneNo': _this.userDetails.emp_cell,
+                'status': 'Pending with Admin',
+                'travelType': _this.bookingForm.value.travelType,
+                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                'returnDate': _this.edate,
+                //'returnDate': new Date(this.endtravelDate).toDateString(),
+                'returnTime': _this.bookingForm.value.endtraveltime
+            };
+            _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
+                console.log("raise request ", response);
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.confirmReqst = false;
+                    _this.bookingForm.reset();
+                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                    _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    HoddashboardPage.prototype.reqAction = function (ev, status, obj) {
+        var _this = this;
+        console.log("obj ", obj);
+        console.log("status ", status);
+        ev.stopPropagation();
+        console.log("status ", status);
+        if (status == "Rejected") {
+            var prompt_1 = this.alertCtrl.create({
+                title: '',
+                message: "Please enter comments for rejection",
+                inputs: [
+                    {
+                        name: 'comment',
+                        placeholder: 'Your reason'
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Cancel',
+                        handler: function (data) {
+                            console.log('Cancel clicked', data);
+                        }
+                    },
+                    {
+                        text: 'Send',
+                        handler: function (data) {
+                            console.log('Saved clicked', data);
+                            _this.confirmReqAction(status, obj, data.comment);
+                        }
+                    }
+                ]
+            });
+            prompt_1.present();
+            return;
+        }
+        else {
+            this.commonProvider.Alert.confirm('').then(function (res) {
+                _this.confirmReqAction(status, obj);
+            }, function (err) {
+                console.log('user cancelled');
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+    };
+    HoddashboardPage.prototype.confirmReqAction = function (status, obj, comment) {
+        var _this = this;
+        if (comment === void 0) { comment = "null"; }
+        console.log("status ", status);
+        console.log("status obj ", obj);
+        this.commonProvider.showLoader('Sending request...');
+        var reqData = {
+            'userID': obj.userID,
+            'source': obj.source,
+            'destination': obj.destination,
+            'pickpoint': obj.pickupPoint,
+            'purpose': obj.purpose,
+            'travel_date': obj.travel_date,
+            'travel_time': obj.travel_time,
+            'id': obj.id,
+            'status': status,
+            'modified_by': this.userDetails.emp_no,
+            'comment': comment,
+            'emp_email': obj.emp_email,
+            'emp_UserName': obj.emp_userName,
+            'emp_phoneNo': obj.emp_phoneNo,
+            'bh_Id': obj.bh_Id,
+            'bh_UserName': obj.bh_UserName,
+            'remark': obj.remark,
+            'bh_email': obj.bh_email,
+            //  'location': obj.source,
+            'location': obj.emp_location,
+            'cost_id': obj.cost_id,
+            'cost_center': obj.cost_center,
+            'travelType': obj.travelType,
+            'isRoundTrip': obj.isRoundTrip,
+            'returnDate': obj.returnDate,
+            'returnTime': obj.returnTime
+        };
+        console.log("raise request ", reqData);
+        //return;
+        this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe(function (response) {
+            _this.commonProvider.hideLoader();
+            if (response) {
+                _this.getApprovalHistory();
+                _this.events.publish('closeModalev');
+                _this.commonProvider.showToast('Request sent successfully');
+            }
+            else {
+                _this.commonProvider.showToast('Request error, Please check with admin');
+            }
+        }, function (err) {
+            console.log("error ", err);
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    HoddashboardPage.prototype.viewReqHistory = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__["a" /* RequesthistoryPage */], { EmployeeDetail: this.userDetails });
+    };
+    HoddashboardPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
+            _this.dhDetails = JSON.parse(response._body);
+            console.log('DH response ', _this.dhDetails);
+        }, function (err) {
+            _this.commonProvider.showToast(err.message);
+        });
+        this.commonProvider.showLoader();
+        this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
+            console.log("Locations ", JSON.parse(response._body));
+            _this.locations = JSON.parse(response._body);
+            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+            _this.commonProvider.hideLoader();
+            _this.getApprovalHistory();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+        console.log('ionViewDidLoad EmpdashboardPage');
+        this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    };
+    HoddashboardPage.prototype.getApprovalHistory = function () {
+        var _this = this;
+        this.commonProvider.showLoader('');
+        this.pageTitle = "Requests";
+        this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe(function (response) {
+            console.log("Locations ", response);
+            console.log("Locations ", JSON.parse(response._body));
+            _this.approvalList = JSON.parse(response._body);
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    HoddashboardPage.prototype.logout = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    HoddashboardPage.prototype.segmentChanged = function (event) {
+        var _this = this;
+        console.log("Segment clicked! " + event.value, this, event);
+        this.zone.run(function () {
+            _this.requestSegment = event.value;
+        });
+    };
+    HoddashboardPage.prototype.openDetail = function (obj, vw) {
+        console.log("open modal");
+        console.log("open modal", vw);
+        var myModal = this.modal.create('ModalDetailPage', { data: obj, viewName: vw });
+        myModal.present();
+    };
+    HoddashboardPage.prototype.setDate = function (dte) {
+        this.travelDate = new Date(dte);
+        this.endtravelDate = new Date(dte);
+        if (this.travelDate > this.minDate) {
+            this.currTime = "00:00";
+            this.bookingForm.get('traveltime').setValue('');
+        }
+        else {
+            this.bookingForm.get('traveltime').setValue('');
+            this.currTime = new Date();
+            this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+        }
+        console.log("date obj ", this.travelDate);
+    };
+    HoddashboardPage.prototype.setEndDate = function (dte) {
+        this.endtravelDate = new Date(dte);
+        if (this.endtravelDate > this.minDate) {
+            this.EndcurrTime = "00:00";
+        }
+        else {
+            this.EndcurrTime = new Date().toISOString;
+            this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        }
+    };
+    HoddashboardPage.prototype.cancelDate = function (dte) {
+        console.log("date obj ", dte);
+        this.minDate = new Date();
+    };
+    HoddashboardPage.prototype.cancelCabReq = function (event, id) {
+        var _this = this;
+        event.stopPropagation();
+        this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
+            _this.commonProvider.showLoader();
+            _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Trip cancelled successfully");
+                _this.getEmpHistory();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in cancellation");
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    // cancelDate(dte: any) {
+    //   console.log("date obj ", dte);
+    //   //this.minDate = new Date();
+    // }
+    HoddashboardPage.prototype.rating = function (val, tripid) {
+        var _this = this;
+        console.log("rating val", val);
+        console.log("trip id", tripid);
+        if (val <= 2) {
+            var prompt_2 = this.alertCtrl.create({
+                title: '',
+                message: "Please enter any reason",
+                inputs: [
+                    {
+                        name: 'comment',
+                        placeholder: 'Your reason'
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Send',
+                        handler: function (data) {
+                            console.log('Saved clicked', data);
+                            _this.giveRating(val, tripid, data.comment);
+                        }
+                    }
+                ]
+            });
+            prompt_2.present();
+        }
+        else {
+            this.giveRating(val, tripid);
+        }
+    };
+    HoddashboardPage.prototype.giveRating = function (ratings, tripid, reason) {
+        var _this = this;
+        if (reason === void 0) { reason = null; }
+        console.log("reason ", reason);
+        this.commonProvider.showLoader();
+        this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast("Thank you for your feedback");
+            _this.getEmpHistory();
+        }, function (error) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast("Error in update rating");
+        });
+    };
+    HoddashboardPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-hoddashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getApprovalHistory()">\n          Requests\n        </ion-segment-button>\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Booking History\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="travelsrc" name="travelsrc">\n                  <div *ngFor="let locs of locations">\n                    <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n                  </div>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <!-- <div *ngFor="let locs of locations"> -->\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                  <!-- </div> -->\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate" [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate" [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Cost ID<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="costid"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Cost Id</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.costid}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View History</span>\n          </ion-list-header>\n          <ion-item *ngFor="let applh of approvalList" (click)="openDetail(applh,\'hodView\')">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n            </span>\n\n            <div style="float: right">\n              <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction($event,\'Pending with Admin\', applh);">Accept</button>\n              <button text-center ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction($event,\'Rejected\', applh);">Decline</button>\n            </div>\n            <span>\n              <h3 style="color: #424242;" *ngIf="applh.travel_date!=null">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n            </span>\n            <div style="width: 50%;">\n              <ul class=" bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n                <div style="width: 70%">\n                  <ul class="bar">\n                    <li style="color:green">\n                      <h3>{{hdata.source}}</h3>\n                    </li>\n                    <li style="color:#a90e1b">\n                      <h3>{{hdata.destination}}</h3>\n                    </li>\n                  </ul>\n                </div>\n              </div>\n              <!-- <span class="statusWrds" *ngIf="hdata.status != \'started\' "> -->\n              <span class="statusWrds" *ngIf="hdata.status != \'started\' && hdata.status != \'Completed\' && hdata.status != \'Rejected\' && hdata.status != \'Approved\'">\n                <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel\n                </button>\n              </span>\n              <span style="float:right; margin-top: -17px;" *ngIf="hdata.status == \'Completed\'">\n                <rating [(ngModel)]="hdata.feedbackRating" [(readOnly)]="hdata.feedbackStatus" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="true" (ngModelChange)="rating($event,hdata.id)">\n                  <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->\n                </rating>\n              </span>\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/hoddashboard/hoddashboard.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* NgZone */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */]])
+    ], HoddashboardPage);
+    return HoddashboardPage;
+}());
+
+//# sourceMappingURL=hoddashboard.js.map
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequesthistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the RequesthistoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var RequesthistoryPage = /** @class */ (function () {
+    function RequesthistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.modal = modal;
+        this.userDetails = [];
+        this.tripHistory = [];
+        this.userDetails = navParams.get('EmployeeDetail');
+        console.log("nav params ", this.userDetails);
+    }
+    RequesthistoryPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.commonProvider.showLoader('');
+        this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+            console.log("getAllTripHistory ", response);
+            console.log("getAllTripHistory ", JSON.parse(response._body));
+            _this.tripHistory = JSON.parse(response._body);
+            // this.approvalList = JSON.parse(response._body);
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    RequesthistoryPage.prototype.openDetail = function (obj) {
+        console.log("open modal");
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    RequesthistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-requesthistory',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory">\n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' " (click)="openDetail(hdata)">\n          <span>\n            <h3 class="reqText">\n              <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n          </span>\n          <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n            {{hdata.travel_date}}, {{hdata.travel_time}}\n          </span>\n          <span class="statusWrds">\n            <h6>{{hdata.status}}</h6>\n          </span>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/hod/requesthistory/requesthistory.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+    ], RequesthistoryPage);
+    return RequesthistoryPage;
+}());
+
+//# sourceMappingURL=requesthistory.js.map
+
+/***/ }),
+
+/***/ 183:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminrequestsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(176);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the AdminrequestsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AdminrequestsPage = /** @class */ (function () {
+    function AdminrequestsPage(navCtrl, navParams, formBuilder, popoverController, serviceProvider, commonProvider, alertCtrl, zone, modal) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.popoverController = popoverController;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.alertCtrl = alertCtrl;
+        this.zone = zone;
+        this.modal = modal;
+        this.confirmReqst = false;
+        this.historyData = [];
+        this.userDetails = [];
+        this.dhDetails = [];
+        this.cabList = [];
+        this.driverList = [];
+        this.vendorList = [];
+        console.log("params hod", navParams);
+        this.userDetails = navParams.data.response;
+        console.log("userDetails ", this.userDetails);
+        this.bookingForm = this.formBuilder.group({
+            // costid: ['', Validators.compose([
+            //   Validators.required,
+            //   Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+            // ])],
+            usrID: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            usrName: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            usrphone: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[0-9 _!@#$&()\\-`.+,/\]*[0-9!@#$&()\\-`.+,/\][0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            updatepurpose: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            // traveldate: ['', Validators.required],
+            traveltime: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            travelsrc: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            endtraveltime: [''],
+            isRoundTrip: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required],
+            cabs: [],
+            driver: [],
+            vendor: [],
+            traveldest: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            pickpoint: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+                ])],
+            remark: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+                ])],
+            travelType: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required]
+        });
+        this.requestSegment = "pendingReq";
+        this.pageTitle = "Pending";
+        this.minDate = new Date();
+        this.travelDate = new Date();
+        this.currTime = new Date(this.minDate);
+        this.currTime = this.currTime.toISOString();
+        this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        this.endDate = new Date();
+        this.endtravelDate = new Date();
+        this.EndcurrTime = new Date();
+        this.EndcurrTime = this.EndcurrTime.toISOString();
+        this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        console.log('this.EndcurrTime ', this.EndcurrTime);
+        this.bookingForm.get('isRoundTrip').setValue('Yes');
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+        console.log('this.currTime', this.currTime);
+    }
+    AdminrequestsPage.prototype.getPendingList = function () {
+        var _this = this;
+        this.commonProvider.showLoader('');
+        this.pageTitle = "Pending";
+        this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+            console.log("Locations ", response);
+            console.log("Locations ", JSON.parse(response._body));
+            _this.approvalList = JSON.parse(response._body);
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    AdminrequestsPage.prototype.segmentChanged = function (event) {
+        var _this = this;
+        console.log("Segment clicked! " + event.value, this, event);
+        this.zone.run(function () {
+            _this.requestSegment = event.value;
+        });
+    };
+    AdminrequestsPage.prototype.logout = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {});
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    AdminrequestsPage.prototype.getEmpHistory = function () {
+        var _this = this;
+        this.commonProvider.showLoader();
+        this.pageTitle = "Approved";
+        this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+            console.log("Emplyee history ", response);
+            if (response.status == 200) {
+                _this.historyData = JSON.parse(response._body);
+                console.log("Emplyee history ", _this.historyData);
+            }
+            _this.commonProvider.hideLoader();
+        }, function (err) {
+            _this.commonProvider.hideLoader();
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    AdminrequestsPage.prototype.openDetail = function (obj) {
+        console.log("open modal");
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    AdminrequestsPage.prototype.viewRequest = function (event, obj) {
+        event.stopPropagation();
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'createRequest' });
+    };
+    AdminrequestsPage.prototype.sendRequest = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm().then(function (res) {
+            _this.commonProvider.showLoader('Sending request...');
+            _this.bookingForm.value.cabs != 'select' ? 'nothing' : _this.bookingForm.get('cabs').setValue("");
+            _this.bookingForm.value.driver != 'select' ? 'nothing' : _this.bookingForm.get('driver').setValue("");
+            _this.bookingForm.value.vendor != 'select' ? 'nothing' : _this.bookingForm.get('vendor').setValue("");
+            console.log('this.bookingForm.value ', _this.bookingForm.value);
+            _this.tdate = new Date(_this.travelDate);
+            _this.tdate = _this.tdate.getDate() + '-' + (_this.tdate.getMonth() + 1) + '-' + _this.tdate.getFullYear();
+            if (_this.bookingForm.value.isRoundTrip == 'No') {
+                _this.edate = "NA";
+                _this.bookingForm.value.endtraveltime = "NA";
+            }
+            else {
+                _this.edate = new Date(_this.endtravelDate);
+                _this.edate = _this.edate.getDate() + '-' + (_this.edate.getMonth() + 1) + '-' + _this.edate.getFullYear();
+            }
+            var reqData = {
+                'source': _this.userDetails.location.id,
+                'destination': _this.bookingForm.value.traveldest,
+                'purpose': _this.bookingForm.value.updatepurpose,
+                //'travel_date': new Date(this.travelDate).toDateString(),
+                'travel_date': _this.tdate,
+                'travel_time': _this.bookingForm.value.traveltime,
+                'remark': _this.bookingForm.value.remark,
+                'status': 'Pending with Admin',
+                'travelType': _this.bookingForm.value.travelType,
+                'usrID': _this.bookingForm.value.usrID,
+                'username': _this.bookingForm.value.usrName,
+                'usrphone': _this.bookingForm.value.usrphone,
+                'cabs': _this.bookingForm.value.cabs,
+                'driver': _this.bookingForm.value.driver,
+                'vendor': _this.bookingForm.value.vendor,
+                'pickpoint': _this.bookingForm.value.pickpoint,
+                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                //'returnDate': new Date(this.endtravelDate).toDateString(),
+                'returnDate': _this.edate,
+                'returnTime': _this.bookingForm.value.endtraveltime,
+                'adminapproverId': _this.userDetails.id
+            };
+            _this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe(function (response) {
+                console.log("raise request ", response);
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.confirmReqst = false;
+                    _this.bookingForm.reset();
+                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast('Request error, Please check with admin');
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    AdminrequestsPage.prototype.ionViewWillEnter = function () {
+        console.log('ionViewDidLoad AdminrequestsPage');
+        this.getPendingList();
+        this.getAllDetails();
+    };
+    AdminrequestsPage.prototype.setDate = function (dte) {
+        this.travelDate = new Date(dte);
+        this.endtravelDate = new Date(dte);
+        if (this.travelDate > this.minDate) {
+            this.currTime = "00:00";
+            this.bookingForm.get('traveltime').setValue('');
+        }
+        else {
+            this.bookingForm.get('traveltime').setValue('');
+            this.currTime = new Date();
+            this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+        }
+        console.log("date obj ", this.travelDate);
+    };
+    AdminrequestsPage.prototype.cancelDate = function (dte) {
+        console.log("date obj ", dte);
+        this.minDate = new Date();
+    };
+    AdminrequestsPage.prototype.logForm = function () {
+        console.log(this.bookingForm.value);
+        this.confirmReqst = true;
+    };
+    AdminrequestsPage.prototype.cancelReq = function () {
+        var _this = this;
+        this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
+            _this.bookingForm.reset();
+            _this.confirmReqst = false;
+            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    AdminrequestsPage.prototype.getAllDetails = function () {
+        var _this = this;
+        this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+            if (response.status == 200) {
+                _this.tripData = JSON.parse(response._body);
+                _this.cabList = _this.tripData.cabList;
+                _this.vendorList = _this.tripData.vendorList;
+                _this.driverList = _this.tripData.driverList;
+                console.log("cabs details ", _this.tripData);
+                console.log("cabs details ", _this.cabList);
+            }
+        }, function (err) {
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    AdminrequestsPage.prototype.editRequest = function () {
+        this.confirmReqst = false;
+    };
+    AdminrequestsPage.prototype.viewReqHistory = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__["a" /* AdminHistoryPage */], { EmployeeDetail: this.userDetails });
+    };
+    AdminrequestsPage.prototype.showTermsCondition = function (myEvent) {
+        var popvr = this.modal.create('TermsconditionPage', {});
+        popvr.present();
+    };
+    AdminrequestsPage.prototype.setEndDate = function (dte) {
+        this.endtravelDate = new Date(dte);
+        if (this.endtravelDate > this.minDate) {
+            this.EndcurrTime = "00:00";
+        }
+        else {
+            this.EndcurrTime = new Date().toISOString;
+            this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+        }
+    };
+    // editFrom(obj: any) {
+    //   this.requestSegment = "raisereq";
+    //   this.pageTitle = 'Raise Request';
+    //
+    //   console.log("edit object ", obj);
+    //   console.log("edit isRoundTrip ", obj.isRoundTrip);
+    //   this.bookingForm.get('isRoundTrip').setValue(obj.isRoundTrip);
+    //   this.bookingForm.get('travelsrc').setValue(obj.source);
+    //   this.bookingForm.get('traveldest').setValue(obj.destination);
+    //   this.bookingForm.get('updatepurpose').setValue(obj.purpose);
+    //   this.bookingForm.get('travelType').setValue(obj.travelType);
+    //   this.bookingForm.get('usrID').setValue(obj.userID);
+    //   this.bookingForm.get('usrName').setValue(obj.emp_userName);
+    //   this.bookingForm.get('usrphone').setValue(obj.emp_phoneNo);
+    //   this.bookingForm.get('remark').setValue(obj.remark);
+    //   this.bookingForm.get('cabs').setValue(obj.cabid);
+    //   this.bookingForm.get('driver').setValue(obj.driverid);
+    //   this.bookingForm.get('vendor').setValue(obj.vendorid);
+    //   this.bookingForm.get('pickpoint').setValue(obj.pickupPoint);
+    //   this.currTime = obj.travel_time;
+    //   this.bookingForm.get('traveltime').setValue(obj.travel_time);
+    //   this.bookingForm.get('remark').setValue(obj.comment);
+    //   this.bookingForm.get('endtraveltime').setValue(obj.travel_time);
+    //   this.endtravelDate = new Date(obj.returnDate);
+    //   this.travelDate = new Date(obj.travel_date);
+    //
+    // }
+    AdminrequestsPage.prototype.setCab = function () {
+        this.bookingForm.get('cabs').setValue('select');
+        this.bookingForm.get('driver').setValue('select');
+    };
+    AdminrequestsPage.prototype.setVendor = function () {
+        this.bookingForm.get('vendor').setValue('select');
+    };
+    AdminrequestsPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-adminrequests',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.username}}/{{userDetails.id}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.role}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.location.loc_name}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">\n          Pending\n        </ion-segment-button>\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Approved\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-input type="text" formControlName="travelsrc"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n              [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n              [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>UserID<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrID"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrName"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>\n            <ion-input type="number" formControlName="usrphone"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Comment<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Cab</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="cabs" name="cabs">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let cab of cabList">\n                <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Driver</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="driver" name="driver">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let drvr of driverList">\n                <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Vendor</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'local\' " -->\n            <ion-select formControlName="vendor" name="vendor">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let vendor of vendorList">\n                <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Token Number</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrID}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">User Name</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrName}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Phone</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrphone}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View\n              History</span>\n          </ion-list-header>\n\n          <ion-item *ngFor="let applh of approvalList">\n            <div (click)="openDetail(applh)">\n              <span>\n                <h3 class="reqText">\n                  <span class="icon-directions_car"\n                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n              </span>\n              <span>\n                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n              </span>\n            </div>\n            <div style="float:right">\n              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"\n                (click)="viewRequest($event,applh);">View</button>\n            </div>\n            <div style="width: 70%">\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n              </div>\n              <div>\n                <ul class="bar">\n                  <li style="color:green">\n                    <h3>{{hdata.source}}</h3>\n                  </li>\n                  <li style="color:#a90e1b">\n                    <h3>{{hdata.destination}}</h3>\n                  </li>\n                </ul>\n              </div>\n              <!-- <span class="statusWrds" (click)="editFrom(hdata)">\n                <h6>Edit</h6>\n              </span> -->\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_0__angular_core__["N" /* NgZone */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+    ], AdminrequestsPage);
+    return AdminrequestsPage;
+}());
+
+//# sourceMappingURL=adminrequests.js.map
+
+/***/ }),
+
+/***/ 187:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequesthistoryPageModule", function() { return RequesthistoryPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(182);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var RequesthistoryPageModule = /** @class */ (function () {
+    function RequesthistoryPageModule() {
+    }
+    RequesthistoryPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */]),
+            ],
+        })
+    ], RequesthistoryPageModule);
+    return RequesthistoryPageModule;
+}());
+
+//# sourceMappingURL=requesthistory.module.js.map
+
+/***/ }),
+
+/***/ 188:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(179);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationDetailPageModule = /** @class */ (function () {
+    function NotificationDetailPageModule() {
+    }
+    NotificationDetailPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
+            ],
+        })
+    ], NotificationDetailPageModule);
+    return NotificationDetailPageModule;
+}());
+
+//# sourceMappingURL=notification-detail.module.js.map
+
+/***/ }),
+
+/***/ 189:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(57);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationPageModule = /** @class */ (function () {
+    function NotificationPageModule() {
+    }
+    NotificationPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+            ],
+        })
+    ], NotificationPageModule);
+    return NotificationPageModule;
+}());
+
+//# sourceMappingURL=notification.module.js.map
+
+/***/ }),
+
+/***/ 19:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+//import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+
+
+/*
+  Generated class for the ServiceProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var ServiceProvider = /** @class */ (function () {
+    function ServiceProvider(http) {
+        this.http = http;
+        // header for json/content-type
+        //private url = 'https://gmc.mahindra.com/vms';
+        this.url = 'https://mapps.mahindra.com/vms';
+        console.log('Hello ServiceProvider Provider');
+    }
+    ServiceProvider.prototype.getBookingHistory = function (param, usrID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        //  headers.append()
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + usrID, options);
+        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
+    };
+    ServiceProvider.prototype.getAllTripHistory = function (param, usrID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        //  headers.append()
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + usrID, options);
+        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
+    };
+    ServiceProvider.prototype.getAllLocations = function (param) {
+        return this.http.get(this.url + param);
+        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
+    };
+    ServiceProvider.prototype.getApprovalList = function (param, uid) {
+        return this.http.get(this.url + param + "/" + uid);
+    };
+    ServiceProvider.prototype.raiseRequest = function (param, data, datastatus) {
+        if (datastatus === void 0) { datastatus = "default"; }
+        this.raiseReq = new FormData();
+        this.raiseReq.append("userID", data.userID);
+        this.raiseReq.append("source", data.source);
+        this.raiseReq.append("destination", data.destination);
+        this.raiseReq.append("pickupPoint", data.pickpoint);
+        this.raiseReq.append("purpose", data.purpose);
+        this.raiseReq.append("travel_date", data.travel_date);
+        this.raiseReq.append("travel_time", data.travel_time);
+        this.raiseReq.append("status", data.status);
+        this.raiseReq.append("bh_Id", data.bh_Id);
+        this.raiseReq.append("bh_UserName", data.bh_UserName);
+        this.raiseReq.append("bh_email", data.bh_email);
+        this.raiseReq.append("emp_email", data.emp_email);
+        this.raiseReq.append("emp_userName", data.emp_UserName);
+        this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
+        this.raiseReq.append("remark", data.remark);
+        this.raiseReq.append("locationName", data.location);
+        this.raiseReq.append("cost_id", data.cost_id);
+        this.raiseReq.append("cost_center", data.cost_center);
+        this.raiseReq.append("travelType", data.travelType);
+        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+        this.raiseReq.append("returnDate", data.returnDate);
+        this.raiseReq.append("returnTime", data.returnTime);
+        this.raiseReq.append("isactive", 'Y');
+        if (datastatus == "hodAction") {
+            this.raiseReq.append("id", data.id);
+            this.raiseReq.append("modifiedby", data.modified_by);
+            this.raiseReq.append("comment", data.comment);
+        }
+        console.log("call api ", data);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        console.log("in service ", this.raiseReq);
+        console.log("in options ", options);
+        return this.http.post(this.url + param, this.raiseReq, options);
+    };
+    ServiceProvider.prototype.raiseRequestAdmin = function (param, data) {
+        this.raiseReq = new FormData();
+        this.raiseReq.append("source", data.source);
+        this.raiseReq.append("destination", data.destination);
+        this.raiseReq.append("pickupPoint", data.pickpoint);
+        this.raiseReq.append("purpose", data.purpose);
+        this.raiseReq.append("travel_date", data.travel_date);
+        this.raiseReq.append("travel_time", data.travel_time);
+        this.raiseReq.append("comment", data.remark);
+        this.raiseReq.append("travelType", data.travelType);
+        this.raiseReq.append("emp_userName", data.username);
+        this.raiseReq.append("emp_phoneNo", data.usrphone);
+        this.raiseReq.append("userID", data.usrID);
+        this.raiseReq.append("cabid", data.cabs);
+        this.raiseReq.append("vendorid", data.vendor);
+        this.raiseReq.append("driverid", data.driver);
+        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+        this.raiseReq.append("returnDate", data.returnDate);
+        this.raiseReq.append("returnTime", data.returnTime);
+        this.raiseReq.append("adminapproverId", data.adminapproverId);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        console.log("in service ", this.raiseReq);
+        console.log("in options ", options);
+        return this.http.post(this.url + param, this.raiseReq);
+    };
+    ServiceProvider.prototype.getUsrRoleDetails = function (param, ivPernr) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + ivPernr, options);
+    };
+    ServiceProvider.prototype.getDeptHeadUser = function (param, ivPernr) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + ivPernr, options);
+    };
+    ServiceProvider.prototype.getDriverTripDetails = function (params) {
+        return this.http.get(this.url + params);
+    };
+    ServiceProvider.prototype.tripStart = function (params, cdate, type, id, km) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append("id", id);
+        if (type == 'startTrip') {
+            this.tripDTO.append("startTrip", cdate);
+            this.tripDTO.append("startKm", km);
+        }
+        else {
+            this.tripDTO.append("endTrip", cdate);
+            this.tripDTO.append("endKm", km);
+        }
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider.prototype.weblogin = function (params, username, pwd) {
+        console.log("emp ", username);
+        console.log("pwd ", pwd);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.lgnDTO = new FormData();
+        this.lgnDTO.append('employeeId', username);
+        this.lgnDTO.append('pwd', pwd);
+        return this.http.post(this.url + params, this.lgnDTO, options);
+    };
+    ServiceProvider.prototype.saveScan = function (params, text) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + text, options);
+    };
+    ServiceProvider.prototype.getReqDetails = function (params, id) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + id, options);
+    };
+    ServiceProvider.prototype.cancelCab = function (params, id) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + id, options);
+    };
+    ServiceProvider.prototype.assignReq = function (params, tripID, cabs, driver, vendor, admincomment, adminId) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.assignTripDto = new FormData();
+        this.assignTripDto.append('tripId', tripID);
+        this.assignTripDto.append('cabId', cabs);
+        this.assignTripDto.append('driverId', driver);
+        this.assignTripDto.append('vendorId', vendor);
+        this.assignTripDto.append('admincomment', admincomment);
+        this.assignTripDto.append('adminapproverId', adminId);
+        return this.http.post(this.url + params, this.assignTripDto, options);
+    };
+    ServiceProvider.prototype.submitRating = function (params, tripId, ratings, reason) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append('id', tripId);
+        this.tripDTO.append('feedbackRating', ratings);
+        this.tripDTO.append('feedbackComment', reason);
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider.prototype.adminCancelReq = function (params, cmnt, tripId, adminId) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append('tripId', tripId);
+        this.tripDTO.append('adminapproverId', adminId);
+        this.tripDTO.append('rejectComment', cmnt);
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
+    ], ServiceProvider);
+    return ServiceProvider;
+}());
+
+//# sourceMappingURL=service.js.map
+
+/***/ }),
+
+/***/ 190:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScanPageModule", function() { return ScanPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(191);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var ScanPageModule = /** @class */ (function () {
+    function ScanPageModule() {
+    }
+    ScanPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__scan__["a" /* ScanPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__scan__["a" /* ScanPage */]),
+            ],
+        })
+    ], ScanPageModule);
+    return ScanPageModule;
+}());
+
+//# sourceMappingURL=scan.module.js.map
+
+/***/ }),
+
+/***/ 191:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScanPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(95);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the ScanPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var ScanPage = /** @class */ (function () {
+    function ScanPage(navCtrl, navParams, commonProvider, serviceProvider, qrScanner) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.commonProvider = commonProvider;
+        this.serviceProvider = serviceProvider;
+        this.qrScanner = qrScanner;
+    }
+    ScanPage.prototype.startScan = function () {
+        var _this = this;
+        this.qrScanner.prepare()
+            .then(function (status) {
+            if (status.authorized) {
+                _this.qrScanner.show();
+                console.log('Camera Permission Given');
+                _this.scanSub = _this.qrScanner.scan().subscribe(function (text) {
+                    _this.qrCode = text;
+                    _this.commonProvider.showToast(_this.qrCode);
+                    _this.qrScanner.hide();
+                    _this.serviceProvider.saveScan('/tripDetails/barcode', _this.qrCode).subscribe(function (response) {
+                        console.log("barcode response ", response);
+                        _this.commonProvider.showToast("PDF is created successfully");
+                    }, function (err) {
+                        alert('error in  pdf');
+                        _this.commonProvider.showToast('Error in save');
+                    });
+                    _this.navCtrl.last();
+                });
+            }
+            else if (status.denied) {
+                _this.commonProvider.showToast('Camera permission denied');
+            }
+            else {
+                _this.commonProvider.showToast('Permission denied for this runtime.');
+            }
+        })
+            .catch(function (e) { return console.log('Error is', e); });
+    };
+    // showCamera() {
+    //   (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
+    //   this.startScan();
+    // }
+    //
+    // hideCamera() {
+    //   (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
+    //   this.scanSub.unsubscribe();
+    //   this.navCtrl.last();
+    // }
+    ScanPage.prototype.ionViewDidLoad = function () {
+    };
+    ScanPage.prototype.ionViewWillEnter = function () {
+        this.showCamera();
+        this.startScan();
+    };
+    ScanPage.prototype.ionViewWillLeave = function () {
+        this.hideCamera();
+    };
+    ScanPage.prototype.showCamera = function () {
+        window.document.querySelector('ion-app').classList.add('cameraView');
+    };
+    ScanPage.prototype.hideCamera = function () {
+        window.document.querySelector('ion-app').classList.remove('cameraView');
+    };
+    ScanPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-scan',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/scan/scan.html"*/'<!--\n  Generated template for the ScanPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>scan</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content style="background: none transparent;">\n\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/scan/scan.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__["a" /* QRScanner */]])
+    ], ScanPage);
+    return ScanPage;
+}());
+
+//# sourceMappingURL=scan.js.map
+
+/***/ }),
+
+/***/ 192:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermsconditionPageModule", function() { return TermsconditionPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__termscondition__ = __webpack_require__(330);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var TermsconditionPageModule = /** @class */ (function () {
+    function TermsconditionPageModule() {
+    }
+    TermsconditionPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */]),
+            ],
+        })
+    ], TermsconditionPageModule);
+    return TermsconditionPageModule;
+}());
+
+//# sourceMappingURL=termscondition.module.js.map
+
+/***/ }),
+
+/***/ 193:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersDashboardPageModule", function() { return UsersDashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(331);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var UsersDashboardPageModule = /** @class */ (function () {
+    function UsersDashboardPageModule() {
+    }
+    UsersDashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__users_dashboard__["a" /* UsersDashboardPage */]),
+            ],
+        })
+    ], UsersDashboardPageModule);
+    return UsersDashboardPageModule;
+}());
+
+//# sourceMappingURL=users-dashboard.module.js.map
+
+/***/ }),
+
+/***/ 194:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminrequestsPageModule", function() { return AdminrequestsPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adminrequests__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var AdminrequestsPageModule = /** @class */ (function () {
+    function AdminrequestsPageModule() {
+    }
+    AdminrequestsPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */]),
+            ],
+        })
+    ], AdminrequestsPageModule);
+    return AdminrequestsPageModule;
+}());
+
+//# sourceMappingURL=adminrequests.module.js.map
+
+/***/ }),
+
+/***/ 198:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmpdashboardPageModule", function() { return EmpdashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var EmpdashboardPageModule = /** @class */ (function () {
+    function EmpdashboardPageModule() {
+    }
+    EmpdashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__["a" /* Ionic2RatingModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */]),
+            ],
+        })
+    ], EmpdashboardPageModule);
+    return EmpdashboardPageModule;
+}());
+
+//# sourceMappingURL=empdashboard.module.js.map
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__ = __webpack_require__(173);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//import { HttpClient } from '@angular/common/http';
+
+
+
+/*
+  Generated class for the CommonProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var CommonProvider = /** @class */ (function () {
+    function CommonProvider(loadingCtrl, toast, alertCtrl, network) {
+        var _this = this;
+        this.loadingCtrl = loadingCtrl;
+        this.toast = toast;
+        this.alertCtrl = alertCtrl;
+        this.network = network;
+        this.loading = false;
+        this.isOnline = true;
+        this.Alert = {
+            confirm: function (msg, title) {
+                return new Promise(function (resolve, reject) {
+                    var alert = _this.alertCtrl.create({
+                        title: title || 'Confirm',
+                        message: msg || '',
+                        buttons: [
+                            {
+                                text: 'Cancel',
+                                role: 'cancel',
+                                handler: function () {
+                                    reject(false);
+                                }
+                            },
+                            {
+                                text: 'Ok',
+                                handler: function () {
+                                    resolve(true);
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                });
+            },
+            alert: function (msg, title) {
+                var alert = _this.alertCtrl.create({
+                    title: title || 'Alert',
+                    subTitle: msg,
+                    buttons: ['Dismiss']
+                });
+                alert.present();
+            }
+        };
+        console.log('Hello CommonProvider Provider');
+        this.network.onConnect().subscribe(function (data) {
+            console.log('network info ', data);
+            _this.displayNetworkUpdate(data.type);
+        }, function (error) {
+            console.log('network info ', error.message);
+        });
+        this.network.onDisconnect().subscribe(function (data) {
+            console.log('network info ', data);
+            _this.displayNetworkUpdate(data.type);
+        }, function (error) {
+            console.log('network info ', error.message);
+        });
+    }
+    CommonProvider.prototype.showLoader = function (msg) {
+        //this.loading is important to start the loader before outside function make **** loading: any = false; ****
+        console.log('this.loading P', this.loading);
+        if (!this.loading) {
+            this.loader = this.loadingCtrl.create({
+                content: msg || ''
+            });
+            this.loading = true;
+            this.loader.present();
+        }
+        else {
+            console.log("trying to calling loader two times");
+        }
+    };
+    CommonProvider.prototype.hideLoader = function () {
+        console.log('this.loading D', this.loading);
+        if (this.loading) {
+            this.loader.dismiss();
+            this.loading = false;
+        }
+        else {
+            console.log("trying to dismiss loader two times");
+        }
+    };
+    CommonProvider.prototype.showToast = function (msg, time) {
+        this.toaster = this.toast.create({
+            message: msg,
+            duration: time || 2000,
+            position: 'bottom'
+        });
+        this.toaster.onDidDismiss(function () {
+            console.log('Dismissed toast');
+        });
+        this.toaster.present();
+    };
+    // checkInternetConnection() {
+    //     console.log("checking network...", this.network.type);
+    //     this.network.onConnect().subscribe(data => {
+    //         console.log(data);
+    //         this.displayNetworkUpdate(data.type);
+    //     }, error => console.error(error));
+    //
+    //     this.network.onDisconnect().subscribe(data => {
+    //         console.log(data);
+    //         this.displayNetworkUpdate(data.type);
+    //     }, error => console.error(error));  // }
+    CommonProvider.prototype.displayNetworkUpdate = function (connectionState) {
+        if (connectionState == 'online') {
+            this.isOnline = true;
+        }
+        else {
+            this.isOnline = false;
+        }
+        // this.showToast(`You are now ${connectionState} via ${networkType}`);
+        this.showToast('You are now ' + connectionState, 2500);
+    };
+    CommonProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__["a" /* Network */]])
+    ], CommonProvider);
+    return CommonProvider;
+}());
+
+//# sourceMappingURL=common.js.map
+
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var HoddashboardPageModule = /** @class */ (function () {
+    function HoddashboardPageModule() {
+    }
+    HoddashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */]
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__["a" /* Ionic2RatingModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__hoddashboard__["a" /* HoddashboardPage */]),
+            ],
+        })
+    ], HoddashboardPageModule);
+    return HoddashboardPageModule;
+}());
+
+//# sourceMappingURL=hoddashboard.module.js.map
+
+/***/ }),
+
+/***/ 243:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(265);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 265:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_call_number__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_notification_notification_module__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_termscondition_termscondition_module__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_notification_detail_notification_detail_module__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_scan_scan_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(187);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_driver_driver_module__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_adminrequests_adminrequests_module__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_ionic3_datepicker__ = __webpack_require__(59);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+//import { HttpClientModule } from '@angular/common/http';
+
+
+// plugins
+
+
+
+
+// import { FCM } from '@ionic-native/fcm';
+
+
+
+//page
+
+
+
+
+
+//hod Dashboard
+
+
+//Driver page
+
+
+//Admin page
+
+
+
+
+var AppModule = /** @class */ (function () {
+    function AppModule() {
+    }
+    AppModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */]
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
+                //  HttpClientModule,
+                __WEBPACK_IMPORTED_MODULE_14__pages_employee_empdashboard_empdashboard_module__["EmpdashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_15__pages_notification_notification_module__["NotificationPageModule"],
+                __WEBPACK_IMPORTED_MODULE_17__pages_notification_detail_notification_detail_module__["NotificationDetailPageModule"],
+                __WEBPACK_IMPORTED_MODULE_19__pages_hod_hoddashboard_hoddashboard_module__["HoddashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_20__pages_hod_requesthistory_requesthistory_module__["RequesthistoryPageModule"],
+                __WEBPACK_IMPORTED_MODULE_22__pages_users_dashboard_users_dashboard_module__["UsersDashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_23__pages_adminrequests_adminrequests_module__["AdminrequestsPageModule"],
+                __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_admin_history_admin_history_module__["AdminHistoryPageModule"],
+                __WEBPACK_IMPORTED_MODULE_16__pages_termscondition_termscondition_module__["TermsconditionPageModule"],
+                __WEBPACK_IMPORTED_MODULE_25__pages_admin_aprvl_admin_aprvl_module__["AdminAprvlPageModule"],
+                __WEBPACK_IMPORTED_MODULE_6__angular_http__["c" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_21__pages_driver_driver_module__["DriverPageModule"],
+                __WEBPACK_IMPORTED_MODULE_18__pages_scan_scan_module__["ScanPageModule"],
+                __WEBPACK_IMPORTED_MODULE_26_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {
+                    backButtonText: 'Back',
+                    backButtonIcon: ''
+                }, {
+                    links: [
+                        { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/modal-detail/modal-detail.module#ModalDetailPageModule', name: 'ModalDetailPage', segment: 'modal-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/requestdetails/requestdetails.module#RequestdetailsPageModule', name: 'RequestdetailsPage', segment: 'requestdetails', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
+                    ]
+                })
+            ],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */]
+            ],
+            providers: [
+                __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+                { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicErrorHandler */] },
+                __WEBPACK_IMPORTED_MODULE_9__providers_service_service__["a" /* ServiceProvider */],
+                __WEBPACK_IMPORTED_MODULE_10__providers_common_common__["a" /* CommonProvider */],
+                //  FCM,
+                __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__["a" /* Network */],
+                __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+                __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__["a" /* QRScanner */],
+                __WEBPACK_IMPORTED_MODULE_13__ionic_native_call_number__["a" /* CallNumber */]
+            ]
+        })
+    ], AppModule);
+    return AppModule;
+}());
+
+//# sourceMappingURL=app.module.js.map
+
+/***/ }),
+
+/***/ 330:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TermsconditionPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the TermsconditionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var TermsconditionPage = /** @class */ (function () {
+    function TermsconditionPage(navCtrl, navParams, view) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.view = view;
+    }
+    TermsconditionPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad TermsconditionPage');
+    };
+    TermsconditionPage.prototype.closeModal = function () {
+        this.view.dismiss();
+    };
+    TermsconditionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-termscondition',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/'<!--\n  Generated template for the TermsconditionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Terms & Condtitions</ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="closeModal()">\n        Close\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h4 style="color: #a90e1b;"> Disclaimer as below</h4>\n  <div>\n    <ul>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n        </h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Travel Request must be approved by your HOD who is L5DH or above.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">For L5DH and above, the Travel Request will be self-approved.</h6>\n      </li>\n    </ul>\n    <!-- <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n    </h6> -->\n  </div>\n  <!-- <div>\n    <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.\n      Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.\n      Travel Request must be approved by your HOD who is L5DH or above.\n      For L5DH and above, the Travel Request will be self-approved.\n    </h6>\n  </div> -->\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]])
+    ], TermsconditionPage);
+    return TermsconditionPage;
+}());
+
+//# sourceMappingURL=termscondition.js.map
+
+/***/ }),
+
+/***/ 331:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersDashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(191);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the UsersDashboardPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var UsersDashboardPage = /** @class */ (function () {
+    function UsersDashboardPage(navCtrl, navParams, commonProvider, serviceProvider, qrScanner) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.commonProvider = commonProvider;
+        this.serviceProvider = serviceProvider;
+        this.qrScanner = qrScanner;
+        this.userDetails = [];
+        this.driverMobileNumber = '';
+        this.securityCheck = '';
+        this.scannig = false;
+        console.log("in user page ", navParams);
+        console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
+        console.log("navParams.get('securitylogin') ", navParams.get('security'));
+        if (navParams.get('driverNumber')) {
+            this.driverMobileNumber = navParams.get('driverNumber');
+        }
+        else if (navParams.get('security')) {
+            this.securityCheck = navParams.get('security');
+        }
+        else {
+            this.userDetails = navParams.data.response.EmployeeDetail;
+        }
+    }
+    UsersDashboardPage.prototype.showDashboard = function () {
+        this.navCtrl.push('EmpdashboardPage', { 'EmployeeDetail': this.userDetails });
+        //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
+    };
+    UsersDashboardPage.prototype.getTripDetails = function (status) {
+        this.navCtrl.push('DriverPage', { 'pageOpen': status });
+    };
+    UsersDashboardPage.prototype.securityScan = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__scan_scan__["a" /* ScanPage */], {});
+    };
+    UsersDashboardPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-users-dashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/users-dashboard/users-dashboard.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title text-center>(M&M)</ion-title>\n  </ion-navbar>\n  <ion-toolbar>\n    <section text-center class="bgclr bgimg">\n      <span class="icon-noimage-icon"></span>\n\n      <div class="header-content">\n        <h1 style="margin-top: 0rem !important;"><b>Welcome,</b> <br>\n          <b>Mr. {{userDetails.emp_f_name}} {{userDetails.emp_l_name}}</b></h1>\n        <span text-center class="userText">\n          <b> {{userDetails.emp_cost}}</b>\n        </span><br>\n        <span text-center class="userText">\n          <b> {{userDetails.emp_esg}}</b>\n        </span>\n      </div>\n    </section>\n  </ion-toolbar>\n</ion-header>\n<ion-content style="background-color: #7c8185c2;">\n  <ion-grid *ngIf="!driverMobileNumber && !securityCheck">\n    <ion-row>\n      <ion-col text-center (click)="showDashboard();">\n        <img src="assets/imgs/ani/bell2.png" alt="">\n        <span class="userText">Notifications</span>\n      </ion-col>\n      <ion-col text-center (click)="showDashboard();">\n        <img src="assets/imgs/ani/cab1.png" alt="">\n        <span class="userText">Cabs History</span>\n      </ion-col>\n    </ion-row>\n    <ion-row>\n      <ion-col offset-3 col-6 text-center (click)="showDashboard();">\n        <img src="assets/imgs/ani/create1.png" alt="">\n        <span class="userText">Create Request</span>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid *ngIf="driverMobileNumber">\n    <ion-row>\n      <ion-col text-center (click)="getTripDetails(\'tripPage\');">\n        <img class="height: 50%" src="assets/imgs/ani/create1.png" alt="">\n        <span class="userText">Trip Details</span>\n      </ion-col>\n      <ion-col text-center (click)="getTripDetails(\'ticketPage\');">\n        <img src="assets/imgs/ani/raise1.png" alt="">\n        <span class="userText">Scan Code</span>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n\n  <ion-grid *ngIf="securityCheck">\n    <ion-row (click)="securityScan();">\n      <ion-col offset-3 col-6 text-center (click)="securityScan();">\n        <img src="assets/imgs/ani/raise1.png" alt="">\n        <span class="userText">Scan Code</span>\n      </ion-col>\n    </ion-row>\n\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/users-dashboard/users-dashboard.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__["a" /* QRScanner */]])
+    ], UsersDashboardPage);
+    return UsersDashboardPage;
+}());
+
+//# sourceMappingURL=users-dashboard.js.map
+
+/***/ }),
+
+/***/ 351:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(41);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+// import { FCM } from '@ionic-native/fcm';
+
+var MyApp = /** @class */ (function () {
+    function MyApp(platform, statusBar, splashScreen) {
+        //rootPage: any = EmpdashboardPage;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_login_login__["a" /* LoginPage */];
+        platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            // this.fcm.subscribeToTopic('/topics/all');
+            // this.fcm.getToken().then(token => {
+            // console.log("Device token from fcm is ", token)
+            //})
+            statusBar.styleDefault();
+            splashScreen.hide();
+        });
+    }
+    MyApp = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/app/app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/app/app.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+    ], MyApp);
+    return MyApp;
+}());
+
+//# sourceMappingURL=app.component.js.map
+
+/***/ }),
+
+/***/ 41:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_crypto_js__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var LoginPage = /** @class */ (function () {
+    function LoginPage(navCtrl, serviceProvider, commonProvider, iab, plt) {
+        this.navCtrl = navCtrl;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.iab = iab;
+        this.plt = plt;
+        this.isLoggedIn = false;
+        this.users = [];
+        this.showLogin = false;
+        this.buildURLForLogin();
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+    };
+    LoginPage.prototype.ngOnInit = function () {
+        this.createFormControls();
+        this.createForm();
+    };
+    LoginPage.prototype.createFormControls = function () {
+        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */](this.email, [
+            __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
+            __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
+        ]);
+        this.password = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('', [
+            __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
+            __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].minLength(4)
+        ]);
+    };
+    LoginPage.prototype.createForm = function () {
+        this.loginForm = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["c" /* FormGroup */]({
+            email: this.email,
+            password: this.password
+        });
+    };
+    LoginPage.prototype.buildURLForLogin = function () {
+        var _this = this;
+        var params = new __WEBPACK_IMPORTED_MODULE_10__angular_http__["e" /* URLSearchParams */](window.location.href);
+        console.log("params ", params);
+        var someParam = params.rawParams;
+        console.log("someParam ", someParam);
+        this.session = this.getQueryString('session', someParam);
+        this.commonProvider.showLoader('Please wait..');
+        if (this.session) {
+            this.showLogin = false;
+            var userData = this.generateSecureKeyAndIV(this.session).then(function (result) {
+                console.log("this.userid ", result);
+                _this.commonProvider.hideLoader();
+                _this.loginToApp(result);
+            });
+        }
+        else {
+            this.commonProvider.hideLoader();
+            this.showLogin = true;
+            console.log("show login page in application ");
+        }
+    };
+    LoginPage.prototype.loginToApp = function (userData) {
+        var _this = this;
+        userData = userData.split(':');
+        var unme = userData.splice(0, 1).join("");
+        var pwd = userData.join("");
+        console.log('decrypted cc ' + unme);
+        console.log('decrypted cc ' + pwd);
+        if (this.session) {
+            this.commonProvider.showLoader('Please wait..');
+            this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe(function (response) {
+                console.log("response ", response);
+                if (response._body == "Login success") {
+                    _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe(function (response) {
+                        response = JSON.parse(response._body);
+                        console.log("response ", response);
+                        _this.commonProvider.hideLoader();
+                        //  let str = response.emp_esg;
+                        var str = response.emp_esgdesc;
+                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                            //this.navCtrl.setRoot(EmpdashboardPage, { response });
+                        }
+                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                            //  this.navCtrl.setRoot(HoddashboardPage, { response });
+                        }
+                        else {
+                            _this.commonProvider.showToast("User role is not allow to login");
+                        }
+                    });
+                }
+                else if (response._body == "false") {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Please enter correct user credentials");
+                }
+                else {
+                    _this.commonProvider.hideLoader();
+                    response = JSON.parse(response._body);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error while login");
+            });
+        }
+        else {
+            this.commonProvider.hideLoader();
+        }
+    };
+    LoginPage.prototype.generateSecureKeyAndIV = function (session) {
+        var promise = new Promise(function (resolve, reject) {
+            var key = __WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.enc.Utf8.parse('M@h1ndra$1234567');
+            var iv = __WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.enc.Utf8.parse('0001000100010001');
+            var decrypted = __WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.AES.decrypt(session, key, {
+                keySize: 128 / 8,
+                iv: iv,
+                mode: __WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.mode.CBC,
+                padding: __WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.pad.Pkcs7
+            });
+            var cipherUsrCredentials = decrypted.toString(__WEBPACK_IMPORTED_MODULE_11_crypto_js___default.a.enc.Utf8);
+            var strln = cipherUsrCredentials.lastIndexOf('pwd=');
+            var pwd = cipherUsrCredentials.substring(strln + 4);
+            var unme = cipherUsrCredentials.match(/usr=(\d+)/i)[1];
+            var unmpwd = unme + ':' + pwd;
+            console.log("usercredetaials from extract ", unmpwd);
+            resolve(unmpwd);
+        });
+        return promise;
+        //     var text = this.datas.password;
+        // var key = CryptoJS.enc.Utf8.parse('Bar12345Bar12345');
+        // var iv = CryptoJS.enc.Utf8.parse('RandomInitVector'); 
+        // For encryption
+        // var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(text), key,
+        //   {
+        //     keySize: 128 / 8,
+        //     iv: iv,
+        //     mode: CryptoJS.mode.CBC,
+        //     padding: CryptoJS.pad.Pkcs7
+        //   });
+        // console.log('pass', encrypted.toString(), encrypted);
+        // this.Password = encrypted.toString();
+    };
+    LoginPage.prototype.loginAction = function () {
+        var _this = this;
+        console.log('this.loginForm ', this.email.value);
+        console.log('this.loginForm password ', this.password);
+        if (this.password.value == 'driver' || this.password.value == 'Driver') {
+            this.mobileNumber = this.email.value;
+            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__driver_driver__["a" /* DriverPage */], { 'driverNumber': this.mobileNumber });
+        }
+        else {
+            this.commonProvider.showLoader('Please wait..');
+            this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe(function (response) {
+                console.log("response ", response);
+                if (response._body == "Login success") {
+                    _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.email.value).subscribe(function (response) {
+                        response = JSON.parse(response._body);
+                        console.log("response ", response);
+                        _this.commonProvider.hideLoader();
+                        //  let str = response.emp_esg;
+                        var str = response.emp_esgdesc;
+                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                            //this.navCtrl.setRoot(EmpdashboardPage, { response });
+                        }
+                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                            //  this.navCtrl.setRoot(HoddashboardPage, { response });
+                        }
+                        else {
+                            _this.commonProvider.showToast("User role is not allow to login");
+                        }
+                    });
+                }
+                else if (response._body == "false") {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Please enter correct user credentials");
+                }
+                else {
+                    _this.commonProvider.hideLoader();
+                    response = JSON.parse(response._body);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error while login");
+            });
+        }
+    };
+    LoginPage.prototype.getParameterByName = function (name, url) {
+        if (!url)
+            url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'), results = regex.exec(url);
+        if (!results)
+            return null;
+        if (!results[2])
+            return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    };
+    LoginPage.prototype.getQueryString = function (field, url) {
+        var href = url;
+        var reg = new RegExp('[?&]' + field + '=([^&#]*)', 'i');
+        var string = reg.exec(href);
+        return string ? string[1] : null;
+    };
+    ;
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-login',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/'<ion-content class="page-content">\n  <ion-grid class="gridSize">\n    <ion-row text-center>\n      <ion-col style="margin-top: 5%;">\n        <img src="assets/imgs/mahindra_logo_white.png" alt="" style="width: 61%;height: 75%;">\n      </ion-col>\n    </ion-row>\n    <ion-row text-center>\n      <ion-col>\n        <div class="reset-title">ASK CAB</div>\n      </ion-col>\n    </ion-row>\n\n    <div *ngIf="showLogin">\n      <form novalidate [formGroup]="loginForm" (ngSubmit)="loginAction()">\n        <ion-row text-center class="row-height" style="margin-top: 1%">\n          <ion-col class="input-height">\n            <input type="email" class="login-input1" formControlName="email" placeholder="Username" required [style.background-color]="(!email.errors) ? \'#C24857\' : \'\'" [style.color]="(!email.errors) ? \'#f8f8f8\' : \'\'" />\n          </ion-col>\n        </ion-row>\n        <ion-row text-center class="row-height" style="margin-top: 7%">\n          <!-- <ion-icon [name]="isActive?\'eye\':\'eye-off\'" item-right (click)="isActive=!isActive;" isActive=true>\n          </ion-icon>\n          type="{{ isActive ? \'password\' : \'text\' }}"\n        -->\n          <ion-col class="input-height">\n            <input type="password" class="login-input1" formControlName="password" [ngClass]="{\'typed\':password.length>1}" placeholder="Password" required [style.background-color]="(!password.errors) ? \'#C24857\' : \'\'" [style.color]="(!password.errors) ? \'#f8f8f8\' : \'\'" />\n          </ion-col>\n        </ion-row>\n        <ion-row text-center style="padding-top:7%">\n          <ion-col>\n            <button [ngClass]="{\'login-button\':(!email.errors),\'login-button-dynamic\':(email.errors)}">LOGIN\n            </button>\n          </ion-col>\n        </ion-row>\n      </form>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/login/login.html"*/
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Platform */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+
+//# sourceMappingURL=login.js.map
+
+/***/ }),
+
+/***/ 57:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__ = __webpack_require__(179);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+/**
+ * Generated class for the NotificationPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var NotificationPage = /** @class */ (function () {
+    function NotificationPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+    }
+    NotificationPage.prototype.showDetails = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__["a" /* NotificationDetailPage */], {});
+    };
+    // showDetails() {
+    //
+    //   const myModalOptions: ModalOptions = {
+    //     enableBackdropDismiss: false
+    //   };
+    //
+    //   const myModalData = {
+    //     name: 'Paul Halliday',
+    //     occupation: 'Developer'
+    //   };
+    //
+    //   const myModal: Modal = this.modal.create('NotificationDetailPage', { data: myModalData }, myModalOptions);
+    //
+    //   myModal.present();
+    //
+    //   myModal.onDidDismiss((data) => {
+    //     console.log("I have dismissed.");
+    //     console.log(data);
+    //   });
+    //
+    //   myModal.onWillDismiss((data) => {
+    //     console.log("I'm about to dismiss");
+    //     console.log(data);
+    //   });
+    //
+    // }
+    NotificationPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad NotificationPage');
+    };
+    NotificationPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-notification',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/notification/notification.html"*/'<!--\n  Generated template for the NotificationPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-content>\n  <ion-list>\n   <ion-item (click)="showDetails()">\n      <span class="icon-directions_car" style="float:left"></span>\n      <p style="padding-left: 3px; color:#9b0c1a">Your request is Accepted</p>\n        <h6 style="color: #424242;padding-left: 22px;">Mon, Sep 03, 06:49AM</h6>\n        <h6 style="color: #424242;padding-left: 22px;">Micro . CRN 22312312</h6>\n   </ion-item>\n   <ion-item>\n      <span class="icon-directions_car" style="float:left"></span>\n      <p style="padding-left: 3px; color:#9b0c1a">Your request is Accepted</p>\n        <h6 style="color: #424242;padding-left: 22px;">Mon, Sep 03, 06:49AM</h6>\n        <h6 style="color: #424242;padding-left: 22px;">Micro . CRN 22312312</h6>\n   </ion-item>\n   <ion-item>\n      <span class="icon-directions_car" style="float:left"></span>\n      <p style="padding-left: 3px; color:#9b0c1a">Your request is Accepted</p>\n        <h6 style="color: #424242;padding-left: 22px;">Mon, Sep 03, 06:49AM</h6>\n        <h6 style="color: #424242;padding-left: 22px;">Micro . CRN 22312312</h6>\n   </ion-item>\n   <ion-item>\n      <span class="icon-directions_car" style="float:left"></span>\n      <p style="padding-left: 3px; color:#9b0c1a">Your request is Accepted</p>\n        <h6 style="color: #424242;padding-left: 22px;">Mon, Sep 03, 06:49AM</h6>\n        <h6 style="color: #424242;padding-left: 22px;">Micro . CRN 22312312</h6>\n   </ion-item>\n   <ion-item>\n      <span class="icon-directions_car" style="float:left"></span>\n      <p style="padding-left: 3px; color:#9b0c1a">Your request is Accepted</p>\n        <h6 style="color: #424242;padding-left: 22px;">Mon, Sep 03, 06:49AM</h6>\n        <h6 style="color: #424242;padding-left: 22px;">Micro . CRN 22312312</h6>\n   </ion-item>\n</ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/notification/notification.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */]])
+    ], NotificationPage);
+    return NotificationPage;
+}());
+
+//# sourceMappingURL=notification.js.map
+
+/***/ }),
+
+/***/ 90:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminAprvlPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_call_number__ = __webpack_require__(64);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+//import { CalendarComponentOptions } from 'ion2-calendar';
+/**
+ * Generated class for the AdminAprvlPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AdminAprvlPage = /** @class */ (function () {
+    function AdminAprvlPage(navCtrl, navParams, serviceProvider, commonProvider, callnumber, alertCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.callnumber = callnumber;
+        this.alertCtrl = alertCtrl;
+        this.cabList = [];
+        this.driverList = [];
+        this.vendorList = [];
+        console.log("location ", this.navParams.get('adminLocation'));
+        this.adminLocationID = this.navParams.get('adminLocation');
+        this.adminID = this.navParams.get('adminID');
+        this.editUrl = this.navParams.get('viewName');
+        console.log("admin id ", this.adminID);
+        //  this.getCabDriverDetails();
+    }
+    AdminAprvlPage.prototype.ionViewWillLoad = function () {
+        this.getAllDetails();
+    };
+    AdminAprvlPage.prototype.getAllDetails = function () {
+        var _this = this;
+        this.tripDetail = this.navParams.get('viewData');
+        this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
+        console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
+        this.srcSubstr = this.tripDetail.source.substring(0, 3);
+        this.destSubstr = this.tripDetail.destination.substring(0, 3);
+        this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe(function (response) {
+            if (response.status == 200) {
+                _this.tripData = JSON.parse(response._body);
+                _this.cabList = _this.tripData.cabList;
+                _this.vendorList = _this.tripData.vendorList;
+                _this.driverList = _this.tripData.driverList;
+                console.log("cabs details ", _this.tripData);
+                console.log("cabs details ", _this.cabList);
+            }
+        }, function (err) {
+            _this.commonProvider.showToast(err.message);
+        });
+    };
+    AdminAprvlPage.prototype.assignRequest = function () {
+        var _this = this;
+        // if (this.tripDetail.travelType == 'local') {
+        //   if (!this.cabs) {
+        //     this.commonProvider.showToast("Please assign Cab");
+        //     return false;
+        //   }
+        // } else {
+        //   if (!this.vendor) {
+        //     this.commonProvider.showToast("Please assign Vendor");
+        //     return false;
+        //   }
+        // }
+        // if (!this.driver) {
+        //   this.commonProvider.showToast("Please assign Driver");
+        //   return false;
+        // }
+        if (!this.vendor) {
+            if (!this.driver) {
+                this.commonProvider.showToast("Please assign Driver");
+                return false;
+            }
+            if (!this.cabs) {
+                this.commonProvider.showToast("Please assign Cab");
+                return false;
+            }
+        }
+        else {
+        }
+        this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';
+        this.commonProvider.Alert.confirm().then(function (res) {
+            _this.cabs != 'select' ? 'nothing' : _this.cabs = "";
+            _this.driver != 'select' ? 'nothing' : _this.driver = "";
+            _this.vendor != 'select' ? 'nothing' : _this.vendor = "";
+            _this.commonProvider.showLoader('Approving trip...');
+            _this.serviceProvider.assignReq(_this.editUrl, _this.tripDetail.id, _this.cabs, _this.driver, _this.vendor, _this.admincomment, _this.adminID).subscribe(function (response) {
+                console.log("response ", response);
+                if (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Request assigned successfully");
+                    _this.navCtrl.pop();
+                }
+                else {
+                    _this.commonProvider.showToast("Error in request update");
+                    _this.commonProvider.hideLoader();
+                }
+            });
+        }, function (err) {
+            console.log('user cancelled');
+        });
+    };
+    AdminAprvlPage.prototype.callnum = function (num) {
+        var _this = this;
+        console.log("inside call number function");
+        this.callnumber.callNumber(num, true).then(function (res) {
+            console.log('Dialer opened', res);
+        })
+            .catch(function (err) {
+            _this.commonProvider.showToast(err);
+            console.log('Error launching dialer', err);
+        });
+    };
+    AdminAprvlPage.prototype.setCab = function () {
+        this.cabs = 'select';
+        this.driver = 'select';
+    };
+    AdminAprvlPage.prototype.setVendor = function () {
+        this.vendor = 'select';
+    };
+    AdminAprvlPage.prototype.cancelReqAdmin = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: '',
+            message: "Please enter comments for rejection",
+            inputs: [
+                {
+                    name: 'comment',
+                    placeholder: 'Your reason'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: function (data) {
+                        console.log('Cancel clicked', data);
+                    }
+                },
+                {
+                    text: 'Send',
+                    handler: function (data) {
+                        console.log('Saved clicked', data);
+                        _this.rejectRequest(data.comment);
+                    }
+                }
+            ]
+        });
+        prompt.present();
+        return;
+    };
+    AdminAprvlPage.prototype.rejectRequest = function (cmnt) {
+        var _this = this;
+        this.commonProvider.showLoader('Rejecting trip...');
+        console.log('cmnt ', cmnt);
+        console.log('this.tripDetail.id ', this.tripDetail.id);
+        console.log('adminID ', this.adminID);
+        this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe(function (response) {
+            console.log("response ", response);
+            if (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Request cancelled successfully");
+                _this.navCtrl.pop();
+            }
+            else {
+                _this.commonProvider.showToast("Error in request cancellation");
+                _this.commonProvider.hideLoader();
+            }
+        }, function (err) {
+            _this.commonProvider.showToast("Request error");
+            _this.commonProvider.hideLoader();
+        });
+    };
+    AdminAprvlPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-admin-aprvl',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/admin-aprvl/admin-aprvl.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>Request Details</ion-title>\n    <!-- <ion-buttons end>\n      <button ion-button (click)="closeModal()">\n        Close\n      </button>\n    </ion-buttons> -->\n  </ion-navbar>\n  <ion-toolbar style="color: white;">\n    <ion-row>\n      <ion-col text-center>\n        <span>\n          {{srcSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;">{{tripDetail.pickupPoint}} </span>\n      </ion-col>\n      <ion-col text-center>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}</span><br>\n        <span class="icon-automobile" style="font-size: 1.5em"></span><br>\n        <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_time}}</span>\n      </ion-col>\n      <ion-col text-center>\n        <span>\n          {{destSubstr}}\n        </span><br>\n        <span style="font-size: 1.5em;font-weight: bold;"> {{tripDetail.destination}} </span>\n      </ion-col>\n    </ion-row>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div>\n\n    <ion-card class="driverCard">\n      <ion-card-header style="text-align: center" color="red">\n        Request Details</ion-card-header>\n      <ion-card-content>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Pick up point</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.pickupPoint}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">My Location</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.source}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Purpose</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.purpose}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Remark</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.remark}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Employee Name</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_userName}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Employee Location</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_location}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Mobile Number</span>\n          </ion-col>\n          <ion-col (click)="callnum(tripDetail.emp_phoneNo);">\n            <u style="color: blue;">{{tripDetail.emp_phoneNo}}\n            </u>\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Email Id</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.emp_email}}\n          </ion-col>\n        </ion-row>\n        <ion-row>\n          <ion-col>\n            <span class="formtitle">Travel Type</span>\n          </ion-col>\n          <ion-col>\n            {{tripDetail.travelType}}\n          </ion-col>\n        </ion-row>\n\n      </ion-card-content>\n    </ion-card>\n\n    <ion-item>\n      <ion-label>Assign Cab</ion-label>\n      <ion-select [(ngModel)]="cabs">\n        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == \'outstation\' " -->\n        <ion-option value="select" [selected]="true">select</ion-option>\n        <div *ngFor="let cab of cabList">\n          <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}, {{cab.cab_no}}</ion-option>\n        </div>\n      </ion-select>\n    </ion-item>\n    <ion-item>\n      <ion-label>Assign Driver</ion-label>\n      <ion-select [(ngModel)]="driver">\n        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == \'outstation\' " -->\n        <ion-option value="select" [selected]="true">select</ion-option>\n        <div *ngFor="let drvr of driverList">\n          <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n        </div>\n      </ion-select>\n    </ion-item>\n    <ion-item>\n      <ion-label>Assign Vendor</ion-label>\n      <ion-select [(ngModel)]="vendor">\n        <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == \'outstation\' " -->\n        <ion-option value="select" [selected]="true">select</ion-option>\n        <div *ngFor="let vendor of vendorList">\n          <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n        </div>\n      </ion-select>\n    </ion-item>\n    <ion-item>\n      <ion-label floating>Admin note</ion-label>\n      <ion-input type="text" [(ngModel)]="admincomment"></ion-input>\n    </ion-item>\n    <ion-row text-center>\n      <ion-col>\n        <button ion-button small="true" color="red" (click)="assignRequest()">Assign</button>\n        <button ion-button small="true" color="red" (click)="cancelReqAdmin()">Reject</button>\n      </ion-col>\n    </ion-row>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/admin-aprvl/admin-aprvl.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_native_call_number__["a" /* CallNumber */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    ], AdminAprvlPage);
+    return AdminAprvlPage;
+}());
+
+//# sourceMappingURL=admin-aprvl.js.map
+
+/***/ })
+
+},[243]);
+//# sourceMappingURL=main.js.map

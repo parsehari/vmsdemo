@@ -159,7 +159,7 @@
 
     <ion-row text-center class="row-height" style="margin-top: 10%">
       <ion-col>
-        <qr-code [value]="nothing" [size]="200"></qr-code>
+        <qr-code [value]="urlPath" [size]="200"></qr-code>
       </ion-col>
     </ion-row>
 
@@ -170,7 +170,8 @@
       </ion-item>
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col>
-          <button ion-button color="red" (click)="startTrip('startTrip')" [disabled]="tripDetail.startKm != 0">Start Trip
+          <button ion-button color="red" (click)="startTrip('startTrip')" [disabled]="tripDetail.startKm != 0">Start
+            Trip
           </button>
           <button ion-button color="red" (click)="startTrip('endTrip')" [disabled]="tripDetail.startKm == 0">End Trip
           </button>
