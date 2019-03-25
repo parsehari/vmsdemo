@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 //import { HttpClientModule } from '@angular/common/http';
 import { Network } from '@ionic-native/network';
 import { HttpModule } from '@angular/http';
+import { HTTP } from '@ionic-native/http';
 
 // plugins
 import { MyApp } from './app.component';
@@ -83,7 +84,8 @@ import { DatePickerModule } from 'ionic3-datepicker';
     Network,
     InAppBrowser,
     QRScanner,
-    CallNumber
+    CallNumber,
+    HTTP
 
 
   ]

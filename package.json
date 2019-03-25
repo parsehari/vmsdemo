@@ -28,7 +28,7 @@
     "@ionic-native/date-picker": "^4.13.0",
     "@ionic-native/facebook": "^4.7.0",
     "@ionic-native/fcm": "^4.15.0",
-    "@ionic-native/http": "^4.15.0",
+    "@ionic-native/http": "^4.20.0",
     "@ionic-native/in-app-browser": "^4.17.0",
     "@ionic-native/native-storage": "^4.17.0",
     "@ionic-native/network": "^4.7.0",

@@ -159,19 +159,32 @@ export class EmpdashboardPage {
       return;
     })
   }
+
   getEmpHistory() {
     this.pageTitle = "History";
     this.commonProvider.showLoader();
-    this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      if (response.status == 200) {
-        this.historyData = JSON.parse(response._body);
+    if (this.commonProvider.vapt) {
+      let buildParam = {};
+      this.serviceProvider.get('/getTripHistory/23165827', buildParam).then((response: any) => {
+        console.log("response", response);
         this.commonProvider.hideLoader();
-      }
-    },
-      (err) => {
+      }, (err) => {
+        alert("error");
+        console.log("err", err);
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      })
+    } else {
+      this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.historyData = JSON.parse(response._body);
+          this.commonProvider.hideLoader();
+        }
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   sendRequest() {

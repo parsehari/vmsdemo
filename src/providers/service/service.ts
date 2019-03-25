@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 //import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
+import { HTTP } from '@ionic-native/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
@@ -18,7 +19,7 @@ export class ServiceProvider {
 
   //private url = 'https://gmc.mahindra.com/vms';
   private url = 'https://mapps.mahindra.com/vms';
-  //public url = 'http://10.174.55.227:8080/vms';
+  //public url = 'http://10.174.55.66:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -26,7 +27,10 @@ export class ServiceProvider {
   assignTripDto: any;
 
 
-  constructor(public http: Http) {
+  constructor(public http: Http,
+    public ahttp: HTTP
+
+  ) {
 
   }
 
@@ -214,6 +218,45 @@ export class ServiceProvider {
     return this.http.post(this.url + params, this.tripDTO, options);
   }
 
+  getAllReq() {
 
+  }
+
+  public get(url: any, params?: any, options: any = {}) {
+    return new Promise(resolve => {
+      let responseData: any;
+      this.ahttp.setSSLCertMode("nocheck").then((data) => {
+        this.ahttp.setDataSerializer('json');
+        this.ahttp.get(this.url + url, params, {}).then(resp => {
+          console.log("response ", resp);
+          responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+          resolve(responseData);
+        }, (err) => {
+          resolve(err);
+        });
+      }).catch((err) => {
+        console.log("catch error ", err);
+        resolve(err);
+      });
+    });
+  }
+
+  post(url: any, params?: any, options: any = {}) {
+    return new Promise(resolve => {
+      this.ahttp.setSSLCertMode("nocheck").then((data) => {
+        this.ahttp.setDataSerializer('json');
+        this.ahttp.post(this.url + url, params, {}).then(resp => {
+          console.log("response ", resp);
+          resolve(options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
+        }, (err) => {
+          console.log("error ", err);
+          resolve(err);
+        });
+      }).catch((err) => {
+        console.log("catch error ", err);
+        resolve(err);
+      });
+    });
+  }
 
 }
