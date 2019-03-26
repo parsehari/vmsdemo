@@ -53,17 +53,31 @@ export class AdminAprvlPage {
     this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
-    this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe((response: any) => {
-      if (response.status == 200) {
-        this.tripData = JSON.parse(response._body);
-        this.cabList = this.tripData.cabList;
-        this.vendorList = this.tripData.vendorList;
-        this.driverList = this.tripData.driverList;
-      }
-    },
-      (err) => {
-        this.commonProvider.showToast(err.message);
-      });
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.adminLocationID).then((response: any) => {
+        if (response.status == 200) {
+          this.tripData = response;
+          this.cabList = this.tripData.cabList;
+          this.vendorList = this.tripData.vendorList;
+          this.driverList = this.tripData.driverList;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.tripData = JSON.parse(response._body);
+          this.cabList = this.tripData.cabList;
+          this.vendorList = this.tripData.vendorList;
+          this.driverList = this.tripData.driverList;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   assignRequest() {

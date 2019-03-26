@@ -33,17 +33,29 @@ export class AdminHistoryPage {
   ionViewWillEnter() {
     this.loadUserData();
   }
+
   loadUserData() {
     this.userDetails = this.navParams.get('EmployeeDetail');
     this.commonProvider.showLoader('');
-    this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      this.tripHistory = JSON.parse(response._body);
-      this.commonProvider.hideLoader();
-    },
-      (err) => {
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+        this.tripHistory = response;
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
+        this.tripHistory = JSON.parse(response._body);
+        this.commonProvider.hideLoader();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   openDetail(obj: any) {

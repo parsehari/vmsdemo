@@ -140,14 +140,25 @@ export class HoddashboardPage {
 
   getEmpHistory() {
     this.pageTitle = "Booking History";
-    this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      if (response.status == 200) {
-        this.historyData = JSON.parse(response._body);
-      }
-    },
-      (err) => {
-        this.commonProvider.showToast(err.message);
-      });
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then((response: any) => {
+        if (response.status == 200) {
+          this.historyData = response;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.historyData = JSON.parse(response._body);
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   sendRequest() {
@@ -304,38 +315,68 @@ export class HoddashboardPage {
   }
 
   ionViewDidLoad() {
-
-    this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
-      this.dhDetails = JSON.parse(response._body);
-    }, (err) => {
-      this.commonProvider.showToast(err.message);
-    })
-
-    this.commonProvider.showLoader();
-    this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
-      this.locations = JSON.parse(response._body);
-      this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
-      this.commonProvider.hideLoader();
-      this.getApprovalHistory();
-    },
-      (err) => {
-        this.commonProvider.hideLoader();
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
+        this.dhDetails = response;
+      }, (err) => {
         this.commonProvider.showToast(err.message);
-      });
-    this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+      })
+      this.commonProvider.showLoader();
+      this.serviceProvider.get('/getAllLocations').then((response: any) => {
+        this.locations = response;
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        this.commonProvider.hideLoader();
+        this.getApprovalHistory();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    } else {
+      this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
+        this.dhDetails = JSON.parse(response._body);
+      }, (err) => {
+        this.commonProvider.showToast(err.message);
+      })
+
+      this.commonProvider.showLoader();
+      this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
+        this.locations = JSON.parse(response._body);
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        this.commonProvider.hideLoader();
+        this.getApprovalHistory();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    }
   }
 
   getApprovalHistory() {
     this.commonProvider.showLoader('');
     this.pageTitle = "Requests";
-    this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response: any) => {
-      this.approvalList = JSON.parse(response._body);
-      this.commonProvider.hideLoader();
-    },
-      (err) => {
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getApprovalList/hod' + this.userDetails.emp_no).then((response: any) => {
+        this.approvalList = response;
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response: any) => {
+        this.approvalList = JSON.parse(response._body);
+        this.commonProvider.hideLoader();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   logout() {
@@ -429,7 +470,7 @@ export class HoddashboardPage {
     }
   }
 
-  giveRating(ratings, tripid, reason = null) {
+  giveRating(ratings: any, tripid: any, reason = null) {
     this.commonProvider.showLoader();
     this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
       this.commonProvider.hideLoader();

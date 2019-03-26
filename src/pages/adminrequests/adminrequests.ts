@@ -126,14 +126,26 @@ export class AdminrequestsPage {
   getPendingList() {
     this.commonProvider.showLoader('');
     this.pageTitle = "Pending";
-    this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      this.approvalList = JSON.parse(response._body);
-      this.commonProvider.hideLoader();
-    },
-      (err) => {
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getAllPendingRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+        this.approvalList = response;
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
+        this.approvalList = JSON.parse(response._body);
+        this.commonProvider.hideLoader();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+
+    }
   }
 
   segmentChanged(event) {
@@ -153,16 +165,29 @@ export class AdminrequestsPage {
   getEmpHistory() {
     this.commonProvider.showLoader();
     this.pageTitle = "Approved";
-    this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      if (response.status == 200) {
-        this.historyData = JSON.parse(response._body);
-      }
-      this.commonProvider.hideLoader();
-    },
-      (err) => {
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getAllApprovedRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+        if (response.status == 200) {
+          this.historyData = response;
+        }
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.historyData = JSON.parse(response._body);
+        }
+        this.commonProvider.hideLoader();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
 
   openDetail(obj: any) {
@@ -273,17 +298,31 @@ export class AdminrequestsPage {
   }
 
   getAllDetails() {
-    this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
-      if (response.status == 200) {
-        this.tripData = JSON.parse(response._body);
-        this.cabList = this.tripData.cabList;
-        this.vendorList = this.tripData.vendorList;
-        this.driverList = this.tripData.driverList;
-      }
-    },
-      (err) => {
-        this.commonProvider.showToast(err.message);
-      });
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+        if (response.status == 200) {
+          this.tripData = response;
+          this.cabList = this.tripData.cabList;
+          this.vendorList = this.tripData.vendorList;
+          this.driverList = this.tripData.driverList;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.tripData = JSON.parse(response._body);
+          this.cabList = this.tripData.cabList;
+          this.vendorList = this.tripData.vendorList;
+          this.driverList = this.tripData.driverList;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
   editRequest() {
     this.confirmReqst = false;
@@ -293,7 +332,7 @@ export class AdminrequestsPage {
     this.navCtrl.push(AdminHistoryPage, { EmployeeDetail: this.userDetails });
   }
 
-  showTermsCondition(myEvent) {
+  showTermsCondition(myEvent: any) {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
   }

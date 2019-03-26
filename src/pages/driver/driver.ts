@@ -61,32 +61,52 @@ export class DriverPage {
 
   getTrip() {
     this.commonProvider.showLoader('Getting cab details..');
-    this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe((resp: any) => {
-
-      this.tripDetail = JSON.parse(resp._body);
-      if (this.tripDetail.length) {
-        this.tripDetail[0] ? this.tripDetail = this.tripDetail[0] : 'nothing';
-
-        this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
-        this.driverDetail = this.tripDetail.driver;
-        this.srcSubstr = this.tripDetail.source.substring(0, 3);
-        this.destSubstr = this.tripDetail.destination.substring(0, 3);
-        //this.urlPath = this.urlPath + this.tripDetail.filePath;
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getTripDetails/driver/' + this.driverphno).then((resp: any) => {
+        this.tripDetail = resp;
+        if (this.tripDetail.length) {
+          this.tripDetail[0] ? this.tripDetail = this.tripDetail[0] : 'nothing';
+          this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
+          this.driverDetail = this.tripDetail.driver;
+          this.srcSubstr = this.tripDetail.source.substring(0, 3);
+          this.destSubstr = this.tripDetail.destination.substring(0, 3);
+          //this.urlPath = this.urlPath + this.tripDetail.filePath;
+          this.commonProvider.hideLoader();
+        } else {
+          this.commonProvider.hideLoader();
+        }
+      }, (err) => {
         this.commonProvider.hideLoader();
-      } else {
+        this.commonProvider.showToast('Service error')
+      })
+    } else {
+      this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe((resp: any) => {
+
+        this.tripDetail = JSON.parse(resp._body);
+        if (this.tripDetail.length) {
+          this.tripDetail[0] ? this.tripDetail = this.tripDetail[0] : 'nothing';
+
+          this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
+          this.driverDetail = this.tripDetail.driver;
+          this.srcSubstr = this.tripDetail.source.substring(0, 3);
+          this.destSubstr = this.tripDetail.destination.substring(0, 3);
+          //this.urlPath = this.urlPath + this.tripDetail.filePath;
+          this.commonProvider.hideLoader();
+        } else {
+          this.commonProvider.hideLoader();
+        }
+      }, (err) => {
         this.commonProvider.hideLoader();
-      }
-    }, (err) => {
-      this.commonProvider.hideLoader();
-      this.commonProvider.showToast('Service error')
-    })
+        this.commonProvider.showToast('Service error')
+      })
+    }
   }
 
   ionViewDidLoad() {
     this.getTrip();
   }
 
-  startTrip(type) {
+  startTrip(type: any) {
     if (this.startkm) {
       this.commonProvider.showLoader('Updating Kms..');
       let today = new Date();

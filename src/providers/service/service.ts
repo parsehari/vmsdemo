@@ -18,8 +18,8 @@ export class ServiceProvider {
   // header for json/content-type
 
   //private url = 'https://gmc.mahindra.com/vms';
-  private url = 'https://mapps.mahindra.com/vms';
-  //public url = 'http://10.174.55.66:8080/vms';
+  //private url = 'https://mapps.mahindra.com/vms';
+  public url = 'http://10.174.55.207:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -218,34 +218,33 @@ export class ServiceProvider {
     return this.http.post(this.url + params, this.tripDTO, options);
   }
 
-  getAllReq() {
-
-  }
-
   public get(url: any, params?: any, options: any = {}) {
     return new Promise(resolve => {
       let responseData: any;
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
         this.ahttp.get(this.url + url, params, {}).then(resp => {
-          console.log("response ", resp);
           responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+          console.log("In get service ", responseData);
           resolve(responseData);
         }, (err) => {
           resolve(err);
         });
       }).catch((err) => {
-        console.log("catch error ", err);
         resolve(err);
       });
     });
   }
 
   post(url: any, params?: any, options: any = {}) {
+    // var headers = new Headers({});
+    // headers.append('Content-Type', 'application/json');
+    // options = new RequestOptions({ headers: headers });
+    console.log('url', params);
     return new Promise(resolve => {
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
-        this.ahttp.post(this.url + url, params, {}).then(resp => {
+        this.ahttp.post(this.url + url, params, options).then(resp => {
           console.log("response ", resp);
           resolve(options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
         }, (err) => {

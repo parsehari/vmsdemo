@@ -109,29 +109,54 @@ export class EmpdashboardPage {
   }
 
   ionViewDidLoad() {
-    this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
-      this.dhDetails = JSON.parse(response._body);
-
-      this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
-        this.dhUsrDetails = JSON.parse(response._body);
-
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
+        this.dhDetails = response;
+        this.serviceProvider.get('/getEmpDetailService/' + this.dhDetails.pernr).then((response: any) => {
+          this.dhUsrDetails = response;
+        }, (err) => {
+          this.commonProvider.showToast("Error in user details");
+        })
       }, (err) => {
-        this.commonProvider.showToast("Error in user details");
+        this.commonProvider.showToast("Error in dh details");
       })
-    }, (err) => {
-      this.commonProvider.showToast("Error in dh details");
-    })
+      this.serviceProvider.get('/getAllLocations').then((response: any) => {
+        this.locations = response;
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    }
+    else {
 
-    this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
-      this.locations = JSON.parse(response._body);
-      this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
-    },
-      (err) => {
+      this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
+        this.dhDetails = JSON.parse(response._body);
 
-        this.commonProvider.showToast(err.message);
-      });
+        this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
+          this.dhUsrDetails = JSON.parse(response._body);
 
-    this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        }, (err) => {
+          this.commonProvider.showToast("Error in user details");
+        })
+      }, (err) => {
+        this.commonProvider.showToast("Error in dh details");
+      })
+
+      this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
+        this.locations = JSON.parse(response._body);
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+      },
+        (err) => {
+
+          this.commonProvider.showToast(err.message);
+        });
+
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+
+    }
+
   }
 
   showNotifn(myEvent) {
@@ -165,12 +190,12 @@ export class EmpdashboardPage {
     this.commonProvider.showLoader();
     if (this.commonProvider.vapt) {
       let buildParam = {};
-      this.serviceProvider.get('/getTripHistory/23165827', buildParam).then((response: any) => {
-        console.log("response", response);
+      this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no, buildParam).then((response: any) => {
+        console.log("historyData response", response);
+        this.historyData = response;
         this.commonProvider.hideLoader();
       }, (err) => {
-        alert("error");
-        console.log("err", err);
+        this.commonProvider.showToast(err);
         this.commonProvider.hideLoader();
       })
     } else {

@@ -28,15 +28,27 @@ export class RequesthistoryPage {
   }
 
   ionViewDidLoad() {
-    this.commonProvider.showLoader('');
-    this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
-      this.tripHistory = JSON.parse(response._body);
-      this.commonProvider.hideLoader();
-    },
-      (err) => {
+    if (this.commonProvider.vapt) {
+      this.commonProvider.showLoader('');
+      this.serviceProvider.get('/getAllTripHistory/' + this.userDetails.emp_no).then((response: any) => {
+        this.tripHistory = response;
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
-      });
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    } else {
+      this.commonProvider.showLoader('');
+      this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+        this.tripHistory = JSON.parse(response._body);
+        this.commonProvider.hideLoader();
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
   }
   openDetail(obj: any) {
     const myModal = this.modal.create('ModalDetailPage', { data: obj });
