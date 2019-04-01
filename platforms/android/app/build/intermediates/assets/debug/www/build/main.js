@@ -28,13 +28,13 @@ var map = {
 		176
 	],
 	"../pages/adminrequests/adminrequests.module": [
-		195
+		201
 	],
 	"../pages/driver/driver.module": [
 		178
 	],
 	"../pages/employee/empdashboard/empdashboard.module": [
-		199
+		195
 	],
 	"../pages/hod/hoddashboard/hoddashboard.module": [
 		202
@@ -47,10 +47,10 @@ var map = {
 		1
 	],
 	"../pages/notification-detail/notification-detail.module": [
-		189
+		190
 	],
 	"../pages/notification/notification.module": [
-		190
+		189
 	],
 	"../pages/requestdetails/requestdetails.module": [
 		354,
@@ -1852,10 +1852,10 @@ var RequesthistoryPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(57);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1865,23 +1865,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NotificationDetailPageModule = /** @class */ (function () {
-    function NotificationDetailPageModule() {
+var NotificationPageModule = /** @class */ (function () {
+    function NotificationPageModule() {
     }
-    NotificationDetailPageModule = __decorate([
+    NotificationPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
+                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
             ],
         })
-    ], NotificationDetailPageModule);
-    return NotificationDetailPageModule;
+    ], NotificationPageModule);
+    return NotificationPageModule;
 }());
 
-//# sourceMappingURL=notification-detail.module.js.map
+//# sourceMappingURL=notification.module.js.map
 
 /***/ }),
 
@@ -2108,9 +2108,10 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.post = function (url, params, options) {
         var _this = this;
         if (options === void 0) { options = {}; }
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        // var headers = new Headers({});
+        // headers.append('Content-Type', 'application/json');
+        // options = new RequestOptions({ headers: headers });
+        console.log('url', params);
         return new Promise(function (resolve) {
             _this.ahttp.setSSLCertMode("nocheck").then(function (data) {
                 _this.ahttp.setDataSerializer('json');
@@ -2144,10 +2145,10 @@ var ServiceProvider = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(180);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2157,23 +2158,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var NotificationPageModule = /** @class */ (function () {
-    function NotificationPageModule() {
+var NotificationDetailPageModule = /** @class */ (function () {
+    function NotificationDetailPageModule() {
     }
-    NotificationPageModule = __decorate([
+    NotificationDetailPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
             ],
         })
-    ], NotificationPageModule);
-    return NotificationPageModule;
+    ], NotificationDetailPageModule);
+    return NotificationDetailPageModule;
 }());
 
-//# sourceMappingURL=notification.module.js.map
+//# sourceMappingURL=notification-detail.module.js.map
 
 /***/ }),
 
@@ -2395,53 +2396,12 @@ var UsersDashboardPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminrequestsPageModule", function() { return AdminrequestsPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adminrequests__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-var AdminrequestsPageModule = /** @class */ (function () {
-    function AdminrequestsPageModule() {
-    }
-    AdminrequestsPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */]),
-            ],
-        })
-    ], AdminrequestsPageModule);
-    return AdminrequestsPageModule;
-}());
-
-//# sourceMappingURL=adminrequests.module.js.map
-
-/***/ }),
-
-/***/ 199:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmpdashboardPageModule", function() { return EmpdashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2612,6 +2572,47 @@ var CommonProvider = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 201:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminrequestsPageModule", function() { return AdminrequestsPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adminrequests__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var AdminrequestsPageModule = /** @class */ (function () {
+    function AdminrequestsPageModule() {
+    }
+    AdminrequestsPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__adminrequests__["a" /* AdminrequestsPage */]),
+            ],
+        })
+    ], AdminrequestsPageModule);
+    return AdminrequestsPageModule;
+}());
+
+//# sourceMappingURL=adminrequests.module.js.map
+
+/***/ }),
+
 /***/ 202:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2622,7 +2623,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2690,16 +2691,16 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_qr_scanner__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_call_number__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__ = __webpack_require__(193);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(188);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_ionic3_datepicker__ = __webpack_require__(59);
@@ -2778,16 +2779,16 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal-detail/modal-detail.module#ModalDetailPageModule', name: 'ModalDetailPage', segment: 'modal-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/requestdetails/requestdetails.module#RequestdetailsPageModule', name: 'RequestdetailsPage', segment: 'requestdetails', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
                     ]
                 })
@@ -3211,9 +3212,10 @@ var LoginPage = /** @class */ (function () {
         else {
             if (this.commonProvider.vapt) {
                 this.commonProvider.showLoader('Please wait..');
-                var reqParams = { 'employeeId': this.email.value, 'pwd': btoa(this.password.value) };
-                //        this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
-                this.serviceProvider.post('/login1', reqParams).then(function (response) {
+                var reqParams = { 'employeeId': this.email.value, 'password': btoa(this.password.value) };
+                var dataOb = JSON.stringify(reqParams);
+                //this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
+                this.serviceProvider.post('/login1', dataOb).then(function (response) {
                     console.log("login response ", response);
                     if (response._body == "Login success") {
                         _this.serviceProvider.get('/getEmpDetailService/' + _this.email.value).then(function (response) {

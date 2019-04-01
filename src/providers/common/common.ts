@@ -15,7 +15,7 @@ export class CommonProvider {
   toaster: any;
   loading: any = false;
   isOnline: boolean = true;
-  vapt: boolean = true;
+  vapt: boolean = false;
 
   constructor(
     public loadingCtrl: LoadingController,

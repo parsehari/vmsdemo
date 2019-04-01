@@ -18,8 +18,8 @@ export class ServiceProvider {
   // header for json/content-type
 
   //private url = 'https://gmc.mahindra.com/vms';
-  //private url = 'https://mapps.mahindra.com/vms';
-  public url = 'http://10.174.55.207:8080/vms';
+  private url = 'https://mapps.mahindra.com/vms';
+  //public url = 'http://10.174.55.207:8080/vms';
 
   raiseReq: any;
   tripDTO: any;
@@ -246,7 +246,7 @@ export class ServiceProvider {
         this.ahttp.setDataSerializer('json');
         this.ahttp.post(this.url + url, params, options).then(resp => {
           console.log("response ", resp);
-          resolve(options.responseType == 'text' ? resp.data : JSON.parse(resp.data));
+          resolve(resp);
         }, (err) => {
           console.log("error ", err);
           resolve(err);

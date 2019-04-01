@@ -214,7 +214,7 @@ export class EmpdashboardPage {
 
   sendRequest() {
     this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
-      this.commonProvider.showLoader('Sending request...');
+
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
       if (this.bookingForm.value.isRoundTrip == 'No') {
@@ -224,56 +224,102 @@ export class EmpdashboardPage {
         this.edate = new Date(this.endtravelDate);
         this.edate = this.edate.getDate() + '/' + (this.edate.getMonth() + 1) + '/' + this.edate.getFullYear();
       }
-
       let reqData: any;
-
-      reqData = {
-        'userID': this.userDetails.emp_no,
-        'source': this.bookingForm.value.travelsrc,
-        'destination': this.bookingForm.value.traveldest,
-        'pickpoint': this.bookingForm.value.pickpoint,
-        'purpose': this.bookingForm.value.updatepurpose,
-        //'travel_date': new Date(this.travelDate).toDateString(),
-        'travel_date': this.tdate,
-        'travel_time': this.bookingForm.value.traveltime,
-        'emp_email': this.userDetails.emp_email,
-        'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
-        'emp_phoneNo': this.userDetails.emp_cell,
-        'status': 'Pending with Manager',
-        'bh_Id': this.dhDetails.pernr,
-        'bh_UserName': this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
-        'bh_email': this.dhUsrDetails.emp_email,
-
-        'remark': this.bookingForm.value.remark,
-        'location': this.userDetails.emp_psa,
-        //'cost_id': this.userDetails.emp_cosid,
-        'cost_id': this.bookingForm.value.costid,
-        'cost_center': this.userDetails.emp_cost,
-        'travelType': this.bookingForm.value.travelType,
-        'isRoundTrip': this.bookingForm.value.isRoundTrip,
-        //'returnDate': new Date(this.endtravelDate).toDateString(),
-        'returnDate': this.edate,
-        'returnTime': this.bookingForm.value.endtraveltime,
-      }
-      this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe((response: any) => {
-        this.commonProvider.hideLoader();
-        if (response) {
-          this.confirmReqst = false;
-          this.bookingForm.reset();
-          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
-          this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
-          this.commonProvider.showToast('Request sent successfully');
-        } else {
-          this.commonProvider.showToast('Request error, Please check with admin');
+      this.commonProvider.showLoader('Sending request...');
+      if (this.commonProvider.vapt) {
+        reqData = {
+          "userID": this.userDetails.emp_no,
+          "source": this.bookingForm.value.travelsrc,
+          "destination": this.bookingForm.value.traveldest,
+          "pickpoint": this.bookingForm.value.pickpoint,
+          "purpose": this.bookingForm.value.updatepurpose,
+          "travel_date": this.tdate,
+          "travel_time": this.bookingForm.value.traveltime,
+          "emp_email": this.userDetails.emp_email,
+          "emp_UserName": this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          "emp_phoneNo": this.userDetails.emp_cell,
+          "status": "Pending with Manager",
+          "bh_Id": this.dhDetails.pernr,
+          "bh_UserName": this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
+          "bh_email": this.dhUsrDetails.emp_email,
+          "remark": this.bookingForm.value.remark,
+          "location": this.userDetails.emp_psa,
+          "cost_id": this.bookingForm.value.costid,
+          "cost_center": this.userDetails.emp_cost,
+          "travelType": this.bookingForm.value.travelType,
+          "isRoundTrip": this.bookingForm.value.isRoundTrip,
+          "returnDate": this.edate,
+          "returnTime": this.bookingForm.value.endtraveltime,
+          "isactive": "Y"
         }
+        this.serviceProvider.post('/insertTrip', reqData).then((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast('Request error, Please check with admin');
+        });
+      } else {
+        reqData = {
+          'userID': this.userDetails.emp_no,
+          'source': this.bookingForm.value.travelsrc,
+          'destination': this.bookingForm.value.traveldest,
+          'pickpoint': this.bookingForm.value.pickpoint,
+          'purpose': this.bookingForm.value.updatepurpose,
+          //'travel_date': new Date(this.travelDate).toDateString(),
+          'travel_date': this.tdate,
+          'travel_time': this.bookingForm.value.traveltime,
+          'emp_email': this.userDetails.emp_email,
+          'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          'emp_phoneNo': this.userDetails.emp_cell,
+          'status': 'Pending with Manager',
+          'bh_Id': this.dhDetails.pernr,
+          'bh_UserName': this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
+          'bh_email': this.dhUsrDetails.emp_email,
 
-      }, (err) => {
-        this.commonProvider.hideLoader();
-        this.commonProvider.showToast('Request error, Please check with admin');
-      });
+          'remark': this.bookingForm.value.remark,
+          'location': this.userDetails.emp_psa,
+          //'cost_id': this.userDetails.emp_cosid,
+          'cost_id': this.bookingForm.value.costid,
+          'cost_center': this.userDetails.emp_cost,
+          'travelType': this.bookingForm.value.travelType,
+          'isRoundTrip': this.bookingForm.value.isRoundTrip,
+          //'returnDate': new Date(this.endtravelDate).toDateString(),
+          'returnDate': this.edate,
+          'returnTime': this.bookingForm.value.endtraveltime,
+        }
+        this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
+
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast('Request error, Please check with admin');
+        });
+      }
+
+
     }, err => {
       return;
     })
+
+
   }
 
   logout() {
@@ -312,23 +358,34 @@ export class EmpdashboardPage {
     }
   }
 
-  cancelCabReq(event, id: any) {
+  cancelCabReq(event: any, id: any) {
     event.stopPropagation();
     this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
       this.commonProvider.showLoader()
-      this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
-        this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Trip cancelled successfully");
-        this.getEmpHistory();
-      }, (err) => {
-        this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Error in cancellation")
-      })
+      if (this.commonProvider.vapt) {
+        this.serviceProvider.get('/employeecanceltrip/' + id).then((response: any) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Trip cancelled successfully");
+          this.getEmpHistory();
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Error in cancellation");
+        })
+      } else {
+        this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Trip cancelled successfully");
+          this.getEmpHistory();
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Error in cancellation");
+        })
+      }
     }, err => {
       return;
     })
-
   }
+
   showTermsCondition(myEvent) {
     const popvr = this.modal.create('TermsconditionPage', {});
     popvr.present();
@@ -361,13 +418,25 @@ export class EmpdashboardPage {
 
   giveRating(ratings: any, tripid: any, reason = null) {
     this.commonProvider.showLoader();
-    this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
-      this.commonProvider.hideLoader();
-      this.commonProvider.showToast("Thank you for your feedback");
-      this.getEmpHistory();
-    }, (error) => {
-      this.commonProvider.hideLoader();
-      this.commonProvider.showToast("Error in update rating");
-    })
+    if (this.commonProvider.vapt) {
+      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason }
+      this.serviceProvider.post('/submitEmployeeFeedback', reqData).then((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Thank you for your feedback");
+        this.getEmpHistory();
+      }, (error) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in update rating");
+      })
+    } else {
+      this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Thank you for your feedback");
+        this.getEmpHistory();
+      }, (error) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in update rating");
+      })
+    }
   }
 }
