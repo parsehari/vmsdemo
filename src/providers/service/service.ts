@@ -19,7 +19,8 @@ export class ServiceProvider {
 
   //private url = 'https://gmc.mahindra.com/vms';
   private url = 'https://mapps.mahindra.com/vms';
-  //public url = 'http://10.174.55.207:8080/vms';
+  // public url = 'http://192.168.43.252:8080/vms_vapt';
+  //public url = 'http://10.174.55.73:8080/vms_vapt';
 
   raiseReq: any;
   tripDTO: any;
@@ -69,7 +70,7 @@ export class ServiceProvider {
     this.raiseReq.append("bh_UserName", data.bh_UserName);
     this.raiseReq.append("bh_email", data.bh_email);
     this.raiseReq.append("emp_email", data.emp_email);
-    this.raiseReq.append("emp_userName", data.emp_UserName);
+    this.raiseReq.append("emp_userName", data.emp_userName);
     this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
 
     this.raiseReq.append("remark", data.remark);

@@ -15,7 +15,7 @@ export class CommonProvider {
   toaster: any;
   loading: any = false;
   isOnline: boolean = true;
-  vapt: boolean = false;
+  vapt: boolean = true;
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -23,19 +23,16 @@ export class CommonProvider {
     public alertCtrl: AlertController,
     public network: Network
   ) {
-
     this.network.onConnect().subscribe(data => {
       this.displayNetworkUpdate(data.type);
     }, (error) => {
       return;
     });
-
     this.network.onDisconnect().subscribe(data => {
       this.displayNetworkUpdate(data.type);
     }, (error) => {
       return;
     });
-
   }
 
   showLoader(msg?) {

@@ -111,21 +111,47 @@ export class DriverPage {
       this.commonProvider.showLoader('Updating Kms..');
       let today = new Date();
       let cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
 
-        this.commonProvider.hideLoader();
-        if (type == 'endTrip') {
-          this.feedbackform = true;
-          this.driverText = 'You have completed your trip!!'
+      if (this.commonProvider.vapt) {
+        let reqData: any;
+        if (type == 'startTrip') {
+          reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
+        } else {
+          reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
         }
+        this.serviceProvider.post('/updateOngoingTripDetails', reqData).then((resp: any) => {
+          this.commonProvider.hideLoader();
+          if (type == 'endTrip') {
+            this.feedbackform = true;
+            this.driverText = 'You have completed your trip!!'
+          }
+          this.getTrip();
+        }, (err) => {
+          this.commonProvider.showToast(err.message);
+          this.commonProvider.hideLoader();
+        })
+      } else {
+        if (type == 'startTrip') {
+          let reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
+        } else {
+          let reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
+        }
+        this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
 
-        this.getTrip();
+          this.commonProvider.hideLoader();
+          if (type == 'endTrip') {
+            this.feedbackform = true;
+            this.driverText = 'You have completed your trip!!'
+          }
 
-      }, (err) => {
+          this.getTrip();
 
-        this.commonProvider.showToast(err.message);
-        this.commonProvider.hideLoader();
-      })
+        }, (err) => {
+
+          this.commonProvider.showToast(err.message);
+          this.commonProvider.hideLoader();
+        })
+      }
     } else {
       this.commonProvider.hideLoader();
       this.commonProvider.showToast("Please enter kms");

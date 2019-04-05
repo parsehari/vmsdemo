@@ -25,13 +25,13 @@ var map = {
 		172
 	],
 	"../pages/adminrequests/admin-history/admin-history.module": [
-		194
+		176
 	],
 	"../pages/adminrequests/adminrequests.module": [
 		195
 	],
 	"../pages/driver/driver.module": [
-		176
+		178
 	],
 	"../pages/employee/empdashboard/empdashboard.module": [
 		199
@@ -40,30 +40,30 @@ var map = {
 		202
 	],
 	"../pages/hod/requesthistory/requesthistory.module": [
-		187
+		188
 	],
 	"../pages/modal-detail/modal-detail.module": [
 		353,
 		1
 	],
 	"../pages/notification-detail/notification-detail.module": [
-		188
+		189
 	],
 	"../pages/notification/notification.module": [
-		189
+		190
 	],
 	"../pages/requestdetails/requestdetails.module": [
 		354,
 		0
 	],
 	"../pages/scan/scan.module": [
-		190
+		191
 	],
 	"../pages/termscondition/termscondition.module": [
-		192
+		193
 	],
 	"../pages/users-dashboard/users-dashboard.module": [
-		193
+		194
 	]
 };
 function webpackAsyncContext(req) {
@@ -125,10 +125,139 @@ var AdminAprvlPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(177);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AdminHistoryPageModule = /** @class */ (function () {
+    function AdminHistoryPageModule() {
+    }
+    AdminHistoryPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */]),
+            ],
+        })
+    ], AdminHistoryPageModule);
+    return AdminHistoryPageModule;
+}());
+
+//# sourceMappingURL=admin-history.module.js.map
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminHistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the AdminHistoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AdminHistoryPage = /** @class */ (function () {
+    function AdminHistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.modal = modal;
+        this.userDetails = [];
+        this.tripHistory = [];
+        //this.loadUserData();
+    }
+    AdminHistoryPage.prototype.ionViewWillEnter = function () {
+        this.loadUserData();
+    };
+    AdminHistoryPage.prototype.loadUserData = function () {
+        var _this = this;
+        this.userDetails = this.navParams.get('EmployeeDetail');
+        this.commonProvider.showLoader('');
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+                _this.tripHistory = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+                _this.tripHistory = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+    };
+    AdminHistoryPage.prototype.openDetail = function (obj) {
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    AdminHistoryPage.prototype.editRequest = function (event, obj) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' });
+    };
+    AdminHistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+    ], AdminHistoryPage);
+    return AdminHistoryPage;
+}());
+
+//# sourceMappingURL=admin-history.js.map
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DriverPageModule", function() { return DriverPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(329);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -161,7 +290,7 @@ var DriverPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 177:
+/***/ 179:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -279,17 +408,45 @@ var DriverPage = /** @class */ (function () {
             this.commonProvider.showLoader('Updating Kms..');
             var today = new Date();
             var cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
-                _this.commonProvider.hideLoader();
-                if (type == 'endTrip') {
-                    _this.feedbackform = true;
-                    _this.driverText = 'You have completed your trip!!';
+            if (this.commonProvider.vapt) {
+                var reqData = void 0;
+                if (type == 'startTrip') {
+                    reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
                 }
-                _this.getTrip();
-            }, function (err) {
-                _this.commonProvider.showToast(err.message);
-                _this.commonProvider.hideLoader();
-            });
+                else {
+                    reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
+                }
+                this.serviceProvider.post('/updateOngoingTripDetails', reqData).then(function (resp) {
+                    _this.commonProvider.hideLoader();
+                    if (type == 'endTrip') {
+                        _this.feedbackform = true;
+                        _this.driverText = 'You have completed your trip!!';
+                    }
+                    _this.getTrip();
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                    _this.commonProvider.hideLoader();
+                });
+            }
+            else {
+                if (type == 'startTrip') {
+                    var reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
+                }
+                else {
+                    var reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
+                }
+                this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
+                    _this.commonProvider.hideLoader();
+                    if (type == 'endTrip') {
+                        _this.feedbackform = true;
+                        _this.driverText = 'You have completed your trip!!';
+                    }
+                    _this.getTrip();
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                    _this.commonProvider.hideLoader();
+                });
+            }
         }
         else {
             this.commonProvider.hideLoader();
@@ -324,7 +481,7 @@ var DriverPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 178:
+/***/ 180:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -368,7 +525,7 @@ var NotificationDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 179:
+/***/ 181:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -469,15 +626,22 @@ var EmpdashboardPage = /** @class */ (function () {
     }
     EmpdashboardPage.prototype.ionViewDidLoad = function () {
         var _this = this;
+        this.commonProvider.showLoader('Getting employee details..');
         if (this.commonProvider.vapt) {
+            console.log("emp service call ", this.userDetails);
             this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then(function (response) {
+                console.log("response usr getEmployeeDept ", response);
                 _this.dhDetails = response;
                 _this.serviceProvider.get('/getEmpDetailService/' + _this.dhDetails.pernr).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    console.log("response usr ", response);
                     _this.dhUsrDetails = response;
                 }, function (err) {
+                    _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast("Error in user details");
                 });
             }, function (err) {
+                _this.commonProvider.hideLoader();
                 _this.commonProvider.showToast("Error in dh details");
             });
             this.serviceProvider.get('/getAllLocations').then(function (response) {
@@ -493,10 +657,13 @@ var EmpdashboardPage = /** @class */ (function () {
                 _this.dhDetails = JSON.parse(response._body);
                 _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.dhDetails.pernr).subscribe(function (response) {
                     _this.dhUsrDetails = JSON.parse(response._body);
+                    _this.commonProvider.hideLoader();
                 }, function (err) {
+                    _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast("Error in user details");
                 });
             }, function (err) {
+                _this.commonProvider.hideLoader();
                 _this.commonProvider.showToast("Error in dh details");
             });
             this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
@@ -578,27 +745,29 @@ var EmpdashboardPage = /** @class */ (function () {
                     "userID": _this.userDetails.emp_no,
                     "source": _this.bookingForm.value.travelsrc,
                     "destination": _this.bookingForm.value.traveldest,
-                    "pickpoint": _this.bookingForm.value.pickpoint,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
                     "purpose": _this.bookingForm.value.updatepurpose,
                     "travel_date": _this.tdate,
                     "travel_time": _this.bookingForm.value.traveltime,
                     "emp_email": _this.userDetails.emp_email,
-                    "emp_UserName": _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    "emp_userName": _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
                     "emp_phoneNo": _this.userDetails.emp_cell,
                     "status": "Pending with Manager",
                     "bh_Id": _this.dhDetails.pernr,
                     "bh_UserName": _this.dhUsrDetails.emp_f_name + ' ' + _this.dhUsrDetails.emp_l_name,
                     "bh_email": _this.dhUsrDetails.emp_email,
                     "remark": _this.bookingForm.value.remark,
-                    "location": _this.userDetails.emp_psa,
+                    //"location": this.userDetails.emp_psa,
                     "cost_id": _this.bookingForm.value.costid,
                     "cost_center": _this.userDetails.emp_cost,
                     "travelType": _this.bookingForm.value.travelType,
                     "isRoundTrip": _this.bookingForm.value.isRoundTrip,
                     "returnDate": _this.edate,
                     "returnTime": _this.bookingForm.value.endtraveltime,
-                    "isactive": "Y"
+                    "isactive": "Y",
+                    "locationName": _this.userDetails.emp_psa
                 };
+                console.log("req data ", reqData);
                 _this.serviceProvider.post('/insertTrip', reqData).then(function (response) {
                     _this.commonProvider.hideLoader();
                     if (response) {
@@ -627,7 +796,7 @@ var EmpdashboardPage = /** @class */ (function () {
                     'travel_date': _this.tdate,
                     'travel_time': _this.bookingForm.value.traveltime,
                     'emp_email': _this.userDetails.emp_email,
-                    'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    'emp_userName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
                     'emp_phoneNo': _this.userDetails.emp_cell,
                     'status': 'Pending with Manager',
                     'bh_Id': _this.dhDetails.pernr,
@@ -807,7 +976,7 @@ var EmpdashboardPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 180:
+/***/ 182:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -818,7 +987,7 @@ var EmpdashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(41);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -914,10 +1083,6 @@ var HoddashboardPage = /** @class */ (function () {
         });
     };
     HoddashboardPage.prototype.showTermsCondition = function (myEvent) {
-        // let popvr = this.popoverController.create(TermsconditionPage);
-        // popvr.present({
-        //   ev: myEvent
-        // })
         var popvr = this.modal.create('TermsconditionPage', {});
         popvr.present();
     };
@@ -943,9 +1108,8 @@ var HoddashboardPage = /** @class */ (function () {
         this.pageTitle = "Booking History";
         if (this.commonProvider.vapt) {
             this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then(function (response) {
-                if (response.status == 200) {
-                    _this.historyData = response;
-                }
+                console.log("history response ", response);
+                _this.historyData = response;
             }, function (err) {
                 _this.commonProvider.showToast(err.message);
             });
@@ -974,45 +1138,86 @@ var HoddashboardPage = /** @class */ (function () {
                 _this.edate = new Date(_this.endtravelDate);
                 _this.edate = _this.edate.getDate() + '/' + (_this.edate.getMonth() + 1) + '/' + _this.edate.getFullYear();
             }
-            var reqData = {
-                'userID': _this.userDetails.emp_no,
-                'source': _this.bookingForm.value.travelsrc,
-                'destination': _this.bookingForm.value.traveldest,
-                'pickpoint': _this.bookingForm.value.pickpoint,
-                'purpose': _this.bookingForm.value.updatepurpose,
-                //'travel_date': new Date(this.travelDate).toDateString(),
-                'travel_date': _this.tdate,
-                'travel_time': _this.bookingForm.value.traveltime,
-                'emp_email': _this.userDetails.emp_email,
-                'remark': _this.bookingForm.value.remark,
-                'location': _this.userDetails.emp_psa,
-                //'cost_id': this.userDetails.emp_cosid,
-                'cost_id': _this.bookingForm.value.costid,
-                'cost_center': _this.userDetails.emp_cost,
-                'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
-                'emp_phoneNo': _this.userDetails.emp_cell,
-                'status': 'Pending with Admin',
-                'travelType': _this.bookingForm.value.travelType,
-                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
-                'returnDate': _this.edate,
-                //'returnDate': new Date(this.endtravelDate).toDateString(),
-                'returnTime': _this.bookingForm.value.endtraveltime
-            };
-            _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
-                _this.commonProvider.hideLoader();
-                if (response) {
-                    _this.confirmReqst = false;
-                    _this.bookingForm.reset();
-                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-                    _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
-                    _this.commonProvider.showToast('Request sent successfully');
-                }
-                else {
-                    _this.commonProvider.showToast('Request error, Please check with admin');
-                }
-            }, function (err) {
-                _this.commonProvider.showToast(err.message);
-            });
+            if (_this.commonProvider.vapt) {
+                var reqData = {
+                    "userID": _this.userDetails.emp_no,
+                    "source": _this.bookingForm.value.travelsrc,
+                    "destination": _this.bookingForm.value.traveldest,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
+                    "purpose": _this.bookingForm.value.updatepurpose,
+                    "travel_date": _this.tdate,
+                    "travel_time": _this.bookingForm.value.traveltime,
+                    "emp_email": _this.userDetails.emp_email,
+                    "remark": _this.bookingForm.value.remark,
+                    "locationName": _this.userDetails.emp_psa,
+                    "cost_id": _this.bookingForm.value.costid,
+                    "cost_center": _this.userDetails.emp_cost,
+                    "emp_userName": _this.userDetails.emp_f_name + " " + _this.userDetails.emp_l_name,
+                    "emp_phoneNo": _this.userDetails.emp_cell,
+                    "status": "Pending with Admin",
+                    "travelType": _this.bookingForm.value.travelType,
+                    "isRoundTrip": _this.bookingForm.value.isRoundTrip,
+                    "returnDate": _this.edate,
+                    "returnTime": _this.bookingForm.value.endtraveltime,
+                    "isactive": 'Y'
+                };
+                _this.serviceProvider.post('/insertTrip', reqData).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                });
+            }
+            else {
+                var reqData = {
+                    'userID': _this.userDetails.emp_no,
+                    'source': _this.bookingForm.value.travelsrc,
+                    'destination': _this.bookingForm.value.traveldest,
+                    'pickupPoint': _this.bookingForm.value.pickpoint,
+                    'purpose': _this.bookingForm.value.updatepurpose,
+                    //'travel_date': new Date(this.travelDate).toDateString(),
+                    'travel_date': _this.tdate,
+                    'travel_time': _this.bookingForm.value.traveltime,
+                    'emp_email': _this.userDetails.emp_email,
+                    'remark': _this.bookingForm.value.remark,
+                    'location': _this.userDetails.emp_psa,
+                    //'cost_id': this.userDetails.emp_cosid,
+                    'cost_id': _this.bookingForm.value.costid,
+                    'cost_center': _this.userDetails.emp_cost,
+                    'emp_userName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    'emp_phoneNo': _this.userDetails.emp_cell,
+                    'status': 'Pending with Admin',
+                    'travelType': _this.bookingForm.value.travelType,
+                    'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                    'returnDate': _this.edate,
+                    //'returnDate': new Date(this.endtravelDate).toDateString(),
+                    'returnTime': _this.bookingForm.value.endtraveltime
+                };
+                _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                });
+            }
         }, function (err) {
             return;
         });
@@ -1061,48 +1266,94 @@ var HoddashboardPage = /** @class */ (function () {
         var _this = this;
         if (comment === void 0) { comment = "null"; }
         this.commonProvider.showLoader('Sending request...');
-        var reqData = {
-            'userID': obj.userID,
-            'source': obj.source,
-            'destination': obj.destination,
-            'pickpoint': obj.pickupPoint,
-            'purpose': obj.purpose,
-            'travel_date': obj.travel_date,
-            'travel_time': obj.travel_time,
-            'id': obj.id,
-            'status': status,
-            'modified_by': this.userDetails.emp_no,
-            'comment': comment,
-            'emp_email': obj.emp_email,
-            'emp_UserName': obj.emp_userName,
-            'emp_phoneNo': obj.emp_phoneNo,
-            'bh_Id': obj.bh_Id,
-            'bh_UserName': obj.bh_UserName,
-            'remark': obj.remark,
-            'bh_email': obj.bh_email,
-            //  'location': obj.source,
-            'location': obj.emp_location,
-            'cost_id': obj.cost_id,
-            'cost_center': obj.cost_center,
-            'travelType': obj.travelType,
-            'isRoundTrip': obj.isRoundTrip,
-            'returnDate': obj.returnDate,
-            'returnTime': obj.returnTime
-        };
-        this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe(function (response) {
-            _this.commonProvider.hideLoader();
-            if (response) {
-                _this.getApprovalHistory();
-                _this.events.publish('closeModalev');
-                _this.commonProvider.showToast('Request sent successfully');
-            }
-            else {
-                _this.commonProvider.showToast('Request error, Please check with admin');
-            }
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            var reqData = {
+                "userID": obj.userID,
+                "source": obj.source,
+                "destination": obj.destination,
+                "pickupPoint": obj.pickupPoint,
+                "purpose": obj.purpose,
+                "travel_date": obj.travel_date,
+                "travel_time": obj.travel_time,
+                "id": obj.id,
+                "status": status,
+                "modifiedby": this.userDetails.emp_no,
+                "comment": comment,
+                "emp_email": obj.emp_email,
+                "emp_userName": obj.emp_userName,
+                "emp_phoneNo": obj.emp_phoneNo,
+                "bh_Id": obj.bh_Id,
+                "bh_UserName": obj.bh_UserName,
+                "remark": obj.remark,
+                "bh_email": obj.bh_email,
+                "location": obj.emp_location,
+                "cost_id": obj.cost_id,
+                "cost_center": obj.cost_center,
+                "travelType": obj.travelType,
+                "isRoundTrip": obj.isRoundTrip,
+                "returnDate": obj.returnDate,
+                "returnTime": obj.returnTime
+            };
+            this.serviceProvider.post('/approveRequest/hod', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                console.log("approve reject resposne ", response);
+                if (response) {
+                    _this.getApprovalHistory();
+                    _this.events.publish('closeModalev');
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            var reqData = {
+                'userID': obj.userID,
+                'source': obj.source,
+                'destination': obj.destination,
+                'pickupPoint': obj.pickupPoint,
+                'purpose': obj.purpose,
+                'travel_date': obj.travel_date,
+                'travel_time': obj.travel_time,
+                'id': obj.id,
+                'status': status,
+                'modified_by': this.userDetails.emp_no,
+                'comment': comment,
+                'emp_email': obj.emp_email,
+                'emp_userName': obj.emp_userName,
+                'emp_phoneNo': obj.emp_phoneNo,
+                'bh_Id': obj.bh_Id,
+                'bh_UserName': obj.bh_UserName,
+                'remark': obj.remark,
+                'bh_email': obj.bh_email,
+                //  'location': obj.source,
+                'location': obj.emp_location,
+                'cost_id': obj.cost_id,
+                'cost_center': obj.cost_center,
+                'travelType': obj.travelType,
+                'isRoundTrip': obj.isRoundTrip,
+                'returnDate': obj.returnDate,
+                'returnTime': obj.returnTime
+            };
+            this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.getApprovalHistory();
+                    _this.events.publish('closeModalev');
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     HoddashboardPage.prototype.viewReqHistory = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__["a" /* RequesthistoryPage */], { EmployeeDetail: this.userDetails });
@@ -1151,7 +1402,7 @@ var HoddashboardPage = /** @class */ (function () {
         this.commonProvider.showLoader('');
         this.pageTitle = "Requests";
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getApprovalList/hod' + this.userDetails.emp_no).then(function (response) {
+            this.serviceProvider.get('/getApprovalList/hod/' + this.userDetails.emp_no).then(function (response) {
                 _this.approvalList = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
@@ -1218,14 +1469,26 @@ var HoddashboardPage = /** @class */ (function () {
         event.stopPropagation();
         this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
             _this.commonProvider.showLoader();
-            _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Trip cancelled successfully");
-                _this.getEmpHistory();
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in cancellation");
-            });
+            if (_this.commonProvider.vapt) {
+                _this.serviceProvider.get('/employeecanceltrip/' + id).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
+            else {
+                _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
         }, function (err) {
             return;
         });
@@ -1261,14 +1524,27 @@ var HoddashboardPage = /** @class */ (function () {
         var _this = this;
         if (reason === void 0) { reason = null; }
         this.commonProvider.showLoader();
-        this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Thank you for your feedback");
-            _this.getEmpHistory();
-        }, function (error) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Error in update rating");
-        });
+        if (this.commonProvider.vapt) {
+            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason };
+            this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
+        else {
+            this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
     };
     HoddashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1292,7 +1568,7 @@ var HoddashboardPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 181:
+/***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1375,7 +1651,7 @@ var RequesthistoryPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 182:
+/***/ 184:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1387,7 +1663,7 @@ var RequesthistoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(183);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(177);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1577,44 +1853,84 @@ var AdminrequestsPage = /** @class */ (function () {
                 _this.edate = new Date(_this.endtravelDate);
                 _this.edate = _this.edate.getDate() + '-' + (_this.edate.getMonth() + 1) + '-' + _this.edate.getFullYear();
             }
-            var reqData = {
-                'source': _this.userDetails.location.id,
-                'destination': _this.bookingForm.value.traveldest,
-                'purpose': _this.bookingForm.value.updatepurpose,
-                //'travel_date': new Date(this.travelDate).toDateString(),
-                'travel_date': _this.tdate,
-                'travel_time': _this.bookingForm.value.traveltime,
-                'remark': _this.bookingForm.value.remark,
-                'status': 'Pending with Admin',
-                'travelType': _this.bookingForm.value.travelType,
-                'usrID': _this.bookingForm.value.usrID,
-                'username': _this.bookingForm.value.usrName,
-                'usrphone': _this.bookingForm.value.usrphone,
-                'cabs': _this.bookingForm.value.cabs,
-                'driver': _this.bookingForm.value.driver,
-                'vendor': _this.bookingForm.value.vendor,
-                'pickpoint': _this.bookingForm.value.pickpoint,
-                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
-                //'returnDate': new Date(this.endtravelDate).toDateString(),
-                'returnDate': _this.edate,
-                'returnTime': _this.bookingForm.value.endtraveltime,
-                'adminapproverId': _this.userDetails.id
-            };
-            _this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe(function (response) {
-                _this.commonProvider.hideLoader();
-                if (response) {
-                    _this.confirmReqst = false;
-                    _this.bookingForm.reset();
-                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
-                    _this.commonProvider.showToast('Request sent successfully');
-                }
-                else {
+            if (_this.commonProvider.vapt) {
+                var reqData = {
+                    "source": _this.userDetails.location.id,
+                    "destination": _this.bookingForm.value.traveldest,
+                    "purpose": _this.bookingForm.value.updatepurpose,
+                    "travel_date": _this.tdate,
+                    "travel_time": _this.bookingForm.value.traveltime,
+                    "comment": _this.bookingForm.value.remark,
+                    //"status": "Pending with Admin",
+                    "travelType": _this.bookingForm.value.travelType,
+                    "userID": _this.bookingForm.value.usrID,
+                    "emp_userName": _this.bookingForm.value.usrName,
+                    "emp_phoneNo": _this.bookingForm.value.usrphone,
+                    "cabid": _this.bookingForm.value.cabs,
+                    "driverid": _this.bookingForm.value.driver,
+                    "vendorid": _this.bookingForm.value.vendor,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
+                    "isRoundTrip": _this.bookingForm.value.isRoundTrip,
+                    "returnDate": _this.edate,
+                    "returnTime": _this.bookingForm.value.endtraveltime,
+                    "adminapproverId": _this.userDetails.id
+                };
+                _this.serviceProvider.post('/adminraisecabrequest/adminMobile', reqData).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast('Request error, Please check with admin');
-                }
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast('Request error, Please check with admin');
-            });
+                });
+            }
+            else {
+                var reqData = {
+                    'source': _this.userDetails.location.id,
+                    'destination': _this.bookingForm.value.traveldest,
+                    'purpose': _this.bookingForm.value.updatepurpose,
+                    //'travel_date': new Date(this.travelDate).toDateString(),
+                    'travel_date': _this.tdate,
+                    'travel_time': _this.bookingForm.value.traveltime,
+                    'remark': _this.bookingForm.value.remark,
+                    'status': 'Pending with Admin',
+                    'travelType': _this.bookingForm.value.travelType,
+                    'usrID': _this.bookingForm.value.usrID,
+                    'username': _this.bookingForm.value.usrName,
+                    'usrphone': _this.bookingForm.value.usrphone,
+                    'cabs': _this.bookingForm.value.cabs,
+                    'driver': _this.bookingForm.value.driver,
+                    'vendor': _this.bookingForm.value.vendor,
+                    'pickupPoint': _this.bookingForm.value.pickpoint,
+                    'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                    //'returnDate': new Date(this.endtravelDate).toDateString(),
+                    'returnDate': _this.edate,
+                    'returnTime': _this.bookingForm.value.endtraveltime,
+                    'adminapproverId': _this.userDetails.id
+                };
+                _this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                });
+            }
         }, function (err) {
         });
     };
@@ -1750,98 +2066,7 @@ var AdminrequestsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 183:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminHistoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the AdminHistoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AdminHistoryPage = /** @class */ (function () {
-    function AdminHistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.serviceProvider = serviceProvider;
-        this.commonProvider = commonProvider;
-        this.modal = modal;
-        this.userDetails = [];
-        this.tripHistory = [];
-        //this.loadUserData();
-    }
-    AdminHistoryPage.prototype.ionViewWillEnter = function () {
-        this.loadUserData();
-    };
-    AdminHistoryPage.prototype.loadUserData = function () {
-        var _this = this;
-        this.userDetails = this.navParams.get('EmployeeDetail');
-        this.commonProvider.showLoader('');
-        if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
-                _this.tripHistory = response;
-                _this.commonProvider.hideLoader();
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
-            });
-        }
-        else {
-            this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
-                _this.tripHistory = JSON.parse(response._body);
-                _this.commonProvider.hideLoader();
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
-            });
-        }
-    };
-    AdminHistoryPage.prototype.openDetail = function (obj) {
-        var myModal = this.modal.create('ModalDetailPage', { data: obj });
-        myModal.present();
-    };
-    AdminHistoryPage.prototype.editRequest = function (event, obj) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' });
-    };
-    AdminHistoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
-    ], AdminHistoryPage);
-    return AdminHistoryPage;
-}());
-
-//# sourceMappingURL=admin-history.js.map
-
-/***/ }),
-
-/***/ 187:
+/***/ 188:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1849,7 +2074,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequesthistoryPageModule", function() { return RequesthistoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(183);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1879,7 +2104,7 @@ var RequesthistoryPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 188:
+/***/ 189:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1887,7 +2112,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(180);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1914,44 +2139,6 @@ var NotificationDetailPageModule = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=notification-detail.module.js.map
-
-/***/ }),
-
-/***/ 189:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(57);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var NotificationPageModule = /** @class */ (function () {
-    function NotificationPageModule() {
-    }
-    NotificationPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
-            ],
-        })
-    ], NotificationPageModule);
-    return NotificationPageModule;
-}());
-
-//# sourceMappingURL=notification.module.js.map
 
 /***/ }),
 
@@ -2030,7 +2217,7 @@ var ServiceProvider = /** @class */ (function () {
         this.raiseReq.append("bh_UserName", data.bh_UserName);
         this.raiseReq.append("bh_email", data.bh_email);
         this.raiseReq.append("emp_email", data.emp_email);
-        this.raiseReq.append("emp_userName", data.emp_UserName);
+        this.raiseReq.append("emp_userName", data.emp_userName);
         this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
         this.raiseReq.append("remark", data.remark);
         this.raiseReq.append("locationName", data.location);
@@ -2214,10 +2401,48 @@ var ServiceProvider = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(57);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationPageModule = /** @class */ (function () {
+    function NotificationPageModule() {
+    }
+    NotificationPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+            ],
+        })
+    ], NotificationPageModule);
+    return NotificationPageModule;
+}());
+
+//# sourceMappingURL=notification.module.js.map
+
+/***/ }),
+
+/***/ 191:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScanPageModule", function() { return ScanPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(192);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2247,7 +2472,7 @@ var ScanPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 191:
+/***/ 192:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2346,7 +2571,7 @@ var ScanPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 192:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2384,7 +2609,7 @@ var TermsconditionPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 193:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2422,44 +2647,6 @@ var UsersDashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 194:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(183);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var AdminHistoryPageModule = /** @class */ (function () {
-    function AdminHistoryPageModule() {
-    }
-    AdminHistoryPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */]),
-            ],
-        })
-    ], AdminHistoryPageModule);
-    return AdminHistoryPageModule;
-}());
-
-//# sourceMappingURL=admin-history.module.js.map
-
-/***/ }),
-
 /***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2468,7 +2655,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminrequestsPageModule", function() { return AdminrequestsPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adminrequests__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__adminrequests__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2509,7 +2696,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmpdashboardPageModule", function() { return EmpdashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2581,7 +2768,7 @@ var CommonProvider = /** @class */ (function () {
         this.network = network;
         this.loading = false;
         this.isOnline = true;
-        this.vapt = false;
+        this.vapt = true;
         this.Alert = {
             confirm: function (msg, title) {
                 return new Promise(function (resolve, reject) {
@@ -2690,7 +2877,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2757,20 +2944,20 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(41);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_service_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_qr_scanner__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_call_number__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__ = __webpack_require__(176);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(194);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__ = __webpack_require__(195);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27_ionic3_datepicker__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -2846,6 +3033,7 @@ var AppModule = /** @class */ (function () {
                 }, {
                     links: [
                         { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal-detail/modal-detail.module#ModalDetailPageModule', name: 'ModalDetailPage', segment: 'modal-detail', priority: 'low', defaultHistory: [] },
@@ -2855,7 +3043,6 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
@@ -2947,7 +3134,7 @@ var TermsconditionPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(192);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3077,12 +3264,12 @@ var MyApp = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__ = __webpack_require__(182);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(305);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_crypto_js__);
@@ -3126,11 +3313,11 @@ var LoginPage = /** @class */ (function () {
         this.createForm();
     };
     LoginPage.prototype.createFormControls = function () {
-        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('23165827', [
+        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('203442', [
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
         ]);
-        this.password = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('Mahindra!!', [
+        this.password = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('Welcome@1234', [
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].minLength(4)
         ]);
@@ -3211,6 +3398,7 @@ var LoginPage = /** @class */ (function () {
                 this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe(function (response) {
                     if (response._body == "Login success") {
                         _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe(function (response) {
+                            console.log("login response ", response);
                             response = JSON.parse(response._body);
                             _this.commonProvider.hideLoader();
                             //  let str = response.emp_esg;
@@ -3403,7 +3591,7 @@ var LoginPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__ = __webpack_require__(180);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3546,17 +3734,33 @@ var AdminAprvlPage = /** @class */ (function () {
             _this.driver != 'select' ? 'nothing' : _this.driver = "";
             _this.vendor != 'select' ? 'nothing' : _this.vendor = "";
             _this.commonProvider.showLoader('Approving trip...');
-            _this.serviceProvider.assignReq(_this.editUrl, _this.tripDetail.id, _this.cabs, _this.driver, _this.vendor, _this.admincomment, _this.adminID).subscribe(function (response) {
-                if (response) {
-                    _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Request assigned successfully");
-                    _this.navCtrl.pop();
-                }
-                else {
-                    _this.commonProvider.showToast("Error in request update");
-                    _this.commonProvider.hideLoader();
-                }
-            });
+            if (_this.commonProvider.vapt) {
+                var reqData = { "tripId": _this.tripDetail.id, "cabId": _this.cabs, "driverId": _this.driver, "vendorId": _this.vendor, "admincomment": _this.admincomment, "adminapproverId": _this.adminID };
+                _this.serviceProvider.post(_this.editUrl, reqData).then(function (response) {
+                    if (response) {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast("Request assigned successfully");
+                        _this.navCtrl.pop();
+                    }
+                    else {
+                        _this.commonProvider.showToast("Error in request update");
+                        _this.commonProvider.hideLoader();
+                    }
+                });
+            }
+            else {
+                _this.serviceProvider.assignReq(_this.editUrl, _this.tripDetail.id, _this.cabs, _this.driver, _this.vendor, _this.admincomment, _this.adminID).subscribe(function (response) {
+                    if (response) {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast("Request assigned successfully");
+                        _this.navCtrl.pop();
+                    }
+                    else {
+                        _this.commonProvider.showToast("Error in request update");
+                        _this.commonProvider.hideLoader();
+                    }
+                });
+            }
         }, function (err) {
         });
     };
@@ -3606,20 +3810,39 @@ var AdminAprvlPage = /** @class */ (function () {
     AdminAprvlPage.prototype.rejectRequest = function (cmnt) {
         var _this = this;
         this.commonProvider.showLoader('Rejecting trip...');
-        this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe(function (response) {
-            if (response) {
+        if (this.commonProvider.vapt) {
+            var reqData = { "tripId": this.adminID, "adminapproverId": this.tripDetail.id, "rejectComment": cmnt };
+            this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then(function (response) {
+                if (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Request cancelled successfully");
+                    _this.navCtrl.pop();
+                }
+                else {
+                    _this.commonProvider.showToast("Error in request cancellation");
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
+                _this.commonProvider.showToast("Request error");
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Request cancelled successfully");
-                _this.navCtrl.pop();
-            }
-            else {
-                _this.commonProvider.showToast("Error in request cancellation");
+            });
+        }
+        else {
+            this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe(function (response) {
+                if (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Request cancelled successfully");
+                    _this.navCtrl.pop();
+                }
+                else {
+                    _this.commonProvider.showToast("Error in request cancellation");
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
+                _this.commonProvider.showToast("Request error");
                 _this.commonProvider.hideLoader();
-            }
-        }, function (err) {
-            _this.commonProvider.showToast("Request error");
-            _this.commonProvider.hideLoader();
-        });
+            });
+        }
     };
     AdminAprvlPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({

@@ -37,7 +37,7 @@
     <name>Ask Cab</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://10.174.55.36:8100" />
+    <content original-src="index.html" src="http://10.174.55.195:8100" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
@@ -47,7 +47,7 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
     <allow-navigation href="http://10.0.28.183:8100" />
-    <allow-navigation href="http://10.174.55.36:8100" sessionid="2f1e2bb0" />
+    <allow-navigation href="http://10.174.55.195:8100" sessionid="befb3989" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

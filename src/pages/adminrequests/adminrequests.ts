@@ -218,45 +218,86 @@ export class AdminrequestsPage {
         this.edate = this.edate.getDate() + '-' + (this.edate.getMonth() + 1) + '-' + this.edate.getFullYear();
       }
 
-      let reqData = {
-        'source': this.userDetails.location.id,
-        'destination': this.bookingForm.value.traveldest,
-        'purpose': this.bookingForm.value.updatepurpose,
-        //'travel_date': new Date(this.travelDate).toDateString(),
-        'travel_date': this.tdate,
-        'travel_time': this.bookingForm.value.traveltime,
-        'remark': this.bookingForm.value.remark,
-        'status': 'Pending with Admin',
-        'travelType': this.bookingForm.value.travelType,
-        'usrID': this.bookingForm.value.usrID,
-        'username': this.bookingForm.value.usrName,
-        'usrphone': this.bookingForm.value.usrphone,
-        'cabs': this.bookingForm.value.cabs,
-        'driver': this.bookingForm.value.driver,
-        'vendor': this.bookingForm.value.vendor,
-        'pickpoint': this.bookingForm.value.pickpoint,
-        'isRoundTrip': this.bookingForm.value.isRoundTrip,
-        //'returnDate': new Date(this.endtravelDate).toDateString(),
-        'returnDate': this.edate,
-        'returnTime': this.bookingForm.value.endtraveltime,
-        'adminapproverId': this.userDetails.id
-      }
+      if (this.commonProvider.vapt) {
+        let reqData = {
+          "source": this.userDetails.location.id,
+          "destination": this.bookingForm.value.traveldest,
+          "purpose": this.bookingForm.value.updatepurpose,
+          "travel_date": this.tdate,
+          "travel_time": this.bookingForm.value.traveltime,
+          "comment": this.bookingForm.value.remark,
+          //"status": "Pending with Admin",
+          "travelType": this.bookingForm.value.travelType,
+          "userID": this.bookingForm.value.usrID,
+          "emp_userName": this.bookingForm.value.usrName,
+          "emp_phoneNo": this.bookingForm.value.usrphone,
+          "cabid": this.bookingForm.value.cabs,
+          "driverid": this.bookingForm.value.driver,
+          "vendorid": this.bookingForm.value.vendor,
+          "pickupPoint": this.bookingForm.value.pickpoint,
+          "isRoundTrip": this.bookingForm.value.isRoundTrip,
+          "returnDate": this.edate,
+          "returnTime": this.bookingForm.value.endtraveltime,
+          "adminapproverId": this.userDetails.id
+        }
+        this.serviceProvider.post('/adminraisecabrequest/adminMobile', reqData).then((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
 
-      this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
-        this.commonProvider.hideLoader();
-        if (response) {
-          this.confirmReqst = false;
-          this.bookingForm.reset();
-          this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
-          this.commonProvider.showToast('Request sent successfully');
-        } else {
+        }, (err) => {
+          this.commonProvider.hideLoader();
           this.commonProvider.showToast('Request error, Please check with admin');
+        });
+
+      } else {
+        let reqData = {
+          'source': this.userDetails.location.id,
+          'destination': this.bookingForm.value.traveldest,
+          'purpose': this.bookingForm.value.updatepurpose,
+          //'travel_date': new Date(this.travelDate).toDateString(),
+          'travel_date': this.tdate,
+          'travel_time': this.bookingForm.value.traveltime,
+          'remark': this.bookingForm.value.remark,
+          'status': 'Pending with Admin',
+          'travelType': this.bookingForm.value.travelType,
+          'usrID': this.bookingForm.value.usrID,
+          'username': this.bookingForm.value.usrName,
+          'usrphone': this.bookingForm.value.usrphone,
+          'cabs': this.bookingForm.value.cabs,
+          'driver': this.bookingForm.value.driver,
+          'vendor': this.bookingForm.value.vendor,
+          'pickupPoint': this.bookingForm.value.pickpoint,
+          'isRoundTrip': this.bookingForm.value.isRoundTrip,
+          //'returnDate': new Date(this.endtravelDate).toDateString(),
+          'returnDate': this.edate,
+          'returnTime': this.bookingForm.value.endtraveltime,
+          'adminapproverId': this.userDetails.id
         }
 
-      }, (err) => {
-        this.commonProvider.hideLoader();
-        this.commonProvider.showToast('Request error, Please check with admin');
-      });
+        this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
+
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast('Request error, Please check with admin');
+        });
+      }
+
     }, err => {
     })
   }

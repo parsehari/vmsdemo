@@ -56,11 +56,11 @@ export class LoginPage {
   }
 
   createFormControls() {
-    this.email = new FormControl('23165827', [
+    this.email = new FormControl('203442', [
       Validators.required,
       Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     ]);
-    this.password = new FormControl('Mahindra!!', [
+    this.password = new FormControl('Welcome@1234', [
       Validators.required,
       Validators.minLength(4)
     ]);
@@ -136,6 +136,7 @@ export class LoginPage {
         this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe((response: any) => {
           if (response._body == "Login success") {
             this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe((response: any) => {
+              console.log("login response ", response);
               response = JSON.parse(response._body);
               this.commonProvider.hideLoader();
               //  let str = response.emp_esg;

@@ -109,15 +109,22 @@ export class EmpdashboardPage {
   }
 
   ionViewDidLoad() {
+    this.commonProvider.showLoader('Getting employee details..');
     if (this.commonProvider.vapt) {
+      console.log("emp service call ", this.userDetails);
       this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
+        console.log("response usr getEmployeeDept ", response);
         this.dhDetails = response;
         this.serviceProvider.get('/getEmpDetailService/' + this.dhDetails.pernr).then((response: any) => {
+          this.commonProvider.hideLoader();
+          console.log("response usr ", response);
           this.dhUsrDetails = response;
         }, (err) => {
+          this.commonProvider.hideLoader();
           this.commonProvider.showToast("Error in user details");
         })
       }, (err) => {
+        this.commonProvider.hideLoader();
         this.commonProvider.showToast("Error in dh details");
       })
       this.serviceProvider.get('/getAllLocations').then((response: any) => {
@@ -132,15 +139,17 @@ export class EmpdashboardPage {
     else {
 
       this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
-        this.dhDetails = JSON.parse(response._body);
 
+        this.dhDetails = JSON.parse(response._body);
         this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
           this.dhUsrDetails = JSON.parse(response._body);
-
+          this.commonProvider.hideLoader();
         }, (err) => {
+          this.commonProvider.hideLoader();
           this.commonProvider.showToast("Error in user details");
         })
       }, (err) => {
+        this.commonProvider.hideLoader();
         this.commonProvider.showToast("Error in dh details");
       })
 
@@ -149,7 +158,6 @@ export class EmpdashboardPage {
         this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
       },
         (err) => {
-
           this.commonProvider.showToast(err.message);
         });
 
@@ -231,27 +239,29 @@ export class EmpdashboardPage {
           "userID": this.userDetails.emp_no,
           "source": this.bookingForm.value.travelsrc,
           "destination": this.bookingForm.value.traveldest,
-          "pickpoint": this.bookingForm.value.pickpoint,
+          "pickupPoint": this.bookingForm.value.pickpoint,
           "purpose": this.bookingForm.value.updatepurpose,
           "travel_date": this.tdate,
           "travel_time": this.bookingForm.value.traveltime,
           "emp_email": this.userDetails.emp_email,
-          "emp_UserName": this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          "emp_userName": this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
           "emp_phoneNo": this.userDetails.emp_cell,
           "status": "Pending with Manager",
           "bh_Id": this.dhDetails.pernr,
           "bh_UserName": this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
           "bh_email": this.dhUsrDetails.emp_email,
           "remark": this.bookingForm.value.remark,
-          "location": this.userDetails.emp_psa,
+          //"location": this.userDetails.emp_psa,
           "cost_id": this.bookingForm.value.costid,
           "cost_center": this.userDetails.emp_cost,
           "travelType": this.bookingForm.value.travelType,
           "isRoundTrip": this.bookingForm.value.isRoundTrip,
           "returnDate": this.edate,
           "returnTime": this.bookingForm.value.endtraveltime,
-          "isactive": "Y"
+          "isactive": "Y",
+          "locationName": this.userDetails.emp_psa
         }
+        console.log("req data ", reqData);
         this.serviceProvider.post('/insertTrip', reqData).then((response: any) => {
           this.commonProvider.hideLoader();
           if (response) {
@@ -278,7 +288,7 @@ export class EmpdashboardPage {
           'travel_date': this.tdate,
           'travel_time': this.bookingForm.value.traveltime,
           'emp_email': this.userDetails.emp_email,
-          'emp_UserName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          'emp_userName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
           'emp_phoneNo': this.userDetails.emp_cell,
           'status': 'Pending with Manager',
           'bh_Id': this.dhDetails.pernr,

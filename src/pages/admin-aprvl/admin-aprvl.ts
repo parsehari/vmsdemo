@@ -100,16 +100,31 @@ export class AdminAprvlPage {
       this.vendor != 'select' ? 'nothing' : this.vendor = "";
 
       this.commonProvider.showLoader('Approving trip...');
-      this.serviceProvider.assignReq(this.editUrl, this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
-        if (response) {
-          this.commonProvider.hideLoader();
-          this.commonProvider.showToast("Request assigned successfully");
-          this.navCtrl.pop();
-        } else {
-          this.commonProvider.showToast("Error in request update");
-          this.commonProvider.hideLoader();
-        }
-      })
+      if (this.commonProvider.vapt) {
+        let reqData = { "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
+        this.serviceProvider.post(this.editUrl, reqData).then((response: any) => {
+          if (response) {
+            this.commonProvider.hideLoader();
+            this.commonProvider.showToast("Request assigned successfully");
+            this.navCtrl.pop();
+          } else {
+            this.commonProvider.showToast("Error in request update");
+            this.commonProvider.hideLoader();
+          }
+        })
+      } else {
+        this.serviceProvider.assignReq(this.editUrl, this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
+          if (response) {
+            this.commonProvider.hideLoader();
+            this.commonProvider.showToast("Request assigned successfully");
+            this.navCtrl.pop();
+          } else {
+            this.commonProvider.showToast("Error in request update");
+            this.commonProvider.hideLoader();
+          }
+        })
+      }
+
     }, err => {
     })
   }
@@ -161,20 +176,36 @@ export class AdminAprvlPage {
 
   rejectRequest(cmnt: any) {
     this.commonProvider.showLoader('Rejecting trip...');
-    this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe((response: any) => {
-      if (response) {
+    if (this.commonProvider.vapt) {
+      let reqData = { "tripId": this.adminID, "adminapproverId": this.tripDetail.id, "rejectComment": cmnt }
+      this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then((response: any) => {
+        if (response) {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Request cancelled successfully");
+          this.navCtrl.pop();
+        } else {
+          this.commonProvider.showToast("Error in request cancellation");
+          this.commonProvider.hideLoader();
+        }
+      }, err => {
+        this.commonProvider.showToast("Request error");
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Request cancelled successfully");
-        this.navCtrl.pop();
-      } else {
-        this.commonProvider.showToast("Error in request cancellation");
+      })
+    } else {
+      this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe((response: any) => {
+        if (response) {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Request cancelled successfully");
+          this.navCtrl.pop();
+        } else {
+          this.commonProvider.showToast("Error in request cancellation");
+          this.commonProvider.hideLoader();
+        }
+      }, err => {
+        this.commonProvider.showToast("Request error");
         this.commonProvider.hideLoader();
-      }
-    }, err => {
-      this.commonProvider.showToast("Request error");
-      this.commonProvider.hideLoader();
-    })
-
+      })
+    }
 
   }
 
