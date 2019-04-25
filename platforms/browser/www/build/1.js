@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 352:
+/***/ 355:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalDetailPageModule", function() { return ModalDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modal_detail__ = __webpack_require__(354);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modal_detail__ = __webpack_require__(357);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -38,7 +38,7 @@ var ModalDetailPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 354:
+/***/ 357:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -81,8 +81,6 @@ var ModalDetailPage = /** @class */ (function () {
         if (this.navParams.get('viewName')) {
             this.viewName = this.navParams.get('viewName');
         }
-        console.log("viewName ", this.viewName);
-        console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
         this.srcSubstr = this.tripDetail.source.substring(0, 3);
         this.destSubstr = this.tripDetail.destination.substring(0, 3);
     };
@@ -93,10 +91,11 @@ var ModalDetailPage = /** @class */ (function () {
         this.events.publish('actionReq', ev, status, this.tripDetail);
     };
     ModalDetailPage.prototype.callnum = function (num) {
-        console.log("inside call number function");
         this.callnumber.callNumber(num, true).then(function (res) {
-            return console.log('Dialer opened', res);
-        }).catch(function (err) { return console.log('Error launching dialer', err); });
+            return;
+        }).catch(function (err) {
+            return;
+        });
     };
     ModalDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({

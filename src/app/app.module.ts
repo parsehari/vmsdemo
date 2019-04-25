@@ -35,6 +35,8 @@ import { AdminrequestsPageModule } from '../pages/adminrequests/adminrequests.mo
 import { AdminHistoryPageModule } from '../pages/adminrequests/admin-history/admin-history.module';
 import { AdminAprvlPageModule } from '../pages/admin-aprvl/admin-aprvl.module';
 
+import { FeedbackPageModule } from '../pages/feedback/feedback.module';
+
 import { DatePickerModule } from 'ionic3-datepicker';
 
 
@@ -61,6 +63,7 @@ import { DatePickerModule } from 'ionic3-datepicker';
     DriverPageModule,
     ScanPageModule,
     DatePickerModule,
+    FeedbackPageModule,
 
     IonicModule.forRoot(MyApp, {
       backButtonText: 'Back',

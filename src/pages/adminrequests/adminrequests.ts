@@ -167,9 +167,7 @@ export class AdminrequestsPage {
     this.pageTitle = "Approved";
     if (this.commonProvider.vapt) {
       this.serviceProvider.get('/getAllApprovedRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
-        if (response.status == 200) {
-          this.historyData = response;
-        }
+        this.historyData = response;
         this.commonProvider.hideLoader();
       },
         (err) => {
@@ -205,9 +203,9 @@ export class AdminrequestsPage {
     this.commonProvider.Alert.confirm().then((res) => {
       this.commonProvider.showLoader('Sending request...');
 
-      this.bookingForm.value.cabs != 'select' ? 'nothing' : this.bookingForm.get('cabs').setValue("");
-      this.bookingForm.value.driver != 'select' ? 'nothing' : this.bookingForm.get('driver').setValue("");
-      this.bookingForm.value.vendor != 'select' ? 'nothing' : this.bookingForm.get('vendor').setValue("");
+      this.bookingForm.value.cabs != 'select' ? 'nothing' : this.bookingForm.get('cabs').setValue(null);
+      this.bookingForm.value.driver != 'select' ? 'nothing' : this.bookingForm.get('driver').setValue(null);
+      this.bookingForm.value.vendor != 'select' ? 'nothing' : this.bookingForm.get('vendor').setValue(null);
       this.tdate = new Date(this.travelDate);
       this.tdate = this.tdate.getDate() + '-' + (this.tdate.getMonth() + 1) + '-' + this.tdate.getFullYear();
       if (this.bookingForm.value.isRoundTrip == 'No') {
@@ -231,6 +229,7 @@ export class AdminrequestsPage {
           "userID": this.bookingForm.value.usrID,
           "emp_userName": this.bookingForm.value.usrName,
           "emp_phoneNo": this.bookingForm.value.usrphone,
+          "emp_email": this.bookingForm.value.usrID + '@mahindra.com',
           "cabid": this.bookingForm.value.cabs,
           "driverid": this.bookingForm.value.driver,
           "vendorid": this.bookingForm.value.vendor,
@@ -238,7 +237,7 @@ export class AdminrequestsPage {
           "isRoundTrip": this.bookingForm.value.isRoundTrip,
           "returnDate": this.edate,
           "returnTime": this.bookingForm.value.endtraveltime,
-          "adminapproverId": this.userDetails.id
+          "approvedBy": this.userDetails.id
         }
         this.serviceProvider.post('/adminraisecabrequest/adminMobile', reqData).then((response: any) => {
           this.commonProvider.hideLoader();
@@ -270,6 +269,7 @@ export class AdminrequestsPage {
           'usrID': this.bookingForm.value.usrID,
           'username': this.bookingForm.value.usrName,
           'usrphone': this.bookingForm.value.usrphone,
+          "emp_email": this.bookingForm.value.usrID + '@mahindra.com',
           'cabs': this.bookingForm.value.cabs,
           'driver': this.bookingForm.value.driver,
           'vendor': this.bookingForm.value.vendor,
@@ -278,7 +278,7 @@ export class AdminrequestsPage {
           //'returnDate': new Date(this.endtravelDate).toDateString(),
           'returnDate': this.edate,
           'returnTime': this.bookingForm.value.endtraveltime,
-          'adminapproverId': this.userDetails.id
+          "approvedBy": this.userDetails.id
         }
 
         this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe((response: any) => {
@@ -341,12 +341,10 @@ export class AdminrequestsPage {
   getAllDetails() {
     if (this.commonProvider.vapt) {
       this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.userDetails.location.id).then((response: any) => {
-        if (response.status == 200) {
-          this.tripData = response;
-          this.cabList = this.tripData.cabList;
-          this.vendorList = this.tripData.vendorList;
-          this.driverList = this.tripData.driverList;
-        }
+        this.tripData = response;
+        this.cabList = this.tripData.cabList;
+        this.vendorList = this.tripData.vendorList;
+        this.driverList = this.tripData.driverList;
       },
         (err) => {
           this.commonProvider.showToast(err.message);

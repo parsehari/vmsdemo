@@ -7,6 +7,7 @@ import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { LoginPage } from '../../login/login';
 import { TermsconditionPage } from '../../termscondition/termscondition';
+import { FeedbackPage } from '../../feedback/feedback';
 
 // import { Calendar } from '@ionic-native/calendar';
 //import { FCM } from '@ionic-native/fcm';
@@ -101,7 +102,7 @@ export class EmpdashboardPage {
     this.endDate = new Date();
     this.endtravelDate = new Date();
     this.EndcurrTime = new Date();
-    this.EndcurrTime = this.EndcurrTime.toISOString()
+    this.EndcurrTime = this.EndcurrTime.toISOString();
 
     this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
     this.bookingForm.get('isRoundTrip').setValue('Yes');
@@ -111,13 +112,10 @@ export class EmpdashboardPage {
   ionViewDidLoad() {
     this.commonProvider.showLoader('Getting employee details..');
     if (this.commonProvider.vapt) {
-      console.log("emp service call ", this.userDetails);
       this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
-        console.log("response usr getEmployeeDept ", response);
         this.dhDetails = response;
         this.serviceProvider.get('/getEmpDetailService/' + this.dhDetails.pernr).then((response: any) => {
           this.commonProvider.hideLoader();
-          console.log("response usr ", response);
           this.dhUsrDetails = response;
         }, (err) => {
           this.commonProvider.hideLoader();
@@ -144,6 +142,8 @@ export class EmpdashboardPage {
         this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
           this.dhUsrDetails = JSON.parse(response._body);
           this.commonProvider.hideLoader();
+
+
         }, (err) => {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Error in user details");
@@ -161,17 +161,48 @@ export class EmpdashboardPage {
           this.commonProvider.showToast(err.message);
         });
 
+      this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe((response: any) => {
+        let ln = JSON.parse(response._body);
+        console.log("response ", ln.length);
+        if (ln.length) {
+          this.feedbackForm(response);
+        }
+      }, (err) => {
+        console.log("response ", err);
+      })
+
+
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
 
     }
 
+
+
   }
 
   showNotifn(myEvent) {
-    let popover = this.popoverController.create(NotificationPage);
+    let popover = this.popoverController.create(NotificationPage, {}, { enableBackdropDismiss: false });
     popover.present(
       {
         ev: myEvent
+      }
+    )
+  }
+
+  feedbackForm(tripObj: any) {
+    let popover = this.popoverController.create(FeedbackPage, { tripObj }, { enableBackdropDismiss: false });
+    let evn = {
+      target: {
+        getBoundingClientRect: () => {
+          return {
+            bottom: '100'
+          };
+        }
+      }
+    };
+    popover.present(
+      {
+        ev: evn
       }
     )
   }
@@ -199,7 +230,6 @@ export class EmpdashboardPage {
     if (this.commonProvider.vapt) {
       let buildParam = {};
       this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no, buildParam).then((response: any) => {
-        console.log("historyData response", response);
         this.historyData = response;
         this.commonProvider.hideLoader();
       }, (err) => {
@@ -261,7 +291,6 @@ export class EmpdashboardPage {
           "isactive": "Y",
           "locationName": this.userDetails.emp_psa
         }
-        console.log("req data ", reqData);
         this.serviceProvider.post('/insertTrip', reqData).then((response: any) => {
           this.commonProvider.hideLoader();
           if (response) {
@@ -282,7 +311,7 @@ export class EmpdashboardPage {
           'userID': this.userDetails.emp_no,
           'source': this.bookingForm.value.travelsrc,
           'destination': this.bookingForm.value.traveldest,
-          'pickpoint': this.bookingForm.value.pickpoint,
+          'pickupPoint': this.bookingForm.value.pickpoint,
           'purpose': this.bookingForm.value.updatepurpose,
           //'travel_date': new Date(this.travelDate).toDateString(),
           'travel_date': this.tdate,
@@ -401,7 +430,7 @@ export class EmpdashboardPage {
     popvr.present();
   }
   rating(val: any, tripid: any) {
-    if (val <= 2) {
+    if (val <= 3) {
       const prompt = this.alertCtrl.create({
         title: '',
         message: "Please enter any reason",

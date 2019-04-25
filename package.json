@@ -61,6 +61,7 @@
     "ion2-calendar": "^3.0.0-rc.0",
     "ionic": "^4.5.0",
     "ionic-angular": "3.9.2",
+    "ionic-plugin-deeplinks": "^1.0.19",
     "ionic2-calendar": "^0.4.6",
     "ionic2-rating": "^1.2.2",
     "ionic3-datepicker": "^2.5.3",
@@ -72,7 +73,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^3.2.3",
+    "@ionic/app-scripts": "3.2.3",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",

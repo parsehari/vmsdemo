@@ -94,5 +94,17 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "ionic-plugin-deeplinks": {
+    "source": {
+      "type": "registry",
+      "id": "ionic-plugin-deeplinks@^1.0.19"
+    },
+    "is_top_level": true,
+    "variables": {
+      "URL_SCHEME": "vmsapp",
+      "DEEPLINK_SCHEME": "https",
+      "DEEPLINK_HOST": "appstore.mahindra.com"
+    }
   }
 }

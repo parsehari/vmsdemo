@@ -19,7 +19,6 @@ export class RequestdetailsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RequestdetailsPage');
   }
 
 }

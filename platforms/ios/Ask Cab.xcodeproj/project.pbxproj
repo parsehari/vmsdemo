@@ -41,6 +41,8 @@
 		DB89DD8605BA4C8FA21495B8 /* CDVSplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE860AB5BF1449DAD37D62C /* CDVSplashScreen.m */; };
 		F26AD46203E045ED8B552C64 /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF912F034B30407888D5A5FF /* PBKDF2.swift */; };
 		FAACF2AE2AE5468EA843D99D /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = C54D469A7F47484FBA275BE4 /* CDVLocalFilesystem.m */; };
+		7BB3CC46E11D49268C2D70BD /* AppDelegate+IonicDeeplink.m in Sources */ = {isa = PBXBuildFile; fileRef = 06459B66F3C7429CA63DBB13 /* AppDelegate+IonicDeeplink.m */; };
+		D0A750591D644284A6E671F2 /* IonicDeeplinkPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8308633D1342FCBC4C4A6B /* IonicDeeplinkPlugin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,6 +141,9 @@
 		F10E51F9FD2B4A78AA351314 /* AES256CBC.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = AES256CBC.swift; path = "cordova-plugin-aes256-encryption/AES256CBC.swift"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Ask Cab/config.xml"; sourceTree = "<group>"; };
 		FA99BC1933774BF28115C2DA /* TextRequestSerializer.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = TextRequestSerializer.m; path = "cordova-plugin-advanced-http/TextRequestSerializer.m"; sourceTree = "<group>"; };
+		06459B66F3C7429CA63DBB13 /* AppDelegate+IonicDeeplink.m */ = {isa = PBXFileReference; name = "AppDelegate+IonicDeeplink.m"; path = "ionic-plugin-deeplinks/AppDelegate+IonicDeeplink.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		FF8308633D1342FCBC4C4A6B /* IonicDeeplinkPlugin.m */ = {isa = PBXFileReference; name = "IonicDeeplinkPlugin.m"; path = "ionic-plugin-deeplinks/IonicDeeplinkPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		6EF598DC3A07476E8F09D905 /* IonicDeeplinkPlugin.h */ = {isa = PBXFileReference; name = "IonicDeeplinkPlugin.h"; path = "ionic-plugin-deeplinks/IonicDeeplinkPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,6 +302,9 @@
 				ABA4F0A4FCD8401486694967 /* CDVViewController+SplashScreen.h */,
 				BC6B8F3E6DD44D4C97578106 /* CFCallNumber.m */,
 				D8436F55456A4F29913F38A6 /* CFCallNumber.h */,
+				06459B66F3C7429CA63DBB13 /* AppDelegate+IonicDeeplink.m */,
+				FF8308633D1342FCBC4C4A6B /* IonicDeeplinkPlugin.m */,
+				6EF598DC3A07476E8F09D905 /* IonicDeeplinkPlugin.h */,
 			);
 			name = Plugins;
 			path = "Ask Cab/Plugins";
@@ -449,6 +457,8 @@
 				DB89DD8605BA4C8FA21495B8 /* CDVSplashScreen.m in Sources */,
 				9B2E72E91C714D1AA795F009 /* CDVViewController+SplashScreen.m in Sources */,
 				B3728E0FDED54AF9AC989926 /* CFCallNumber.m in Sources */,
+				7BB3CC46E11D49268C2D70BD /* AppDelegate+IonicDeeplink.m in Sources */,
+				D0A750591D644284A6E671F2 /* IonicDeeplinkPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@ import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
 import { RequesthistoryPage } from '../../hod/requesthistory/requesthistory';
 import { LoginPage } from '../../login/login';
+import { FeedbackPage } from '../../feedback/feedback';
 /**
  * Generated class for the HoddashboardPage page.
  *
@@ -138,7 +139,6 @@ export class HoddashboardPage {
     this.pageTitle = "Booking History";
     if (this.commonProvider.vapt) {
       this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then((response: any) => {
-        console.log("history response ", response);
         this.historyData = response;
       },
         (err) => {
@@ -317,7 +317,7 @@ export class HoddashboardPage {
         "bh_UserName": obj.bh_UserName,
         "remark": obj.remark,
         "bh_email": obj.bh_email,
-        "location": obj.emp_location,
+        "locationName": obj.emp_location,
         "cost_id": obj.cost_id,
         "cost_center": obj.cost_center,
         "travelType": obj.travelType,
@@ -327,7 +327,6 @@ export class HoddashboardPage {
       }
       this.serviceProvider.post('/approveRequest/hod', reqData).then((response: any) => {
         this.commonProvider.hideLoader();
-        console.log("approve reject resposne ", response);
         if (response) {
           this.getApprovalHistory();
           this.events.publish('closeModalev');
@@ -428,8 +427,37 @@ export class HoddashboardPage {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast(err.message);
         });
+
+      this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe((response: any) => {
+        let ln = JSON.parse(response._body);
+        console.log("response ", ln.length);
+        if (ln.length) {
+          this.feedbackForm(response);
+        }
+      }, (err) => {
+        console.log("response ", err);
+      })
+
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }
+  }
+
+  feedbackForm(tripObj: any) {
+    let popover = this.popoverController.create(FeedbackPage, { tripObj }, { enableBackdropDismiss: false });
+    let evn = {
+      target: {
+        getBoundingClientRect: () => {
+          return {
+            bottom: '100'
+          };
+        }
+      }
+    };
+    popover.present(
+      {
+        ev: evn
+      }
+    )
   }
 
   getApprovalHistory() {
@@ -533,7 +561,7 @@ export class HoddashboardPage {
   }
 
   rating(val, tripid) {
-    if (val <= 2) {
+    if (val <= 3) {
       const prompt = this.alertCtrl.create({
         title: '',
         message: "Please enter any reason",

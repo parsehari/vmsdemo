@@ -6,7 +6,8 @@ import { HTTP } from '@ionic-native/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
-
+import CryptoJS from 'crypto-js';
+import { CommonProvider } from '../common/common';
 /*
   Generated class for the ServiceProvider provider.
 
@@ -17,10 +18,10 @@ import 'rxjs/add/operator/toPromise';
 export class ServiceProvider {
   // header for json/content-type
 
-  //private url = 'https://gmc.mahindra.com/vms';
-  private url = 'https://mapps.mahindra.com/vms';
-  // public url = 'http://192.168.43.252:8080/vms_vapt';
-  //public url = 'http://10.174.55.73:8080/vms_vapt';
+  //private url = 'https://gmc.mahindra.com/vms_vapt';
+  //private url = 'https://mapps.mahindra.com/vms';
+  //public url = 'http://192.168.43.252:8080/vms_vapt';
+  public url = 'http://192.168.43.252:8080/vms_vapt';
 
   raiseReq: any;
   tripDTO: any;
@@ -29,7 +30,8 @@ export class ServiceProvider {
 
 
   constructor(public http: Http,
-    public ahttp: HTTP
+    public ahttp: HTTP,
+    public commonprovider: CommonProvider
 
   ) {
 
@@ -61,7 +63,7 @@ export class ServiceProvider {
     this.raiseReq.append("userID", data.userID);
     this.raiseReq.append("source", data.source);
     this.raiseReq.append("destination", data.destination);
-    this.raiseReq.append("pickupPoint", data.pickpoint);
+    this.raiseReq.append("pickupPoint", data.pickupPoint);
     this.raiseReq.append("purpose", data.purpose);
     this.raiseReq.append("travel_date", data.travel_date);
     this.raiseReq.append("travel_time", data.travel_time);
@@ -220,13 +222,17 @@ export class ServiceProvider {
   }
 
   public get(url: any, params?: any, options: any = {}) {
+    console.log("url", this.commonprovider.accessToken);
     return new Promise(resolve => {
       let responseData: any;
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
-        this.ahttp.get(this.url + url, params, {}).then(resp => {
+        let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
+        // let headers = new Headers({ 'access_token': this.commonprovider.accessToken });
+        // let opts = new RequestOptions({ headers: headers });
+        this.ahttp.get(this.url + url, params, opts).then(resp => {
           responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
-          console.log("In get service ", responseData);
+          console.log("Advance http response for ", responseData);
           resolve(responseData);
         }, (err) => {
           resolve(err);
@@ -237,26 +243,61 @@ export class ServiceProvider {
     });
   }
 
+
   post(url: any, params?: any, options: any = {}) {
-    // var headers = new Headers({});
-    // headers.append('Content-Type', 'application/json');
-    // options = new RequestOptions({ headers: headers });
-    console.log('url', params);
     return new Promise(resolve => {
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
         this.ahttp.post(this.url + url, params, options).then(resp => {
-          console.log("response ", resp);
+          console.log("respone post ", resp)
           resolve(resp);
         }, (err) => {
-          console.log("error ", err);
           resolve(err);
         });
       }).catch((err) => {
-        console.log("catch error ", err);
         resolve(err);
       });
     });
   }
 
+  getPendingTrip(params: any, id: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + id, options)
+  }
+
+  decryptData(sessionData: any) {
+    var promise = new Promise(function (resolve, reject) {
+      var key = CryptoJS.enc.Utf8.parse('M@h1ndra$1234567');
+      var iv = CryptoJS.enc.Utf8.parse('0001000100010001');
+      var decrypted = CryptoJS.AES.decrypt(sessionData, key, {
+        keySize: 128 / 8,
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      });
+      var cipherUsrCredentials = decrypted.toString(CryptoJS.enc.Utf8);
+      resolve(cipherUsrCredentials);
+    });
+    return promise;
+
+  }
+
+  encryptData(sessionData: any) {
+    var promise = new Promise(function (resolve, reject) {
+      var text = sessionData;
+      var key = CryptoJS.enc.Utf8.parse('M@h1ndra$1234567');
+      var iv = CryptoJS.enc.Utf8.parse('0001000100010001');
+      var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(text), key,
+        {
+          keySize: 128 / 8,
+          iv: iv,
+          mode: CryptoJS.mode.CBC,
+          padding: CryptoJS.pad.Pkcs7
+        });
+      this.text = encrypted.toString();
+      resolve(this.text);
+    });
+    return promise;
+  }
 }

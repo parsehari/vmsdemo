@@ -55,7 +55,7 @@ export class AdminAprvlPage {
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
     if (this.commonProvider.vapt) {
       this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.adminLocationID).then((response: any) => {
-        if (response.status == 200) {
+        if (response) {
           this.tripData = response;
           this.cabList = this.tripData.cabList;
           this.vendorList = this.tripData.vendorList;
@@ -93,7 +93,7 @@ export class AdminAprvlPage {
     } else {
 
     }
-    this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';
+
     this.commonProvider.Alert.confirm().then((res) => {
       this.cabs != 'select' ? 'nothing' : this.cabs = "";
       this.driver != 'select' ? 'nothing' : this.driver = "";
@@ -101,6 +101,7 @@ export class AdminAprvlPage {
 
       this.commonProvider.showLoader('Approving trip...');
       if (this.commonProvider.vapt) {
+        this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin/mobile' : this.editUrl = '/editTripDetails/mobile';
         let reqData = { "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
         this.serviceProvider.post(this.editUrl, reqData).then((response: any) => {
           if (response) {
@@ -111,8 +112,12 @@ export class AdminAprvlPage {
             this.commonProvider.showToast("Error in request update");
             this.commonProvider.hideLoader();
           }
+        }, (err) => {
+          this.commonProvider.showToast("Error in request update");
+          this.commonProvider.hideLoader();
         })
       } else {
+        this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';
         this.serviceProvider.assignReq(this.editUrl, this.tripDetail.id, this.cabs, this.driver, this.vendor, this.admincomment, this.adminID).subscribe((response: any) => {
           if (response) {
             this.commonProvider.hideLoader();
@@ -122,6 +127,9 @@ export class AdminAprvlPage {
             this.commonProvider.showToast("Error in request update");
             this.commonProvider.hideLoader();
           }
+        }, (err) => {
+          this.commonProvider.showToast("Error in request update");
+          this.commonProvider.hideLoader();
         })
       }
 

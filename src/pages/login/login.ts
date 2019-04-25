@@ -56,11 +56,11 @@ export class LoginPage {
   }
 
   createFormControls() {
-    this.email = new FormControl('203442', [
+    this.email = new FormControl('23165827', [
       Validators.required,
       Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     ]);
-    this.password = new FormControl('Welcome@1234', [
+    this.password = new FormControl('Mahindra!!', [
       Validators.required,
       Validators.minLength(4)
     ]);
@@ -100,11 +100,9 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
-          console.log("login response ", response);
           if (response.status == 200 && response.data != "false") {
             if (response.data == "Login success") {
               this.serviceProvider.get('/getEmpDetailService/' + this.email.value).then((response: any) => {
-                console.log("response ", response);
                 this.commonProvider.hideLoader();
                 let str = response.emp_esgdesc;
                 if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
@@ -117,15 +115,15 @@ export class LoginPage {
               })
             } else if (response.data == "false") {
               this.commonProvider.hideLoader();
-              this.commonProvider.showToast("Please enter correct user credentials")
+              this.commonProvider.showToast(response.error);
             } else {
               this.commonProvider.hideLoader();
-              response = response.data;
+              response = JSON.parse(response.data);
               this.navCtrl.setRoot(AdminrequestsPage, { response });
             }
           } else {
             this.commonProvider.hideLoader();
-            this.commonProvider.showToast("Please enter correct credentials");
+            this.commonProvider.showToast(response.error);
           }
         }, (err) => {
           this.commonProvider.hideLoader();
@@ -136,7 +134,6 @@ export class LoginPage {
         this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe((response: any) => {
           if (response._body == "Login success") {
             this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe((response: any) => {
-              console.log("login response ", response);
               response = JSON.parse(response._body);
               this.commonProvider.hideLoader();
               //  let str = response.emp_esg;
@@ -154,7 +151,7 @@ export class LoginPage {
             })
           } else if (response._body == "false") {
             this.commonProvider.hideLoader();
-            this.commonProvider.showToast("Please enter correct user credentials")
+            this.commonProvider.showToast(response.error);
           } else {
             this.commonProvider.hideLoader();
             response = JSON.parse(response._body);
@@ -213,11 +210,13 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
-          console.log("login response ", response);
-          if (response.status == 200 && response.data != "false") {
-            if (response.data == "Login success") {
+          if (response.status == 200) {
+            let lgnData = JSON.parse(response.data);
+            this.commonProvider.accessToken = lgnData.access_token;
+            console.log("login resp ", lgnData.msg);
+            if (lgnData.access_token) {
+              console.log("service call")
               this.serviceProvider.get('/getEmpDetailService/' + this.email.value).then((response: any) => {
-                console.log("response ", response);
                 this.commonProvider.hideLoader();
                 let str = response.emp_esgdesc;
                 if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
@@ -230,15 +229,15 @@ export class LoginPage {
               })
             } else if (response.data == "false") {
               this.commonProvider.hideLoader();
-              this.commonProvider.showToast("Please enter correct user credentials")
+              this.commonProvider.showToast(response.error);
             } else {
               this.commonProvider.hideLoader();
-              response = response.data;
+              response = JSON.parse(response.data);
               this.navCtrl.setRoot(AdminrequestsPage, { response });
             }
           } else {
             this.commonProvider.hideLoader();
-            this.commonProvider.showToast("Please enter correct credentials");
+            this.commonProvider.showToast(response.error);
           }
         }, (err) => {
           this.commonProvider.hideLoader();
@@ -249,15 +248,17 @@ export class LoginPage {
         this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe((response: any) => {
           if (response._body == "Login success") {
             this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.email.value).subscribe((response: any) => {
-              response = JSON.parse(response._body);
               this.commonProvider.hideLoader();
-              let str = response.emp_esgdesc;
-              if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
-                this.navCtrl.setRoot(HoddashboardPage, { response });
-              } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                this.navCtrl.setRoot(EmpdashboardPage, { response });
-              } else {
-                this.commonProvider.showToast("User role is not allow to login")
+              if (response._body) {
+                response = JSON.parse(response._body);
+                let str = response.emp_esgdesc;
+                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                  this.navCtrl.setRoot(HoddashboardPage, { response });
+                } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                  this.navCtrl.setRoot(EmpdashboardPage, { response });
+                } else {
+                  this.commonProvider.showToast("User role is not allow to login")
+                }
               }
             })
           } else if (response._body == "false") {

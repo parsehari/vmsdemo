@@ -5835,6 +5835,10 @@ textarea::-webkit-input-placeholder {
   padding-left: 2px;
 }
 
+textarea::-moz-placeholder {
+  padding-left: 2px;
+}
+
 textarea::-ms-input-placeholder {
   padding-left: 2px;
 }
@@ -35260,6 +35264,20 @@ page-empdashboard ul.rating li ion-icon {
   }
 }
 
+page-feedback ul {
+  padding: 0;
+}
+
+page-feedback ul.rating li {
+  padding: 5px 5px !important;
+  background: none;
+  color: #74b923;
+}
+
+page-feedback ul.rating li ion-icon {
+  font-size: 30px;
+}
+
 page-hoddashboard .formtitle {
   color: #999;
 }
@@ -35524,6 +35542,15 @@ page-login #footer h1 {
 }
 
 page-login ::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000000;
+  font-family: "font-regular" !important;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+page-login ::-moz-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #000000;
   font-family: "font-regular" !important;

@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 129:
+/***/ 131:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -13,57 +13,451 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 129;
+webpackEmptyAsyncContext.id = 131;
 
 /***/ }),
 
-/***/ 171:
+/***/ 16:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(301);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+//import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+
+
+
+/*
+  Generated class for the ServiceProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var ServiceProvider = /** @class */ (function () {
+    function ServiceProvider(http, ahttp) {
+        this.http = http;
+        this.ahttp = ahttp;
+        // header for json/content-type
+        //private url = 'https://gmc.mahindra.com/vms_vapt';
+        this.url = 'https://mapps.mahindra.com/vms';
+    }
+    ServiceProvider.prototype.getBookingHistory = function (param, usrID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + usrID, options);
+    };
+    ServiceProvider.prototype.getAllTripHistory = function (param, usrID) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + usrID, options);
+    };
+    ServiceProvider.prototype.getAllLocations = function (param) {
+        return this.http.get(this.url + param);
+    };
+    ServiceProvider.prototype.getApprovalList = function (param, uid) {
+        return this.http.get(this.url + param + "/" + uid);
+    };
+    ServiceProvider.prototype.raiseRequest = function (param, data, datastatus) {
+        if (datastatus === void 0) { datastatus = "default"; }
+        this.raiseReq = new FormData();
+        this.raiseReq.append("userID", data.userID);
+        this.raiseReq.append("source", data.source);
+        this.raiseReq.append("destination", data.destination);
+        this.raiseReq.append("pickupPoint", data.pickupPoint);
+        this.raiseReq.append("purpose", data.purpose);
+        this.raiseReq.append("travel_date", data.travel_date);
+        this.raiseReq.append("travel_time", data.travel_time);
+        this.raiseReq.append("status", data.status);
+        this.raiseReq.append("bh_Id", data.bh_Id);
+        this.raiseReq.append("bh_UserName", data.bh_UserName);
+        this.raiseReq.append("bh_email", data.bh_email);
+        this.raiseReq.append("emp_email", data.emp_email);
+        this.raiseReq.append("emp_userName", data.emp_userName);
+        this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
+        this.raiseReq.append("remark", data.remark);
+        this.raiseReq.append("locationName", data.location);
+        this.raiseReq.append("cost_id", data.cost_id);
+        this.raiseReq.append("cost_center", data.cost_center);
+        this.raiseReq.append("travelType", data.travelType);
+        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+        this.raiseReq.append("returnDate", data.returnDate);
+        this.raiseReq.append("returnTime", data.returnTime);
+        this.raiseReq.append("isactive", 'Y');
+        if (datastatus == "hodAction") {
+            this.raiseReq.append("id", data.id);
+            this.raiseReq.append("modifiedby", data.modified_by);
+            this.raiseReq.append("comment", data.comment);
+        }
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.post(this.url + param, this.raiseReq, options);
+    };
+    ServiceProvider.prototype.raiseRequestAdmin = function (param, data) {
+        this.raiseReq = new FormData();
+        this.raiseReq.append("source", data.source);
+        this.raiseReq.append("destination", data.destination);
+        this.raiseReq.append("pickupPoint", data.pickpoint);
+        this.raiseReq.append("purpose", data.purpose);
+        this.raiseReq.append("travel_date", data.travel_date);
+        this.raiseReq.append("travel_time", data.travel_time);
+        this.raiseReq.append("comment", data.remark);
+        this.raiseReq.append("travelType", data.travelType);
+        this.raiseReq.append("emp_userName", data.username);
+        this.raiseReq.append("emp_phoneNo", data.usrphone);
+        this.raiseReq.append("userID", data.usrID);
+        this.raiseReq.append("cabid", data.cabs);
+        this.raiseReq.append("vendorid", data.vendor);
+        this.raiseReq.append("driverid", data.driver);
+        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
+        this.raiseReq.append("returnDate", data.returnDate);
+        this.raiseReq.append("returnTime", data.returnTime);
+        this.raiseReq.append("adminapproverId", data.adminapproverId);
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.post(this.url + param, this.raiseReq);
+    };
+    ServiceProvider.prototype.getUsrRoleDetails = function (param, ivPernr) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + ivPernr, options);
+    };
+    ServiceProvider.prototype.getDeptHeadUser = function (param, ivPernr) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + param + "/" + ivPernr, options);
+    };
+    ServiceProvider.prototype.getDriverTripDetails = function (params) {
+        return this.http.get(this.url + params);
+    };
+    ServiceProvider.prototype.tripStart = function (params, cdate, type, id, km) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append("id", id);
+        if (type == 'startTrip') {
+            this.tripDTO.append("startTrip", cdate);
+            this.tripDTO.append("startKm", km);
+        }
+        else {
+            this.tripDTO.append("endTrip", cdate);
+            this.tripDTO.append("endKm", km);
+        }
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider.prototype.weblogin = function (params, username, pwd) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.lgnDTO = new FormData();
+        this.lgnDTO.append('employeeId', username);
+        this.lgnDTO.append('pwd', pwd);
+        return this.http.post(this.url + params, this.lgnDTO, options);
+    };
+    ServiceProvider.prototype.saveScan = function (params, text) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + text, options);
+    };
+    ServiceProvider.prototype.getReqDetails = function (params, id) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + id, options);
+    };
+    ServiceProvider.prototype.cancelCab = function (params, id) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + id, options);
+    };
+    ServiceProvider.prototype.assignReq = function (params, tripID, cabs, driver, vendor, admincomment, adminId) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.assignTripDto = new FormData();
+        this.assignTripDto.append('tripId', tripID);
+        this.assignTripDto.append('cabId', cabs);
+        this.assignTripDto.append('driverId', driver);
+        this.assignTripDto.append('vendorId', vendor);
+        this.assignTripDto.append('admincomment', admincomment);
+        this.assignTripDto.append('adminapproverId', adminId);
+        return this.http.post(this.url + params, this.assignTripDto, options);
+    };
+    ServiceProvider.prototype.submitRating = function (params, tripId, ratings, reason) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append('id', tripId);
+        this.tripDTO.append('feedbackRating', ratings);
+        this.tripDTO.append('feedbackComment', reason);
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider.prototype.adminCancelReq = function (params, cmnt, tripId, adminId) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        this.tripDTO = new FormData();
+        this.tripDTO.append('tripId', tripId);
+        this.tripDTO.append('adminapproverId', adminId);
+        this.tripDTO.append('rejectComment', cmnt);
+        return this.http.post(this.url + params, this.tripDTO, options);
+    };
+    ServiceProvider.prototype.get = function (url, params, options) {
+        var _this = this;
+        if (options === void 0) { options = {}; }
+        return new Promise(function (resolve) {
+            var responseData;
+            _this.ahttp.setSSLCertMode("nocheck").then(function (data) {
+                _this.ahttp.setDataSerializer('json');
+                _this.ahttp.get(_this.url + url, params, {}).then(function (resp) {
+                    responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+                    resolve(responseData);
+                }, function (err) {
+                    resolve(err);
+                });
+            }).catch(function (err) {
+                resolve(err);
+            });
+        });
+    };
+    ServiceProvider.prototype.post = function (url, params, options) {
+        var _this = this;
+        if (options === void 0) { options = {}; }
+        // var headers = new Headers({});
+        // headers.append('Content-Type', 'application/json');
+        // options = new RequestOptions({ headers: headers });
+        return new Promise(function (resolve) {
+            _this.ahttp.setSSLCertMode("nocheck").then(function (data) {
+                _this.ahttp.setDataSerializer('json');
+                _this.ahttp.post(_this.url + url, params, options).then(function (resp) {
+                    resolve(resp);
+                }, function (err) {
+                    resolve(err);
+                });
+            }).catch(function (err) {
+                resolve(err);
+            });
+        });
+    };
+    ServiceProvider.prototype.getPendingTrip = function (params, id) {
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
+        return this.http.get(this.url + params + "/" + id, options);
+    };
+    ServiceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__["a" /* HTTP */]])
+    ], ServiceProvider);
+    return ServiceProvider;
+}());
+
+//# sourceMappingURL=service.js.map
+
+/***/ }),
+
+/***/ 17:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__ = __webpack_require__(179);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+//import { HttpClient } from '@angular/common/http';
+
+
+
+/*
+  Generated class for the CommonProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var CommonProvider = /** @class */ (function () {
+    function CommonProvider(loadingCtrl, toast, alertCtrl, network) {
+        var _this = this;
+        this.loadingCtrl = loadingCtrl;
+        this.toast = toast;
+        this.alertCtrl = alertCtrl;
+        this.network = network;
+        this.loading = false;
+        this.isOnline = true;
+        this.vapt = false;
+        this.Alert = {
+            confirm: function (msg, title) {
+                return new Promise(function (resolve, reject) {
+                    var alert = _this.alertCtrl.create({
+                        title: title || 'Confirm',
+                        message: msg || '',
+                        buttons: [
+                            {
+                                text: 'Cancel',
+                                role: 'cancel',
+                                handler: function () {
+                                    reject(false);
+                                }
+                            },
+                            {
+                                text: 'Ok',
+                                handler: function () {
+                                    resolve(true);
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                });
+            },
+            alert: function (msg, title) {
+                var alert = _this.alertCtrl.create({
+                    title: title || 'Alert',
+                    subTitle: msg,
+                    buttons: ['Dismiss']
+                });
+                alert.present();
+            }
+        };
+        this.network.onConnect().subscribe(function (data) {
+            _this.displayNetworkUpdate(data.type);
+        }, function (error) {
+            return;
+        });
+        this.network.onDisconnect().subscribe(function (data) {
+            _this.displayNetworkUpdate(data.type);
+        }, function (error) {
+            return;
+        });
+    }
+    CommonProvider.prototype.showLoader = function (msg) {
+        if (!this.loading) {
+            this.loader = this.loadingCtrl.create({
+                content: msg || ''
+            });
+            this.loading = true;
+            this.loader.present();
+        }
+        else {
+            return;
+        }
+    };
+    CommonProvider.prototype.hideLoader = function () {
+        if (this.loading) {
+            this.loader.dismiss();
+            this.loading = false;
+        }
+        else {
+            return;
+        }
+    };
+    CommonProvider.prototype.showToast = function (msg, time) {
+        this.toaster = this.toast.create({
+            message: msg,
+            duration: time || 2000,
+            position: 'bottom'
+        });
+        this.toaster.onDidDismiss(function () {
+            return;
+        });
+        this.toaster.present();
+    };
+    CommonProvider.prototype.displayNetworkUpdate = function (connectionState) {
+        if (connectionState == 'online') {
+            this.isOnline = true;
+        }
+        else {
+            this.isOnline = false;
+        }
+        this.showToast('You are now ' + connectionState, 2500);
+    };
+    CommonProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__["a" /* Network */]])
+    ], CommonProvider);
+    return CommonProvider;
+}());
+
+//# sourceMappingURL=common.js.map
+
+/***/ }),
+
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/admin-aprvl/admin-aprvl.module": [
-		172
+		189
 	],
 	"../pages/adminrequests/admin-history/admin-history.module": [
-		175
+		188
 	],
 	"../pages/adminrequests/adminrequests.module": [
-		194
+		199
 	],
 	"../pages/driver/driver.module": [
-		177
+		174
 	],
 	"../pages/employee/empdashboard/empdashboard.module": [
-		198
+		203
+	],
+	"../pages/feedback/feedback.module": [
+		190
 	],
 	"../pages/hod/hoddashboard/hoddashboard.module": [
-		201
+		204
 	],
 	"../pages/hod/requesthistory/requesthistory.module": [
-		187
+		197
 	],
 	"../pages/modal-detail/modal-detail.module": [
-		352,
+		355,
 		1
 	],
 	"../pages/notification-detail/notification-detail.module": [
-		188
+		192
 	],
 	"../pages/notification/notification.module": [
-		189
+		193
 	],
 	"../pages/requestdetails/requestdetails.module": [
-		353,
+		356,
 		0
 	],
 	"../pages/scan/scan.module": [
-		190
+		194
 	],
 	"../pages/termscondition/termscondition.module": [
-		192
+		198
 	],
 	"../pages/users-dashboard/users-dashboard.module": [
-		193
+		196
 	]
 };
 function webpackAsyncContext(req) {
@@ -77,174 +471,12 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 171;
+webpackAsyncContext.id = 173;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 172:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAprvlPageModule", function() { return AdminAprvlPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__ = __webpack_require__(90);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var AdminAprvlPageModule = /** @class */ (function () {
-    function AdminAprvlPageModule() {
-    }
-    AdminAprvlPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */]),
-            ],
-        })
-    ], AdminAprvlPageModule);
-    return AdminAprvlPageModule;
-}());
-
-//# sourceMappingURL=admin-aprvl.module.js.map
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(176);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var AdminHistoryPageModule = /** @class */ (function () {
-    function AdminHistoryPageModule() {
-    }
-    AdminHistoryPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */]),
-            ],
-        })
-    ], AdminHistoryPageModule);
-    return AdminHistoryPageModule;
-}());
-
-//# sourceMappingURL=admin-history.module.js.map
-
-/***/ }),
-
-/***/ 176:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminHistoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-/**
- * Generated class for the AdminHistoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AdminHistoryPage = /** @class */ (function () {
-    function AdminHistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.serviceProvider = serviceProvider;
-        this.commonProvider = commonProvider;
-        this.modal = modal;
-        this.userDetails = [];
-        this.tripHistory = [];
-        //this.loadUserData();
-    }
-    AdminHistoryPage.prototype.ionViewWillEnter = function () {
-        this.loadUserData();
-    };
-    AdminHistoryPage.prototype.loadUserData = function () {
-        var _this = this;
-        this.userDetails = this.navParams.get('EmployeeDetail');
-        console.log("nav params ", this.userDetails);
-        this.commonProvider.showLoader('');
-        this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
-            console.log("getAllTripHistory ", response);
-            console.log("getAllTripHistory ", JSON.parse(response._body));
-            _this.tripHistory = JSON.parse(response._body);
-            // this.approvalList = JSON.parse(response._body);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
-    };
-    AdminHistoryPage.prototype.openDetail = function (obj) {
-        console.log("open modal");
-        var myModal = this.modal.create('ModalDetailPage', { data: obj });
-        myModal.present();
-    };
-    AdminHistoryPage.prototype.editRequest = function (event, obj) {
-        console.log("edit requet ", obj);
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' });
-    };
-    AdminHistoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
-    ], AdminHistoryPage);
-    return AdminHistoryPage;
-}());
-
-//# sourceMappingURL=admin-history.js.map
-
-/***/ }),
-
-/***/ 177:
+/***/ 174:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -252,8 +484,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DriverPageModule", function() { return DriverPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(328);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(331);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -285,7 +517,7 @@ var DriverPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 178:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -294,8 +526,8 @@ var DriverPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_notification__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_service_service__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_service_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_call_number__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -335,17 +567,13 @@ var DriverPage = /** @class */ (function () {
         this.feedbackform = false;
         this.driverText = 'No cab is assigned';
         this.urlPath = 'https://mapps.mahindra.com/images/vms/VMS_PDF37tripDetails.pdf';
-        console.log('driver driverNumber page', this.navParams.get('driverNumber'));
         this.driverphno = this.navParams.get('driverNumber');
-        //this.urlPath = this.serviceProvider.url+;
-        console.log('url path ', this.urlPath);
     }
     DriverPage.prototype.logout = function () {
         var _this = this;
         this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__login_login__["a" /* LoginPage */], {});
         }, function (err) {
-            console.log('user cancelled');
         });
     };
     DriverPage.prototype.showNotifn = function (myEvent) {
@@ -357,62 +585,95 @@ var DriverPage = /** @class */ (function () {
     DriverPage.prototype.getTrip = function () {
         var _this = this;
         this.commonProvider.showLoader('Getting cab details..');
-        this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe(function (resp) {
-            _this.tripDetail = JSON.parse(resp._body);
-            console.log("this.tripDetail ", _this.tripDetail.length);
-            if (_this.tripDetail.length) {
-                _this.tripDetail[0] ? _this.tripDetail = _this.tripDetail[0] : 'nothing';
-                console.log("this.tripDetail ", _this.tripDetail.length);
-                _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
-                _this.driverDetail = _this.tripDetail.driver;
-                _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
-                _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
-                //this.urlPath = this.urlPath + this.tripDetail.filePath;
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getTripDetails/driver/' + this.driverphno).then(function (resp) {
+                _this.tripDetail = resp;
+                if (_this.tripDetail.length) {
+                    _this.tripDetail[0] ? _this.tripDetail = _this.tripDetail[0] : 'nothing';
+                    _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
+                    _this.driverDetail = _this.tripDetail.driver;
+                    _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
+                    _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
+                    //this.urlPath = this.urlPath + this.tripDetail.filePath;
+                    _this.commonProvider.hideLoader();
+                }
+                else {
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
                 _this.commonProvider.hideLoader();
-                console.log("trip response ", _this.tripDetail);
-                console.log("cabDetail response ", _this.cabDetail);
-                console.log("driver Detail response ", _this.driverDetail);
-                console.log("urlPath Detail response ", _this.urlPath);
-            }
-            else {
+                _this.commonProvider.showToast('Service error');
+            });
+        }
+        else {
+            this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe(function (resp) {
+                _this.tripDetail = JSON.parse(resp._body);
+                if (_this.tripDetail.length) {
+                    _this.tripDetail[0] ? _this.tripDetail = _this.tripDetail[0] : 'nothing';
+                    _this.tripDetail.cab ? _this.cabDetail = _this.tripDetail.cab : 'nothing';
+                    _this.driverDetail = _this.tripDetail.driver;
+                    _this.srcSubstr = _this.tripDetail.source.substring(0, 3);
+                    _this.destSubstr = _this.tripDetail.destination.substring(0, 3);
+                    //this.urlPath = this.urlPath + this.tripDetail.filePath;
+                    _this.commonProvider.hideLoader();
+                }
+                else {
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
                 _this.commonProvider.hideLoader();
-            }
-            // }else{
-            //   this.commonProvider.hideLoader();
-            // }
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            console.log("error ", err);
-            _this.commonProvider.showToast('Service error');
-        });
+                _this.commonProvider.showToast('Service error');
+            });
+        }
     };
     DriverPage.prototype.ionViewDidLoad = function () {
         this.getTrip();
     };
     DriverPage.prototype.startTrip = function (type) {
         var _this = this;
-        console.log('type ', type);
-        console.log(this.startkm);
         if (this.startkm) {
             this.commonProvider.showLoader('Updating Kms..');
             var today = new Date();
             var cdate = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear() + '-' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            console.log("ctime ", cdate);
-            console.log("this.tripDetail ", this.tripDetail);
-            this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
-                console.log("response ", resp);
-                _this.commonProvider.hideLoader();
-                if (type == 'endTrip') {
-                    _this.feedbackform = true;
-                    _this.driverText = 'You have completed your trip!!';
+            if (this.commonProvider.vapt) {
+                var reqData = void 0;
+                if (type == 'startTrip') {
+                    reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
                 }
-                console.log("end trip");
-                _this.getTrip();
-            }, function (err) {
-                console.log("error", err);
-                _this.commonProvider.showToast(err.message);
-                _this.commonProvider.hideLoader();
-            });
+                else {
+                    reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
+                }
+                this.serviceProvider.post('/updateOngoingTripDetails', reqData).then(function (resp) {
+                    _this.commonProvider.hideLoader();
+                    if (type == 'endTrip') {
+                        _this.feedbackform = true;
+                        _this.driverText = 'You have completed your trip!!';
+                    }
+                    _this.getTrip();
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                    _this.commonProvider.hideLoader();
+                });
+            }
+            else {
+                if (type == 'startTrip') {
+                    var reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
+                }
+                else {
+                    var reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
+                }
+                this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe(function (resp) {
+                    _this.commonProvider.hideLoader();
+                    if (type == 'endTrip') {
+                        _this.feedbackform = true;
+                        _this.driverText = 'You have completed your trip!!';
+                    }
+                    _this.getTrip();
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                    _this.commonProvider.hideLoader();
+                });
+            }
         }
         else {
             this.commonProvider.hideLoader();
@@ -421,13 +682,11 @@ var DriverPage = /** @class */ (function () {
     };
     DriverPage.prototype.callnum = function (num) {
         var _this = this;
-        console.log("inside call number function");
         this.callnumber.callNumber(num, true).then(function (res) {
-            console.log('Dialer opened', res);
+            return true;
         })
             .catch(function (err) {
             _this.commonProvider.showToast(err);
-            console.log('Error launching dialer', err);
         });
     };
     DriverPage = __decorate([
@@ -449,7 +708,7 @@ var DriverPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 179:
+/***/ 176:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -479,7 +738,6 @@ var NotificationDetailPage = /** @class */ (function () {
         this.navParams = navParams;
     }
     NotificationDetailPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad NotificationDetailPage');
     };
     NotificationDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -503,9 +761,10 @@ var NotificationDetailPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__feedback_feedback__ = __webpack_require__(92);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -523,6 +782,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 // import { Calendar } from '@ionic-native/calendar';
 //import { FCM } from '@ionic-native/fcm';
 /**
@@ -532,10 +792,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var EmpdashboardPage = /** @class */ (function () {
-    function EmpdashboardPage(navCtrl, navParams, formBuilder, popoverController, serviceProvider, commonProvider, modal, events, alertCtrl
-        //  public calendar: Calendar
-        //  public fcm: FCM
-    ) {
+    function EmpdashboardPage(navCtrl, navParams, formBuilder, popoverController, serviceProvider, commonProvider, modal, events, alertCtrl) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
@@ -551,7 +808,6 @@ var EmpdashboardPage = /** @class */ (function () {
         this.dhDetails = [];
         this.dhUsrDetails = [];
         this.travelType = [];
-        console.log("params ", navParams);
         this.userDetails = navParams.data.response;
         this.userName = navParams.get('userId');
         this.userName = navParams.get('response');
@@ -589,7 +845,6 @@ var EmpdashboardPage = /** @class */ (function () {
         this.travelDate = new Date();
         this.currTime = new Date(this.minDate);
         this.currTime = this.currTime.toISOString();
-        console.log('this.currTime iso format ', this.currTime);
         this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
         this.endDate = new Date();
         this.endtravelDate = new Date();
@@ -600,42 +855,83 @@ var EmpdashboardPage = /** @class */ (function () {
     }
     EmpdashboardPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
-            _this.dhDetails = JSON.parse(response._body);
-            console.log('DH response ', _this.dhDetails);
-            _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.dhDetails.pernr).subscribe(function (response) {
-                _this.dhUsrDetails = JSON.parse(response._body);
-                console.log("this.dhUsrDetails ", _this.dhUsrDetails);
+        this.commonProvider.showLoader('Getting employee details..');
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then(function (response) {
+                _this.dhDetails = response;
+                _this.serviceProvider.get('/getEmpDetailService/' + _this.dhDetails.pernr).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.dhUsrDetails = response;
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in user details");
+                });
             }, function (err) {
-                _this.commonProvider.showToast("Error in user details");
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in dh details");
             });
-        }, function (err) {
-            _this.commonProvider.showToast("Error in dh details");
-        });
-        this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
-            console.log("Locations ", response);
-            console.log("Locations ", JSON.parse(response._body));
-            _this.locations = JSON.parse(response._body);
-            console.log("this.locations[0].loc_name ", _this.locations[1].loc_name);
-            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-        }, function (err) {
-            _this.commonProvider.showToast(err.message);
-        });
-        this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
-        console.log('ionViewDidLoad EmpdashboardPage ', this.endDate);
+            this.serviceProvider.get('/getAllLocations').then(function (response) {
+                _this.locations = response;
+                _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        }
+        else {
+            this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
+                _this.dhDetails = JSON.parse(response._body);
+                _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.dhDetails.pernr).subscribe(function (response) {
+                    _this.dhUsrDetails = JSON.parse(response._body);
+                    _this.commonProvider.hideLoader();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in user details");
+                });
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in dh details");
+            });
+            this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
+                _this.locations = JSON.parse(response._body);
+                _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+            this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe(function (response) {
+                var ln = JSON.parse(response._body);
+                console.log("response ", ln.length);
+                if (ln.length) {
+                    _this.feedbackForm(response);
+                }
+            }, function (err) {
+                console.log("response ", err);
+            });
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        }
     };
     EmpdashboardPage.prototype.showNotifn = function (myEvent) {
-        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_3__notification_notification__["a" /* NotificationPage */]);
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_3__notification_notification__["a" /* NotificationPage */], {}, { enableBackdropDismiss: false });
         popover.present({
             ev: myEvent
         });
     };
+    EmpdashboardPage.prototype.feedbackForm = function (tripObj) {
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_7__feedback_feedback__["a" /* FeedbackPage */], { tripObj: tripObj }, { enableBackdropDismiss: false });
+        var evn = {
+            target: {
+                getBoundingClientRect: function () {
+                    return {
+                        bottom: '100'
+                    };
+                }
+            }
+        };
+        popover.present({
+            ev: evn
+        });
+    };
     EmpdashboardPage.prototype.logForm = function () {
-        console.log(this.bookingForm.value);
-        // if (this.bookingForm.value.updatepurpose != null) {
-        //   this.commonProvider.showToast("not save");
-        // }
-        // return false;
         this.confirmReqst = true;
     };
     EmpdashboardPage.prototype.editRequest = function () {
@@ -649,30 +945,38 @@ var EmpdashboardPage = /** @class */ (function () {
             _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
             _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     EmpdashboardPage.prototype.getEmpHistory = function () {
         var _this = this;
-        console.log("In Emp History");
         this.pageTitle = "History";
         this.commonProvider.showLoader();
-        this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
-            console.log("Emplyee history ", response);
-            if (response.status == 200) {
-                _this.historyData = JSON.parse(response._body);
+        if (this.commonProvider.vapt) {
+            var buildParam = {};
+            this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no, buildParam).then(function (response) {
+                _this.historyData = response;
                 _this.commonProvider.hideLoader();
-            }
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+            }, function (err) {
+                _this.commonProvider.showToast(err);
+                _this.commonProvider.hideLoader();
+            });
+        }
+        else {
+            this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+                if (response.status == 200) {
+                    _this.historyData = JSON.parse(response._body);
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     EmpdashboardPage.prototype.sendRequest = function () {
         var _this = this;
         this.commonProvider.Alert.confirm('Sure you want to send request?').then(function (res) {
-            _this.commonProvider.showLoader('Sending request...');
-            console.log('this.bookingForm.value ', _this.bookingForm.value);
             _this.tdate = new Date(_this.travelDate);
             _this.tdate = _this.tdate.getDate() + '/' + (_this.tdate.getMonth() + 1) + '/' + _this.tdate.getFullYear();
             if (_this.bookingForm.value.isRoundTrip == 'No') {
@@ -684,55 +988,98 @@ var EmpdashboardPage = /** @class */ (function () {
                 _this.edate = _this.edate.getDate() + '/' + (_this.edate.getMonth() + 1) + '/' + _this.edate.getFullYear();
             }
             var reqData;
-            reqData = {
-                'userID': _this.userDetails.emp_no,
-                'source': _this.bookingForm.value.travelsrc,
-                'destination': _this.bookingForm.value.traveldest,
-                'pickpoint': _this.bookingForm.value.pickpoint,
-                'purpose': _this.bookingForm.value.updatepurpose,
-                //'travel_date': new Date(this.travelDate).toDateString(),
-                'travel_date': _this.tdate,
-                'travel_time': _this.bookingForm.value.traveltime,
-                'emp_email': _this.userDetails.emp_email,
-                'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
-                'emp_phoneNo': _this.userDetails.emp_cell,
-                'status': 'Pending with Manager',
-                'bh_Id': _this.dhDetails.pernr,
-                'bh_UserName': _this.dhUsrDetails.emp_f_name + ' ' + _this.dhUsrDetails.emp_l_name,
-                'bh_email': _this.dhUsrDetails.emp_email,
-                'remark': _this.bookingForm.value.remark,
-                'location': _this.userDetails.emp_psa,
-                //'cost_id': this.userDetails.emp_cosid,
-                'cost_id': _this.bookingForm.value.costid,
-                'cost_center': _this.userDetails.emp_cost,
-                'travelType': _this.bookingForm.value.travelType,
-                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
-                //'returnDate': new Date(this.endtravelDate).toDateString(),
-                'returnDate': _this.edate,
-                'returnTime': _this.bookingForm.value.endtraveltime,
-            };
-            console.log("ustr", reqData);
-            //   reqData.bh_Id = '00211779' ;
-            console.log("reqraise data", reqData);
-            _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
-                console.log("raise request ", response);
-                _this.commonProvider.hideLoader();
-                if (response) {
-                    _this.confirmReqst = false;
-                    _this.bookingForm.reset();
-                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-                    _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
-                    _this.commonProvider.showToast('Request sent successfully');
-                }
-                else {
+            _this.commonProvider.showLoader('Sending request...');
+            if (_this.commonProvider.vapt) {
+                reqData = {
+                    "userID": _this.userDetails.emp_no,
+                    "source": _this.bookingForm.value.travelsrc,
+                    "destination": _this.bookingForm.value.traveldest,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
+                    "purpose": _this.bookingForm.value.updatepurpose,
+                    "travel_date": _this.tdate,
+                    "travel_time": _this.bookingForm.value.traveltime,
+                    "emp_email": _this.userDetails.emp_email,
+                    "emp_userName": _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    "emp_phoneNo": _this.userDetails.emp_cell,
+                    "status": "Pending with Manager",
+                    "bh_Id": _this.dhDetails.pernr,
+                    "bh_UserName": _this.dhUsrDetails.emp_f_name + ' ' + _this.dhUsrDetails.emp_l_name,
+                    "bh_email": _this.dhUsrDetails.emp_email,
+                    "remark": _this.bookingForm.value.remark,
+                    //"location": this.userDetails.emp_psa,
+                    "cost_id": _this.bookingForm.value.costid,
+                    "cost_center": _this.userDetails.emp_cost,
+                    "travelType": _this.bookingForm.value.travelType,
+                    "isRoundTrip": _this.bookingForm.value.isRoundTrip,
+                    "returnDate": _this.edate,
+                    "returnTime": _this.bookingForm.value.endtraveltime,
+                    "isactive": "Y",
+                    "locationName": _this.userDetails.emp_psa
+                };
+                _this.serviceProvider.post('/insertTrip', reqData).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast('Request error, Please check with admin');
-                }
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast('Request error, Please check with admin');
-            });
+                });
+            }
+            else {
+                reqData = {
+                    'userID': _this.userDetails.emp_no,
+                    'source': _this.bookingForm.value.travelsrc,
+                    'destination': _this.bookingForm.value.traveldest,
+                    'pickupPoint': _this.bookingForm.value.pickpoint,
+                    'purpose': _this.bookingForm.value.updatepurpose,
+                    //'travel_date': new Date(this.travelDate).toDateString(),
+                    'travel_date': _this.tdate,
+                    'travel_time': _this.bookingForm.value.traveltime,
+                    'emp_email': _this.userDetails.emp_email,
+                    'emp_userName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    'emp_phoneNo': _this.userDetails.emp_cell,
+                    'status': 'Pending with Manager',
+                    'bh_Id': _this.dhDetails.pernr,
+                    'bh_UserName': _this.dhUsrDetails.emp_f_name + ' ' + _this.dhUsrDetails.emp_l_name,
+                    'bh_email': _this.dhUsrDetails.emp_email,
+                    'remark': _this.bookingForm.value.remark,
+                    'location': _this.userDetails.emp_psa,
+                    //'cost_id': this.userDetails.emp_cosid,
+                    'cost_id': _this.bookingForm.value.costid,
+                    'cost_center': _this.userDetails.emp_cost,
+                    'travelType': _this.bookingForm.value.travelType,
+                    'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                    //'returnDate': new Date(this.endtravelDate).toDateString(),
+                    'returnDate': _this.edate,
+                    'returnTime': _this.bookingForm.value.endtraveltime,
+                };
+                _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     EmpdashboardPage.prototype.logout = function () {
@@ -740,17 +1087,14 @@ var EmpdashboardPage = /** @class */ (function () {
         this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     EmpdashboardPage.prototype.openDetail = function (obj) {
-        console.log("open modal");
         var myModal = this.modal.create('ModalDetailPage', { data: obj });
         myModal.present();
     };
     EmpdashboardPage.prototype.setDate = function (dte) {
-        console.log("dte ", dte);
-        console.log("minDate ", this.minDate);
         this.travelDate = new Date(dte);
         this.endtravelDate = new Date(dte);
         if (this.travelDate > this.minDate) {
@@ -761,7 +1105,6 @@ var EmpdashboardPage = /** @class */ (function () {
             this.currTime = new Date();
             this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
         }
-        console.log("date obj ", this.travelDate);
     };
     EmpdashboardPage.prototype.setEndDate = function (dte) {
         this.endtravelDate = new Date(dte);
@@ -779,16 +1122,28 @@ var EmpdashboardPage = /** @class */ (function () {
         event.stopPropagation();
         this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
             _this.commonProvider.showLoader();
-            _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Trip cancelled successfully");
-                _this.getEmpHistory();
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in cancellation");
-            });
+            if (_this.commonProvider.vapt) {
+                _this.serviceProvider.get('/employeecanceltrip/' + id).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
+            else {
+                _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     EmpdashboardPage.prototype.showTermsCondition = function (myEvent) {
@@ -797,8 +1152,6 @@ var EmpdashboardPage = /** @class */ (function () {
     };
     EmpdashboardPage.prototype.rating = function (val, tripid) {
         var _this = this;
-        console.log("rating val", val);
-        console.log("trip id", tripid);
         if (val <= 2) {
             var prompt_1 = this.alertCtrl.create({
                 title: '',
@@ -813,7 +1166,6 @@ var EmpdashboardPage = /** @class */ (function () {
                     {
                         text: 'Send',
                         handler: function (data) {
-                            console.log('Saved clicked', data);
                             _this.giveRating(val, tripid, data.comment);
                         }
                     }
@@ -828,20 +1180,32 @@ var EmpdashboardPage = /** @class */ (function () {
     EmpdashboardPage.prototype.giveRating = function (ratings, tripid, reason) {
         var _this = this;
         if (reason === void 0) { reason = null; }
-        console.log("reason ", reason);
         this.commonProvider.showLoader();
-        this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Thank you for your feedback");
-            _this.getEmpHistory();
-        }, function (error) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Error in update rating");
-        });
+        if (this.commonProvider.vapt) {
+            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason };
+            this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
+        else {
+            this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
     };
     EmpdashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-empdashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span></div>\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red">\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle=\'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          History\n        </ion-segment-button>\n      </ion-segment>\n    </div>\n    <div [ngSwitch]="requestSegment">\n      <div >\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="travelsrc" name="travelsrc">\n                  <div *ngFor="let locs of locations">\n                    <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n                  </div>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <!-- <div *ngFor="let locs of locations"> -->\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                  <!-- </div> -->\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate" [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate" [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Cost ID<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="costid"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Cost Id</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.costid}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n\n\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n    </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important; margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n\n                </span>\n\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                  <h6 *ngIf="hdata.status == \'Pending with Manager\' ">{{hdata.bh_UserName}}\n                  </h6>\n                </span>\n                <div>\n                  <ul class="bar">\n                    <li style="color:green">\n                      <h3>{{hdata.source}}</h3>\n                    </li>\n                    <li style="color:#a90e1b">\n                      <h3>{{hdata.destination}}</h3>\n                    </li>\n                  </ul>\n\n                </div>\n              </div>\n              <span class="statusWrds" *ngIf="hdata.status != \'started\' && hdata.status != \'Completed\' && hdata.status != \'Rejected\' && hdata.status != \'Approved\'">\n                <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel\n                </button>\n              </span>\n              <span style="float:right; margin-top: -25px;" *ngIf="hdata.status == \'Completed\'">\n                <!-- <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="hdata.feedbackRating">\n                </ionic3-star-rating> -->\n                <rating [(ngModel)]="hdata.feedbackRating" [(readOnly)]="hdata.feedbackStatus" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="true" (ngModelChange)="rating($event,hdata.id)">\n                  <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->\n                </rating>\n\n              </span>\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n\n  \n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/,
+            selector: 'page-empdashboard',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/'<ion-header>\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.emp_f_name}}/{{userDetails.emp_no}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.emp_psa}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.emp_cost}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red">\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle=\'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          History\n        </ion-segment-button>\n      </ion-segment>\n    </div>\n    <div [ngSwitch]="requestSegment">\n      <div>\n        <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n          <div *ngIf="!confirmReqst">\n            <ion-row>\n              <ion-col>\n                <ion-item>\n                  <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                  <ion-select formControlName="travelsrc" name="travelsrc">\n                    <div *ngFor="let locs of locations">\n                      <ion-option value="{{locs.loc_name}}">{{locs.loc_name}}</ion-option>\n                    </div>\n                  </ion-select>\n                </ion-item>\n              </ion-col>\n              <ion-col>\n                <ion-item>\n                  <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                  <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                    <!-- <div *ngFor="let locs of locations"> -->\n                    <ion-option value="No">One Way</ion-option>\n                    <ion-option value="Yes">Round Trip</ion-option>\n                    <!-- </div> -->\n                  </ion-select>\n                </ion-item>\n              </ion-col>\n            </ion-row>\n            <ion-item>\n              <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n              <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n            </ion-item>\n            <ion-item>\n              <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n                [cancelText]=\'Today\' clear>\n                <span>Start Date : {{travelDate | date}}\n                  <ion-icon name="clipboard" item-left></ion-icon>\n                </span>\n              </span>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n              <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n              </ion-datetime>\n            </ion-item>\n            <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n              <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n                [cancelText]=\'Today\' clear>\n                <span>Return Date : {{endtravelDate | date}}\n                  <ion-icon name="clipboard" item-left></ion-icon>\n                </span>\n              </span>\n            </ion-item>\n            <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n              <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n              <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n              </ion-datetime>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n              <ion-input type="text" formControlName="updatepurpose"></ion-input>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n              <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Remark<sup style="color:red">*</sup></ion-label>\n              <ion-input type="text" formControlName="remark"></ion-input>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Cost ID<sup style="color:red">*</sup></ion-label>\n              <ion-input type="text" formControlName="costid"></ion-input>\n            </ion-item>\n            <ion-item>\n              <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n              <ion-select formControlName="travelType">\n                <ion-option value="outstation">Outstation</ion-option>\n                <ion-option value="local">Local</ion-option>\n              </ion-select>\n            </ion-item>\n            <ion-row text-center class="row-height" style="margin-top: 1%">\n              <ion-col>\n                <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n                </button>\n              </ion-col>\n            </ion-row>\n          </div>\n          <div *ngIf="confirmReqst">\n            <ion-card>\n              <ion-card-header style="text-align: center" color="red">\n                Confirm Request\n                <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                  (Round Trip)\n                </span>\n                <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                  (One-Way Trip)\n                </span>\n                <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n              </ion-card-header>\n              <ion-card-content style="padding: 13px 6px 5px;">\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Cost Id</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.costid}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Purpose</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.updatepurpose}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Start Date</span>\n                  </ion-col>\n                  <ion-col>\n                    {{travelDate | date}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Start Time</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.traveltime}}\n                  </ion-col>\n                </ion-row>\n                <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                  <ion-col>\n                    <span class="formtitle">Return Date</span>\n                  </ion-col>\n                  <ion-col>\n                    {{endtravelDate | date}}\n                  </ion-col>\n                </ion-row>\n                <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                  <ion-col>\n                    <span class="formtitle">Return Time</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.endtraveltime}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">My Location</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.travelsrc}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Destination</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.traveldest}}\n                  </ion-col>\n                </ion-row>\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Pickup point</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.pickpoint}}\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Travel Type</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.travelType}}\n                  </ion-col>\n                </ion-row>\n\n                <ion-row>\n                  <ion-col>\n                    <span class="formtitle">Remark</span>\n                  </ion-col>\n                  <ion-col>\n                    {{bookingForm.value.remark}}\n                  </ion-col>\n                </ion-row>\n\n\n                <ion-row text-center class="row-height" style="margin-top: 1%">\n                  <ion-col>\n\n                    <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                    </button>\n                    <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                    </button>\n                  </ion-col>\n                </ion-row>\n              </ion-card-content>\n            </ion-card>\n          </div>\n        </form>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important; margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n\n                </span>\n\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                  <h6 *ngIf="hdata.status == \'Pending with Manager\' ">{{hdata.bh_UserName}}\n                  </h6>\n                </span>\n                <div>\n                  <ul class="bar">\n                    <li style="color:green">\n                      <h3>{{hdata.source}}</h3>\n                    </li>\n                    <li style="color:#a90e1b">\n                      <h3>{{hdata.destination}}</h3>\n                    </li>\n                  </ul>\n\n                </div>\n              </div>\n              <span class="statusWrds"\n                *ngIf="hdata.status != \'started\' && hdata.status != \'Completed\' && hdata.status != \'Rejected\' && hdata.status != \'Approved\'">\n                <button ion-button small="true" color="red" (click)="cancelCabReq($event,hdata.id)">Cancel\n                </button>\n              </span>\n              <span style="float:right; margin-top: -25px;" *ngIf="hdata.status == \'Completed\'">\n                <!-- <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="rgb(120, 193, 35)" defaultColor="red" readonly="false" [rating]="hdata.feedbackRating">\n                </ionic3-star-rating> -->\n                <rating [(ngModel)]="hdata.feedbackRating" [(readOnly)]="hdata.feedbackStatus" max="5"\n                  emptyStarIconName="star-outline" halfStarIconName="star-half" starIconName="star" nullable="true"\n                  (ngModelChange)="rating($event,hdata.id)">\n                  <!--use it when you need to do something when user clicks on a star. in case you only need to change ngModel property, this property can be ommited.-->\n                </rating>\n\n              </span>\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n\n\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/employee/empdashboard/empdashboard.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
@@ -851,10 +1215,7 @@ var EmpdashboardPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_5__providers_common_common__["a" /* CommonProvider */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]
-            //  public calendar: Calendar
-            //  public fcm: FCM
-        ])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], EmpdashboardPage);
     return EmpdashboardPage;
 }());
@@ -872,10 +1233,11 @@ var EmpdashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__feedback_feedback__ = __webpack_require__(92);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -885,6 +1247,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -918,8 +1281,6 @@ var HoddashboardPage = /** @class */ (function () {
         this.userDetails = [];
         this.dhDetails = [];
         this.userDetails = navParams.data.response;
-        console.log("params hod", navParams);
-        console.log("params ", this.userDetails);
         this.bookingForm = this.formBuilder.group({
             costid: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
                     __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
@@ -960,7 +1321,6 @@ var HoddashboardPage = /** @class */ (function () {
         this.EndcurrTime = new Date();
         this.EndcurrTime = this.EndcurrTime.toISOString();
         this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
-        console.log('this.EndcurrTime ', this.EndcurrTime);
         this.bookingForm.get('isRoundTrip').setValue('Yes');
         this.events.subscribe('actionReq', function (ev, status, obj) {
             _this.reqAction(ev, status, obj);
@@ -973,15 +1333,10 @@ var HoddashboardPage = /** @class */ (function () {
         });
     };
     HoddashboardPage.prototype.showTermsCondition = function (myEvent) {
-        // let popvr = this.popoverController.create(TermsconditionPage);
-        // popvr.present({
-        //   ev: myEvent
-        // })
         var popvr = this.modal.create('TermsconditionPage', {});
         popvr.present();
     };
     HoddashboardPage.prototype.logForm = function () {
-        console.log(this.bookingForm.value);
         this.confirmReqst = true;
     };
     HoddashboardPage.prototype.editRequest = function () {
@@ -995,27 +1350,33 @@ var HoddashboardPage = /** @class */ (function () {
             _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
             _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     HoddashboardPage.prototype.getEmpHistory = function () {
         var _this = this;
         this.pageTitle = "Booking History";
-        this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
-            console.log("Emplyee history ", response);
-            if (response.status == 200) {
-                _this.historyData = JSON.parse(response._body);
-                console.log("Emplyee history ", _this.historyData);
-            }
-        }, function (err) {
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then(function (response) {
+                _this.historyData = response;
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+                if (response.status == 200) {
+                    _this.historyData = JSON.parse(response._body);
+                }
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     HoddashboardPage.prototype.sendRequest = function () {
         var _this = this;
         this.commonProvider.Alert.confirm().then(function (res) {
             _this.commonProvider.showLoader('Sending request...');
-            console.log('this.bookingForm.value ', _this.bookingForm.value);
             _this.tdate = new Date(_this.travelDate);
             _this.tdate = _this.tdate.getDate() + '/' + (_this.tdate.getMonth() + 1) + '/' + _this.tdate.getFullYear();
             if (_this.bookingForm.value.isRoundTrip == 'No') {
@@ -1026,56 +1387,93 @@ var HoddashboardPage = /** @class */ (function () {
                 _this.edate = new Date(_this.endtravelDate);
                 _this.edate = _this.edate.getDate() + '/' + (_this.edate.getMonth() + 1) + '/' + _this.edate.getFullYear();
             }
-            var reqData = {
-                'userID': _this.userDetails.emp_no,
-                'source': _this.bookingForm.value.travelsrc,
-                'destination': _this.bookingForm.value.traveldest,
-                'pickpoint': _this.bookingForm.value.pickpoint,
-                'purpose': _this.bookingForm.value.updatepurpose,
-                //'travel_date': new Date(this.travelDate).toDateString(),
-                'travel_date': _this.tdate,
-                'travel_time': _this.bookingForm.value.traveltime,
-                'emp_email': _this.userDetails.emp_email,
-                'remark': _this.bookingForm.value.remark,
-                'location': _this.userDetails.emp_psa,
-                //'cost_id': this.userDetails.emp_cosid,
-                'cost_id': _this.bookingForm.value.costid,
-                'cost_center': _this.userDetails.emp_cost,
-                'emp_UserName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
-                'emp_phoneNo': _this.userDetails.emp_cell,
-                'status': 'Pending with Admin',
-                'travelType': _this.bookingForm.value.travelType,
-                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
-                'returnDate': _this.edate,
-                //'returnDate': new Date(this.endtravelDate).toDateString(),
-                'returnTime': _this.bookingForm.value.endtraveltime
-            };
-            _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
-                console.log("raise request ", response);
-                _this.commonProvider.hideLoader();
-                if (response) {
-                    _this.confirmReqst = false;
-                    _this.bookingForm.reset();
-                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-                    _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
-                    _this.commonProvider.showToast('Request sent successfully');
-                }
-                else {
-                    _this.commonProvider.showToast('Request error, Please check with admin');
-                }
-            }, function (err) {
-                _this.commonProvider.showToast(err.message);
-            });
+            if (_this.commonProvider.vapt) {
+                var reqData = {
+                    "userID": _this.userDetails.emp_no,
+                    "source": _this.bookingForm.value.travelsrc,
+                    "destination": _this.bookingForm.value.traveldest,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
+                    "purpose": _this.bookingForm.value.updatepurpose,
+                    "travel_date": _this.tdate,
+                    "travel_time": _this.bookingForm.value.traveltime,
+                    "emp_email": _this.userDetails.emp_email,
+                    "remark": _this.bookingForm.value.remark,
+                    "locationName": _this.userDetails.emp_psa,
+                    "cost_id": _this.bookingForm.value.costid,
+                    "cost_center": _this.userDetails.emp_cost,
+                    "emp_userName": _this.userDetails.emp_f_name + " " + _this.userDetails.emp_l_name,
+                    "emp_phoneNo": _this.userDetails.emp_cell,
+                    "status": "Pending with Admin",
+                    "travelType": _this.bookingForm.value.travelType,
+                    "isRoundTrip": _this.bookingForm.value.isRoundTrip,
+                    "returnDate": _this.edate,
+                    "returnTime": _this.bookingForm.value.endtraveltime,
+                    "isactive": 'Y'
+                };
+                _this.serviceProvider.post('/insertTrip', reqData).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                });
+            }
+            else {
+                var reqData = {
+                    'userID': _this.userDetails.emp_no,
+                    'source': _this.bookingForm.value.travelsrc,
+                    'destination': _this.bookingForm.value.traveldest,
+                    'pickupPoint': _this.bookingForm.value.pickpoint,
+                    'purpose': _this.bookingForm.value.updatepurpose,
+                    //'travel_date': new Date(this.travelDate).toDateString(),
+                    'travel_date': _this.tdate,
+                    'travel_time': _this.bookingForm.value.traveltime,
+                    'emp_email': _this.userDetails.emp_email,
+                    'remark': _this.bookingForm.value.remark,
+                    'location': _this.userDetails.emp_psa,
+                    //'cost_id': this.userDetails.emp_cosid,
+                    'cost_id': _this.bookingForm.value.costid,
+                    'cost_center': _this.userDetails.emp_cost,
+                    'emp_userName': _this.userDetails.emp_f_name + ' ' + _this.userDetails.emp_l_name,
+                    'emp_phoneNo': _this.userDetails.emp_cell,
+                    'status': 'Pending with Admin',
+                    'travelType': _this.bookingForm.value.travelType,
+                    'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                    'returnDate': _this.edate,
+                    //'returnDate': new Date(this.endtravelDate).toDateString(),
+                    'returnTime': _this.bookingForm.value.endtraveltime
+                };
+                _this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                        _this.bookingForm.get('costid').setValue(_this.userDetails.emp_cosid);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.showToast(err.message);
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     HoddashboardPage.prototype.reqAction = function (ev, status, obj) {
         var _this = this;
-        console.log("obj ", obj);
-        console.log("status ", status);
         ev.stopPropagation();
-        console.log("status ", status);
         if (status == "Rejected") {
             var prompt_1 = this.alertCtrl.create({
                 title: '',
@@ -1090,13 +1488,12 @@ var HoddashboardPage = /** @class */ (function () {
                     {
                         text: 'Cancel',
                         handler: function (data) {
-                            console.log('Cancel clicked', data);
+                            return;
                         }
                     },
                     {
                         text: 'Send',
                         handler: function (data) {
-                            console.log('Saved clicked', data);
                             _this.confirmReqAction(status, obj, data.comment);
                         }
                     }
@@ -1109,7 +1506,6 @@ var HoddashboardPage = /** @class */ (function () {
             this.commonProvider.Alert.confirm('').then(function (res) {
                 _this.confirmReqAction(status, obj);
             }, function (err) {
-                console.log('user cancelled');
                 _this.commonProvider.hideLoader();
                 _this.commonProvider.showToast(err.message);
             });
@@ -1118,112 +1514,199 @@ var HoddashboardPage = /** @class */ (function () {
     HoddashboardPage.prototype.confirmReqAction = function (status, obj, comment) {
         var _this = this;
         if (comment === void 0) { comment = "null"; }
-        console.log("status ", status);
-        console.log("status obj ", obj);
         this.commonProvider.showLoader('Sending request...');
-        var reqData = {
-            'userID': obj.userID,
-            'source': obj.source,
-            'destination': obj.destination,
-            'pickpoint': obj.pickupPoint,
-            'purpose': obj.purpose,
-            'travel_date': obj.travel_date,
-            'travel_time': obj.travel_time,
-            'id': obj.id,
-            'status': status,
-            'modified_by': this.userDetails.emp_no,
-            'comment': comment,
-            'emp_email': obj.emp_email,
-            'emp_UserName': obj.emp_userName,
-            'emp_phoneNo': obj.emp_phoneNo,
-            'bh_Id': obj.bh_Id,
-            'bh_UserName': obj.bh_UserName,
-            'remark': obj.remark,
-            'bh_email': obj.bh_email,
-            //  'location': obj.source,
-            'location': obj.emp_location,
-            'cost_id': obj.cost_id,
-            'cost_center': obj.cost_center,
-            'travelType': obj.travelType,
-            'isRoundTrip': obj.isRoundTrip,
-            'returnDate': obj.returnDate,
-            'returnTime': obj.returnTime
-        };
-        console.log("raise request ", reqData);
-        //return;
-        this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe(function (response) {
-            _this.commonProvider.hideLoader();
-            if (response) {
-                _this.getApprovalHistory();
-                _this.events.publish('closeModalev');
-                _this.commonProvider.showToast('Request sent successfully');
-            }
-            else {
-                _this.commonProvider.showToast('Request error, Please check with admin');
-            }
-        }, function (err) {
-            console.log("error ", err);
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            var reqData = {
+                "userID": obj.userID,
+                "source": obj.source,
+                "destination": obj.destination,
+                "pickupPoint": obj.pickupPoint,
+                "purpose": obj.purpose,
+                "travel_date": obj.travel_date,
+                "travel_time": obj.travel_time,
+                "id": obj.id,
+                "status": status,
+                "modifiedby": this.userDetails.emp_no,
+                "comment": comment,
+                "emp_email": obj.emp_email,
+                "emp_userName": obj.emp_userName,
+                "emp_phoneNo": obj.emp_phoneNo,
+                "bh_Id": obj.bh_Id,
+                "bh_UserName": obj.bh_UserName,
+                "remark": obj.remark,
+                "bh_email": obj.bh_email,
+                "locationName": obj.emp_location,
+                "cost_id": obj.cost_id,
+                "cost_center": obj.cost_center,
+                "travelType": obj.travelType,
+                "isRoundTrip": obj.isRoundTrip,
+                "returnDate": obj.returnDate,
+                "returnTime": obj.returnTime
+            };
+            this.serviceProvider.post('/approveRequest/hod', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.getApprovalHistory();
+                    _this.events.publish('closeModalev');
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            var reqData = {
+                'userID': obj.userID,
+                'source': obj.source,
+                'destination': obj.destination,
+                'pickupPoint': obj.pickupPoint,
+                'purpose': obj.purpose,
+                'travel_date': obj.travel_date,
+                'travel_time': obj.travel_time,
+                'id': obj.id,
+                'status': status,
+                'modified_by': this.userDetails.emp_no,
+                'comment': comment,
+                'emp_email': obj.emp_email,
+                'emp_userName': obj.emp_userName,
+                'emp_phoneNo': obj.emp_phoneNo,
+                'bh_Id': obj.bh_Id,
+                'bh_UserName': obj.bh_UserName,
+                'remark': obj.remark,
+                'bh_email': obj.bh_email,
+                //  'location': obj.source,
+                'location': obj.emp_location,
+                'cost_id': obj.cost_id,
+                'cost_center': obj.cost_center,
+                'travelType': obj.travelType,
+                'isRoundTrip': obj.isRoundTrip,
+                'returnDate': obj.returnDate,
+                'returnTime': obj.returnTime
+            };
+            this.serviceProvider.raiseRequest('/approveRequest/hod', reqData, 'hodAction').subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                if (response) {
+                    _this.getApprovalHistory();
+                    _this.events.publish('closeModalev');
+                    _this.commonProvider.showToast('Request sent successfully');
+                }
+                else {
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                }
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     HoddashboardPage.prototype.viewReqHistory = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__["a" /* RequesthistoryPage */], { EmployeeDetail: this.userDetails });
     };
     HoddashboardPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
-            _this.dhDetails = JSON.parse(response._body);
-            console.log('DH response ', _this.dhDetails);
-        }, function (err) {
-            _this.commonProvider.showToast(err.message);
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then(function (response) {
+                _this.dhDetails = response;
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+            this.commonProvider.showLoader();
+            this.serviceProvider.get('/getAllLocations').then(function (response) {
+                _this.locations = response;
+                _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                _this.commonProvider.hideLoader();
+                _this.getApprovalHistory();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        }
+        else {
+            this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe(function (response) {
+                _this.dhDetails = JSON.parse(response._body);
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+            this.commonProvider.showLoader();
+            this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
+                _this.locations = JSON.parse(response._body);
+                _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                _this.commonProvider.hideLoader();
+                _this.getApprovalHistory();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+            this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe(function (response) {
+                var ln = JSON.parse(response._body);
+                console.log("response ", ln.length);
+                if (ln.length) {
+                    _this.feedbackForm(response);
+                }
+            }, function (err) {
+                console.log("response ", err);
+            });
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+        }
+    };
+    HoddashboardPage.prototype.feedbackForm = function (tripObj) {
+        var popover = this.popoverController.create(__WEBPACK_IMPORTED_MODULE_8__feedback_feedback__["a" /* FeedbackPage */], { tripObj: tripObj }, { enableBackdropDismiss: false });
+        var evn = {
+            target: {
+                getBoundingClientRect: function () {
+                    return {
+                        bottom: '100'
+                    };
+                }
+            }
+        };
+        popover.present({
+            ev: evn
         });
-        this.commonProvider.showLoader();
-        this.serviceProvider.getAllLocations('/getAllLocations').subscribe(function (response) {
-            console.log("Locations ", JSON.parse(response._body));
-            _this.locations = JSON.parse(response._body);
-            _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-            _this.commonProvider.hideLoader();
-            _this.getApprovalHistory();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
-        console.log('ionViewDidLoad EmpdashboardPage');
-        this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     };
     HoddashboardPage.prototype.getApprovalHistory = function () {
         var _this = this;
         this.commonProvider.showLoader('');
         this.pageTitle = "Requests";
-        this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe(function (response) {
-            console.log("Locations ", response);
-            console.log("Locations ", JSON.parse(response._body));
-            _this.approvalList = JSON.parse(response._body);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getApprovalList/hod/' + this.userDetails.emp_no).then(function (response) {
+                _this.approvalList = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe(function (response) {
+                _this.approvalList = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     HoddashboardPage.prototype.logout = function () {
         var _this = this;
         this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
     HoddashboardPage.prototype.segmentChanged = function (event) {
         var _this = this;
-        console.log("Segment clicked! " + event.value, this, event);
         this.zone.run(function () {
             _this.requestSegment = event.value;
         });
     };
     HoddashboardPage.prototype.openDetail = function (obj, vw) {
-        console.log("open modal");
-        console.log("open modal", vw);
         var myModal = this.modal.create('ModalDetailPage', { data: obj, viewName: vw });
         myModal.present();
     };
@@ -1239,7 +1722,6 @@ var HoddashboardPage = /** @class */ (function () {
             this.currTime = new Date();
             this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
         }
-        console.log("date obj ", this.travelDate);
     };
     HoddashboardPage.prototype.setEndDate = function (dte) {
         this.endtravelDate = new Date(dte);
@@ -1252,7 +1734,6 @@ var HoddashboardPage = /** @class */ (function () {
         }
     };
     HoddashboardPage.prototype.cancelDate = function (dte) {
-        console.log("date obj ", dte);
         this.minDate = new Date();
     };
     HoddashboardPage.prototype.cancelCabReq = function (event, id) {
@@ -1260,26 +1741,32 @@ var HoddashboardPage = /** @class */ (function () {
         event.stopPropagation();
         this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
             _this.commonProvider.showLoader();
-            _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Trip cancelled successfully");
-                _this.getEmpHistory();
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in cancellation");
-            });
+            if (_this.commonProvider.vapt) {
+                _this.serviceProvider.get('/employeecanceltrip/' + id).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
+            else {
+                _this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Trip cancelled successfully");
+                    _this.getEmpHistory();
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Error in cancellation");
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
+            return;
         });
     };
-    // cancelDate(dte: any) {
-    //   console.log("date obj ", dte);
-    //   //this.minDate = new Date();
-    // }
     HoddashboardPage.prototype.rating = function (val, tripid) {
         var _this = this;
-        console.log("rating val", val);
-        console.log("trip id", tripid);
         if (val <= 2) {
             var prompt_2 = this.alertCtrl.create({
                 title: '',
@@ -1294,7 +1781,6 @@ var HoddashboardPage = /** @class */ (function () {
                     {
                         text: 'Send',
                         handler: function (data) {
-                            console.log('Saved clicked', data);
                             _this.giveRating(val, tripid, data.comment);
                         }
                     }
@@ -1309,16 +1795,28 @@ var HoddashboardPage = /** @class */ (function () {
     HoddashboardPage.prototype.giveRating = function (ratings, tripid, reason) {
         var _this = this;
         if (reason === void 0) { reason = null; }
-        console.log("reason ", reason);
         this.commonProvider.showLoader();
-        this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Thank you for your feedback");
-            _this.getEmpHistory();
-        }, function (error) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast("Error in update rating");
-        });
+        if (this.commonProvider.vapt) {
+            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason };
+            this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
+        else {
+            this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.getEmpHistory();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
     };
     HoddashboardPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -1349,8 +1847,8 @@ var HoddashboardPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequesthistoryPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1380,24 +1878,31 @@ var RequesthistoryPage = /** @class */ (function () {
         this.userDetails = [];
         this.tripHistory = [];
         this.userDetails = navParams.get('EmployeeDetail');
-        console.log("nav params ", this.userDetails);
     }
     RequesthistoryPage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        this.commonProvider.showLoader('');
-        this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe(function (response) {
-            console.log("getAllTripHistory ", response);
-            console.log("getAllTripHistory ", JSON.parse(response._body));
-            _this.tripHistory = JSON.parse(response._body);
-            // this.approvalList = JSON.parse(response._body);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.commonProvider.showLoader('');
+            this.serviceProvider.get('/getAllTripHistory/' + this.userDetails.emp_no).then(function (response) {
+                _this.tripHistory = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.commonProvider.showLoader('');
+            this.serviceProvider.getAllTripHistory('/getAllTripHistory', this.userDetails.emp_no).subscribe(function (response) {
+                _this.tripHistory = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     RequesthistoryPage.prototype.openDetail = function (obj) {
-        console.log("open modal");
         var myModal = this.modal.create('ModalDetailPage', { data: obj });
         myModal.present();
     };
@@ -1426,11 +1931,11 @@ var RequesthistoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(184);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1473,9 +1978,7 @@ var AdminrequestsPage = /** @class */ (function () {
         this.cabList = [];
         this.driverList = [];
         this.vendorList = [];
-        console.log("params hod", navParams);
         this.userDetails = navParams.data.response;
-        console.log("userDetails ", this.userDetails);
         this.bookingForm = this.formBuilder.group({
             // costid: ['', Validators.compose([
             //   Validators.required,
@@ -1531,28 +2034,34 @@ var AdminrequestsPage = /** @class */ (function () {
         this.EndcurrTime = new Date();
         this.EndcurrTime = this.EndcurrTime.toISOString();
         this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
-        console.log('this.EndcurrTime ', this.EndcurrTime);
         this.bookingForm.get('isRoundTrip').setValue('Yes');
         this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
-        console.log('this.currTime', this.currTime);
     }
     AdminrequestsPage.prototype.getPendingList = function () {
         var _this = this;
         this.commonProvider.showLoader('');
         this.pageTitle = "Pending";
-        this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
-            console.log("Locations ", response);
-            console.log("Locations ", JSON.parse(response._body));
-            _this.approvalList = JSON.parse(response._body);
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllPendingRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+                _this.approvalList = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+                _this.approvalList = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     AdminrequestsPage.prototype.segmentChanged = function (event) {
         var _this = this;
-        console.log("Segment clicked! " + event.value, this, event);
         this.zone.run(function () {
             _this.requestSegment = event.value;
         });
@@ -1562,27 +2071,34 @@ var AdminrequestsPage = /** @class */ (function () {
         this.commonProvider.Alert.confirm('Sure you want to logout?').then(function (res) {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {});
         }, function (err) {
-            console.log('user cancelled');
         });
     };
     AdminrequestsPage.prototype.getEmpHistory = function () {
         var _this = this;
         this.commonProvider.showLoader();
         this.pageTitle = "Approved";
-        this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
-            console.log("Emplyee history ", response);
-            if (response.status == 200) {
-                _this.historyData = JSON.parse(response._body);
-                console.log("Emplyee history ", _this.historyData);
-            }
-            _this.commonProvider.hideLoader();
-        }, function (err) {
-            _this.commonProvider.hideLoader();
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllApprovedRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+                _this.historyData = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+                if (response.status == 200) {
+                    _this.historyData = JSON.parse(response._body);
+                }
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     AdminrequestsPage.prototype.openDetail = function (obj) {
-        console.log("open modal");
         var myModal = this.modal.create('ModalDetailPage', { data: obj });
         myModal.present();
     };
@@ -1594,10 +2110,9 @@ var AdminrequestsPage = /** @class */ (function () {
         var _this = this;
         this.commonProvider.Alert.confirm().then(function (res) {
             _this.commonProvider.showLoader('Sending request...');
-            _this.bookingForm.value.cabs != 'select' ? 'nothing' : _this.bookingForm.get('cabs').setValue("");
-            _this.bookingForm.value.driver != 'select' ? 'nothing' : _this.bookingForm.get('driver').setValue("");
-            _this.bookingForm.value.vendor != 'select' ? 'nothing' : _this.bookingForm.get('vendor').setValue("");
-            console.log('this.bookingForm.value ', _this.bookingForm.value);
+            _this.bookingForm.value.cabs != 'select' ? 'nothing' : _this.bookingForm.get('cabs').setValue(null);
+            _this.bookingForm.value.driver != 'select' ? 'nothing' : _this.bookingForm.get('driver').setValue(null);
+            _this.bookingForm.value.vendor != 'select' ? 'nothing' : _this.bookingForm.get('vendor').setValue(null);
             _this.tdate = new Date(_this.travelDate);
             _this.tdate = _this.tdate.getDate() + '-' + (_this.tdate.getMonth() + 1) + '-' + _this.tdate.getFullYear();
             if (_this.bookingForm.value.isRoundTrip == 'No') {
@@ -1608,51 +2123,90 @@ var AdminrequestsPage = /** @class */ (function () {
                 _this.edate = new Date(_this.endtravelDate);
                 _this.edate = _this.edate.getDate() + '-' + (_this.edate.getMonth() + 1) + '-' + _this.edate.getFullYear();
             }
-            var reqData = {
-                'source': _this.userDetails.location.id,
-                'destination': _this.bookingForm.value.traveldest,
-                'purpose': _this.bookingForm.value.updatepurpose,
-                //'travel_date': new Date(this.travelDate).toDateString(),
-                'travel_date': _this.tdate,
-                'travel_time': _this.bookingForm.value.traveltime,
-                'remark': _this.bookingForm.value.remark,
-                'status': 'Pending with Admin',
-                'travelType': _this.bookingForm.value.travelType,
-                'usrID': _this.bookingForm.value.usrID,
-                'username': _this.bookingForm.value.usrName,
-                'usrphone': _this.bookingForm.value.usrphone,
-                'cabs': _this.bookingForm.value.cabs,
-                'driver': _this.bookingForm.value.driver,
-                'vendor': _this.bookingForm.value.vendor,
-                'pickpoint': _this.bookingForm.value.pickpoint,
-                'isRoundTrip': _this.bookingForm.value.isRoundTrip,
-                //'returnDate': new Date(this.endtravelDate).toDateString(),
-                'returnDate': _this.edate,
-                'returnTime': _this.bookingForm.value.endtraveltime,
-                'adminapproverId': _this.userDetails.id
-            };
-            _this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe(function (response) {
-                console.log("raise request ", response);
-                _this.commonProvider.hideLoader();
-                if (response) {
-                    _this.confirmReqst = false;
-                    _this.bookingForm.reset();
-                    _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
-                    _this.commonProvider.showToast('Request sent successfully');
-                }
-                else {
+            if (_this.commonProvider.vapt) {
+                var reqData = {
+                    "source": _this.userDetails.location.id,
+                    "destination": _this.bookingForm.value.traveldest,
+                    "purpose": _this.bookingForm.value.updatepurpose,
+                    "travel_date": _this.tdate,
+                    "travel_time": _this.bookingForm.value.traveltime,
+                    "comment": _this.bookingForm.value.remark,
+                    //"status": "Pending with Admin",
+                    "travelType": _this.bookingForm.value.travelType,
+                    "userID": _this.bookingForm.value.usrID,
+                    "emp_userName": _this.bookingForm.value.usrName,
+                    "emp_phoneNo": _this.bookingForm.value.usrphone,
+                    "emp_email": _this.bookingForm.value.usrID + '@mahindra.com',
+                    "cabid": _this.bookingForm.value.cabs,
+                    "driverid": _this.bookingForm.value.driver,
+                    "vendorid": _this.bookingForm.value.vendor,
+                    "pickupPoint": _this.bookingForm.value.pickpoint,
+                    "isRoundTrip": _this.bookingForm.value.isRoundTrip,
+                    "returnDate": _this.edate,
+                    "returnTime": _this.bookingForm.value.endtraveltime,
+                    "approvedBy": _this.userDetails.id
+                };
+                _this.serviceProvider.post('/adminraisecabrequest/adminMobile', reqData).then(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast('Request error, Please check with admin');
-                }
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast('Request error, Please check with admin');
-            });
+                });
+            }
+            else {
+                var reqData = {
+                    'source': _this.userDetails.location.id,
+                    'destination': _this.bookingForm.value.traveldest,
+                    'purpose': _this.bookingForm.value.updatepurpose,
+                    //'travel_date': new Date(this.travelDate).toDateString(),
+                    'travel_date': _this.tdate,
+                    'travel_time': _this.bookingForm.value.traveltime,
+                    'remark': _this.bookingForm.value.remark,
+                    'status': 'Pending with Admin',
+                    'travelType': _this.bookingForm.value.travelType,
+                    'usrID': _this.bookingForm.value.usrID,
+                    'username': _this.bookingForm.value.usrName,
+                    'usrphone': _this.bookingForm.value.usrphone,
+                    "emp_email": _this.bookingForm.value.usrID + '@mahindra.com',
+                    'cabs': _this.bookingForm.value.cabs,
+                    'driver': _this.bookingForm.value.driver,
+                    'vendor': _this.bookingForm.value.vendor,
+                    'pickupPoint': _this.bookingForm.value.pickpoint,
+                    'isRoundTrip': _this.bookingForm.value.isRoundTrip,
+                    //'returnDate': new Date(this.endtravelDate).toDateString(),
+                    'returnDate': _this.edate,
+                    'returnTime': _this.bookingForm.value.endtraveltime,
+                    "approvedBy": _this.userDetails.id
+                };
+                _this.serviceProvider.raiseRequestAdmin('/adminraisecabrequest/adminMobile', reqData).subscribe(function (response) {
+                    _this.commonProvider.hideLoader();
+                    if (response) {
+                        _this.confirmReqst = false;
+                        _this.bookingForm.reset();
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
+                        _this.commonProvider.showToast('Request sent successfully');
+                    }
+                    else {
+                        _this.commonProvider.showToast('Request error, Please check with admin');
+                    }
+                }, function (err) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast('Request error, Please check with admin');
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
         });
     };
     AdminrequestsPage.prototype.ionViewWillEnter = function () {
-        console.log('ionViewDidLoad AdminrequestsPage');
         this.getPendingList();
         this.getAllDetails();
     };
@@ -1668,14 +2222,11 @@ var AdminrequestsPage = /** @class */ (function () {
             this.currTime = new Date();
             this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
         }
-        console.log("date obj ", this.travelDate);
     };
     AdminrequestsPage.prototype.cancelDate = function (dte) {
-        console.log("date obj ", dte);
         this.minDate = new Date();
     };
     AdminrequestsPage.prototype.logForm = function () {
-        console.log(this.bookingForm.value);
         this.confirmReqst = true;
     };
     AdminrequestsPage.prototype.cancelReq = function () {
@@ -1685,23 +2236,32 @@ var AdminrequestsPage = /** @class */ (function () {
             _this.confirmReqst = false;
             _this.bookingForm.get('travelsrc').setValue(_this.userDetails.location.loc_name);
         }, function (err) {
-            console.log('user cancelled');
         });
     };
     AdminrequestsPage.prototype.getAllDetails = function () {
         var _this = this;
-        this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe(function (response) {
-            if (response.status == 200) {
-                _this.tripData = JSON.parse(response._body);
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.userDetails.location.id).then(function (response) {
+                _this.tripData = response;
                 _this.cabList = _this.tripData.cabList;
                 _this.vendorList = _this.tripData.vendorList;
                 _this.driverList = _this.tripData.driverList;
-                console.log("cabs details ", _this.tripData);
-                console.log("cabs details ", _this.cabList);
-            }
-        }, function (err) {
-            _this.commonProvider.showToast(err.message);
-        });
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+                if (response.status == 200) {
+                    _this.tripData = JSON.parse(response._body);
+                    _this.cabList = _this.tripData.cabList;
+                    _this.vendorList = _this.tripData.vendorList;
+                    _this.driverList = _this.tripData.driverList;
+                }
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     AdminrequestsPage.prototype.editRequest = function () {
         this.confirmReqst = false;
@@ -1727,8 +2287,6 @@ var AdminrequestsPage = /** @class */ (function () {
     //   this.requestSegment = "raisereq";
     //   this.pageTitle = 'Raise Request';
     //
-    //   console.log("edit object ", obj);
-    //   console.log("edit isRoundTrip ", obj.isRoundTrip);
     //   this.bookingForm.get('isRoundTrip').setValue(obj.isRoundTrip);
     //   this.bookingForm.get('travelsrc').setValue(obj.source);
     //   this.bookingForm.get('traveldest').setValue(obj.destination);
@@ -1759,7 +2317,7 @@ var AdminrequestsPage = /** @class */ (function () {
     };
     AdminrequestsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-adminrequests',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.username}}/{{userDetails.id}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.role}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.location.loc_name}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">\n          Pending\n        </ion-segment-button>\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Approved\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-input type="text" formControlName="travelsrc"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n              [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n              [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>UserID<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrID"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrName"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>\n            <ion-input type="number" formControlName="usrphone"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Comment<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Cab</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="cabs" name="cabs">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let cab of cabList">\n                <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Driver</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="driver" name="driver">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let drvr of driverList">\n                <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Vendor</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'local\' " -->\n            <ion-select formControlName="vendor" name="vendor">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let vendor of vendorList">\n                <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Token Number</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrID}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">User Name</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrName}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Phone</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrphone}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View\n              History</span>\n          </ion-list-header>\n\n          <ion-item *ngFor="let applh of approvalList">\n            <div (click)="openDetail(applh)">\n              <span>\n                <h3 class="reqText">\n                  <span class="icon-directions_car"\n                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n              </span>\n              <span>\n                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n              </span>\n            </div>\n            <div style="float:right">\n              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"\n                (click)="viewRequest($event,applh);">View</button>\n            </div>\n            <div style="width: 70%">\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n              </div>\n              <div>\n                <ul class="bar">\n                  <li style="color:green">\n                    <h3>{{hdata.source}}</h3>\n                  </li>\n                  <li style="color:#a90e1b">\n                    <h3>{{hdata.destination}}</h3>\n                  </li>\n                </ul>\n              </div>\n              <!-- <span class="statusWrds" (click)="editFrom(hdata)">\n                <h6>Edit</h6>\n              </span> -->\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/,
+            selector: 'page-adminrequests',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.username}}/{{userDetails.id}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.role}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.location.loc_name}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">\n          Pending\n        </ion-segment-button>\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Approved\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-input type="text" formControlName="travelsrc"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n              [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n              [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Token Number<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrID"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrName"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>\n            <ion-input type="number" formControlName="usrphone"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Comment<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Cab</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="cabs" name="cabs">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let cab of cabList">\n                <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Driver</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="driver" name="driver">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let drvr of driverList">\n                <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Vendor</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'local\' " -->\n            <ion-select formControlName="vendor" name="vendor">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let vendor of vendorList">\n                <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Token Number</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrID}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">User Name</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrName}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Phone</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrphone}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View\n              History</span>\n          </ion-list-header>\n\n          <ion-item *ngFor="let applh of approvalList">\n            <div (click)="openDetail(applh)">\n              <span>\n                <h3 class="reqText">\n                  <span class="icon-directions_car"\n                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n              </span>\n              <span>\n                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n              </span>\n            </div>\n            <div style="float:right">\n              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"\n                (click)="viewRequest($event,applh);">View</button>\n            </div>\n            <div style="width: 70%">\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n              </div>\n              <div>\n                <ul class="bar">\n                  <li style="color:green">\n                    <h3>{{hdata.source}}</h3>\n                  </li>\n                  <li style="color:#a90e1b">\n                    <h3>{{hdata.destination}}</h3>\n                  </li>\n                </ul>\n              </div>\n              <!-- <span class="statusWrds" (click)="editFrom(hdata)">\n                <h6>Edit</h6>\n              </span> -->\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
@@ -1778,15 +2336,106 @@ var AdminrequestsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 187:
+/***/ 184:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminHistoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(93);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+/**
+ * Generated class for the AdminHistoryPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AdminHistoryPage = /** @class */ (function () {
+    function AdminHistoryPage(navCtrl, navParams, serviceProvider, commonProvider, modal) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.serviceProvider = serviceProvider;
+        this.commonProvider = commonProvider;
+        this.modal = modal;
+        this.userDetails = [];
+        this.tripHistory = [];
+        //this.loadUserData();
+    }
+    AdminHistoryPage.prototype.ionViewWillEnter = function () {
+        this.loadUserData();
+    };
+    AdminHistoryPage.prototype.loadUserData = function () {
+        var _this = this;
+        this.userDetails = this.navParams.get('EmployeeDetail');
+        this.commonProvider.showLoader('');
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+                _this.tripHistory = response;
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getAllTripHistory('/getAllApprovedTripRequest/adminMobile', this.userDetails.location.id).subscribe(function (response) {
+                _this.tripHistory = JSON.parse(response._body);
+                _this.commonProvider.hideLoader();
+            }, function (err) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+    };
+    AdminHistoryPage.prototype.openDetail = function (obj) {
+        var myModal = this.modal.create('ModalDetailPage', { data: obj });
+        myModal.present();
+    };
+    AdminHistoryPage.prototype.editRequest = function (event, obj) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__["a" /* AdminAprvlPage */], { viewData: obj, adminLocation: this.userDetails.location.id, adminID: this.userDetails.id, viewName: 'editRequest' });
+    };
+    AdminHistoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ModalController */]])
+    ], AdminHistoryPage);
+    return AdminHistoryPage;
+}());
+
+//# sourceMappingURL=admin-history.js.map
+
+/***/ }),
+
+/***/ 188:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequesthistoryPageModule", function() { return RequesthistoryPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(184);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1796,27 +2445,106 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var RequesthistoryPageModule = /** @class */ (function () {
-    function RequesthistoryPageModule() {
+var AdminHistoryPageModule = /** @class */ (function () {
+    function AdminHistoryPageModule() {
     }
-    RequesthistoryPageModule = __decorate([
+    AdminHistoryPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */],
+                __WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_history__["a" /* AdminHistoryPage */]),
             ],
         })
-    ], RequesthistoryPageModule);
-    return RequesthistoryPageModule;
+    ], AdminHistoryPageModule);
+    return AdminHistoryPageModule;
 }());
 
-//# sourceMappingURL=requesthistory.module.js.map
+//# sourceMappingURL=admin-history.module.js.map
 
 /***/ }),
 
-/***/ 188:
+/***/ 189:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAprvlPageModule", function() { return AdminAprvlPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__ = __webpack_require__(93);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AdminAprvlPageModule = /** @class */ (function () {
+    function AdminAprvlPageModule() {
+    }
+    AdminAprvlPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */]),
+            ],
+        })
+    ], AdminAprvlPageModule);
+    return AdminAprvlPageModule;
+}());
+
+//# sourceMappingURL=admin-aprvl.module.js.map
+
+/***/ }),
+
+/***/ 190:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FeedbackPageModule", function() { return FeedbackPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__feedback__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic2_rating__ = __webpack_require__(96);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+var FeedbackPageModule = /** @class */ (function () {
+    function FeedbackPageModule() {
+    }
+    FeedbackPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__feedback__["a" /* FeedbackPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic2_rating__["a" /* Ionic2RatingModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__feedback__["a" /* FeedbackPage */]),
+            ],
+        })
+    ], FeedbackPageModule);
+    return FeedbackPageModule;
+}());
+
+//# sourceMappingURL=feedback.module.js.map
+
+/***/ }),
+
+/***/ 192:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1824,7 +2552,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(176);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1854,7 +2582,7 @@ var NotificationDetailPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 189:
+/***/ 193:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1892,228 +2620,7 @@ var NotificationPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 19:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(290);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_catch__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_toPromise__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-//import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-
-
-
-/*
-  Generated class for the ServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var ServiceProvider = /** @class */ (function () {
-    function ServiceProvider(http) {
-        this.http = http;
-        // header for json/content-type
-        //private url = 'https://gmc.mahindra.com/vms';
-        this.url = 'https://mapps.mahindra.com/vms';
-        console.log('Hello ServiceProvider Provider');
-    }
-    ServiceProvider.prototype.getBookingHistory = function (param, usrID) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        //  headers.append()
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + param + "/" + usrID, options);
-        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
-    };
-    ServiceProvider.prototype.getAllTripHistory = function (param, usrID) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        //  headers.append()
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + param + "/" + usrID, options);
-        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
-    };
-    ServiceProvider.prototype.getAllLocations = function (param) {
-        return this.http.get(this.url + param);
-        //    return this.http.get('http://127.0.0.1:3000' + param + "?email=" + data.email + "&pwd=" + data.pwd,  {headers: this.headers});
-    };
-    ServiceProvider.prototype.getApprovalList = function (param, uid) {
-        return this.http.get(this.url + param + "/" + uid);
-    };
-    ServiceProvider.prototype.raiseRequest = function (param, data, datastatus) {
-        if (datastatus === void 0) { datastatus = "default"; }
-        this.raiseReq = new FormData();
-        this.raiseReq.append("userID", data.userID);
-        this.raiseReq.append("source", data.source);
-        this.raiseReq.append("destination", data.destination);
-        this.raiseReq.append("pickupPoint", data.pickpoint);
-        this.raiseReq.append("purpose", data.purpose);
-        this.raiseReq.append("travel_date", data.travel_date);
-        this.raiseReq.append("travel_time", data.travel_time);
-        this.raiseReq.append("status", data.status);
-        this.raiseReq.append("bh_Id", data.bh_Id);
-        this.raiseReq.append("bh_UserName", data.bh_UserName);
-        this.raiseReq.append("bh_email", data.bh_email);
-        this.raiseReq.append("emp_email", data.emp_email);
-        this.raiseReq.append("emp_userName", data.emp_UserName);
-        this.raiseReq.append("emp_phoneNo", data.emp_phoneNo);
-        this.raiseReq.append("remark", data.remark);
-        this.raiseReq.append("locationName", data.location);
-        this.raiseReq.append("cost_id", data.cost_id);
-        this.raiseReq.append("cost_center", data.cost_center);
-        this.raiseReq.append("travelType", data.travelType);
-        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
-        this.raiseReq.append("returnDate", data.returnDate);
-        this.raiseReq.append("returnTime", data.returnTime);
-        this.raiseReq.append("isactive", 'Y');
-        if (datastatus == "hodAction") {
-            this.raiseReq.append("id", data.id);
-            this.raiseReq.append("modifiedby", data.modified_by);
-            this.raiseReq.append("comment", data.comment);
-        }
-        console.log("call api ", data);
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        console.log("in service ", this.raiseReq);
-        console.log("in options ", options);
-        return this.http.post(this.url + param, this.raiseReq, options);
-    };
-    ServiceProvider.prototype.raiseRequestAdmin = function (param, data) {
-        this.raiseReq = new FormData();
-        this.raiseReq.append("source", data.source);
-        this.raiseReq.append("destination", data.destination);
-        this.raiseReq.append("pickupPoint", data.pickpoint);
-        this.raiseReq.append("purpose", data.purpose);
-        this.raiseReq.append("travel_date", data.travel_date);
-        this.raiseReq.append("travel_time", data.travel_time);
-        this.raiseReq.append("comment", data.remark);
-        this.raiseReq.append("travelType", data.travelType);
-        this.raiseReq.append("emp_userName", data.username);
-        this.raiseReq.append("emp_phoneNo", data.usrphone);
-        this.raiseReq.append("userID", data.usrID);
-        this.raiseReq.append("cabid", data.cabs);
-        this.raiseReq.append("vendorid", data.vendor);
-        this.raiseReq.append("driverid", data.driver);
-        this.raiseReq.append("isRoundTrip", data.isRoundTrip);
-        this.raiseReq.append("returnDate", data.returnDate);
-        this.raiseReq.append("returnTime", data.returnTime);
-        this.raiseReq.append("adminapproverId", data.adminapproverId);
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        console.log("in service ", this.raiseReq);
-        console.log("in options ", options);
-        return this.http.post(this.url + param, this.raiseReq);
-    };
-    ServiceProvider.prototype.getUsrRoleDetails = function (param, ivPernr) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + param + "/" + ivPernr, options);
-    };
-    ServiceProvider.prototype.getDeptHeadUser = function (param, ivPernr) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + param + "/" + ivPernr, options);
-    };
-    ServiceProvider.prototype.getDriverTripDetails = function (params) {
-        return this.http.get(this.url + params);
-    };
-    ServiceProvider.prototype.tripStart = function (params, cdate, type, id, km) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        this.tripDTO = new FormData();
-        this.tripDTO.append("id", id);
-        if (type == 'startTrip') {
-            this.tripDTO.append("startTrip", cdate);
-            this.tripDTO.append("startKm", km);
-        }
-        else {
-            this.tripDTO.append("endTrip", cdate);
-            this.tripDTO.append("endKm", km);
-        }
-        return this.http.post(this.url + params, this.tripDTO, options);
-    };
-    ServiceProvider.prototype.weblogin = function (params, username, pwd) {
-        console.log("emp ", username);
-        console.log("pwd ", pwd);
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        this.lgnDTO = new FormData();
-        this.lgnDTO.append('employeeId', username);
-        this.lgnDTO.append('pwd', pwd);
-        return this.http.post(this.url + params, this.lgnDTO, options);
-    };
-    ServiceProvider.prototype.saveScan = function (params, text) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + params + "/" + text, options);
-    };
-    ServiceProvider.prototype.getReqDetails = function (params, id) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + params + "/" + id, options);
-    };
-    ServiceProvider.prototype.cancelCab = function (params, id) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        return this.http.get(this.url + params + "/" + id, options);
-    };
-    ServiceProvider.prototype.assignReq = function (params, tripID, cabs, driver, vendor, admincomment, adminId) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        this.assignTripDto = new FormData();
-        this.assignTripDto.append('tripId', tripID);
-        this.assignTripDto.append('cabId', cabs);
-        this.assignTripDto.append('driverId', driver);
-        this.assignTripDto.append('vendorId', vendor);
-        this.assignTripDto.append('admincomment', admincomment);
-        this.assignTripDto.append('adminapproverId', adminId);
-        return this.http.post(this.url + params, this.assignTripDto, options);
-    };
-    ServiceProvider.prototype.submitRating = function (params, tripId, ratings, reason) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        this.tripDTO = new FormData();
-        this.tripDTO.append('id', tripId);
-        this.tripDTO.append('feedbackRating', ratings);
-        this.tripDTO.append('feedbackComment', reason);
-        return this.http.post(this.url + params, this.tripDTO, options);
-    };
-    ServiceProvider.prototype.adminCancelReq = function (params, cmnt, tripId, adminId) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
-        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: headers });
-        this.tripDTO = new FormData();
-        this.tripDTO.append('tripId', tripId);
-        this.tripDTO.append('adminapproverId', adminId);
-        this.tripDTO.append('rejectComment', cmnt);
-        return this.http.post(this.url + params, this.tripDTO, options);
-    };
-    ServiceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]])
-    ], ServiceProvider);
-    return ServiceProvider;
-}());
-
-//# sourceMappingURL=service.js.map
-
-/***/ }),
-
-/***/ 190:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2121,7 +2628,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScanPageModule", function() { return ScanPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2151,16 +2658,16 @@ var ScanPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 191:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ScanPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(97);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2195,16 +2702,13 @@ var ScanPage = /** @class */ (function () {
             .then(function (status) {
             if (status.authorized) {
                 _this.qrScanner.show();
-                console.log('Camera Permission Given');
                 _this.scanSub = _this.qrScanner.scan().subscribe(function (text) {
                     _this.qrCode = text;
                     _this.commonProvider.showToast(_this.qrCode);
                     _this.qrScanner.hide();
                     _this.serviceProvider.saveScan('/tripDetails/barcode', _this.qrCode).subscribe(function (response) {
-                        console.log("barcode response ", response);
                         _this.commonProvider.showToast("PDF is created successfully");
                     }, function (err) {
-                        alert('error in  pdf');
                         _this.commonProvider.showToast('Error in save');
                     });
                     _this.navCtrl.last();
@@ -2217,18 +2721,10 @@ var ScanPage = /** @class */ (function () {
                 _this.commonProvider.showToast('Permission denied for this runtime.');
             }
         })
-            .catch(function (e) { return console.log('Error is', e); });
+            .catch(function (e) {
+            return;
+        });
     };
-    // showCamera() {
-    //   (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
-    //   this.startScan();
-    // }
-    //
-    // hideCamera() {
-    //   (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
-    //   this.scanSub.unsubscribe();
-    //   this.navCtrl.last();
-    // }
     ScanPage.prototype.ionViewDidLoad = function () {
     };
     ScanPage.prototype.ionViewWillEnter = function () {
@@ -2261,45 +2757,7 @@ var ScanPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 192:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermsconditionPageModule", function() { return TermsconditionPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__termscondition__ = __webpack_require__(330);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var TermsconditionPageModule = /** @class */ (function () {
-    function TermsconditionPageModule() {
-    }
-    TermsconditionPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */]),
-            ],
-        })
-    ], TermsconditionPageModule);
-    return TermsconditionPageModule;
-}());
-
-//# sourceMappingURL=termscondition.module.js.map
-
-/***/ }),
-
-/***/ 193:
+/***/ 196:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2307,7 +2765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersDashboardPageModule", function() { return UsersDashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(334);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2337,7 +2795,83 @@ var UsersDashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 194:
+/***/ 197:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RequesthistoryPageModule", function() { return RequesthistoryPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__requesthistory__ = __webpack_require__(182);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var RequesthistoryPageModule = /** @class */ (function () {
+    function RequesthistoryPageModule() {
+    }
+    RequesthistoryPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__requesthistory__["a" /* RequesthistoryPage */]),
+            ],
+        })
+    ], RequesthistoryPageModule);
+    return RequesthistoryPageModule;
+}());
+
+//# sourceMappingURL=requesthistory.module.js.map
+
+/***/ }),
+
+/***/ 198:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermsconditionPageModule", function() { return TermsconditionPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__termscondition__ = __webpack_require__(335);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var TermsconditionPageModule = /** @class */ (function () {
+    function TermsconditionPageModule() {
+    }
+    TermsconditionPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__termscondition__["a" /* TermsconditionPage */]),
+            ],
+        })
+    ], TermsconditionPageModule);
+    return TermsconditionPageModule;
+}());
+
+//# sourceMappingURL=termscondition.module.js.map
+
+/***/ }),
+
+/***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2378,7 +2912,7 @@ var AdminrequestsPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 198:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2388,7 +2922,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2422,161 +2956,7 @@ var EmpdashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 20:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__ = __webpack_require__(173);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-//import { HttpClient } from '@angular/common/http';
-
-
-
-/*
-  Generated class for the CommonProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var CommonProvider = /** @class */ (function () {
-    function CommonProvider(loadingCtrl, toast, alertCtrl, network) {
-        var _this = this;
-        this.loadingCtrl = loadingCtrl;
-        this.toast = toast;
-        this.alertCtrl = alertCtrl;
-        this.network = network;
-        this.loading = false;
-        this.isOnline = true;
-        this.Alert = {
-            confirm: function (msg, title) {
-                return new Promise(function (resolve, reject) {
-                    var alert = _this.alertCtrl.create({
-                        title: title || 'Confirm',
-                        message: msg || '',
-                        buttons: [
-                            {
-                                text: 'Cancel',
-                                role: 'cancel',
-                                handler: function () {
-                                    reject(false);
-                                }
-                            },
-                            {
-                                text: 'Ok',
-                                handler: function () {
-                                    resolve(true);
-                                }
-                            }
-                        ]
-                    });
-                    alert.present();
-                });
-            },
-            alert: function (msg, title) {
-                var alert = _this.alertCtrl.create({
-                    title: title || 'Alert',
-                    subTitle: msg,
-                    buttons: ['Dismiss']
-                });
-                alert.present();
-            }
-        };
-        console.log('Hello CommonProvider Provider');
-        this.network.onConnect().subscribe(function (data) {
-            console.log('network info ', data);
-            _this.displayNetworkUpdate(data.type);
-        }, function (error) {
-            console.log('network info ', error.message);
-        });
-        this.network.onDisconnect().subscribe(function (data) {
-            console.log('network info ', data);
-            _this.displayNetworkUpdate(data.type);
-        }, function (error) {
-            console.log('network info ', error.message);
-        });
-    }
-    CommonProvider.prototype.showLoader = function (msg) {
-        //this.loading is important to start the loader before outside function make **** loading: any = false; ****
-        console.log('this.loading P', this.loading);
-        if (!this.loading) {
-            this.loader = this.loadingCtrl.create({
-                content: msg || ''
-            });
-            this.loading = true;
-            this.loader.present();
-        }
-        else {
-            console.log("trying to calling loader two times");
-        }
-    };
-    CommonProvider.prototype.hideLoader = function () {
-        console.log('this.loading D', this.loading);
-        if (this.loading) {
-            this.loader.dismiss();
-            this.loading = false;
-        }
-        else {
-            console.log("trying to dismiss loader two times");
-        }
-    };
-    CommonProvider.prototype.showToast = function (msg, time) {
-        this.toaster = this.toast.create({
-            message: msg,
-            duration: time || 2000,
-            position: 'bottom'
-        });
-        this.toaster.onDidDismiss(function () {
-            console.log('Dismissed toast');
-        });
-        this.toaster.present();
-    };
-    // checkInternetConnection() {
-    //     console.log("checking network...", this.network.type);
-    //     this.network.onConnect().subscribe(data => {
-    //         console.log(data);
-    //         this.displayNetworkUpdate(data.type);
-    //     }, error => console.error(error));
-    //
-    //     this.network.onDisconnect().subscribe(data => {
-    //         console.log(data);
-    //         this.displayNetworkUpdate(data.type);
-    //     }, error => console.error(error));  // }
-    CommonProvider.prototype.displayNetworkUpdate = function (connectionState) {
-        if (connectionState == 'online') {
-            this.isOnline = true;
-        }
-        else {
-            this.isOnline = false;
-        }
-        // this.showToast(`You are now ${connectionState} via ${networkType}`);
-        this.showToast('You are now ' + connectionState, 2500);
-    };
-    CommonProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* ToastController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__["a" /* Network */]])
-    ], CommonProvider);
-    return CommonProvider;
-}());
-
-//# sourceMappingURL=common.js.map
-
-/***/ }),
-
-/***/ 201:
+/***/ 204:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2586,7 +2966,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__hoddashboard__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(96);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2620,13 +3000,13 @@ var HoddashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 243:
+/***/ 246:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(268);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -2634,7 +3014,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 265:
+/***/ 268:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2642,30 +3022,32 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(173);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_component__ = __webpack_require__(351);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_login_login__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_call_number__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_notification_notification_module__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_termscondition_termscondition_module__ = __webpack_require__(192);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_notification_detail_notification_detail_module__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_scan_scan_module__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(187);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_driver_driver_module__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(193);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_adminrequests_adminrequests_module__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(172);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26_ionic3_datepicker__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_http__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__(354);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_qr_scanner__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_call_number__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(193);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(192);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(188);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(189);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_feedback_feedback_module__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_ionic3_datepicker__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2678,6 +3060,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 //import { HttpClientModule } from '@angular/common/http';
+
 
 
 // plugins
@@ -2706,49 +3089,52 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["J" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */]
+                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 //  HttpClientModule,
-                __WEBPACK_IMPORTED_MODULE_14__pages_employee_empdashboard_empdashboard_module__["EmpdashboardPageModule"],
-                __WEBPACK_IMPORTED_MODULE_15__pages_notification_notification_module__["NotificationPageModule"],
-                __WEBPACK_IMPORTED_MODULE_17__pages_notification_detail_notification_detail_module__["NotificationDetailPageModule"],
-                __WEBPACK_IMPORTED_MODULE_19__pages_hod_hoddashboard_hoddashboard_module__["HoddashboardPageModule"],
-                __WEBPACK_IMPORTED_MODULE_20__pages_hod_requesthistory_requesthistory_module__["RequesthistoryPageModule"],
-                __WEBPACK_IMPORTED_MODULE_22__pages_users_dashboard_users_dashboard_module__["UsersDashboardPageModule"],
-                __WEBPACK_IMPORTED_MODULE_23__pages_adminrequests_adminrequests_module__["AdminrequestsPageModule"],
-                __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_admin_history_admin_history_module__["AdminHistoryPageModule"],
-                __WEBPACK_IMPORTED_MODULE_16__pages_termscondition_termscondition_module__["TermsconditionPageModule"],
-                __WEBPACK_IMPORTED_MODULE_25__pages_admin_aprvl_admin_aprvl_module__["AdminAprvlPageModule"],
+                __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__["EmpdashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__["NotificationPageModule"],
+                __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__["NotificationDetailPageModule"],
+                __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__["HoddashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__["RequesthistoryPageModule"],
+                __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__["UsersDashboardPageModule"],
+                __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__["AdminrequestsPageModule"],
+                __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__["AdminHistoryPageModule"],
+                __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__["TermsconditionPageModule"],
+                __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__["AdminAprvlPageModule"],
                 __WEBPACK_IMPORTED_MODULE_6__angular_http__["c" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_21__pages_driver_driver_module__["DriverPageModule"],
-                __WEBPACK_IMPORTED_MODULE_18__pages_scan_scan_module__["ScanPageModule"],
-                __WEBPACK_IMPORTED_MODULE_26_ionic3_datepicker__["a" /* DatePickerModule */],
-                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */], {
+                __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__["DriverPageModule"],
+                __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__["ScanPageModule"],
+                __WEBPACK_IMPORTED_MODULE_28_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_27__pages_feedback_feedback_module__["FeedbackPageModule"],
+                __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */], {
                     backButtonText: 'Back',
                     backButtonIcon: ''
                 }, {
                     links: [
-                        { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/feedback/feedback.module#FeedbackPageModule', name: 'FeedbackPage', segment: 'feedback', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal-detail/modal-detail.module#ModalDetailPageModule', name: 'ModalDetailPage', segment: 'modal-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/requestdetails/requestdetails.module#RequestdetailsPageModule', name: 'RequestdetailsPage', segment: 'requestdetails', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/requestdetails/requestdetails.module#RequestdetailsPageModule', name: 'RequestdetailsPage', segment: 'requestdetails', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
                     ]
@@ -2756,20 +3142,21 @@ var AppModule = /** @class */ (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_7__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_8__pages_login_login__["a" /* LoginPage */]
+                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_9__pages_login_login__["a" /* LoginPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
                 { provide: __WEBPACK_IMPORTED_MODULE_1__angular_core__["v" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicErrorHandler */] },
-                __WEBPACK_IMPORTED_MODULE_9__providers_service_service__["a" /* ServiceProvider */],
-                __WEBPACK_IMPORTED_MODULE_10__providers_common_common__["a" /* CommonProvider */],
+                __WEBPACK_IMPORTED_MODULE_10__providers_service_service__["a" /* ServiceProvider */],
+                __WEBPACK_IMPORTED_MODULE_11__providers_common_common__["a" /* CommonProvider */],
                 //  FCM,
                 __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__["a" /* Network */],
-                __WEBPACK_IMPORTED_MODULE_11__ionic_native_in_app_browser__["a" /* InAppBrowser */],
-                __WEBPACK_IMPORTED_MODULE_12__ionic_native_qr_scanner__["a" /* QRScanner */],
-                __WEBPACK_IMPORTED_MODULE_13__ionic_native_call_number__["a" /* CallNumber */]
+                __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+                __WEBPACK_IMPORTED_MODULE_13__ionic_native_qr_scanner__["a" /* QRScanner */],
+                __WEBPACK_IMPORTED_MODULE_14__ionic_native_call_number__["a" /* CallNumber */],
+                __WEBPACK_IMPORTED_MODULE_7__ionic_native_http__["a" /* HTTP */]
             ]
         })
     ], AppModule);
@@ -2780,66 +3167,17 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 330:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TermsconditionPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the TermsconditionPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var TermsconditionPage = /** @class */ (function () {
-    function TermsconditionPage(navCtrl, navParams, view) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.view = view;
-    }
-    TermsconditionPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad TermsconditionPage');
-    };
-    TermsconditionPage.prototype.closeModal = function () {
-        this.view.dismiss();
-    };
-    TermsconditionPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-termscondition',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/'<!--\n  Generated template for the TermsconditionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Terms & Condtitions</ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="closeModal()">\n        Close\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h4 style="color: #a90e1b;"> Disclaimer as below</h4>\n  <div>\n    <ul>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n        </h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Travel Request must be approved by your HOD who is L5DH or above.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">For L5DH and above, the Travel Request will be self-approved.</h6>\n      </li>\n    </ul>\n    <!-- <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n    </h6> -->\n  </div>\n  <!-- <div>\n    <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.\n      Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.\n      Travel Request must be approved by your HOD who is L5DH or above.\n      For L5DH and above, the Travel Request will be self-approved.\n    </h6>\n  </div> -->\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]])
-    ], TermsconditionPage);
-    return TermsconditionPage;
-}());
-
-//# sourceMappingURL=termscondition.js.map
-
-/***/ }),
-
-/***/ 331:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UsersDashboardPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(95);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(191);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2872,9 +3210,6 @@ var UsersDashboardPage = /** @class */ (function () {
         this.driverMobileNumber = '';
         this.securityCheck = '';
         this.scannig = false;
-        console.log("in user page ", navParams);
-        console.log("navParams.get('driverNumber') ", navParams.get('driverNumber'));
-        console.log("navParams.get('securitylogin') ", navParams.get('security'));
         if (navParams.get('driverNumber')) {
             this.driverMobileNumber = navParams.get('driverNumber');
         }
@@ -2887,7 +3222,6 @@ var UsersDashboardPage = /** @class */ (function () {
     }
     UsersDashboardPage.prototype.showDashboard = function () {
         this.navCtrl.push('EmpdashboardPage', { 'EmployeeDetail': this.userDetails });
-        //this.navCtrl.push('HoddashboardPage',{ 'EmployeeDetail': this.userDetails });
     };
     UsersDashboardPage.prototype.getTripDetails = function (status) {
         this.navCtrl.push('DriverPage', { 'pageOpen': status });
@@ -2912,15 +3246,63 @@ var UsersDashboardPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 351:
+/***/ 335:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TermsconditionPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**
+ * Generated class for the TermsconditionPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var TermsconditionPage = /** @class */ (function () {
+    function TermsconditionPage(navCtrl, navParams, view) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.view = view;
+    }
+    TermsconditionPage.prototype.ionViewDidLoad = function () {
+    };
+    TermsconditionPage.prototype.closeModal = function () {
+        this.view.dismiss();
+    };
+    TermsconditionPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-termscondition',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/'<!--\n  Generated template for the TermsconditionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Terms & Condtitions</ion-title>\n    <ion-buttons end>\n      <button ion-button (click)="closeModal()">\n        Close\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <h4 style="color: #a90e1b;"> Disclaimer as below</h4>\n  <div>\n    <ul>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n        </h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">\n          Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">Travel Request must be approved by your HOD who is L5DH or above.</h6>\n      </li>\n      <li>\n        <h6 style="color: #100f0fcc;">For L5DH and above, the Travel Request will be self-approved.</h6>\n      </li>\n    </ul>\n    <!-- <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Vehicle Request should be sent 24 hours in advance (these 24 hours are excluding weekends and holidays).\n    </h6> -->\n  </div>\n  <!-- <div>\n    <h6 style="text-indent: 21px;     color: #100f0fcc;">\n      Any Travel Request received after 17.30 hrs on a working day will be actioned the next working day.\n      Kindly provide flight details for airport pickup in the vehicles request format itself to help driver for better co-ordination.\n      Travel Request must be approved by your HOD who is L5DH or above.\n      For L5DH and above, the Travel Request will be self-approved.\n    </h6>\n  </div> -->\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/termscondition/termscondition.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]])
+    ], TermsconditionPage);
+    return TermsconditionPage;
+}());
+
+//# sourceMappingURL=termscondition.js.map
+
+/***/ }),
+
+/***/ 354:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(41);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2971,16 +3353,16 @@ var MyApp = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__ = __webpack_require__(183);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(175);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(185);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_crypto_js__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3022,7 +3404,7 @@ var LoginPage = /** @class */ (function () {
         this.createForm();
     };
     LoginPage.prototype.createFormControls = function () {
-        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */](this.email, [
+        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('', [
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
         ]);
@@ -3040,15 +3422,12 @@ var LoginPage = /** @class */ (function () {
     LoginPage.prototype.buildURLForLogin = function () {
         var _this = this;
         var params = new __WEBPACK_IMPORTED_MODULE_10__angular_http__["e" /* URLSearchParams */](window.location.href);
-        console.log("params ", params);
         var someParam = params.rawParams;
-        console.log("someParam ", someParam);
         this.session = this.getQueryString('session', someParam);
         this.commonProvider.showLoader('Please wait..');
         if (this.session) {
             this.showLogin = false;
             var userData = this.generateSecureKeyAndIV(this.session).then(function (result) {
-                console.log("this.userid ", result);
                 _this.commonProvider.hideLoader();
                 _this.loginToApp(result);
             });
@@ -3056,7 +3435,6 @@ var LoginPage = /** @class */ (function () {
         else {
             this.commonProvider.hideLoader();
             this.showLogin = true;
-            console.log("show login page in application ");
         }
     };
     LoginPage.prototype.loginToApp = function (userData) {
@@ -3064,45 +3442,82 @@ var LoginPage = /** @class */ (function () {
         userData = userData.split(':');
         var unme = userData.splice(0, 1).join("");
         var pwd = userData.join("");
-        console.log('decrypted cc ' + unme);
-        console.log('decrypted cc ' + pwd);
         if (this.session) {
-            this.commonProvider.showLoader('Please wait..');
-            this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe(function (response) {
-                console.log("response ", response);
-                if (response._body == "Login success") {
-                    _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe(function (response) {
-                        response = JSON.parse(response._body);
-                        console.log("response ", response);
-                        _this.commonProvider.hideLoader();
-                        //  let str = response.emp_esg;
-                        var str = response.emp_esgdesc;
-                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
-                            //this.navCtrl.setRoot(EmpdashboardPage, { response });
+            if (this.commonProvider.vapt) {
+                this.commonProvider.showLoader('Please wait..');
+                var reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
+                this.serviceProvider.post('/login1', reqParams).then(function (response) {
+                    if (response.status == 200 && response.data != "false") {
+                        if (response.data == "Login success") {
+                            _this.serviceProvider.get('/getEmpDetailService/' + _this.email.value).then(function (response) {
+                                _this.commonProvider.hideLoader();
+                                var str = response.emp_esgdesc;
+                                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                                }
+                                else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                                }
+                                else {
+                                    _this.commonProvider.showToast(response.error);
+                                }
+                            });
                         }
-                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
-                            //  this.navCtrl.setRoot(HoddashboardPage, { response });
+                        else if (response.data == "false") {
+                            _this.commonProvider.hideLoader();
+                            _this.commonProvider.showToast(response.error);
                         }
                         else {
-                            _this.commonProvider.showToast("User role is not allow to login");
+                            _this.commonProvider.hideLoader();
+                            response = JSON.parse(response.data);
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
                         }
-                    });
-                }
-                else if (response._body == "false") {
+                    }
+                    else {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast(response.error);
+                    }
+                }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Please enter correct user credentials");
-                }
-                else {
+                    _this.commonProvider.showToast("Error while login");
+                });
+            }
+            else {
+                this.commonProvider.showLoader('Please wait..');
+                this.serviceProvider.weblogin('/login1', unme, btoa(pwd)).subscribe(function (response) {
+                    if (response._body == "Login success") {
+                        _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', unme).subscribe(function (response) {
+                            response = JSON.parse(response._body);
+                            _this.commonProvider.hideLoader();
+                            //  let str = response.emp_esg;
+                            var str = response.emp_esgdesc;
+                            if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                                //this.navCtrl.setRoot(EmpdashboardPage, { response });
+                            }
+                            else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                                //  this.navCtrl.setRoot(HoddashboardPage, { response });
+                            }
+                            else {
+                                _this.commonProvider.showToast("User role is not allow to login");
+                            }
+                        });
+                    }
+                    else if (response._body == "false") {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast(response.error);
+                    }
+                    else {
+                        _this.commonProvider.hideLoader();
+                        response = JSON.parse(response._body);
+                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                    }
+                }, function (err) {
                     _this.commonProvider.hideLoader();
-                    response = JSON.parse(response._body);
-                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
-                }
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error while login");
-            });
+                    _this.commonProvider.showToast("Error while login");
+                });
+            }
         }
         else {
             this.commonProvider.hideLoader();
@@ -3123,7 +3538,6 @@ var LoginPage = /** @class */ (function () {
             var pwd = cipherUsrCredentials.substring(strln + 4);
             var unme = cipherUsrCredentials.match(/usr=(\d+)/i)[1];
             var unmpwd = unme + ':' + pwd;
-            console.log("usercredetaials from extract ", unmpwd);
             resolve(unmpwd);
         });
         return promise;
@@ -3138,54 +3552,89 @@ var LoginPage = /** @class */ (function () {
         //     mode: CryptoJS.mode.CBC,
         //     padding: CryptoJS.pad.Pkcs7
         //   });
-        // console.log('pass', encrypted.toString(), encrypted);
         // this.Password = encrypted.toString();
     };
     LoginPage.prototype.loginAction = function () {
         var _this = this;
-        console.log('this.loginForm ', this.email.value);
-        console.log('this.loginForm password ', this.password);
         if (this.password.value == 'driver' || this.password.value == 'Driver') {
             this.mobileNumber = this.email.value;
             this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__driver_driver__["a" /* DriverPage */], { 'driverNumber': this.mobileNumber });
         }
         else {
-            this.commonProvider.showLoader('Please wait..');
-            this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe(function (response) {
-                console.log("response ", response);
-                if (response._body == "Login success") {
-                    _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.email.value).subscribe(function (response) {
-                        response = JSON.parse(response._body);
-                        console.log("response ", response);
-                        _this.commonProvider.hideLoader();
-                        //  let str = response.emp_esg;
-                        var str = response.emp_esgdesc;
-                        if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
-                            //this.navCtrl.setRoot(EmpdashboardPage, { response });
+            if (this.commonProvider.vapt) {
+                this.commonProvider.showLoader('Please wait..');
+                var reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
+                this.serviceProvider.post('/login1', reqParams).then(function (response) {
+                    if (response.status == 200 && response.data != "false") {
+                        if (response.data == "Login success") {
+                            _this.serviceProvider.get('/getEmpDetailService/' + _this.email.value).then(function (response) {
+                                _this.commonProvider.hideLoader();
+                                var str = response.emp_esgdesc;
+                                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                                }
+                                else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                                }
+                                else {
+                                    _this.commonProvider.showToast(response.error);
+                                }
+                            });
                         }
-                        else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
-                            //  this.navCtrl.setRoot(HoddashboardPage, { response });
+                        else if (response.data == "false") {
+                            _this.commonProvider.hideLoader();
+                            _this.commonProvider.showToast(response.error);
                         }
                         else {
-                            _this.commonProvider.showToast("User role is not allow to login");
+                            _this.commonProvider.hideLoader();
+                            response = JSON.parse(response.data);
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
                         }
-                    });
-                }
-                else if (response._body == "false") {
+                    }
+                    else {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast(response.error);
+                    }
+                }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Please enter correct user credentials");
-                }
-                else {
+                    _this.commonProvider.showToast("Error while login");
+                });
+            }
+            else {
+                this.commonProvider.showLoader('Please wait..');
+                this.serviceProvider.weblogin('/login1', this.email.value, btoa(this.password.value)).subscribe(function (response) {
+                    if (response._body == "Login success") {
+                        _this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', _this.email.value).subscribe(function (response) {
+                            _this.commonProvider.hideLoader();
+                            if (response._body) {
+                                response = JSON.parse(response._body);
+                                var str = response.emp_esgdesc;
+                                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__hod_hoddashboard_hoddashboard__["a" /* HoddashboardPage */], { response: response });
+                                }
+                                else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__employee_empdashboard_empdashboard__["a" /* EmpdashboardPage */], { response: response });
+                                }
+                                else {
+                                    _this.commonProvider.showToast("User role is not allow to login");
+                                }
+                            }
+                        });
+                    }
+                    else if (response._body == "false") {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast("Please enter correct user credentials");
+                    }
+                    else {
+                        _this.commonProvider.hideLoader();
+                        response = JSON.parse(response._body);
+                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                    }
+                }, function (err) {
                     _this.commonProvider.hideLoader();
-                    response = JSON.parse(response._body);
-                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
-                }
-            }, function (err) {
-                _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error while login");
-            });
+                    _this.commonProvider.showToast("Error while login");
+                });
+            }
         }
     };
     LoginPage.prototype.getParameterByName = function (name, url) {
@@ -3230,7 +3679,7 @@ var LoginPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NotificationPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__ = __webpack_require__(176);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3257,34 +3706,7 @@ var NotificationPage = /** @class */ (function () {
     NotificationPage.prototype.showDetails = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__notification_detail_notification_detail__["a" /* NotificationDetailPage */], {});
     };
-    // showDetails() {
-    //
-    //   const myModalOptions: ModalOptions = {
-    //     enableBackdropDismiss: false
-    //   };
-    //
-    //   const myModalData = {
-    //     name: 'Paul Halliday',
-    //     occupation: 'Developer'
-    //   };
-    //
-    //   const myModal: Modal = this.modal.create('NotificationDetailPage', { data: myModalData }, myModalOptions);
-    //
-    //   myModal.present();
-    //
-    //   myModal.onDidDismiss((data) => {
-    //     console.log("I have dismissed.");
-    //     console.log(data);
-    //   });
-    //
-    //   myModal.onWillDismiss((data) => {
-    //     console.log("I'm about to dismiss");
-    //     console.log(data);
-    //   });
-    //
-    // }
     NotificationPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad NotificationPage');
     };
     NotificationPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -3300,15 +3722,110 @@ var NotificationPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 90:
+/***/ 92:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FeedbackPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_common_common__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(16);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/**
+ * Generated class for the FeedbackPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var FeedbackPage = /** @class */ (function () {
+    function FeedbackPage(navCtrl, navParams, commonProvider, serviceProvider, view) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.commonProvider = commonProvider;
+        this.serviceProvider = serviceProvider;
+        this.view = view;
+        this.islowRateing = false;
+        this.tripDataObj = this.navParams.get('tripObj');
+        this.tripDataObj = JSON.parse(this.tripDataObj._body);
+        this.tripDetail = this.tripDataObj[0];
+        console.log('trip datatripDataObj ', this.tripDetail);
+    }
+    FeedbackPage.prototype.postRating = function (val, reason) {
+        if (val <= '2') {
+            this.islowRateing = true;
+        }
+        else {
+            this.islowRateing = false;
+            this.submitFeedback(val);
+        }
+    };
+    FeedbackPage.prototype.submitFeedback = function (ratings, reason) {
+        var _this = this;
+        if (reason === void 0) { reason = null; }
+        this.commonProvider.showLoader();
+        if (this.commonProvider.vapt) {
+            var reqData = { "id": this.tripDataObj[0].id, "feedbackRating": ratings, "feedbackComment": reason };
+            this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.view.dismiss();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
+        else {
+            this.serviceProvider.submitRating('/submitEmployeeFeedback', this.tripDataObj[0].id, ratings, reason).subscribe(function (response) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Thank you for your feedback");
+                _this.view.dismiss();
+            }, function (error) {
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast("Error in update rating");
+            });
+        }
+    };
+    FeedbackPage.prototype.ionViewDidLoad = function () {
+    };
+    FeedbackPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'page-feedback',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/feedback/feedback.html"*/'<!--\n  Generated template for the FeedbackPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Rate your trip</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n  <ion-row>\n    <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.purpose}}</span>\n  </ion-row>\n  <ion-row>\n    <div style="font-size: 1.0em;font-weight: bold;">{{tripDetail.pickupPoint}}</div>\n  </ion-row>\n  <ion-row>\n    <div style="font-size: 1.0em;font-weight: bold;">{{tripDetail.destination}}</div>\n  </ion-row>\n  <ion-row>\n    <span style="font-size: 1.0em;font-weight: bold;">{{tripDetail.travel_date}}, {{tripDetail.travel_time}}</span>\n  </ion-row>\n  <rating [(ngModel)]="ratingValue" max="5" emptyStarIconName="star-outline" halfStarIconName="star-half"\n    starIconName="star" nullable="true" (ngModelChange)="postRating($event,\'2\');">\n  </rating>\n  <div *ngIf="islowRateing">\n    <ion-item>\n      <ion-input [(ngModel)]="ratingComment" type="text" placeholder="Your comment"></ion-input>\n    </ion-item>\n    <ion-row text-center class="row-height" style="margin-top: 1%">\n      <ion-col>\n        <button ion-button small="true" color="red" (click)="submitFeedback(ratingValue,ratingComment)">Submit</button>\n      </ion-col>\n    </ion-row>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/feedback/feedback.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_common_common__["a" /* CommonProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_service_service__["a" /* ServiceProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ViewController */]])
+    ], FeedbackPage);
+    return FeedbackPage;
+}());
+
+//# sourceMappingURL=feedback.js.map
+
+/***/ }),
+
+/***/ 93:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AdminAprvlPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_call_number__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3342,12 +3859,9 @@ var AdminAprvlPage = /** @class */ (function () {
         this.cabList = [];
         this.driverList = [];
         this.vendorList = [];
-        console.log("location ", this.navParams.get('adminLocation'));
         this.adminLocationID = this.navParams.get('adminLocation');
         this.adminID = this.navParams.get('adminID');
         this.editUrl = this.navParams.get('viewName');
-        console.log("admin id ", this.adminID);
-        //  this.getCabDriverDetails();
     }
     AdminAprvlPage.prototype.ionViewWillLoad = function () {
         this.getAllDetails();
@@ -3356,39 +3870,35 @@ var AdminAprvlPage = /** @class */ (function () {
         var _this = this;
         this.tripDetail = this.navParams.get('viewData');
         this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
-        console.log('ionViewDidLoad ModalDetailPage', this.tripDetail);
         this.srcSubstr = this.tripDetail.source.substring(0, 3);
         this.destSubstr = this.tripDetail.destination.substring(0, 3);
-        this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe(function (response) {
-            if (response.status == 200) {
-                _this.tripData = JSON.parse(response._body);
-                _this.cabList = _this.tripData.cabList;
-                _this.vendorList = _this.tripData.vendorList;
-                _this.driverList = _this.tripData.driverList;
-                console.log("cabs details ", _this.tripData);
-                console.log("cabs details ", _this.cabList);
-            }
-        }, function (err) {
-            _this.commonProvider.showToast(err.message);
-        });
+        if (this.commonProvider.vapt) {
+            this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.adminLocationID).then(function (response) {
+                if (response) {
+                    _this.tripData = response;
+                    _this.cabList = _this.tripData.cabList;
+                    _this.vendorList = _this.tripData.vendorList;
+                    _this.driverList = _this.tripData.driverList;
+                }
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
+        else {
+            this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.adminLocationID).subscribe(function (response) {
+                if (response.status == 200) {
+                    _this.tripData = JSON.parse(response._body);
+                    _this.cabList = _this.tripData.cabList;
+                    _this.vendorList = _this.tripData.vendorList;
+                    _this.driverList = _this.tripData.driverList;
+                }
+            }, function (err) {
+                _this.commonProvider.showToast(err.message);
+            });
+        }
     };
     AdminAprvlPage.prototype.assignRequest = function () {
         var _this = this;
-        // if (this.tripDetail.travelType == 'local') {
-        //   if (!this.cabs) {
-        //     this.commonProvider.showToast("Please assign Cab");
-        //     return false;
-        //   }
-        // } else {
-        //   if (!this.vendor) {
-        //     this.commonProvider.showToast("Please assign Vendor");
-        //     return false;
-        //   }
-        // }
-        // if (!this.driver) {
-        //   this.commonProvider.showToast("Please assign Driver");
-        //   return false;
-        // }
         if (!this.vendor) {
             if (!this.driver) {
                 this.commonProvider.showToast("Please assign Driver");
@@ -3401,37 +3911,55 @@ var AdminAprvlPage = /** @class */ (function () {
         }
         else {
         }
-        this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin' : this.editUrl = '/editTripDetails';
         this.commonProvider.Alert.confirm().then(function (res) {
             _this.cabs != 'select' ? 'nothing' : _this.cabs = "";
             _this.driver != 'select' ? 'nothing' : _this.driver = "";
             _this.vendor != 'select' ? 'nothing' : _this.vendor = "";
             _this.commonProvider.showLoader('Approving trip...');
-            _this.serviceProvider.assignReq(_this.editUrl, _this.tripDetail.id, _this.cabs, _this.driver, _this.vendor, _this.admincomment, _this.adminID).subscribe(function (response) {
-                console.log("response ", response);
-                if (response) {
-                    _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Request assigned successfully");
-                    _this.navCtrl.pop();
-                }
-                else {
+            if (_this.commonProvider.vapt) {
+                _this.editUrl == 'createRequest' ? _this.editUrl = '/approvependingrequestadmin/mobile' : _this.editUrl = '/editTripDetails/mobile';
+                var reqData = { "tripId": _this.tripDetail.id, "cabId": _this.cabs, "driverId": _this.driver, "vendorId": _this.vendor, "admincomment": _this.admincomment, "adminapproverId": _this.adminID };
+                _this.serviceProvider.post(_this.editUrl, reqData).then(function (response) {
+                    if (response) {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast("Request assigned successfully");
+                        _this.navCtrl.pop();
+                    }
+                    else {
+                        _this.commonProvider.showToast("Error in request update");
+                        _this.commonProvider.hideLoader();
+                    }
+                }, function (err) {
                     _this.commonProvider.showToast("Error in request update");
                     _this.commonProvider.hideLoader();
-                }
-            });
+                });
+            }
+            else {
+                _this.editUrl == 'createRequest' ? _this.editUrl = '/approvependingrequestadmin' : _this.editUrl = '/editTripDetails';
+                _this.serviceProvider.assignReq(_this.editUrl, _this.tripDetail.id, _this.cabs, _this.driver, _this.vendor, _this.admincomment, _this.adminID).subscribe(function (response) {
+                    if (response) {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast("Request assigned successfully");
+                        _this.navCtrl.pop();
+                    }
+                    else {
+                        _this.commonProvider.showToast("Error in request update");
+                        _this.commonProvider.hideLoader();
+                    }
+                }, function (err) {
+                    _this.commonProvider.showToast("Error in request update");
+                    _this.commonProvider.hideLoader();
+                });
+            }
         }, function (err) {
-            console.log('user cancelled');
         });
     };
     AdminAprvlPage.prototype.callnum = function (num) {
         var _this = this;
-        console.log("inside call number function");
         this.callnumber.callNumber(num, true).then(function (res) {
-            console.log('Dialer opened', res);
         })
             .catch(function (err) {
             _this.commonProvider.showToast(err);
-            console.log('Error launching dialer', err);
         });
     };
     AdminAprvlPage.prototype.setCab = function () {
@@ -3456,13 +3984,11 @@ var AdminAprvlPage = /** @class */ (function () {
                 {
                     text: 'Cancel',
                     handler: function (data) {
-                        console.log('Cancel clicked', data);
                     }
                 },
                 {
                     text: 'Send',
                     handler: function (data) {
-                        console.log('Saved clicked', data);
                         _this.rejectRequest(data.comment);
                     }
                 }
@@ -3474,24 +4000,39 @@ var AdminAprvlPage = /** @class */ (function () {
     AdminAprvlPage.prototype.rejectRequest = function (cmnt) {
         var _this = this;
         this.commonProvider.showLoader('Rejecting trip...');
-        console.log('cmnt ', cmnt);
-        console.log('this.tripDetail.id ', this.tripDetail.id);
-        console.log('adminID ', this.adminID);
-        this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe(function (response) {
-            console.log("response ", response);
-            if (response) {
+        if (this.commonProvider.vapt) {
+            var reqData = { "tripId": this.adminID, "adminapproverId": this.tripDetail.id, "rejectComment": cmnt };
+            this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then(function (response) {
+                if (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Request cancelled successfully");
+                    _this.navCtrl.pop();
+                }
+                else {
+                    _this.commonProvider.showToast("Error in request cancellation");
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
+                _this.commonProvider.showToast("Request error");
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Request cancelled successfully");
-                _this.navCtrl.pop();
-            }
-            else {
-                _this.commonProvider.showToast("Error in request cancellation");
+            });
+        }
+        else {
+            this.serviceProvider.adminCancelReq('/rejectpendingrequestadmin', cmnt, this.tripDetail.id, this.adminID).subscribe(function (response) {
+                if (response) {
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast("Request cancelled successfully");
+                    _this.navCtrl.pop();
+                }
+                else {
+                    _this.commonProvider.showToast("Error in request cancellation");
+                    _this.commonProvider.hideLoader();
+                }
+            }, function (err) {
+                _this.commonProvider.showToast("Request error");
                 _this.commonProvider.hideLoader();
-            }
-        }, function (err) {
-            _this.commonProvider.showToast("Request error");
-            _this.commonProvider.hideLoader();
-        });
+            });
+        }
     };
     AdminAprvlPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -3510,5 +4051,5 @@ var AdminAprvlPage = /** @class */ (function () {
 
 /***/ })
 
-},[243]);
+},[246]);
 //# sourceMappingURL=main.js.map

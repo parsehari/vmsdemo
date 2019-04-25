@@ -278,12 +278,13 @@ module.exports = [
     ]
   },
   {
-    "id": "cordova-plugin-aes256-encryption.AES256",
-    "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
-    "pluginId": "cordova-plugin-aes256-encryption",
+    "id": "ionic-plugin-deeplinks.deeplink",
+    "file": "plugins/ionic-plugin-deeplinks/www/deeplink.js",
+    "pluginId": "ionic-plugin-deeplinks",
     "clobbers": [
-      "cordova.plugins.AES256"
-    ]
+      "IonicDeeplink"
+    ],
+    "runs": true
   }
 ];
 module.exports.metadata = 
@@ -300,7 +301,7 @@ module.exports.metadata =
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",
   "mx.ferreyra.callnumber": "0.0.2",
-  "cordova-plugin-aes256-encryption": "1.1.0"
+  "ionic-plugin-deeplinks": "1.0.19"
 };
 // BOTTOM OF METADATA
 });
