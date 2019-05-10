@@ -341,7 +341,8 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-whitelist": "1.3.3",
     "mx.ferreyra.callnumber": "0.0.2",
-    "ionic-plugin-deeplinks": "1.0.19"
+    "ionic-plugin-deeplinks": "1.0.19",
+    "cordova-plugin-proguard": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

@@ -138,11 +138,13 @@ export class HoddashboardPage {
   getEmpHistory() {
     this.pageTitle = "Booking History";
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then((response: any) => {
+      this.serviceProvider.post('/getTripHistory', { "pernr": this.userDetails.emp_no }).then((response: any) => {
         this.historyData = response;
       },
         (err) => {
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         });
     } else {
       this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
@@ -205,7 +207,9 @@ export class HoddashboardPage {
           }
 
         }, (err) => {
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         });
       } else {
 
@@ -337,7 +341,8 @@ export class HoddashboardPage {
 
       }, (err) => {
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast(err.message);
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
       });
     }
     else {
@@ -392,10 +397,12 @@ export class HoddashboardPage {
 
   ionViewDidLoad() {
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
+      this.serviceProvider.post('/getEmployeeDept', { "pernr": this.userDetails.emp_no }).then((response: any) => {
         this.dhDetails = response;
       }, (err) => {
-        this.commonProvider.showToast(err.message);
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
       })
       this.commonProvider.showLoader();
       this.serviceProvider.get('/getAllLocations').then((response: any) => {
@@ -430,12 +437,10 @@ export class HoddashboardPage {
 
       this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe((response: any) => {
         let ln = JSON.parse(response._body);
-        console.log("response ", ln.length);
         if (ln.length) {
           this.feedbackForm(response);
         }
       }, (err) => {
-        console.log("response ", err);
       })
 
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
@@ -464,13 +469,14 @@ export class HoddashboardPage {
     this.commonProvider.showLoader('');
     this.pageTitle = "Requests";
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getApprovalList/hod/' + this.userDetails.emp_no).then((response: any) => {
+      this.serviceProvider.post('/getApprovalList/hod', { "pernr": this.userDetails.emp_no }).then((response: any) => {
         this.approvalList = response;
         this.commonProvider.hideLoader();
       },
         (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         });
     } else {
       this.serviceProvider.getApprovalList('/getApprovalList/hod', this.userDetails.emp_no).subscribe((response: any) => {
@@ -536,13 +542,14 @@ export class HoddashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
       this.commonProvider.showLoader()
       if (this.commonProvider.vapt) {
-        this.serviceProvider.get('/employeecanceltrip/' + id).then((response: any) => {
+        this.serviceProvider.post('/employeecanceltrip', { "tripId": id, "pernr": this.userDetails.emp_no }).then((response: any) => {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Trip cancelled successfully");
           this.getEmpHistory();
         }, (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast("Error in cancellation")
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         })
       } else {
         this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
@@ -590,14 +597,15 @@ export class HoddashboardPage {
   giveRating(ratings: any, tripid: any, reason = null) {
     this.commonProvider.showLoader();
     if (this.commonProvider.vapt) {
-      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason }
+      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason, "pernr": this.userDetails.emp_no }
       this.serviceProvider.post('/submitEmployeeFeedback', reqData).then((response: any) => {
         this.commonProvider.hideLoader();
         this.commonProvider.showToast("Thank you for your feedback");
         this.getEmpHistory();
       }, (error) => {
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Error in update rating");
+        this.commonProvider.showToast(error);
+        this.navCtrl.setRoot(LoginPage, {});
       })
     } else {
       this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {

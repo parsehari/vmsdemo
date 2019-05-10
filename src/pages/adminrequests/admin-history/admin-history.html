@@ -20,12 +20,13 @@
         <span style="color:#ad081f">Trip Completed</span>
       </ion-list-header>
       <ng-container *ngFor="let hdata of tripHistory.approvedTripList">
-        
+
         <ion-item *ngIf="hdata.travel_date && hdata.travel_date != 'null' ">
           <div (click)="openDetail(hdata)">
             <span>
               <h3 class="reqText">
-                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
+                <span class="icon-directions_car"
+                  style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>
             </span>
             <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">
               {{hdata.travel_date}}, {{hdata.travel_time}}
@@ -44,9 +45,9 @@
               </li>
             </ul>
           </div>
-          <span class="statusWrds" (click)="editRequest($event,hdata);">
+          <!-- <span class="statusWrds" (click)="editRequest($event,hdata);">
             <h6>Edit</h6>
-          </span>
+          </span> -->
         </ion-item>
       </ng-container>
     </ion-list>

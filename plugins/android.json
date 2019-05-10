@@ -10,6 +10,9 @@
     "cordova-plugin-advanced-http": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
+    "cordova-plugin-aes256-encryption": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
@@ -32,25 +35,6 @@
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
     "mx.ferreyra.callnumber": {
-      "PACKAGE_NAME": "com.mahindra.vmsapp"
-    },
-    "ionic-plugin-deeplinks": {
-      "URL_SCHEME": "vmsapp",
-      "DEEPLINK_SCHEME": "https",
-      "DEEPLINK_HOST": "appstore.mahindra.com",
-      "ANDROID_PATH_PREFIX": "/",
-      "ANDROID_2_PATH_PREFIX": "/",
-      "ANDROID_3_PATH_PREFIX": "/",
-      "ANDROID_4_PATH_PREFIX": "/",
-      "ANDROID_5_PATH_PREFIX": "/",
-      "DEEPLINK_2_SCHEME": " ",
-      "DEEPLINK_2_HOST": " ",
-      "DEEPLINK_3_SCHEME": " ",
-      "DEEPLINK_3_HOST": " ",
-      "DEEPLINK_4_SCHEME": " ",
-      "DEEPLINK_4_HOST": " ",
-      "DEEPLINK_5_SCHEME": " ",
-      "DEEPLINK_5_HOST": " ",
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },

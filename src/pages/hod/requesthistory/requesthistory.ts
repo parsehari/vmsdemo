@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { ServiceProvider } from '../../../providers/service/service';
 import { CommonProvider } from '../../../providers/common/common';
+import { LoginPage } from '../../login/login';
 /**
  * Generated class for the RequesthistoryPage page.
  *
@@ -30,13 +31,14 @@ export class RequesthistoryPage {
   ionViewDidLoad() {
     if (this.commonProvider.vapt) {
       this.commonProvider.showLoader('');
-      this.serviceProvider.get('/getAllTripHistory/' + this.userDetails.emp_no).then((response: any) => {
+      this.serviceProvider.post('/getAllTripHistory', { "pernr": this.userDetails.emp_no }).then((response: any) => {
         this.tripHistory = response;
         this.commonProvider.hideLoader();
       },
         (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         });
     } else {
       this.commonProvider.showLoader('');

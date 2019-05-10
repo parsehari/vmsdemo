@@ -24,7 +24,7 @@ webpackEmptyAsyncContext.id = 131;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CommonProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_network__ = __webpack_require__(181);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -54,6 +54,7 @@ var CommonProvider = /** @class */ (function () {
         this.loading = false;
         this.isOnline = true;
         this.vapt = true;
+        this.accessToken = '';
         this.Alert = {
             confirm: function (msg, title) {
                 return new Promise(function (resolve, reject) {
@@ -160,15 +161,15 @@ var CommonProvider = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ServiceProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__ = __webpack_require__(175);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__ = __webpack_require__(176);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__ = __webpack_require__(303);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_catch__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__ = __webpack_require__(306);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_operator_toPromise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_crypto_js__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_crypto_js__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_crypto_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__common_common__ = __webpack_require__(16);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -204,7 +205,7 @@ var ServiceProvider = /** @class */ (function () {
         //private url = 'https://gmc.mahindra.com/vms_vapt';
         //private url = 'https://mapps.mahindra.com/vms';
         //public url = 'http://192.168.43.252:8080/vms_vapt';
-        this.url = 'http://192.168.43.252:8080/vms_vapt';
+        this.url = 'http://10.174.55.188:8080/vms_vapt';
     }
     ServiceProvider.prototype.getBookingHistory = function (param, usrID) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({});
@@ -365,18 +366,22 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.get = function (url, params, options) {
         var _this = this;
         if (options === void 0) { options = {}; }
-        console.log("url", this.commonprovider.accessToken);
         return new Promise(function (resolve) {
             var responseData;
             _this.ahttp.setSSLCertMode("nocheck").then(function (data) {
                 _this.ahttp.setDataSerializer('json');
                 var opts = _this.ahttp.setHeader('*', 'access_token', _this.commonprovider.accessToken);
-                // let headers = new Headers({ 'access_token': this.commonprovider.accessToken });
-                // let opts = new RequestOptions({ headers: headers });
                 _this.ahttp.get(_this.url + url, params, opts).then(function (resp) {
-                    responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
-                    console.log("Advance http response for ", responseData);
-                    resolve(responseData);
+                    console.log("Advance http response for ", resp);
+                    _this.decryptData(resp.data).then(function (respData) {
+                        console.log("decrypted DATA ", respData);
+                        var decrypted = respData;
+                        //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+                        // responseData = options.responseType == 'text' ? respData : JSON.parse(decrypted);
+                        responseData = JSON.parse(decrypted);
+                        console.log("Advance http response for ", responseData);
+                        resolve(responseData);
+                    });
                 }, function (err) {
                     resolve(err);
                 });
@@ -387,15 +392,46 @@ var ServiceProvider = /** @class */ (function () {
     };
     ServiceProvider.prototype.post = function (url, params, options) {
         var _this = this;
-        if (options === void 0) { options = {}; }
-        return new Promise(function (resolve) {
+        console.log(this.commonprovider.accessToken);
+        return new Promise(function (resolve, reject) {
             _this.ahttp.setSSLCertMode("nocheck").then(function (data) {
                 _this.ahttp.setDataSerializer('json');
-                _this.ahttp.post(_this.url + url, params, options).then(function (resp) {
-                    console.log("respone post ", resp);
-                    resolve(resp);
-                }, function (err) {
-                    resolve(err);
+                _this.encryptData(params).then(function (Encryresp) {
+                    console.log("encrypted string for login ", Encryresp);
+                    console.log("encrypted string for login ", _this.commonprovider.accessToken);
+                    var objParam = { "param": Encryresp };
+                    var opts = _this.ahttp.setHeader('*', 'access_token', _this.commonprovider.accessToken);
+                    console.log("opts", opts);
+                    _this.ahttp.post(_this.url + url, objParam, opts).then(function (resp) {
+                        console.log("respone post ", resp);
+                        if (resp.data == "Access token has expired") {
+                            // this.commonprovider.showToast(resp.data);
+                            // this.navCtrl.setRoot(LoginPage, {});
+                            reject(resp.data);
+                        }
+                        else if (!resp.data) {
+                            resolve(false);
+                        }
+                        else {
+                            _this.decryptData(resp.data).then(function (respData) {
+                                console.log("decrypted DATA ", respData);
+                                var decrypted = respData;
+                                var responseData;
+                                //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+                                if (decrypted) {
+                                    responseData = JSON.parse(decrypted);
+                                    console.log("Advance http response for ", responseData);
+                                    resolve(responseData);
+                                }
+                                else {
+                                    reject(false);
+                                }
+                            });
+                        }
+                        // resolve(resp);
+                    }, function (err) {
+                        resolve(err);
+                    });
                 });
             }).catch(function (err) {
                 resolve(err);
@@ -418,6 +454,7 @@ var ServiceProvider = /** @class */ (function () {
                 padding: __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.pad.Pkcs7
             });
             var cipherUsrCredentials = decrypted.toString(__WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.enc.Utf8);
+            console.log("decrypted string ", cipherUsrCredentials);
             resolve(cipherUsrCredentials);
         });
         return promise;
@@ -425,6 +462,7 @@ var ServiceProvider = /** @class */ (function () {
     ServiceProvider.prototype.encryptData = function (sessionData) {
         var promise = new Promise(function (resolve, reject) {
             var text = sessionData;
+            text = JSON.stringify(text);
             var key = __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.enc.Utf8.parse('M@h1ndra$1234567');
             var iv = __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.enc.Utf8.parse('0001000100010001');
             var encrypted = __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.AES.encrypt(__WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.enc.Utf8.parse(text), key, {
@@ -433,17 +471,18 @@ var ServiceProvider = /** @class */ (function () {
                 mode: __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.mode.CBC,
                 padding: __WEBPACK_IMPORTED_MODULE_6_crypto_js___default.a.pad.Pkcs7
             });
-            this.text = encrypted.toString();
-            resolve(this.text);
+            text = encrypted.toString();
+            resolve(text);
         });
         return promise;
     };
     ServiceProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__["a" /* HTTP */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__["a" /* HTTP */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__common_common__["a" /* CommonProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__common_common__["a" /* CommonProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_http__["a" /* HTTP */],
+            __WEBPACK_IMPORTED_MODULE_7__common_common__["a" /* CommonProvider */]])
     ], ServiceProvider);
     return ServiceProvider;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=service.js.map
@@ -455,10 +494,10 @@ var ServiceProvider = /** @class */ (function () {
 
 var map = {
 	"../pages/admin-aprvl/admin-aprvl.module": [
-		174
+		182
 	],
 	"../pages/adminrequests/admin-history/admin-history.module": [
-		181
+		174
 	],
 	"../pages/adminrequests/adminrequests.module": [
 		200
@@ -467,33 +506,33 @@ var map = {
 		183
 	],
 	"../pages/employee/empdashboard/empdashboard.module": [
-		204
+		205
 	],
 	"../pages/feedback/feedback.module": [
 		191
 	],
 	"../pages/hod/hoddashboard/hoddashboard.module": [
-		205
+		204
 	],
 	"../pages/hod/requesthistory/requesthistory.module": [
 		193
 	],
 	"../pages/modal-detail/modal-detail.module": [
-		355,
+		354,
 		1
 	],
 	"../pages/notification-detail/notification-detail.module": [
-		194
+		196
 	],
 	"../pages/notification/notification.module": [
-		195
+		197
 	],
 	"../pages/requestdetails/requestdetails.module": [
-		356,
+		355,
 		0
 	],
 	"../pages/scan/scan.module": [
-		196
+		194
 	],
 	"../pages/termscondition/termscondition.module": [
 		198
@@ -523,48 +562,10 @@ module.exports = webpackAsyncContext;
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAprvlPageModule", function() { return AdminAprvlPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__ = __webpack_require__(90);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var AdminAprvlPageModule = /** @class */ (function () {
-    function AdminAprvlPageModule() {
-    }
-    AdminAprvlPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */]),
-            ],
-        })
-    ], AdminAprvlPageModule);
-    return AdminAprvlPageModule;
-}());
-
-//# sourceMappingURL=admin-aprvl.module.js.map
-
-/***/ }),
-
-/***/ 181:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHistoryPageModule", function() { return AdminHistoryPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_history__ = __webpack_require__(175);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -594,7 +595,7 @@ var AdminHistoryPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 182:
+/***/ 175:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -603,7 +604,7 @@ var AdminHistoryPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__admin_aprvl_admin_aprvl__ = __webpack_require__(94);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -641,9 +642,10 @@ var AdminHistoryPage = /** @class */ (function () {
     AdminHistoryPage.prototype.loadUserData = function () {
         var _this = this;
         this.userDetails = this.navParams.get('EmployeeDetail');
+        console.log("this.userDetails", this.userDetails);
         this.commonProvider.showLoader('');
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+            this.serviceProvider.post('/getAllApprovedTripRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then(function (response) {
                 _this.tripHistory = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
@@ -670,7 +672,7 @@ var AdminHistoryPage = /** @class */ (function () {
     };
     AdminHistoryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n        \n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car" style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span>\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
+            selector: 'page-admin-history',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/'<!--\n  Generated template for the RequesthistoryPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>Request History</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <ion-list>\n      <ion-list-header style="background: #9e9e9e1f !important;">\n        <span style="color:#ad081f">Trip Completed</span>\n      </ion-list-header>\n      <ng-container *ngFor="let hdata of tripHistory.approvedTripList">\n\n        <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n          <div (click)="openDetail(hdata)">\n            <span>\n              <h3 class="reqText">\n                <span class="icon-directions_car"\n                  style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n            </span>\n            <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n              {{hdata.travel_date}}, {{hdata.travel_time}}\n            </span>\n            <span class="statusWrds">\n              <h6>{{hdata.status}}</h6>\n            </span>\n          </div>\n          <div>\n            <ul class="bar">\n              <li style="color:green">\n                <h3>{{hdata.source}}</h3>\n              </li>\n              <li style="color:#a90e1b">\n                <h3>{{hdata.destination}}</h3>\n              </li>\n            </ul>\n          </div>\n          <!-- <span class="statusWrds" (click)="editRequest($event,hdata);">\n            <h6>Edit</h6>\n          </span> -->\n        </ion-item>\n      </ng-container>\n    </ion-list>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/admin-history/admin-history.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
@@ -685,6 +687,44 @@ var AdminHistoryPage = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 182:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminAprvlPageModule", function() { return AdminAprvlPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__ = __webpack_require__(94);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var AdminAprvlPageModule = /** @class */ (function () {
+    function AdminAprvlPageModule() {
+    }
+    AdminAprvlPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__admin_aprvl__["a" /* AdminAprvlPage */]),
+            ],
+        })
+    ], AdminAprvlPageModule);
+    return AdminAprvlPageModule;
+}());
+
+//# sourceMappingURL=admin-aprvl.module.js.map
+
+/***/ }),
+
 /***/ 183:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -694,7 +734,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__driver__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_qrcode__ = __webpack_require__(330);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -734,7 +774,7 @@ var DriverPageModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_notification__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__login_login__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_call_number__ = __webpack_require__(64);
@@ -972,7 +1012,7 @@ var NotificationDetailPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notification_notification__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__login_login__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__feedback_feedback__ = __webpack_require__(95);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1018,8 +1058,9 @@ var EmpdashboardPage = /** @class */ (function () {
         this.dhUsrDetails = [];
         this.travelType = [];
         this.userDetails = navParams.data.response;
-        this.userName = navParams.get('userId');
-        this.userName = navParams.get('response');
+        // this.userName = navParams.get('userId');
+        // this.userName = navParams.get('response');
+        console.log("userDetails ", this.userDetails);
         this.bookingForm = this.formBuilder.group({
             updatepurpose: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].compose([
                     __WEBPACK_IMPORTED_MODULE_2__angular_forms__["h" /* Validators */].required,
@@ -1062,28 +1103,35 @@ var EmpdashboardPage = /** @class */ (function () {
         this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
         this.bookingForm.get('isRoundTrip').setValue('Yes');
     }
-    EmpdashboardPage.prototype.ionViewDidLoad = function () {
+    EmpdashboardPage.prototype.ionViewWillLoad = function () {
         var _this = this;
         this.commonProvider.showLoader('Getting employee details..');
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then(function (response) {
-                _this.dhDetails = response;
-                _this.serviceProvider.get('/getEmpDetailService/' + _this.dhDetails.pernr).then(function (response) {
-                    _this.commonProvider.hideLoader();
+            this.serviceProvider.post('/getEmployeeDept', { "pernr": this.userDetails.emp_no }).then(function (response) {
+                _this.dhDetails = JSON.parse(response);
+                // console.log("getEmployeeDept ", JSON.parse(this.dhDetails));
+                console.log("getEmployeeDept ", _this.dhDetails.pernr);
+                _this.serviceProvider.post('/getEmpDetailService', { "pernr": _this.userDetails.emp_no, "bhId": _this.dhDetails.pernr }).then(function (response) {
                     _this.dhUsrDetails = response;
+                    console.log("responsee", response);
+                    _this.serviceProvider.get('/getAllLocations').then(function (response) {
+                        _this.commonProvider.hideLoader();
+                        _this.locations = response;
+                        _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
+                    }, function (err) {
+                        _this.commonProvider.hideLoader();
+                        _this.commonProvider.showToast(err);
+                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
+                    });
                 }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Error in user details");
+                    _this.commonProvider.showToast(err);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
                 });
             }, function (err) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in dh details");
-            });
-            this.serviceProvider.get('/getAllLocations').then(function (response) {
-                _this.locations = response;
-                _this.bookingForm.get('travelsrc').setValue(_this.userDetails.emp_psa);
-            }, function (err) {
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
             });
             this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
         }
@@ -1162,13 +1210,13 @@ var EmpdashboardPage = /** @class */ (function () {
         this.pageTitle = "History";
         this.commonProvider.showLoader();
         if (this.commonProvider.vapt) {
-            var buildParam = {};
-            this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no, buildParam).then(function (response) {
+            this.serviceProvider.post('/getTripHistory', { "pernr": this.userDetails.emp_no }).then(function (response) {
                 _this.historyData = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
-                _this.commonProvider.showToast(err);
                 _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -1239,7 +1287,8 @@ var EmpdashboardPage = /** @class */ (function () {
                     }
                 }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast('Request error, Please check with admin');
+                    _this.commonProvider.showToast(err);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
                 });
             }
             else {
@@ -1332,7 +1381,8 @@ var EmpdashboardPage = /** @class */ (function () {
         this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
             _this.commonProvider.showLoader();
             if (_this.commonProvider.vapt) {
-                _this.serviceProvider.get('/employeecanceltrip/' + id).then(function (response) {
+                console.log("tripid ", id);
+                _this.serviceProvider.post('/employeecanceltrip', { "tripId": id, "pernr": _this.userDetails.emp_no }).then(function (response) {
                     _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast("Trip cancelled successfully");
                     _this.getEmpHistory();
@@ -1391,14 +1441,15 @@ var EmpdashboardPage = /** @class */ (function () {
         if (reason === void 0) { reason = null; }
         this.commonProvider.showLoader();
         if (this.commonProvider.vapt) {
-            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason };
+            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason, "pernr": this.userDetails.emp_no };
             this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
                 _this.commonProvider.hideLoader();
                 _this.commonProvider.showToast("Thank you for your feedback");
                 _this.getEmpHistory();
             }, function (error) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in update rating");
+                _this.commonProvider.showToast(error);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -1445,7 +1496,7 @@ var EmpdashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_common_common__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__hod_requesthistory_requesthistory__ = __webpack_require__(188);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__login_login__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__feedback_feedback__ = __webpack_require__(95);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1566,10 +1617,12 @@ var HoddashboardPage = /** @class */ (function () {
         var _this = this;
         this.pageTitle = "Booking History";
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no).then(function (response) {
+            this.serviceProvider.post('/getTripHistory', { "pernr": this.userDetails.emp_no }).then(function (response) {
                 _this.historyData = response;
             }, function (err) {
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -1632,7 +1685,9 @@ var HoddashboardPage = /** @class */ (function () {
                         _this.commonProvider.showToast('Request error, Please check with admin');
                     }
                 }, function (err) {
-                    _this.commonProvider.showToast(err.message);
+                    _this.commonProvider.hideLoader();
+                    _this.commonProvider.showToast(err);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
                 });
             }
             else {
@@ -1752,6 +1807,7 @@ var HoddashboardPage = /** @class */ (function () {
                 "returnDate": obj.returnDate,
                 "returnTime": obj.returnTime
             };
+            console.log("reqdata ", reqData);
             this.serviceProvider.post('/approveRequest/hod', reqData).then(function (response) {
                 _this.commonProvider.hideLoader();
                 if (response) {
@@ -1764,7 +1820,8 @@ var HoddashboardPage = /** @class */ (function () {
                 }
             }, function (err) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -1818,10 +1875,12 @@ var HoddashboardPage = /** @class */ (function () {
     HoddashboardPage.prototype.ionViewDidLoad = function () {
         var _this = this;
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then(function (response) {
+            this.serviceProvider.post('/getEmployeeDept', { "pernr": this.userDetails.emp_no }).then(function (response) {
                 _this.dhDetails = response;
             }, function (err) {
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
             });
             this.commonProvider.showLoader();
             this.serviceProvider.get('/getAllLocations').then(function (response) {
@@ -1883,12 +1942,13 @@ var HoddashboardPage = /** @class */ (function () {
         this.commonProvider.showLoader('');
         this.pageTitle = "Requests";
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getApprovalList/hod/' + this.userDetails.emp_no).then(function (response) {
+            this.serviceProvider.post('/getApprovalList/hod', { "pernr": this.userDetails.emp_no }).then(function (response) {
                 _this.approvalList = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -1951,13 +2011,14 @@ var HoddashboardPage = /** @class */ (function () {
         this.commonProvider.Alert.confirm('Sure you want to cancel request?').then(function (res) {
             _this.commonProvider.showLoader();
             if (_this.commonProvider.vapt) {
-                _this.serviceProvider.get('/employeecanceltrip/' + id).then(function (response) {
+                _this.serviceProvider.post('/employeecanceltrip', { "tripId": id, "pernr": _this.userDetails.emp_no }).then(function (response) {
                     _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast("Trip cancelled successfully");
                     _this.getEmpHistory();
                 }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Error in cancellation");
+                    _this.commonProvider.showToast(err);
+                    _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
                 });
             }
             else {
@@ -2006,14 +2067,15 @@ var HoddashboardPage = /** @class */ (function () {
         if (reason === void 0) { reason = null; }
         this.commonProvider.showLoader();
         if (this.commonProvider.vapt) {
-            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason };
+            var reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason, "pernr": this.userDetails.emp_no };
             this.serviceProvider.post('/submitEmployeeFeedback', reqData).then(function (response) {
                 _this.commonProvider.hideLoader();
                 _this.commonProvider.showToast("Thank you for your feedback");
                 _this.getEmpHistory();
             }, function (error) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast("Error in update rating");
+                _this.commonProvider.showToast(error);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -2058,6 +2120,7 @@ var HoddashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__login_login__ = __webpack_require__(36);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2067,6 +2130,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2092,12 +2156,13 @@ var RequesthistoryPage = /** @class */ (function () {
         var _this = this;
         if (this.commonProvider.vapt) {
             this.commonProvider.showLoader('');
-            this.serviceProvider.get('/getAllTripHistory/' + this.userDetails.emp_no).then(function (response) {
+            this.serviceProvider.post('/getAllTripHistory', { "pernr": this.userDetails.emp_no }).then(function (response) {
                 _this.tripHistory = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__login_login__["a" /* LoginPage */], {});
             });
         }
         else {
@@ -2142,9 +2207,9 @@ var RequesthistoryPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_common_common__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_aprvl_admin_aprvl__ = __webpack_require__(94);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__admin_history_admin_history__ = __webpack_require__(175);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2188,6 +2253,7 @@ var AdminrequestsPage = /** @class */ (function () {
         this.driverList = [];
         this.vendorList = [];
         this.userDetails = navParams.data.response;
+        console.log("user details ", this.userDetails);
         this.bookingForm = this.formBuilder.group({
             // costid: ['', Validators.compose([
             //   Validators.required,
@@ -2251,12 +2317,15 @@ var AdminrequestsPage = /** @class */ (function () {
         this.commonProvider.showLoader('');
         this.pageTitle = "Pending";
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllPendingRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+            console.log('this.userDetails.emp_no ', this.userDetails);
+            this.serviceProvider.post('/getAllPendingRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then(function (response) {
                 _this.approvalList = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
+                console.log("err ", err);
+                err == "Access token has expired" ? _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {}) : '';
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
             });
         }
         else {
@@ -2287,12 +2356,13 @@ var AdminrequestsPage = /** @class */ (function () {
         this.commonProvider.showLoader();
         this.pageTitle = "Approved";
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllApprovedRequest/adminMobile/' + this.userDetails.location.id).then(function (response) {
+            this.serviceProvider.post('/getAllApprovedRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then(function (response) {
                 _this.historyData = response;
                 _this.commonProvider.hideLoader();
             }, function (err) {
+                err == "Access token has expired" ? _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {}) : '';
                 _this.commonProvider.hideLoader();
-                _this.commonProvider.showToast(err.message);
+                _this.commonProvider.showToast(err);
             });
         }
         else {
@@ -2367,8 +2437,9 @@ var AdminrequestsPage = /** @class */ (function () {
                         _this.commonProvider.showToast('Request error, Please check with admin');
                     }
                 }, function (err) {
+                    err == "Access token has expired" ? _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {}) : '';
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast('Request error, Please check with admin');
+                    _this.commonProvider.showToast(err);
                 });
             }
             else {
@@ -2450,13 +2521,15 @@ var AdminrequestsPage = /** @class */ (function () {
     AdminrequestsPage.prototype.getAllDetails = function () {
         var _this = this;
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.userDetails.location.id).then(function (response) {
+            this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then(function (response) {
                 _this.tripData = response;
                 _this.cabList = _this.tripData.cabList;
                 _this.vendorList = _this.tripData.vendorList;
                 _this.driverList = _this.tripData.driverList;
             }, function (err) {
-                _this.commonProvider.showToast(err.message);
+                err == "Access token has expired" ? _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */], {}) : '';
+                _this.commonProvider.hideLoader();
+                _this.commonProvider.showToast(err);
             });
         }
         else {
@@ -2526,7 +2599,7 @@ var AdminrequestsPage = /** @class */ (function () {
     };
     AdminrequestsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-            selector: 'page-adminrequests',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.username}}/{{userDetails.id}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.role}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.location.loc_name}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">\n          Pending\n        </ion-segment-button>\n        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button>\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Approved\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-input type="text" formControlName="travelsrc"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n              [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n              [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Token Number<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrID"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrName"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>\n            <ion-input type="number" formControlName="usrphone"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Comment<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Cab</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="cabs" name="cabs">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let cab of cabList">\n                <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Driver</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="driver" name="driver">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let drvr of driverList">\n                <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Vendor</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'local\' " -->\n            <ion-select formControlName="vendor" name="vendor">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let vendor of vendorList">\n                <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Token Number</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrID}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">User Name</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrName}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Phone</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrphone}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View\n              History</span>\n          </ion-list-header>\n\n          <ion-item *ngFor="let applh of approvalList">\n            <div (click)="openDetail(applh)">\n              <span>\n                <h3 class="reqText">\n                  <span class="icon-directions_car"\n                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n              </span>\n              <span>\n                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n              </span>\n            </div>\n            <div style="float:right">\n              <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"\n                (click)="viewRequest($event,applh);">View</button>\n            </div>\n            <div style="width: 70%">\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n              </div>\n              <div>\n                <ul class="bar">\n                  <li style="color:green">\n                    <h3>{{hdata.source}}</h3>\n                  </li>\n                  <li style="color:#a90e1b">\n                    <h3>{{hdata.destination}}</h3>\n                  </li>\n                </ul>\n              </div>\n              <!-- <span class="statusWrds" (click)="editFrom(hdata)">\n                <h6>Edit</h6>\n              </span> -->\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/,
+            selector: 'page-adminrequests',template:/*ion-inline-start:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/'<!--\n  Generated template for the HoddashboardPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar color="navColor">\n    <ion-title text-center>{{pageTitle}}</ion-title>\n    <div style="float:right" (click)="logout($event)"><span class="icon-switch"></span></div>\n    <div style="float:right; padding-right: 20px;" (click)="showTermsCondition($event)"><span class="icon-info"></span>\n    </div>\n    <!-- <span class="icon-switch" style="float:right" (click)="logout($event)"></span>\n    <span class="icon-info" style="float:right; margin-right: 20px;" (click)="showTermsCondition($event)"></span> -->\n    <!-- <span class="icon-bell" style="float:right" (click)="showNotifn($event)"></span>\n    <ion-badge class="cart-badge">5</ion-badge> -->\n  </ion-navbar>\n  <ion-toolbar color="white" class="webToolbar">\n    <ion-grid>\n      <ion-row>\n        <ion-col col-8 text-left>\n          <span style="font-size: 17px;">{{userDetails.username}}/{{userDetails.id}}</span>\n        </ion-col>\n        <ion-col col-4 text-right>\n          <span style="color:#ad081f; font-family: font-medium"> {{userDetails.role}} </span>\n        </ion-col>\n      </ion-row>\n      <ion-row>\n        <ion-col col-8 style="padding-top: 0px;" text-left>\n          <span> {{userDetails.location.loc_name}} </span>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n\n  </ion-toolbar>\n\n</ion-header>\n\n\n<ion-content>\n  <ion-grid class="formcntent">\n    <div>\n      <ion-segment [(ngModel)]="requestSegment" color="red" (ionSelect)="segmentChanged($event)">\n        <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">\n          Pending\n        </ion-segment-button>\n        <!-- <ion-segment-button value="raisereq" (ionSelect)="pageTitle = \'Raise Request\'">\n          Raise Request\n        </ion-segment-button> -->\n        <ion-segment-button value="history" (ionSelect)="getEmpHistory()">\n          Approved\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n    <div [ngSwitch]="requestSegment">\n\n      <form *ngSwitchCase="\'raisereq\'" [formGroup]="bookingForm">\n        <div *ngIf="!confirmReqst">\n          <ion-row>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>\n                <ion-input type="text" formControlName="travelsrc"></ion-input>\n              </ion-item>\n            </ion-col>\n            <ion-col>\n              <ion-item>\n                <ion-label floating>Trip Type<sup style="color:red">*</sup></ion-label>\n                <ion-select formControlName="isRoundTrip" name="isRoundTrip">\n                  <ion-option value="No">One Way</ion-option>\n                  <ion-option value="Yes">Round Trip</ion-option>\n                </ion-select>\n              </ion-item>\n            </ion-col>\n          </ion-row>\n          <ion-item>\n            <ion-label floating>Destination<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="traveldest" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <span ion-datepicker (ionChanged)="setDate($event);" [value]="travelDate" [min]="minDate"\n              [cancelText]=\'Today\' clear>\n              <span>Start Date : {{travelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Start Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="currTime" formControlName="traveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <span ion-datepicker (ionChanged)="setEndDate($event);" [value]="endtravelDate" [min]="travelDate"\n              [cancelText]=\'Today\' clear>\n              <span>Return Date : {{endtravelDate | date}}\n                <ion-icon name="clipboard" item-left></ion-icon>\n              </span>\n            </span>\n          </ion-item>\n          <ion-item *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n            <ion-label floating>Return Time<sup style="color:red">*</sup></ion-label>\n            <ion-datetime displayFormat="HH:mm" [min]="EndcurrTime" formControlName="endtraveltime">\n            </ion-datetime>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Token Number<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrID"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>User Name<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="usrName"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Phone<sup style="color:red">*</sup></ion-label>\n            <ion-input type="number" formControlName="usrphone"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Purpose<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="updatepurpose"></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Pickup point<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="pickpoint" maxlength=30></ion-input>\n          </ion-item>\n          <ion-item>\n            <ion-label floating>Comment<sup style="color:red">*</sup></ion-label>\n            <ion-input type="text" formControlName="remark"></ion-input>\n          </ion-item>\n\n          <ion-item>\n            <ion-label floating>Travel type<sup style="color:red">*</sup></ion-label>\n            <ion-select formControlName="travelType">\n              <ion-option value="outstation">Outstation</ion-option>\n              <ion-option value="local">Local</ion-option>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Cab</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="cabs" name="cabs">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let cab of cabList">\n                <ion-option value="{{cab.id}}" (ionSelect)="setVendor()">{{cab.cab_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Driver</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'outstation\' " -->\n            <ion-select formControlName="driver" name="driver">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let drvr of driverList">\n                <ion-option value="{{drvr.id}}" (ionSelect)="setVendor()">{{drvr.first_name}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-item>\n            <ion-label>Assign Vendor</ion-label>\n            <!-- [disabled]="bookingForm.value.travelType == \'local\' " -->\n            <ion-select formControlName="vendor" name="vendor">\n              <ion-option value="select" [selected]="true">select</ion-option>\n              <div *ngFor="let vendor of vendorList">\n                <ion-option value="{{vendor.id}}" (ionSelect)="setCab()">{{vendor.vName}}</ion-option>\n              </div>\n            </ion-select>\n          </ion-item>\n          <ion-row text-center class="row-height" style="margin-top: 1%">\n            <ion-col>\n              <button ion-button small="true" [disabled]="!bookingForm.valid" color="red" (click)="logForm()">Next\n              </button>\n            </ion-col>\n          </ion-row>\n        </div>\n        <div *ngIf="confirmReqst">\n          <ion-card>\n            <ion-card-header style="text-align: center" color="red">\n              Confirm Request\n              <span *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                (Round Trip)\n              </span>\n              <span *ngIf="bookingForm.value.isRoundTrip == \'No\'">\n                (One-Way Trip)\n              </span>\n              <span class="icon-pencil" style="float: right;" (click)="editRequest()"></span>\n            </ion-card-header>\n            <ion-card-content style="padding: 13px 6px 5px;">\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Token Number</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrID}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">User Name</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrName}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Phone</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.usrphone}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Purpose</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.updatepurpose}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Date</span>\n                </ion-col>\n                <ion-col>\n                  {{travelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Start Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Date</span>\n                </ion-col>\n                <ion-col>\n                  {{endtravelDate | date}}\n                </ion-col>\n              </ion-row>\n              <ion-row *ngIf="bookingForm.value.isRoundTrip == \'Yes\'">\n                <ion-col>\n                  <span class="formtitle">Return Time</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.endtraveltime}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">My Location</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelsrc}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Destination</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.traveldest}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Pickup point</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.pickpoint}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Travel Type</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.travelType}}\n                </ion-col>\n              </ion-row>\n              <ion-row>\n                <ion-col>\n                  <span class="formtitle">Remark</span>\n                </ion-col>\n                <ion-col>\n                  {{bookingForm.value.remark}}\n                </ion-col>\n              </ion-row>\n              <ion-row text-center class="row-height" style="margin-top: 1%">\n                <ion-col>\n                  <button ion-button small="true" color="red" (click)="cancelReq()">Cancel Request\n                  </button>\n                  <button ion-button small="true" color="red" (click)="sendRequest()">Send Request\n                  </button>\n                </ion-col>\n              </ion-row>\n            </ion-card-content>\n          </ion-card>\n        </div>\n      </form>\n      <div *ngSwitchCase="\'pendingReq\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;">\n            <span style="color:#ad081f">Pending for approval</span>\n            <span style="color:#ad081f; float: right;border-bottom: 1px solid;" (click)="viewReqHistory();">View\n              History</span>\n          </ion-list-header>\n\n          <ion-item *ngFor="let applh of approvalList">\n            <div (click)="openDetail(applh)">\n              <span>\n                <h3 class="reqText">\n                  <span class="icon-directions_car"\n                    style="padding-right: 10px;margin-bottom: 10px;"></span>{{applh.purpose}}</h3>\n              </span>\n              <span>\n                <h3 style="color: #424242;">{{applh.travel_date}}, {{applh.travel_time}}</h3>\n              </span>\n            </div>\n            <div style="float:right">\n              <!-- <button ion-button item-right small="true" solid="true" style="background-color: #398b00;"\n                (click)="viewRequest($event,applh);">View</button> -->\n            </div>\n            <div style="width: 70%">\n              <ul class="bar">\n                <li style="color:green">\n                  <h3>{{applh.source}}</h3>\n                </li>\n                <li style="color:#a90e1b">\n                  <h3>{{applh.destination}}</h3>\n                </li>\n              </ul>\n            </div>\n          </ion-item>\n        </ion-list>\n      </div>\n      <div *ngSwitchCase="\'history\'">\n        <ion-list>\n          <ion-list-header style="background: #9e9e9e1f !important;  margin-bottom: 0px;">\n            <span style="color:#ad081f">Booking History</span>\n          </ion-list-header>\n          <ng-container *ngFor="let hdata of historyData">\n            <ion-item *ngIf="hdata.travel_date && hdata.travel_date != \'null\' ">\n              <div (click)="openDetail(hdata)">\n                <span>\n                  <h3 class="reqText">\n                    <span class="icon-directions_car"\n                      style="padding-right: 10px;margin-bottom: 10px;"></span>{{hdata.purpose}}</h3>\n                </span>\n                <span text-left style="color: #a90e1b;" *ngIf="hdata.travel_date!=null">\n                  {{hdata.travel_date}}, {{hdata.travel_time}}\n                </span>\n                <span class="statusWrds">\n                  <h6>{{hdata.status}}</h6>\n                </span>\n              </div>\n              <div>\n                <ul class="bar">\n                  <li style="color:green">\n                    <h3>{{hdata.source}}</h3>\n                  </li>\n                  <li style="color:#a90e1b">\n                    <h3>{{hdata.destination}}</h3>\n                  </li>\n                </ul>\n              </div>\n              <!-- <span class="statusWrds" (click)="editFrom(hdata)">\n                <h6>Edit</h6>\n              </span> -->\n            </ion-item>\n          </ng-container>\n        </ion-list>\n      </div>\n    </div>\n  </ion-grid>\n</ion-content>'/*ion-inline-end:"/Users/Apple/Desktop/mahindraApps/VMS/src/pages/adminrequests/adminrequests.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavParams */],
@@ -2629,86 +2702,10 @@ var RequesthistoryPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(185);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var NotificationDetailPageModule = /** @class */ (function () {
-    function NotificationDetailPageModule() {
-    }
-    NotificationDetailPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
-            ],
-        })
-    ], NotificationDetailPageModule);
-    return NotificationDetailPageModule;
-}());
-
-//# sourceMappingURL=notification-detail.module.js.map
-
-/***/ }),
-
-/***/ 195:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(58);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-var NotificationPageModule = /** @class */ (function () {
-    function NotificationPageModule() {
-    }
-    NotificationPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
-            ],
-        })
-    ], NotificationPageModule);
-    return NotificationPageModule;
-}());
-
-//# sourceMappingURL=notification.module.js.map
-
-/***/ }),
-
-/***/ 196:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScanPageModule", function() { return ScanPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__scan__ = __webpack_require__(195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2738,7 +2735,7 @@ var ScanPageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 197:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2837,6 +2834,82 @@ var ScanPage = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 196:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationDetailPageModule", function() { return NotificationDetailPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification_detail__ = __webpack_require__(185);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationDetailPageModule = /** @class */ (function () {
+    function NotificationDetailPageModule() {
+    }
+    NotificationDetailPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification_detail__["a" /* NotificationDetailPage */]),
+            ],
+        })
+    ], NotificationDetailPageModule);
+    return NotificationDetailPageModule;
+}());
+
+//# sourceMappingURL=notification-detail.module.js.map
+
+/***/ }),
+
+/***/ 197:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationPageModule", function() { return NotificationPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notification__ = __webpack_require__(58);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+var NotificationPageModule = /** @class */ (function () {
+    function NotificationPageModule() {
+    }
+    NotificationPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__notification__["a" /* NotificationPage */]),
+            ],
+        })
+    ], NotificationPageModule);
+    return NotificationPageModule;
+}());
+
+//# sourceMappingURL=notification.module.js.map
+
+/***/ }),
+
 /***/ 198:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2845,7 +2918,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TermsconditionPageModule", function() { return TermsconditionPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__termscondition__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__termscondition__ = __webpack_require__(333);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2883,7 +2956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersDashboardPageModule", function() { return UsersDashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__users_dashboard__ = __webpack_require__(334);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2959,50 +3032,6 @@ var AdminrequestsPageModule = /** @class */ (function () {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmpdashboardPageModule", function() { return EmpdashboardPageModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(186);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(96);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-var EmpdashboardPageModule = /** @class */ (function () {
-    function EmpdashboardPageModule() {
-    }
-    EmpdashboardPageModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
-            declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */],
-            ],
-            imports: [
-                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
-                __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__["a" /* Ionic2RatingModule */],
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */]),
-            ],
-        })
-    ], EmpdashboardPageModule);
-    return EmpdashboardPageModule;
-}());
-
-//# sourceMappingURL=empdashboard.module.js.map
-
-/***/ }),
-
-/***/ 205:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HoddashboardPageModule", function() { return HoddashboardPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
@@ -3042,6 +3071,50 @@ var HoddashboardPageModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 205:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EmpdashboardPageModule", function() { return EmpdashboardPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__empdashboard__ = __webpack_require__(186);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__ = __webpack_require__(96);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+var EmpdashboardPageModule = /** @class */ (function () {
+    function EmpdashboardPageModule() {
+    }
+    EmpdashboardPageModule = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["J" /* NgModule */])({
+            declarations: [
+                __WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */],
+            ],
+            imports: [
+                __WEBPACK_IMPORTED_MODULE_3_ionic3_datepicker__["a" /* DatePickerModule */],
+                __WEBPACK_IMPORTED_MODULE_4_ionic2_rating__["a" /* Ionic2RatingModule */],
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__empdashboard__["a" /* EmpdashboardPage */]),
+            ],
+        })
+    ], EmpdashboardPageModule);
+    return EmpdashboardPageModule;
+}());
+
+//# sourceMappingURL=empdashboard.module.js.map
+
+/***/ }),
+
 /***/ 247:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3066,28 +3139,28 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(245);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(246);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_http__ = __webpack_require__(175);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__(354);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_network__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_http__ = __webpack_require__(176);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_login_login__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_common_common__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_in_app_browser__ = __webpack_require__(190);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_qr_scanner__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_call_number__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_employee_empdashboard_empdashboard_module__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_notification_notification_module__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_termscondition_termscondition_module__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(205);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_notification_detail_notification_detail_module__ = __webpack_require__(196);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_scan_scan_module__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_hod_hoddashboard_hoddashboard_module__ = __webpack_require__(204);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_hod_requesthistory_requesthistory_module__ = __webpack_require__(193);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_driver_driver_module__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_users_dashboard_users_dashboard_module__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_adminrequests_adminrequests_module__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(181);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_adminrequests_admin_history_admin_history_module__ = __webpack_require__(174);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_admin_aprvl_admin_aprvl_module__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_feedback_feedback_module__ = __webpack_require__(191);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28_ionic3_datepicker__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -3164,21 +3237,21 @@ var AppModule = /** @class */ (function () {
                     backButtonIcon: ''
                 }, {
                     links: [
-                        { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/adminrequests/admin-history/admin-history.module#AdminHistoryPageModule', name: 'AdminHistoryPage', segment: 'admin-history', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/admin-aprvl/admin-aprvl.module#AdminAprvlPageModule', name: 'AdminAprvlPage', segment: 'admin-aprvl', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/driver/driver.module#DriverPageModule', name: 'DriverPage', segment: 'driver', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/feedback/feedback.module#FeedbackPageModule', name: 'FeedbackPage', segment: 'feedback', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/modal-detail/modal-detail.module#ModalDetailPageModule', name: 'ModalDetailPage', segment: 'modal-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/hod/requesthistory/requesthistory.module#RequesthistoryPageModule', name: 'RequesthistoryPage', segment: 'requesthistory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/requestdetails/requestdetails.module#RequestdetailsPageModule', name: 'RequestdetailsPage', segment: 'requestdetails', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/scan/scan.module#ScanPageModule', name: 'ScanPage', segment: 'scan', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification-detail/notification-detail.module#NotificationDetailPageModule', name: 'NotificationDetailPage', segment: 'notification-detail', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/notification/notification.module#NotificationPageModule', name: 'NotificationPage', segment: 'notification', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/termscondition/termscondition.module#TermsconditionPageModule', name: 'TermsconditionPage', segment: 'termscondition', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/users-dashboard/users-dashboard.module#UsersDashboardPageModule', name: 'UsersDashboardPage', segment: 'users-dashboard', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/adminrequests/adminrequests.module#AdminrequestsPageModule', name: 'AdminrequestsPage', segment: 'adminrequests', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/hod/hoddashboard/hoddashboard.module#HoddashboardPageModule', name: 'HoddashboardPage', segment: 'hoddashboard', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/employee/empdashboard/empdashboard.module#EmpdashboardPageModule', name: 'EmpdashboardPage', segment: 'empdashboard', priority: 'low', defaultHistory: [] }
                     ]
                 })
             ],
@@ -3209,7 +3282,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 334:
+/***/ 333:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3257,7 +3330,7 @@ var TermsconditionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 335:
+/***/ 334:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3267,7 +3340,7 @@ var TermsconditionPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_service_service__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_common_common__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_qr_scanner__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__scan_scan__ = __webpack_require__(195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3336,7 +3409,7 @@ var UsersDashboardPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 354:
+/***/ 353:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3345,7 +3418,7 @@ var UsersDashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(246);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login__ = __webpack_require__(36);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3388,7 +3461,7 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 43:
+/***/ 36:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3403,8 +3476,8 @@ var MyApp = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__driver_driver__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_in_app_browser__ = __webpack_require__(190);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_http__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js__ = __webpack_require__(178);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_crypto_js__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -3446,11 +3519,11 @@ var LoginPage = /** @class */ (function () {
         this.createForm();
     };
     LoginPage.prototype.createFormControls = function () {
-        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('23165827', [
+        this.email = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('203442', [
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
         ]);
-        this.password = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('Mahindra!!', [
+        this.password = new __WEBPACK_IMPORTED_MODULE_8__angular_forms__["b" /* FormControl */]('Welcome@1234', [
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].required,
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["h" /* Validators */].minLength(4)
         ]);
@@ -3521,7 +3594,7 @@ var LoginPage = /** @class */ (function () {
                     }
                 }, function (err) {
                     _this.commonProvider.hideLoader();
-                    _this.commonProvider.showToast("Error while login");
+                    _this.commonProvider.showToast("Please contact admin");
                 });
             }
             else {
@@ -3607,13 +3680,18 @@ var LoginPage = /** @class */ (function () {
                 this.commonProvider.showLoader('Please wait..');
                 var reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
                 this.serviceProvider.post('/login1', reqParams).then(function (response) {
-                    if (response.status == 200) {
-                        var lgnData = JSON.parse(response.data);
-                        _this.commonProvider.accessToken = lgnData.access_token;
-                        console.log("login resp ", lgnData.msg);
-                        if (lgnData.access_token) {
-                            console.log("service call");
-                            _this.serviceProvider.get('/getEmpDetailService/' + _this.email.value).then(function (response) {
+                    console.log("respnse ", response);
+                    if (response.access_token) {
+                        _this.commonProvider.accessToken = response.access_token;
+                        if (response.admin) {
+                            _this.commonProvider.hideLoader();
+                            response = JSON.parse(response.admin);
+                            console.log("Ressponse data ", response);
+                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                        }
+                        else {
+                            _this.serviceProvider.post('/getEmpDetailService', { "pernr": _this.email.value, "bhId": "" }).then(function (response) {
+                                console.log("/getEmpDetailService ", response);
                                 _this.commonProvider.hideLoader();
                                 var str = response.emp_esgdesc;
                                 if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
@@ -3627,20 +3705,20 @@ var LoginPage = /** @class */ (function () {
                                 }
                             });
                         }
-                        else if (response.data == "false") {
-                            _this.commonProvider.hideLoader();
-                            _this.commonProvider.showToast(response.error);
-                        }
-                        else {
-                            _this.commonProvider.hideLoader();
-                            response = JSON.parse(response.data);
-                            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
-                        }
                     }
-                    else {
+                    else if (response.data == "false") {
                         _this.commonProvider.hideLoader();
                         _this.commonProvider.showToast(response.error);
                     }
+                    else {
+                        _this.commonProvider.hideLoader();
+                        response = response;
+                        _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__adminrequests_adminrequests__["a" /* AdminrequestsPage */], { response: response });
+                    }
+                    // } else {
+                    //   this.commonProvider.hideLoader();
+                    //   this.commonProvider.showToast(response.error);
+                    // }
                 }, function (err) {
                     _this.commonProvider.hideLoader();
                     _this.commonProvider.showToast("Error while login");
@@ -3768,7 +3846,7 @@ var NotificationPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 90:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3824,7 +3902,7 @@ var AdminAprvlPage = /** @class */ (function () {
         this.srcSubstr = this.tripDetail.source.substring(0, 3);
         this.destSubstr = this.tripDetail.destination.substring(0, 3);
         if (this.commonProvider.vapt) {
-            this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.adminLocationID).then(function (response) {
+            this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.adminID, "loc_ids": this.adminLocationID }).then(function (response) {
                 if (response) {
                     _this.tripData = response;
                     _this.cabList = _this.tripData.cabList;
@@ -3869,7 +3947,7 @@ var AdminAprvlPage = /** @class */ (function () {
             _this.commonProvider.showLoader('Approving trip...');
             if (_this.commonProvider.vapt) {
                 _this.editUrl == 'createRequest' ? _this.editUrl = '/approvependingrequestadmin/mobile' : _this.editUrl = '/editTripDetails/mobile';
-                var reqData = { "tripId": _this.tripDetail.id, "cabId": _this.cabs, "driverId": _this.driver, "vendorId": _this.vendor, "admincomment": _this.admincomment, "adminapproverId": _this.adminID };
+                var reqData = { "pernr": _this.adminID, "tripId": _this.tripDetail.id, "cabId": _this.cabs, "driverId": _this.driver, "vendorId": _this.vendor, "admincomment": _this.admincomment, "adminapproverId": _this.adminID };
                 _this.serviceProvider.post(_this.editUrl, reqData).then(function (response) {
                     if (response) {
                         _this.commonProvider.hideLoader();
@@ -3952,7 +4030,7 @@ var AdminAprvlPage = /** @class */ (function () {
         var _this = this;
         this.commonProvider.showLoader('Rejecting trip...');
         if (this.commonProvider.vapt) {
-            var reqData = { "tripId": this.adminID, "adminapproverId": this.tripDetail.id, "rejectComment": cmnt };
+            var reqData = { "tripId": this.tripDetail.id, "adminapproverId": this.adminID, "rejectComment": cmnt };
             this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then(function (response) {
                 if (response) {
                     _this.commonProvider.hideLoader();

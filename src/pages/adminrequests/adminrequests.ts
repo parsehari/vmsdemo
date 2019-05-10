@@ -8,6 +8,7 @@ import { LoginPage } from '../login/login';
 import { AdminAprvlPage } from '../admin-aprvl/admin-aprvl';
 import { TermsconditionPage } from '../termscondition/termscondition';
 import { AdminHistoryPage } from './admin-history/admin-history';
+
 /**
  * Generated class for the AdminrequestsPage page.
  *
@@ -127,13 +128,14 @@ export class AdminrequestsPage {
     this.commonProvider.showLoader('');
     this.pageTitle = "Pending";
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getAllPendingRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+      this.serviceProvider.post('/getAllPendingRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then((response: any) => {
         this.approvalList = response;
         this.commonProvider.hideLoader();
       },
         (err) => {
+          err == "Access token has expired" ? this.navCtrl.setRoot(LoginPage, {}) : '';
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.showToast(err);
         });
     } else {
       this.serviceProvider.getApprovalList('/getAllPendingRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
@@ -166,13 +168,14 @@ export class AdminrequestsPage {
     this.commonProvider.showLoader();
     this.pageTitle = "Approved";
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getAllApprovedRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+      this.serviceProvider.post('/getAllApprovedRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then((response: any) => {
         this.historyData = response;
         this.commonProvider.hideLoader();
       },
         (err) => {
+          err == "Access token has expired" ? this.navCtrl.setRoot(LoginPage, {}) : '';
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast(err.message);
+          this.commonProvider.showToast(err);
         });
     } else {
       this.serviceProvider.getApprovalList('/getAllApprovedRequest/adminMobile', this.userDetails.location.id).subscribe((response: any) => {
@@ -251,8 +254,9 @@ export class AdminrequestsPage {
           }
 
         }, (err) => {
+          err == "Access token has expired" ? this.navCtrl.setRoot(LoginPage, {}) : '';
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast('Request error, Please check with admin');
+          this.commonProvider.showToast(err);
         });
 
       } else {
@@ -340,14 +344,16 @@ export class AdminrequestsPage {
 
   getAllDetails() {
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+      this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then((response: any) => {
         this.tripData = response;
         this.cabList = this.tripData.cabList;
         this.vendorList = this.tripData.vendorList;
         this.driverList = this.tripData.driverList;
       },
         (err) => {
-          this.commonProvider.showToast(err.message);
+          err == "Access token has expired" ? this.navCtrl.setRoot(LoginPage, {}) : '';
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err);
         });
     } else {
       this.serviceProvider.getReqDetails('/getAllAvailableResources/adminMobile', this.userDetails.location.id).subscribe((response: any) => {

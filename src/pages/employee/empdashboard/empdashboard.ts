@@ -60,8 +60,8 @@ export class EmpdashboardPage {
     public alertCtrl: AlertController
   ) {
     this.userDetails = navParams.data.response;
-    this.userName = navParams.get('userId');
-    this.userName = navParams.get('response');
+    // this.userName = navParams.get('userId');
+    // this.userName = navParams.get('response');
     this.bookingForm = this.formBuilder.group({
       updatepurpose: ['', Validators.compose([
         Validators.required,
@@ -109,41 +109,41 @@ export class EmpdashboardPage {
 
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
     this.commonProvider.showLoader('Getting employee details..');
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getEmployeeDept/' + this.userDetails.emp_no).then((response: any) => {
-        this.dhDetails = response;
-        this.serviceProvider.get('/getEmpDetailService/' + this.dhDetails.pernr).then((response: any) => {
-          this.commonProvider.hideLoader();
+      this.serviceProvider.post('/getEmployeeDept', { "pernr": this.userDetails.emp_no }).then((response: any) => {
+        this.dhDetails = JSON.parse(response);
+        this.serviceProvider.post('/getEmpDetailService', { "pernr": this.userDetails.emp_no, "bhId": this.dhDetails.pernr }).then((response: any) => {
           this.dhUsrDetails = response;
+          this.serviceProvider.get('/getAllLocations').then((response: any) => {
+            this.commonProvider.hideLoader();
+            this.locations = response;
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          },
+            (err) => {
+              this.commonProvider.hideLoader();
+              this.commonProvider.showToast(err);
+              this.navCtrl.setRoot(LoginPage, {});
+            });
         }, (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast("Error in user details");
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         })
       }, (err) => {
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Error in dh details");
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
       })
-      this.serviceProvider.get('/getAllLocations').then((response: any) => {
-        this.locations = response;
-        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
-      },
-        (err) => {
-          this.commonProvider.showToast(err.message);
-        });
       this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
     }
     else {
-
       this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
-
         this.dhDetails = JSON.parse(response._body);
         this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
           this.dhUsrDetails = JSON.parse(response._body);
           this.commonProvider.hideLoader();
-
-
         }, (err) => {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Error in user details");
@@ -163,12 +163,10 @@ export class EmpdashboardPage {
 
       this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe((response: any) => {
         let ln = JSON.parse(response._body);
-        console.log("response ", ln.length);
         if (ln.length) {
           this.feedbackForm(response);
         }
       }, (err) => {
-        console.log("response ", err);
       })
 
 
@@ -228,13 +226,13 @@ export class EmpdashboardPage {
     this.pageTitle = "History";
     this.commonProvider.showLoader();
     if (this.commonProvider.vapt) {
-      let buildParam = {};
-      this.serviceProvider.get('/getTripHistory/' + this.userDetails.emp_no, buildParam).then((response: any) => {
+      this.serviceProvider.post('/getTripHistory', { "pernr": this.userDetails.emp_no }).then((response: any) => {
         this.historyData = response;
         this.commonProvider.hideLoader();
       }, (err) => {
-        this.commonProvider.showToast(err);
         this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
       })
     } else {
       this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
@@ -304,7 +302,8 @@ export class EmpdashboardPage {
           }
         }, (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast('Request error, Please check with admin');
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
         });
       } else {
         reqData = {
@@ -402,7 +401,7 @@ export class EmpdashboardPage {
     this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
       this.commonProvider.showLoader()
       if (this.commonProvider.vapt) {
-        this.serviceProvider.get('/employeecanceltrip/' + id).then((response: any) => {
+        this.serviceProvider.post('/employeecanceltrip', { "tripId": id, "pernr": this.userDetails.emp_no }).then((response: any) => {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Trip cancelled successfully");
           this.getEmpHistory();
@@ -458,14 +457,15 @@ export class EmpdashboardPage {
   giveRating(ratings: any, tripid: any, reason = null) {
     this.commonProvider.showLoader();
     if (this.commonProvider.vapt) {
-      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason }
+      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason, "pernr": this.userDetails.emp_no }
       this.serviceProvider.post('/submitEmployeeFeedback', reqData).then((response: any) => {
         this.commonProvider.hideLoader();
         this.commonProvider.showToast("Thank you for your feedback");
         this.getEmpHistory();
       }, (error) => {
         this.commonProvider.hideLoader();
-        this.commonProvider.showToast("Error in update rating");
+        this.commonProvider.showToast(error);
+        this.navCtrl.setRoot(LoginPage, {});
       })
     } else {
       this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {

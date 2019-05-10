@@ -54,7 +54,7 @@ export class AdminAprvlPage {
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getAllAvailableResources/adminMobile/' + this.adminLocationID).then((response: any) => {
+      this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.adminID, "loc_ids": this.adminLocationID }).then((response: any) => {
         if (response) {
           this.tripData = response;
           this.cabList = this.tripData.cabList;
@@ -102,7 +102,7 @@ export class AdminAprvlPage {
       this.commonProvider.showLoader('Approving trip...');
       if (this.commonProvider.vapt) {
         this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin/mobile' : this.editUrl = '/editTripDetails/mobile';
-        let reqData = { "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
+        let reqData = { "pernr": this.adminID, "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
         this.serviceProvider.post(this.editUrl, reqData).then((response: any) => {
           if (response) {
             this.commonProvider.hideLoader();
@@ -185,7 +185,7 @@ export class AdminAprvlPage {
   rejectRequest(cmnt: any) {
     this.commonProvider.showLoader('Rejecting trip...');
     if (this.commonProvider.vapt) {
-      let reqData = { "tripId": this.adminID, "adminapproverId": this.tripDetail.id, "rejectComment": cmnt }
+      let reqData = { "tripId": this.tripDetail.id, "adminapproverId": this.adminID, "rejectComment": cmnt }
       this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then((response: any) => {
         if (response) {
           this.commonProvider.hideLoader();

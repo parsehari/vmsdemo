@@ -8,6 +8,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/toPromise';
 import CryptoJS from 'crypto-js';
 import { CommonProvider } from '../common/common';
+import { LoginPage } from '../../pages/login/login';
+
 /*
   Generated class for the ServiceProvider provider.
 
@@ -21,7 +23,7 @@ export class ServiceProvider {
   //private url = 'https://gmc.mahindra.com/vms_vapt';
   //private url = 'https://mapps.mahindra.com/vms';
   //public url = 'http://192.168.43.252:8080/vms_vapt';
-  public url = 'http://192.168.43.252:8080/vms_vapt';
+  public url = 'http://10.174.55.188:8080/vms_vapt';
 
   raiseReq: any;
   tripDTO: any;
@@ -222,18 +224,19 @@ export class ServiceProvider {
   }
 
   public get(url: any, params?: any, options: any = {}) {
-    console.log("url", this.commonprovider.accessToken);
     return new Promise(resolve => {
       let responseData: any;
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
         let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
-        // let headers = new Headers({ 'access_token': this.commonprovider.accessToken });
-        // let opts = new RequestOptions({ headers: headers });
         this.ahttp.get(this.url + url, params, opts).then(resp => {
-          responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
-          console.log("Advance http response for ", responseData);
-          resolve(responseData);
+          this.decryptData(resp.data).then(respData => {
+            let decrypted: any = respData;
+            //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+            // responseData = options.responseType == 'text' ? respData : JSON.parse(decrypted);
+            responseData = JSON.parse(decrypted);
+            resolve(responseData);
+          })
         }, (err) => {
           resolve(err);
         });
@@ -244,20 +247,43 @@ export class ServiceProvider {
   }
 
 
-  post(url: any, params?: any, options: any = {}) {
-    return new Promise(resolve => {
+  post(url: any, params?: any, options?: any) {
+    return new Promise((resolve, reject) => {
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
-        this.ahttp.post(this.url + url, params, options).then(resp => {
-          console.log("respone post ", resp)
-          resolve(resp);
-        }, (err) => {
-          resolve(err);
+        this.encryptData(params).then(Encryresp => {
+          let objParam = { "param": Encryresp };
+          let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
+          this.ahttp.post(this.url + url, objParam, opts).then(resp => {
+            if (resp.data == "Access token has expired") {
+              // this.commonprovider.showToast(resp.data);
+              // this.navCtrl.setRoot(LoginPage, {});
+              reject(resp.data);
+            } else if (!resp.data) {
+              resolve(false);
+            } else {
+              this.decryptData(resp.data).then(respData => {
+                let decrypted: any = respData;
+                let responseData: any;
+                //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
+                if (decrypted) {
+                  responseData = JSON.parse(decrypted);
+                  resolve(responseData);
+                } else {
+                  reject(false);
+                }
+              })
+            }
+            // resolve(resp);
+          }, (err) => {
+            resolve(err);
+          });
         });
       }).catch((err) => {
         resolve(err);
       });
     });
+
   }
 
   getPendingTrip(params: any, id: any): Observable<any> {
@@ -286,6 +312,7 @@ export class ServiceProvider {
   encryptData(sessionData: any) {
     var promise = new Promise(function (resolve, reject) {
       var text = sessionData;
+      text = JSON.stringify(text);
       var key = CryptoJS.enc.Utf8.parse('M@h1ndra$1234567');
       var iv = CryptoJS.enc.Utf8.parse('0001000100010001');
       var encrypted = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(text), key,
@@ -295,8 +322,8 @@ export class ServiceProvider {
           mode: CryptoJS.mode.CBC,
           padding: CryptoJS.pad.Pkcs7
         });
-      this.text = encrypted.toString();
-      resolve(this.text);
+      text = encrypted.toString();
+      resolve(text);
     });
     return promise;
   }

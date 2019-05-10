@@ -300,7 +300,8 @@ module.exports.metadata =
   "cordova-plugin-qrscanner": "2.6.0",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",
-  "mx.ferreyra.callnumber": "0.0.2"
+  "mx.ferreyra.callnumber": "0.0.2",
+  "cordova-plugin-proguard": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

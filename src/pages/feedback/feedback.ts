@@ -30,7 +30,6 @@ export class FeedbackPage {
     this.tripDataObj = this.navParams.get('tripObj');
     this.tripDataObj = JSON.parse(this.tripDataObj._body);
     this.tripDetail = this.tripDataObj[0];
-    console.log('trip datatripDataObj ', this.tripDetail);
   }
 
   postRating(val: any, reason: any) {

@@ -21,6 +21,10 @@
               "count": 1
             },
             {
+              "xml": "<feature name=\"AES256\"><param name=\"android-package\" value=\"com.ideas2it.aes256.AES256\" /></feature>",
+              "count": 1
+            },
+            {
               "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
               "count": 1
             },
@@ -46,10 +50,6 @@
             },
             {
               "xml": "<feature name=\"CallNumber\"><param name=\"android-package\" value=\"mx.ferreyra.callnumber.CFCallNumber\" /></feature>",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"IonicDeeplinkPlugin\"><param name=\"android-package\" value=\"io.ionic.links.IonicDeeplink\" /><param name=\"onload\" value=\"true\" /></feature>",
               "count": 1
             }
           ]
@@ -92,16 +92,6 @@
               "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
               "count": 1
             }
-          ],
-          "/manifest/application/activity": [
-            {
-              "xml": "<intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.BROWSABLE\" /><data android:scheme=\"vmsapp\" /></intent-filter>",
-              "count": 1
-            },
-            {
-              "xml": "<intent-filter android:autoVerify=\"true\"><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><category android:name=\"android.intent.category.BROWSABLE\" /><data android:host=\"appstore.mahindra.com\" android:pathPrefix=\"/\" android:scheme=\"https\" /><data android:host=\" \" android:pathPrefix=\"/\" android:scheme=\" \" /><data android:host=\" \" android:pathPrefix=\"/\" android:scheme=\" \" /><data android:host=\" \" android:pathPrefix=\"/\" android:scheme=\" \" /><data android:host=\" \" android:pathPrefix=\"/\" android:scheme=\" \" /></intent-filter>",
-              "count": 1
-            }
           ]
         }
       },
@@ -127,6 +117,9 @@
     "cordova-plugin-advanced-http": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
+    "cordova-plugin-aes256-encryption": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
     "cordova-plugin-device": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
@@ -149,25 +142,6 @@
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
     "mx.ferreyra.callnumber": {
-      "PACKAGE_NAME": "com.mahindra.vmsapp"
-    },
-    "ionic-plugin-deeplinks": {
-      "URL_SCHEME": "vmsapp",
-      "DEEPLINK_SCHEME": "https",
-      "DEEPLINK_HOST": "appstore.mahindra.com",
-      "ANDROID_PATH_PREFIX": "/",
-      "ANDROID_2_PATH_PREFIX": "/",
-      "ANDROID_3_PATH_PREFIX": "/",
-      "ANDROID_4_PATH_PREFIX": "/",
-      "ANDROID_5_PATH_PREFIX": "/",
-      "DEEPLINK_2_SCHEME": " ",
-      "DEEPLINK_2_HOST": " ",
-      "DEEPLINK_3_SCHEME": " ",
-      "DEEPLINK_3_HOST": " ",
-      "DEEPLINK_4_SCHEME": " ",
-      "DEEPLINK_4_HOST": " ",
-      "DEEPLINK_5_SCHEME": " ",
-      "DEEPLINK_5_HOST": " ",
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },
@@ -385,6 +359,14 @@
       ]
     },
     {
+      "id": "cordova-plugin-aes256-encryption.AES256",
+      "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
+      "pluginId": "cordova-plugin-aes256-encryption",
+      "clobbers": [
+        "cordova.plugins.AES256"
+      ]
+    },
+    {
       "id": "cordova-plugin-device.device",
       "file": "plugins/cordova-plugin-device/www/device.js",
       "pluginId": "cordova-plugin-device",
@@ -449,21 +431,13 @@
       "clobbers": [
         "call"
       ]
-    },
-    {
-      "id": "ionic-plugin-deeplinks.deeplink",
-      "file": "plugins/ionic-plugin-deeplinks/www/deeplink.js",
-      "pluginId": "ionic-plugin-deeplinks",
-      "clobbers": [
-        "IonicDeeplink"
-      ],
-      "runs": true
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-add-swift-support": "1.7.2",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-advanced-http": "2.0.1",
+    "cordova-plugin-aes256-encryption": "1.1.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-ionic-keyboard": "2.0.5",
@@ -471,7 +445,6 @@
     "cordova-plugin-qrscanner": "2.6.0",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-whitelist": "1.3.3",
-    "mx.ferreyra.callnumber": "0.0.2",
-    "ionic-plugin-deeplinks": "1.0.19"
+    "mx.ferreyra.callnumber": "0.0.2"
   }
 }

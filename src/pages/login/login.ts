@@ -56,11 +56,11 @@ export class LoginPage {
   }
 
   createFormControls() {
-    this.email = new FormControl('23165827', [
+    this.email = new FormControl('203442', [
       Validators.required,
       Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     ]);
-    this.password = new FormControl('Mahindra!!', [
+    this.password = new FormControl('Welcome@1234', [
       Validators.required,
       Validators.minLength(4)
     ]);
@@ -127,7 +127,7 @@ export class LoginPage {
           }
         }, (err) => {
           this.commonProvider.hideLoader();
-          this.commonProvider.showToast("Error while login");
+          this.commonProvider.showToast("Please contact admin");
         });
       } else {
         this.commonProvider.showLoader('Please wait..');
@@ -207,16 +207,18 @@ export class LoginPage {
       this.navCtrl.setRoot(DriverPage, { 'driverNumber': this.mobileNumber });
     } else {
       if (this.commonProvider.vapt) {
+
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
-          if (response.status == 200) {
-            let lgnData = JSON.parse(response.data);
-            this.commonProvider.accessToken = lgnData.access_token;
-            console.log("login resp ", lgnData.msg);
-            if (lgnData.access_token) {
-              console.log("service call")
-              this.serviceProvider.get('/getEmpDetailService/' + this.email.value).then((response: any) => {
+          if (response.access_token) {
+            this.commonProvider.accessToken = response.access_token;
+            if (response.admin) {
+              this.commonProvider.hideLoader();
+              response = JSON.parse(response.admin)
+              this.navCtrl.setRoot(AdminrequestsPage, { response });
+            } else {
+              this.serviceProvider.post('/getEmpDetailService', { "pernr": this.email.value, "bhId": "" }).then((response: any) => {
                 this.commonProvider.hideLoader();
                 let str = response.emp_esgdesc;
                 if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
@@ -227,18 +229,19 @@ export class LoginPage {
                   this.commonProvider.showToast(response.error);
                 }
               })
-            } else if (response.data == "false") {
-              this.commonProvider.hideLoader();
-              this.commonProvider.showToast(response.error);
-            } else {
-              this.commonProvider.hideLoader();
-              response = JSON.parse(response.data);
-              this.navCtrl.setRoot(AdminrequestsPage, { response });
             }
-          } else {
+          } else if (response.data == "false") {
             this.commonProvider.hideLoader();
             this.commonProvider.showToast(response.error);
+          } else {
+            this.commonProvider.hideLoader();
+            response = response;
+            this.navCtrl.setRoot(AdminrequestsPage, { response });
           }
+          // } else {
+          //   this.commonProvider.hideLoader();
+          //   this.commonProvider.showToast(response.error);
+          // }
         }, (err) => {
           this.commonProvider.hideLoader();
           this.commonProvider.showToast("Error while login");

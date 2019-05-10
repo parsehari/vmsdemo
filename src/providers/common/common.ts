@@ -16,7 +16,7 @@ export class CommonProvider {
   loading: any = false;
   isOnline: boolean = true;
   vapt: boolean = true;
-  accessToken: any;
+  accessToken: any = '';
 
   constructor(
     public loadingCtrl: LoadingController,

@@ -5835,6 +5835,10 @@ textarea::-webkit-input-placeholder {
   padding-left: 2px;
 }
 
+textarea::-moz-placeholder {
+  padding-left: 2px;
+}
+
 textarea::-ms-input-placeholder {
   padding-left: 2px;
 }
@@ -35538,6 +35542,15 @@ page-login #footer h1 {
 }
 
 page-login ::-webkit-input-placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #000000;
+  font-family: "font-regular" !important;
+  letter-spacing: 1px;
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+page-login ::-moz-placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #000000;
   font-family: "font-regular" !important;

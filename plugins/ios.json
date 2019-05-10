@@ -36,6 +36,9 @@
     },
     "mx.ferreyra.callnumber": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-proguard": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },
   "dependent_plugins": {

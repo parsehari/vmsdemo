@@ -91,6 +91,7 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "../cordova-plugin-aes256-encryption/vmsapp-plugin.gradle"
 apply from: "../cordova-plugin-qrscanner/vmsapp-qrscanner.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 

@@ -38,7 +38,7 @@ export class AdminHistoryPage {
     this.userDetails = this.navParams.get('EmployeeDetail');
     this.commonProvider.showLoader('');
     if (this.commonProvider.vapt) {
-      this.serviceProvider.get('/getAllApprovedTripRequest/adminMobile/' + this.userDetails.location.id).then((response: any) => {
+      this.serviceProvider.post('/getAllApprovedTripRequest/adminMobile', { "pernr": this.userDetails.userID, "loc_id": this.userDetails.location.id }).then((response: any) => {
         this.tripHistory = response;
         this.commonProvider.hideLoader();
       },
