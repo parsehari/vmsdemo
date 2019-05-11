@@ -31,6 +31,7 @@ export class AdminAprvlPage {
   adminID: any;
   admincomment: any;
   editUrl: any;
+  adminName: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -42,6 +43,7 @@ export class AdminAprvlPage {
     this.adminLocationID = this.navParams.get('adminLocation');
     this.adminID = this.navParams.get('adminID');
     this.editUrl = this.navParams.get('viewName');
+    this.adminName = this.navParams.get('adminName');
   }
 
   ionViewWillLoad() {
@@ -53,8 +55,11 @@ export class AdminAprvlPage {
     this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
+    console.log("this.adminLocationID ", this.adminLocationID);
+    console.log("this.adminName ", this.adminName);
+    console.log("this.editUrl ", this.editUrl);
     if (this.commonProvider.vapt) {
-      this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.adminID, "loc_ids": this.adminLocationID }).then((response: any) => {
+      this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.adminName, "loc_id": this.adminLocationID }).then((response: any) => {
         if (response) {
           this.tripData = response;
           this.cabList = this.tripData.cabList;
@@ -102,7 +107,8 @@ export class AdminAprvlPage {
       this.commonProvider.showLoader('Approving trip...');
       if (this.commonProvider.vapt) {
         this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin/mobile' : this.editUrl = '/editTripDetails/mobile';
-        let reqData = { "pernr": this.adminID, "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
+        let reqData = { "pernr": this.adminName, "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
+        console.log("reqData ", reqData);
         this.serviceProvider.post(this.editUrl, reqData).then((response: any) => {
           if (response) {
             this.commonProvider.hideLoader();
@@ -185,7 +191,7 @@ export class AdminAprvlPage {
   rejectRequest(cmnt: any) {
     this.commonProvider.showLoader('Rejecting trip...');
     if (this.commonProvider.vapt) {
-      let reqData = { "tripId": this.tripDetail.id, "adminapproverId": this.adminID, "rejectComment": cmnt }
+      let reqData = { "tripId": this.tripDetail.id, "adminapproverId": this.adminID, "pernr": this.adminName, "rejectComment": cmnt }
       this.serviceProvider.post('/rejectpendingrequestadmin', reqData).then((response: any) => {
         if (response) {
           this.commonProvider.hideLoader();

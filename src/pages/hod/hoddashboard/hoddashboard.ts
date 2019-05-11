@@ -192,7 +192,9 @@ export class HoddashboardPage {
           "isRoundTrip": this.bookingForm.value.isRoundTrip,
           "returnDate": this.edate,
           "returnTime": this.bookingForm.value.endtraveltime,
-          "isactive": 'Y'
+          "isactive": 'Y',
+          "bh_Id": undefined,
+          "bh_UserName": undefined
         }
         this.serviceProvider.post('/insertTrip', reqData).then((response: any) => {
           this.commonProvider.hideLoader();

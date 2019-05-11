@@ -56,11 +56,11 @@ export class LoginPage {
   }
 
   createFormControls() {
-    this.email = new FormControl('203442', [
+    this.email = new FormControl('knd', [
       Validators.required,
       Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     ]);
-    this.password = new FormControl('Welcome@1234', [
+    this.password = new FormControl('knd', [
       Validators.required,
       Validators.minLength(4)
     ]);
@@ -100,6 +100,7 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
+          console.log("response ", response);
           if (response.status == 200 && response.data != "false") {
             if (response.data == "Login success") {
               this.serviceProvider.get('/getEmpDetailService/' + this.email.value).then((response: any) => {
@@ -113,7 +114,7 @@ export class LoginPage {
                   this.commonProvider.showToast(response.error);
                 }
               })
-            } else if (response.data == "false") {
+            } else if (response.data == "Invalid Credentials") {
               this.commonProvider.hideLoader();
               this.commonProvider.showToast(response.error);
             } else {
@@ -211,6 +212,7 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
+          console.log("response ", response);
           if (response.access_token) {
             this.commonProvider.accessToken = response.access_token;
             if (response.admin) {
@@ -230,9 +232,9 @@ export class LoginPage {
                 }
               })
             }
-          } else if (response.data == "false") {
+          } else if (response.data == "false" || response.msg == "Invalid Credentials") {
             this.commonProvider.hideLoader();
-            this.commonProvider.showToast(response.error);
+            this.commonProvider.showToast(response.msg);
           } else {
             this.commonProvider.hideLoader();
             response = response;

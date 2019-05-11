@@ -253,8 +253,11 @@ export class ServiceProvider {
         this.ahttp.setDataSerializer('json');
         this.encryptData(params).then(Encryresp => {
           let objParam = { "param": Encryresp };
+          console.log("objParam ", objParam);
+          console.log("this.commonprovider.accessToken ", this.commonprovider.accessToken);
           let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
           this.ahttp.post(this.url + url, objParam, opts).then(resp => {
+            console.log("resp", resp);
             if (resp.data == "Access token has expired") {
               // this.commonprovider.showToast(resp.data);
               // this.navCtrl.setRoot(LoginPage, {});
@@ -265,6 +268,7 @@ export class ServiceProvider {
               this.decryptData(resp.data).then(respData => {
                 let decrypted: any = respData;
                 let responseData: any;
+                console.log("decryped string is ", JSON.parse(decrypted));
                 //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
                 if (decrypted) {
                   responseData = JSON.parse(decrypted);

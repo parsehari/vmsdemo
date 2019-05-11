@@ -51,7 +51,7 @@
     <allow-intent href="geo:*" />
     <allow-navigation href="http://10.0.28.183:8100" />
     <allow-navigation href="http://10.174.50.84:8100" sessionid="2a8dfa16" />
-    <allow-navigation href="http://10.174.55.205:8100" sessionid="6f311f27" />
+    <allow-navigation href="http://10.174.55.205:8100" sessionid="441eed98" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
