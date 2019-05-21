@@ -42,6 +42,16 @@
     },
     "cordova-plugin-proguard": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-crypt-file": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "cordova-plugin-iroot": {
+      "ENABLE_BUSYBOX_CHECK": "true",
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },
   "dependent_plugins": {

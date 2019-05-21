@@ -325,6 +325,14 @@ module.exports = [
         "id": "ionic-plugin-deeplinks.IonicDeeplinkProxy",
         "pluginId": "ionic-plugin-deeplinks",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-iroot/www/iroot.js",
+        "id": "cordova-plugin-iroot.IRoot",
+        "pluginId": "cordova-plugin-iroot",
+        "clobbers": [
+            "IRoot"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -342,7 +350,10 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.3",
     "mx.ferreyra.callnumber": "0.0.2",
     "ionic-plugin-deeplinks": "1.0.19",
-    "cordova-plugin-proguard": "1.0.0"
+    "cordova-plugin-proguard": "1.0.0",
+    "cordova-plugin-crypt-file": "1.3.3",
+    "cordova.plugins.diagnostic": "4.0.12",
+    "cordova-plugin-iroot": "0.8.0"
 }
 // BOTTOM OF METADATA
 });

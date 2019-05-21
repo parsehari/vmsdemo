@@ -5,6 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 // import { FCM } from '@ionic-native/fcm';
 import { LoginPage } from '../pages/login/login';
 import { EmpdashboardPage } from '../pages/employee/empdashboard/empdashboard';
+import { IRoot } from '../../plugins/cordova-plugin-iroot/www/iroot.js';
+
+declare var IRoot: IRoot;
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,8 +22,16 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       // this.fcm.subscribeToTopic('/topics/all');
       // this.fcm.getToken().then(token => {
-      // console.log("Device token from fcm is ", token)
+
       //})
+      IRoot.isRooted((isRootedDevice: any) => {
+        if (isRootedDevice) {
+          platform.exitApp();
+        }
+      }, (err: any) => {
+
+      });
+
       statusBar.styleDefault();
       splashScreen.hide();
     });

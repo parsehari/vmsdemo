@@ -1,0 +1,56 @@
+{
+  "_from": "cordova-plugin-proguard@^2.0.0",
+  "_id": "cordova-plugin-proguard@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-nJdMoaq4rEfYTQOySbtvnalsRVpmvIQl8t4DaNLHCDlQbp360r8v4fzG49AlLj7RhlH+VSj/c4pG59dKqmJagQ==",
+  "_location": "/cordova-plugin-proguard",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cordova-plugin-proguard@^2.0.0",
+    "name": "cordova-plugin-proguard",
+    "escapedName": "cordova-plugin-proguard",
+    "rawSpec": "^2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "^2.0.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-proguard/-/cordova-plugin-proguard-2.0.0.tgz",
+  "_shasum": "769f328ccc84011af229d1588fa994633a69bd62",
+  "_spec": "cordova-plugin-proguard@^2.0.0",
+  "_where": "/Users/Apple/Desktop/mahindraApps/VMS",
+  "author": {
+    "name": "Aleksandr Filatov",
+    "email": "greybax@gmail.com",
+    "url": "https://alfilatov.com"
+  },
+  "bugs": {
+    "url": "https://github.com/greybax/cordova-plugin-proguard/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Cordova plugin for ProGuard",
+  "homepage": "https://github.com/greybax/cordova-plugin-proguard#readme",
+  "keywords": [
+    "proguard",
+    "android",
+    "optimize",
+    "shrink",
+    "minify",
+    "obfuscate",
+    "tool",
+    "cordova",
+    "plugin"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-proguard",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greybax/cordova-plugin-proguard.git"
+  },
+  "version": "2.0.0"
+}

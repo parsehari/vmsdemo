@@ -56,11 +56,11 @@ export class LoginPage {
   }
 
   createFormControls() {
-    this.email = new FormControl('knd', [
+    this.email = new FormControl('', [
       Validators.required,
       Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')
     ]);
-    this.password = new FormControl('knd', [
+    this.password = new FormControl('', [
       Validators.required,
       Validators.minLength(4)
     ]);
@@ -100,7 +100,6 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
-          console.log("response ", response);
           if (response.status == 200 && response.data != "false") {
             if (response.data == "Login success") {
               this.serviceProvider.get('/getEmpDetailService/' + this.email.value).then((response: any) => {
@@ -212,12 +211,12 @@ export class LoginPage {
         this.commonProvider.showLoader('Please wait..');
         let reqParams = { "employeeId": this.email.value, "password": btoa(this.password.value) };
         this.serviceProvider.post('/login1', reqParams).then((response: any) => {
-          console.log("response ", response);
+
           if (response.access_token) {
             this.commonProvider.accessToken = response.access_token;
             if (response.admin) {
               this.commonProvider.hideLoader();
-              response = JSON.parse(response.admin)
+              response = JSON.parse(response.admin);
               this.navCtrl.setRoot(AdminrequestsPage, { response });
             } else {
               this.serviceProvider.post('/getEmpDetailService', { "pernr": this.email.value, "bhId": "" }).then((response: any) => {
@@ -237,8 +236,9 @@ export class LoginPage {
             this.commonProvider.showToast(response.msg);
           } else {
             this.commonProvider.hideLoader();
-            response = response;
-            this.navCtrl.setRoot(AdminrequestsPage, { response });
+            this.commonProvider.showToast(response.msg);
+            // response = response;
+            // this.navCtrl.setRoot(AdminrequestsPage, { response });
           }
           // } else {
           //   this.commonProvider.hideLoader();

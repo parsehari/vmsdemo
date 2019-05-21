@@ -17,6 +17,10 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="IRoot">
+        <param name="android-package" value="de.cyberkatze.iroot.IRoot" />
+        <param name="onload" value="true" />
+    </feature>
     <feature name="NetworkStatus">
         <param name="android-package" value="org.apache.cordova.networkinformation.NetworkManager" />
     </feature>
@@ -40,7 +44,7 @@
     <name>Ask Cab</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://10.174.55.205:8100" />
+    <content original-src="index.html" src="http://192.168.43.185:8100" />
     <access origin="*" />
     <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
@@ -49,9 +53,9 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-navigation href="http://10.0.28.183:8100" />
-    <allow-navigation href="http://10.174.50.84:8100" sessionid="2a8dfa16" />
-    <allow-navigation href="http://10.174.55.205:8100" sessionid="441eed98" />
+    <allow-navigation href="http://10.174.50.131:8100" sessionid="4c10112d" />
+    <allow-navigation href="http://10.174.55.160:8100" sessionid="575fb808" />
+    <allow-navigation href="http://192.168.43.185:8100" sessionid="69a16982" />
     <allow-intent href="market:*" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

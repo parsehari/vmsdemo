@@ -25,6 +25,9 @@
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
+    "cordova-plugin-proguard": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
     "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
@@ -37,7 +40,11 @@
     "mx.ferreyra.callnumber": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
-    "cordova-plugin-proguard": {
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-iroot": {
+      "ENABLE_BUSYBOX_CHECK": "true",
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   },

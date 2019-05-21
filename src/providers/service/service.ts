@@ -20,11 +20,10 @@ import { LoginPage } from '../../pages/login/login';
 export class ServiceProvider {
   // header for json/content-type
 
-  //private url = 'https://gmc.mahindra.com/vms_vapt';
-  //private url = 'https://mapps.mahindra.com/vms';
-  //public url = 'http://192.168.43.252:8080/vms_vapt';
-  public url = 'http://10.174.55.188:8080/vms_vapt';
+  //  private url = 'https://gmc.mahindra.com/vms_vapt';
 
+  //private url = 'http://gmc.mahindra.com/vms_vapt';
+  private url = 'http://10.174.50.92:8080/vms_vapt';
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;
@@ -253,11 +252,8 @@ export class ServiceProvider {
         this.ahttp.setDataSerializer('json');
         this.encryptData(params).then(Encryresp => {
           let objParam = { "param": Encryresp };
-          console.log("objParam ", objParam);
-          console.log("this.commonprovider.accessToken ", this.commonprovider.accessToken);
           let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
           this.ahttp.post(this.url + url, objParam, opts).then(resp => {
-            console.log("resp", resp);
             if (resp.data == "Access token has expired") {
               // this.commonprovider.showToast(resp.data);
               // this.navCtrl.setRoot(LoginPage, {});
@@ -268,7 +264,6 @@ export class ServiceProvider {
               this.decryptData(resp.data).then(respData => {
                 let decrypted: any = respData;
                 let responseData: any;
-                console.log("decryped string is ", JSON.parse(decrypted));
                 //responseData = options.responseType == 'text' ? resp.data : JSON.parse(resp.data);
                 if (decrypted) {
                   responseData = JSON.parse(decrypted);

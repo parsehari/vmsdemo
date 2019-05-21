@@ -55,9 +55,6 @@ export class AdminAprvlPage {
     this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);
-    console.log("this.adminLocationID ", this.adminLocationID);
-    console.log("this.adminName ", this.adminName);
-    console.log("this.editUrl ", this.editUrl);
     if (this.commonProvider.vapt) {
       this.serviceProvider.post('/getAllAvailableResources/adminMobile', { "pernr": this.adminName, "loc_id": this.adminLocationID }).then((response: any) => {
         if (response) {
@@ -108,7 +105,6 @@ export class AdminAprvlPage {
       if (this.commonProvider.vapt) {
         this.editUrl == 'createRequest' ? this.editUrl = '/approvependingrequestadmin/mobile' : this.editUrl = '/editTripDetails/mobile';
         let reqData = { "pernr": this.adminName, "tripId": this.tripDetail.id, "cabId": this.cabs, "driverId": this.driver, "vendorId": this.vendor, "admincomment": this.admincomment, "adminapproverId": this.adminID }
-        console.log("reqData ", reqData);
         this.serviceProvider.post(this.editUrl, reqData).then((response: any) => {
           if (response) {
             this.commonProvider.hideLoader();

@@ -245,6 +245,14 @@ module.exports = [
     ]
   },
   {
+    "id": "cordova-plugin-iroot.IRoot",
+    "file": "plugins/cordova-plugin-iroot/www/iroot.js",
+    "pluginId": "cordova-plugin-iroot",
+    "clobbers": [
+      "IRoot"
+    ]
+  },
+  {
     "id": "cordova-plugin-network-information.network",
     "file": "plugins/cordova-plugin-network-information/www/network.js",
     "pluginId": "cordova-plugin-network-information",
@@ -296,7 +304,9 @@ module.exports.metadata =
   "cordova-plugin-device": "2.0.2",
   "cordova-plugin-inappbrowser": "3.0.0",
   "cordova-plugin-ionic-keyboard": "2.0.5",
+  "cordova-plugin-iroot": "0.8.0",
   "cordova-plugin-network-information": "2.0.1",
+  "cordova-plugin-proguard": "1.0.0",
   "cordova-plugin-qrscanner": "2.6.0",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",

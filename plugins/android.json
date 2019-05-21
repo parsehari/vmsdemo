@@ -22,7 +22,14 @@
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
+    "cordova-plugin-iroot": {
+      "ENABLE_BUSYBOX_CHECK": "false",
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
     "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.mahindra.vmsapp"
+    },
+    "cordova-plugin-proguard": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
     },
     "cordova-plugin-qrscanner": {

@@ -329,7 +329,8 @@ export class HoddashboardPage {
         "travelType": obj.travelType,
         "isRoundTrip": obj.isRoundTrip,
         "returnDate": obj.returnDate,
-        "returnTime": obj.returnTime
+        "returnTime": obj.returnTime,
+        "isactive": 'Y'
       }
       this.serviceProvider.post('/approveRequest/hod', reqData).then((response: any) => {
         this.commonProvider.hideLoader();

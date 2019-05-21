@@ -12,7 +12,8 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
-    <allow-navigation href="http://10.0.28.183:8100" />
+    <allow-navigation href="http://10.174.50.131:8100" sessionid="4c10112d" />
+    <allow-navigation href="http://10.174.55.160:8100" sessionid="575fb808" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />

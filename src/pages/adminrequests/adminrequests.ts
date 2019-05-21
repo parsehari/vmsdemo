@@ -60,6 +60,10 @@ export class AdminrequestsPage {
 
   ) {
     this.userDetails = navParams.data.response;
+    this.userDetails.location = {
+      'loc_name': this.userDetails.loc_name,
+      'id': this.userDetails.locationId
+    }
     this.bookingForm = this.formBuilder.group({
       // costid: ['', Validators.compose([
       //   Validators.required,
@@ -120,6 +124,7 @@ export class AdminrequestsPage {
     this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
 
     this.bookingForm.get('isRoundTrip').setValue('Yes');
+
     this.bookingForm.get('travelsrc').setValue(this.userDetails.location.loc_name);
   }
 
