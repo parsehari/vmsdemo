@@ -18,12 +18,8 @@ import { LoginPage } from '../../pages/login/login';
 */
 @Injectable()
 export class ServiceProvider {
-  // header for json/content-type
 
-  //  private url = 'https://gmc.mahindra.com/vms_vapt';
-
-  //private url = 'http://gmc.mahindra.com/vms_vapt';
-  private url = 'http://10.174.50.92:8080/vms_vapt';
+  private url = 'https://gmc.mahindra.com/vms_vapt';
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;

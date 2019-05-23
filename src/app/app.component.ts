@@ -13,7 +13,6 @@ declare var IRoot: IRoot;
   templateUrl: 'app.html'
 })
 export class MyApp {
-  //rootPage: any = EmpdashboardPage;
   rootPage: any = LoginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
