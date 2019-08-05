@@ -1,0 +1,551 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Events, AlertController } from 'ionic-angular';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { PopoverController } from 'ionic-angular';
+import { NotificationPage } from '../notification/notification';
+import { ServiceProvider } from '../../providers/service/service';
+import { CommonProvider } from '../../providers/common/common';
+import { LoginPage } from '../login/login';
+import { TermsconditionPage } from '../termscondition/termscondition';
+import { FeedbackPage } from '../feedback/feedback';
+
+/**
+ * Generated class for the AdminrequestsPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-secretary',
+  templateUrl: 'secretary.html',
+})
+export class SecretaryPage {
+  requestSegment: any;
+  confirmReqst: boolean = false;
+  minDate: any;
+  travelDate: any;
+  endtravelDate: any;
+  locations: any;
+  historyData: any = [];
+  userDetails: any = [];
+  dhDetails: any = [];
+  dhUsrDetails: any = [];
+  travelType: any = [];
+  userName: any;
+  endDate: any;
+
+  datess: any;
+  pageTitle: any;
+  tdate: any;
+  edate: any;
+  currTime: any;
+  EndcurrTime: any;
+  bookingFor: any;
+  private bookingForm: FormGroup;
+  bookingForManager: boolean = true;
+  gcoEmp: boolean = false;
+  sectorName: String = 'My Location';
+
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    public popoverController: PopoverController,
+    public serviceProvider: ServiceProvider,
+    public commonProvider: CommonProvider,
+    public modal: ModalController,
+    public events: Events,
+    public alertCtrl: AlertController
+  ) {
+    this.userDetails = navParams.data.response;
+    this.commonProvider.userSector = this.userDetails.empSectorName;
+    // this.userName = navParams.get('userId');
+    // this.userName = navParams.get('response');
+    this.bookingForm = this.formBuilder.group({
+      updatepurpose: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
+      bookingFor: ['', Validators.required],
+      costid: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
+      // traveldate: ['', Validators.required],
+      traveltime: ['', Validators.required],
+      endtraveltime: [''],
+      travelsrc: ['', Validators.required],
+      isRoundTrip: ['', Validators.required],
+      usrName: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+
+      ])],
+      usrID: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!@#$&()\\-`.+,/\]*[A-Za-z0-9!@#$&()\\-`.+,/\][A-Za-z0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      usrphone: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[0-9 _!@#$&()\\-`.+,/\]*[0-9!@#$&()\\-`.+,/\][0-9 _!@#$&()\\-`.+,/\]*$")
+      ])],
+      traveldest: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
+      pickpoint: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
+      remark: ['', Validators.compose([
+        Validators.required,
+        Validators.pattern("^[A-Za-z0-9 _!?@#$&()\\-`.+,/\]*[A-Za-z0-9!?@#$&()\\-`.+,/\][A-Za-z0-9 _!?@#$&()\\-`.+,/\]*$")
+      ])],
+      travelType: ['', Validators.required]
+    });
+    this.requestSegment = "raisereq";
+    this.pageTitle = "Raise Request";
+
+    this.minDate = new Date();
+    this.travelDate = new Date();
+
+    this.currTime = new Date(this.minDate);
+    this.currTime = this.currTime.toISOString();
+    this.currTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    this.endDate = new Date();
+    this.endtravelDate = new Date();
+    this.EndcurrTime = new Date();
+    this.EndcurrTime = this.EndcurrTime.toISOString();
+
+    this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    this.bookingForm.get('isRoundTrip').setValue('Yes');
+    this.bookingForm.get('bookingFor').setValue('manager');
+  }
+
+  ionViewWillLoad() {
+    this.commonProvider.showLoader('Getting employee details..');
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.post('/getEmployeeDept', { "pernr": this.userDetails.emp_no }).then((response: any) => {
+        this.dhDetails = JSON.parse(response);
+        this.serviceProvider.post('/getEmpDetailService', { "pernr": this.userDetails.emp_no, "bhId": this.dhDetails.pernr }).then((response: any) => {
+          this.dhUsrDetails = response;
+          this.serviceProvider.get('/getAllLocations').then((response: any) => {
+            this.commonProvider.hideLoader();
+            this.locations = response;
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.sectorName = 'My Sector';
+              this.gcoEmp = true;
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.sectorName = 'My Location';
+              this.gcoEmp = false;
+            }
+          },
+            (err) => {
+              this.commonProvider.hideLoader();
+              this.commonProvider.showToast(err);
+              this.navCtrl.setRoot(LoginPage, {});
+            });
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
+        })
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
+      })
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    }
+    else {
+      this.serviceProvider.getDeptHeadUser('/getEmployeeDept', this.userDetails.emp_no).subscribe((response: any) => {
+        this.dhDetails = JSON.parse(response._body);
+        this.serviceProvider.getUsrRoleDetails('/getEmpDetailService', this.dhDetails.pernr).subscribe((response: any) => {
+          this.dhUsrDetails = JSON.parse(response._body);
+          let unme = this.dhUsrDetails.emp_f_name + " " + this.dhUsrDetails.emp_l_name;
+          this.bookingForm.get('usrID').setValue(this.dhUsrDetails.emp_no);
+          this.bookingForm.get('usrName').setValue(unme);
+          this.bookingForm.get('usrphone').setValue(this.dhUsrDetails.emp_cell);
+          console.log("this.dhUserDetails ", this.dhUsrDetails);
+          this.commonProvider.hideLoader();
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Error in user details");
+        })
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in dh details");
+      })
+
+      this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
+        this.locations = JSON.parse(response._body);
+        if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+          this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+          this.sectorName = 'My Sector';
+          this.gcoEmp = true;
+        } else {
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.sectorName = 'My Location';
+          this.gcoEmp = false;
+        }
+      },
+        (err) => {
+          this.commonProvider.showToast(err.message);
+        });
+
+      this.serviceProvider.getPendingTrip('/checkEmployeeFeedbackStatus', this.userDetails.emp_no).subscribe((response: any) => {
+        let ln = JSON.parse(response._body);
+        if (ln.length) {
+          this.feedbackForm(response);
+        }
+      }, (err) => {
+      })
+
+
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+
+    }
+
+
+
+  }
+
+  showNotifn(myEvent) {
+    let popover = this.popoverController.create(NotificationPage, {}, { enableBackdropDismiss: false });
+    popover.present(
+      {
+        ev: myEvent
+      }
+    )
+  }
+
+  feedbackForm(tripObj: any) {
+    let popover = this.popoverController.create(FeedbackPage, { tripObj }, { enableBackdropDismiss: false });
+    let evn = {
+      target: {
+        getBoundingClientRect: () => {
+          return {
+            bottom: '100'
+          };
+        }
+      }
+    };
+    popover.present(
+      {
+        ev: evn
+      }
+    )
+  }
+
+  logForm() {
+    this.confirmReqst = true;
+  }
+  editRequest() {
+    this.confirmReqst = false;
+  }
+  cancelReq() {
+    this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
+      this.bookingForm.reset();
+      this.confirmReqst = false;
+      if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+        this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+        this.sectorName = 'My Sector';
+        this.gcoEmp = true;
+      } else {
+        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        this.sectorName = 'My Location';
+        this.gcoEmp = false;
+      }
+      this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+    }, err => {
+      return;
+    })
+  }
+
+  getEmpHistory() {
+    this.pageTitle = "History";
+    this.commonProvider.showLoader();
+    if (this.commonProvider.vapt) {
+      this.serviceProvider.post('/getTripHistory', { "pernr": this.userDetails.emp_no }).then((response: any) => {
+        this.historyData = response;
+        this.commonProvider.hideLoader();
+      }, (err) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(err);
+        this.navCtrl.setRoot(LoginPage, {});
+      })
+    } else {
+      this.serviceProvider.getBookingHistory('/getTripHistory', this.userDetails.emp_no).subscribe((response: any) => {
+        if (response.status == 200) {
+          this.historyData = JSON.parse(response._body);
+          this.commonProvider.hideLoader();
+        }
+      },
+        (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err.message);
+        });
+    }
+  }
+
+  sendRequest() {
+    this.commonProvider.Alert.confirm('Sure you want to send request?').then((res) => {
+
+      this.tdate = new Date(this.travelDate);
+      this.tdate = this.tdate.getDate() + '/' + (this.tdate.getMonth() + 1) + '/' + this.tdate.getFullYear();
+      if (this.bookingForm.value.isRoundTrip == 'No') {
+        this.edate = "NA";
+        this.bookingForm.value.endtraveltime = "NA";
+      } else {
+        this.edate = new Date(this.endtravelDate);
+        this.edate = this.edate.getDate() + '/' + (this.edate.getMonth() + 1) + '/' + this.edate.getFullYear();
+      }
+      let reqData: any;
+      this.commonProvider.showLoader('Sending request...');
+      if (this.commonProvider.vapt) {
+        reqData = {
+          "userID": this.userDetails.emp_no,
+          "source": this.bookingForm.value.travelsrc,
+          "destination": this.bookingForm.value.traveldest,
+          "pickupPoint": this.bookingForm.value.pickpoint,
+          "purpose": this.bookingForm.value.updatepurpose,
+          "travel_date": this.tdate,
+          "travel_time": this.bookingForm.value.traveltime,
+          "emp_email": this.userDetails.emp_email,
+          "emp_userName": this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          "emp_phoneNo": this.userDetails.emp_cell,
+          "status": "Pending with Manager",
+          "bh_Id": this.dhDetails.pernr,
+          "bh_UserName": this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name,
+          "bh_email": this.dhUsrDetails.emp_email,
+          "remark": this.bookingForm.value.remark,
+          //"location": this.userDetails.emp_psa,
+          "cost_id": this.bookingForm.value.costid,
+          "cost_center": this.userDetails.emp_cost,
+          "travelType": this.bookingForm.value.travelType,
+          "isRoundTrip": this.bookingForm.value.isRoundTrip,
+          "returnDate": this.edate,
+          "returnTime": this.bookingForm.value.endtraveltime,
+          "isactive": "Y",
+          "locationName": this.userDetails.emp_psa
+        }
+        this.serviceProvider.post('/insertTrip', reqData).then((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.sectorName = 'My Sector';
+              this.gcoEmp = true;
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.sectorName = 'My Location';
+              this.gcoEmp = false;
+            }
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast(err);
+          this.navCtrl.setRoot(LoginPage, {});
+        });
+      } else {
+        reqData = {
+          'userID': this.userDetails.emp_no,
+          'source': this.bookingForm.value.travelsrc,
+          'destination': this.bookingForm.value.traveldest,
+          'pickupPoint': this.bookingForm.value.pickpoint,
+          'purpose': this.bookingForm.value.updatepurpose,
+          //'travel_date': new Date(this.travelDate).toDateString(),
+          'travel_date': this.tdate,
+          'travel_time': this.bookingForm.value.traveltime,
+          'emp_email': this.userDetails.emp_email,
+          'emp_userName': this.userDetails.emp_f_name + ' ' + this.userDetails.emp_l_name,
+          'emp_phoneNo': this.userDetails.emp_cell,
+          'remark': this.bookingForm.value.remark,
+          'location': this.userDetails.emp_psa,
+          //'cost_id': this.userDetails.emp_cosid,
+          'cost_id': this.bookingForm.value.costid,
+          'cost_center': this.userDetails.emp_cost,
+          'travelType': this.bookingForm.value.travelType,
+          'isRoundTrip': this.bookingForm.value.isRoundTrip,
+          //'returnDate': new Date(this.endtravelDate).toDateString(),
+          'returnDate': this.edate,
+          'returnTime': this.bookingForm.value.endtraveltime,
+          'managerToken': this.bookingForm.value.usrID,
+          'managerName': this.bookingForm.value.usrName,
+          'managerMobile': this.bookingForm.value.usrphone,
+          'raisedBySecretory': this.bookingForm.value.bookingFor
+        }
+        let val = this.bookingForm.value.bookingFor;
+        if (val == 'manager') {
+          reqData.bh_Id = '';
+          reqData.bh_UserName = '';
+          reqData.bh_email = '';
+          reqData.status = 'Pending with admin';
+        } else {
+          reqData.bh_Id = this.dhDetails.pernr;
+          reqData.bh_UserName = this.dhUsrDetails.emp_f_name + ' ' + this.dhUsrDetails.emp_l_name;
+          reqData.bh_email = this.dhUsrDetails.emp_email;
+          reqData.status = 'Pending with manager';
+        }
+
+        console.log("data ", reqData);
+        this.serviceProvider.raiseRequest('/insertTrip', reqData).subscribe((response: any) => {
+          this.commonProvider.hideLoader();
+          if (response) {
+            this.confirmReqst = false;
+            this.bookingForm.reset();
+            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
+            this.commonProvider.showToast('Request sent successfully');
+          } else {
+            this.commonProvider.showToast('Request error, Please check with admin');
+          }
+
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast('Request error, Please check with admin');
+        });
+      }
+
+
+    }, err => {
+      return;
+    })
+
+
+  }
+
+  logout() {
+    this.commonProvider.Alert.confirm('Sure you want to logout?').then((res) => {
+      this.navCtrl.setRoot(LoginPage, {});
+    }, err => {
+      return;
+    })
+  }
+
+  openDetail(obj: any) {
+    const myModal = this.modal.create('ModalDetailPage', { data: obj });
+    myModal.present();
+  }
+
+  setDate(dte: any) {
+    this.travelDate = new Date(dte);
+    this.endtravelDate = new Date(dte);
+    if (this.travelDate > this.minDate) {
+      this.currTime = "00:00";
+      this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.currTime = new Date();
+      this.currTime = (this.currTime.getHours() + 2) + ':' + this.currTime.getMinutes();
+    }
+  }
+
+  setEndDate(dte: any) {
+    this.endtravelDate = new Date(dte);
+    if (this.endtravelDate > this.minDate) {
+      this.EndcurrTime = "00:00";
+      //this.bookingForm.get('traveltime').setValue('');
+    } else {
+      this.EndcurrTime = new Date().toISOString;
+      this.EndcurrTime = (this.minDate.getHours() + 2) + ':' + this.minDate.getMinutes();
+    }
+  }
+
+  cancelCabReq(event: any, id: any) {
+    event.stopPropagation();
+    this.commonProvider.Alert.confirm('Sure you want to cancel request?').then((res) => {
+      this.commonProvider.showLoader()
+      if (this.commonProvider.vapt) {
+        this.serviceProvider.post('/employeecanceltrip', { "tripId": id, "pernr": this.userDetails.emp_no }).then((response: any) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Trip cancelled successfully");
+          this.getEmpHistory();
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Error in cancellation");
+        })
+      } else {
+        this.serviceProvider.cancelCab('/employeecanceltrip', id).subscribe((response: any) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Trip cancelled successfully");
+          this.getEmpHistory();
+        }, (err) => {
+          this.commonProvider.hideLoader();
+          this.commonProvider.showToast("Error in cancellation");
+        })
+      }
+    }, err => {
+      return;
+    })
+  }
+
+  showTermsCondition(myEvent) {
+    const popvr = this.modal.create('TermsconditionPage', {});
+    popvr.present();
+  }
+  rating(val: any, tripid: any) {
+    if (val <= 3) {
+      const prompt = this.alertCtrl.create({
+        title: '',
+        message: "Please enter any reason",
+        inputs: [
+          {
+            name: 'comment',
+            placeholder: 'Your reason'
+          },
+        ],
+        buttons: [
+          {
+            text: 'Send',
+            handler: data => {
+              this.giveRating(val, tripid, data.comment);
+            }
+          }
+        ]
+      });
+      prompt.present();
+    } else {
+      this.giveRating(val, tripid);
+    }
+  }
+
+  giveRating(ratings: any, tripid: any, reason = null) {
+    this.commonProvider.showLoader();
+    if (this.commonProvider.vapt) {
+      let reqData = { "id": tripid, "feedbackRating": ratings, "feedbackComment": reason, "pernr": this.userDetails.emp_no }
+      this.serviceProvider.post('/submitEmployeeFeedback', reqData).then((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Thank you for your feedback");
+        this.getEmpHistory();
+      }, (error) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast(error);
+        this.navCtrl.setRoot(LoginPage, {});
+      })
+    } else {
+      this.serviceProvider.submitRating('/submitEmployeeFeedback', tripid, ratings, reason).subscribe((response: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Thank you for your feedback");
+        this.getEmpHistory();
+      }, (error) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast("Error in update rating");
+      })
+    }
+  }
+
+  bookingForUser(type: any) {
+    console.log("type ", type);
+    type == 'manager' ? this.bookingForManager = true : this.bookingForManager = false;
+  }
+
+}

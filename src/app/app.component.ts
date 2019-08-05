@@ -23,13 +23,13 @@ export class MyApp {
       // this.fcm.getToken().then(token => {
 
       //})
-      IRoot.isRooted((isRootedDevice: any) => {
-        if (isRootedDevice) {
-          platform.exitApp();
-        }
-      }, (err: any) => {
+      // IRoot.isRooted((isRootedDevice: any) => {
+      //   if (isRootedDevice) {
+      //     platform.exitApp();
+      //   }
+      // }, (err: any) => {
 
-      });
+      // });
 
       statusBar.styleDefault();
       splashScreen.hide();

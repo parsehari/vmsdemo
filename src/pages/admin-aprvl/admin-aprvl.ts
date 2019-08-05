@@ -18,6 +18,7 @@ import { CallNumber } from '@ionic-native/call-number';
 })
 export class AdminAprvlPage {
   tripDetail: any;
+  gcoEmp: boolean = false;
   srcSubstr: any;
   destSubstr: any;
   adminLocationID: any;
@@ -52,6 +53,8 @@ export class AdminAprvlPage {
 
   getAllDetails() {
     this.tripDetail = this.navParams.get('viewData');
+    console.log("trip details ", this.tripDetail);
+    // this.tripDetail.source == 'GROUP CORPORATE OFFICE' ? this.gcoEmp = true : this.gcoEmp = false;
     this.tripDetail.comment != "null" ? this.admincomment = this.tripDetail.comment : 'nothing';
     this.srcSubstr = this.tripDetail.source.substring(0, 3);
     this.destSubstr = this.tripDetail.destination.substring(0, 3);

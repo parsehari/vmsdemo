@@ -2,12 +2,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController, ToastController, AlertController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-/*
-  Generated class for the CommonProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class CommonProvider {
 
@@ -15,8 +10,9 @@ export class CommonProvider {
   toaster: any;
   loading: any = false;
   isOnline: boolean = true;
-  vapt: boolean = true;
+  vapt: boolean = false;
   accessToken: any = '';
+  userSector: any = '';
 
   constructor(
     public loadingCtrl: LoadingController,
@@ -70,7 +66,7 @@ export class CommonProvider {
   }
 
   public Alert = {
-    confirm: (msg?, title?) => {
+    confirm: (msg?: any, title?: any) => {
       return new Promise((resolve, reject) => {
         let alert = this.alertCtrl.create({
           title: title || 'Confirm',

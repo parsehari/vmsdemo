@@ -11,6 +11,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ScanPage } from '../scan/scan';
 import { Http, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { SecretaryPage } from '../secretary/secretary';
 import CryptoJS from 'crypto-js';
 
 @Component({
@@ -256,13 +257,17 @@ export class LoginPage {
               this.commonProvider.hideLoader();
               if (response._body) {
                 response = JSON.parse(response._body);
-                let str = response.emp_esgdesc;
-                if (str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
-                  this.navCtrl.setRoot(HoddashboardPage, { response });
-                } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
-                  this.navCtrl.setRoot(EmpdashboardPage, { response });
+                if (response.emp_pos.toLowerCase().includes('secretary')) {
+                  this.navCtrl.setRoot(SecretaryPage, { response });
                 } else {
-                  this.commonProvider.showToast("User role is not allow to login")
+                  let str = response.emp_esgdesc;
+                  if (str == "L8-Operational" || str == "L5-Department Head" || str == "L6-Department Head" || str == "L7-Department Head" || str == "L4-Department Head" || str == "HEAD-BUSINESS APPLICATION" || str == "L3-Executive" || str == "L3-Department Head") {
+                    this.navCtrl.setRoot(HoddashboardPage, { response });
+                  } else if (str == "L5-Managerial" || str == "L6-Managerial" || str == "L7-Managerial" || str == "L4-Managerial") {
+                    this.navCtrl.setRoot(EmpdashboardPage, { response });
+                  } else {
+                    this.commonProvider.showToast("User role is not allow to login")
+                  }
                 }
               }
             })

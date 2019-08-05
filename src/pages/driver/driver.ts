@@ -18,7 +18,11 @@ import { CallNumber } from '@ionic-native/call-number';
   selector: 'page-driver',
   templateUrl: 'driver.html',
 })
+
 export class DriverPage {
+  gates: any;
+  gateDetails: any;
+  locationID: any;
   tripDetail: any = [];
   cabDetail: any = [];
   driverDetail: any = [];
@@ -59,7 +63,8 @@ export class DriverPage {
   }
 
 
-  getTrip() {
+  getTrip(type: any) {
+
     this.commonProvider.showLoader('Getting cab details..');
     if (this.commonProvider.vapt) {
       this.serviceProvider.get('/getTripDetails/driver/' + this.driverphno).then((resp: any) => {
@@ -83,13 +88,17 @@ export class DriverPage {
       this.serviceProvider.getDriverTripDetails('/getTripDetails/driver/' + this.driverphno).subscribe((resp: any) => {
 
         this.tripDetail = JSON.parse(resp._body);
+        console.log("trip details ", this.tripDetail);
         if (this.tripDetail.length) {
           this.tripDetail[0] ? this.tripDetail = this.tripDetail[0] : 'nothing';
 
           this.tripDetail.cab ? this.cabDetail = this.tripDetail.cab : 'nothing';
           this.driverDetail = this.tripDetail.driver;
+          this.locationID = this.tripDetail.location.loc_id;
           this.srcSubstr = this.tripDetail.source.substring(0, 3);
           this.destSubstr = this.tripDetail.destination.substring(0, 3);
+          console.log("type", type);
+          this.getGateDetails(type);
           //this.urlPath = this.urlPath + this.tripDetail.filePath;
           this.commonProvider.hideLoader();
         } else {
@@ -103,7 +112,29 @@ export class DriverPage {
   }
 
   ionViewDidLoad() {
-    this.getTrip();
+    this.getTrip('none');
+  }
+
+  getGateDetails(type: any) {
+    console.log("type ", type);
+    if (type == 'startTrip') {
+      this.serviceProvider.getEndGateDetails('/getAllLocationGate').subscribe((resp: any) => {
+        this.gateDetails = JSON.parse(resp._body);
+        console.log("response ", this.gateDetails);
+      }, (err: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast('Service error')
+      })
+    }
+    else {
+      this.serviceProvider.getGateDetails('/getLocationGateForStartTrip', this.locationID).subscribe((resp: any) => {
+        this.gateDetails = JSON.parse(resp._body);
+        console.log("response ", this.gateDetails);
+      }, (err: any) => {
+        this.commonProvider.hideLoader();
+        this.commonProvider.showToast('Service error')
+      })
+    }
   }
 
   startTrip(type: any) {
@@ -125,32 +156,31 @@ export class DriverPage {
             this.feedbackform = true;
             this.driverText = 'You have completed your trip!!'
           }
-          this.getTrip();
+          this.getTrip(type);
         }, (err) => {
           this.commonProvider.showToast(err.message);
           this.commonProvider.hideLoader();
         })
       } else {
-        if (type == 'startTrip') {
-          let reqData = { "id": this.tripDetail.id, "startTrip": cdate, "startKm": this.startkm };
-        } else {
-          let reqData = { "id": this.tripDetail.id, "endTrip": cdate, "endKm": this.startkm };
-        }
-        this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm).subscribe((resp: any) => {
-
+        this.serviceProvider.tripStart('/updateOngoingTripDetails', cdate, type, this.tripDetail.id, this.startkm, this.gates).subscribe((resp: any) => {
+          this.gates = '';
+          this.startkm = '';
           this.commonProvider.hideLoader();
+
           if (type == 'endTrip') {
             this.feedbackform = true;
             this.driverText = 'You have completed your trip!!'
           }
 
-          this.getTrip();
+          this.getTrip(type);
 
         }, (err) => {
 
           this.commonProvider.showToast(err.message);
           this.commonProvider.hideLoader();
         })
+
+
       }
     } else {
       this.commonProvider.hideLoader();

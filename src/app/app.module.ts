@@ -34,6 +34,9 @@ import { UsersDashboardPageModule } from '../pages/users-dashboard/users-dashboa
 import { AdminrequestsPageModule } from '../pages/adminrequests/adminrequests.module';
 import { AdminHistoryPageModule } from '../pages/adminrequests/admin-history/admin-history.module';
 import { AdminAprvlPageModule } from '../pages/admin-aprvl/admin-aprvl.module';
+import { SecretaryPageModule } from '../pages/secretary/secretary.module';
+import { SecretaryHistoryPageModule } from '../pages/secretary/secretary-history/secretary-history.module';
+
 
 import { FeedbackPageModule } from '../pages/feedback/feedback.module';
 
@@ -64,7 +67,8 @@ import { DatePickerModule } from 'ionic3-datepicker';
     ScanPageModule,
     DatePickerModule,
     FeedbackPageModule,
-
+    SecretaryPageModule,
+    SecretaryHistoryPageModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: 'Back',
       backButtonIcon: ''

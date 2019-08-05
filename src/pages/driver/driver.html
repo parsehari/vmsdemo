@@ -103,11 +103,11 @@
 
     <ion-card class="driverCard formcntent">
       <ion-card-header style="text-align: center" color="red">
-        Cab Details</ion-card-header>
+        Car Details</ion-card-header>
       <ion-card-content>
         <ion-row>
           <ion-col>
-            <span class="formtitle">Cab Name</span>
+            <span class="formtitle">Car Name</span>
           </ion-col>
           <ion-col>
             {{cabDetail.cab_name}}
@@ -115,7 +115,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <span class="formtitle">Cab Number</span>
+            <span class="formtitle">Car Number</span>
           </ion-col>
           <ion-col>
             {{cabDetail.cab_no}}
@@ -157,13 +157,21 @@
     </ion-card>
 
 
-    <ion-row text-center class="row-height" style="margin-top: 10%">
+    <!-- <ion-row text-center class="row-height" style="margin-top: 10%">
       <ion-col>
         <qr-code [value]="urlPath" [size]="200"></qr-code>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <div *ngIf="tripDetail.length != 0">
+      <ion-item>
+        <ion-label floating>Select Gate<sup style="color:red">*</sup></ion-label>
+        <ion-select [(ngModel)]="gates">
+          <div *ngFor="let gate of gateDetails">
+            <ion-option value="{{gate.id}}">{{gate.gateName}}</ion-option>
+          </div>
+        </ion-select>
+      </ion-item>
       <ion-item>
         <ion-label floating>Enter kms.</ion-label>
         <ion-input type="number" [(ngModel)]="startkm"></ion-input>

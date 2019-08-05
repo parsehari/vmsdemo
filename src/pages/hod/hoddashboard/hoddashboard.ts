@@ -38,7 +38,8 @@ export class HoddashboardPage {
   EndcurrTime: any;
   edate: any;
   endDate: any;
-
+  gcoEmp: boolean = false;
+  sectorName: String = 'My Location';
   private bookingForm: FormGroup;
 
   constructor(public navCtrl: NavController,
@@ -54,6 +55,7 @@ export class HoddashboardPage {
 
   ) {
     this.userDetails = navParams.data.response;
+    this.commonProvider.userSector = this.userDetails.empSectorName;
     this.bookingForm = this.formBuilder.group({
       costid: ['', Validators.compose([
         Validators.required,
@@ -244,7 +246,16 @@ export class HoddashboardPage {
           if (response) {
             this.confirmReqst = false;
             this.bookingForm.reset();
-            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.sectorName = 'My Sector';
+              this.gcoEmp = true;
+
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.sectorName = 'My Location';
+              this.gcoEmp = false;
+            }
             this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
             this.commonProvider.showToast('Request sent successfully');
           } else {
@@ -410,7 +421,17 @@ export class HoddashboardPage {
       this.commonProvider.showLoader();
       this.serviceProvider.get('/getAllLocations').then((response: any) => {
         this.locations = response;
-        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        console.log("this.userDetails ", this.userDetails);
+        if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+          this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+          this.sectorName = 'My Sector';
+          this.gcoEmp = true;
+
+        } else {
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.sectorName = 'My Location';
+          this.gcoEmp = false;
+        }
         this.commonProvider.hideLoader();
         this.getApprovalHistory();
       },
@@ -429,7 +450,18 @@ export class HoddashboardPage {
       this.commonProvider.showLoader();
       this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
         this.locations = JSON.parse(response._body);
-        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        console.log("this.userDetails ", this.userDetails);
+        console.log("this.userDetails ", this.commonProvider.userSector);
+        if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+          this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+          this.sectorName = 'My Sector';
+          this.gcoEmp = true;
+
+        } else {
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.sectorName = 'My Location';
+          this.gcoEmp = false;
+        }
         this.commonProvider.hideLoader();
         this.getApprovalHistory();
       },

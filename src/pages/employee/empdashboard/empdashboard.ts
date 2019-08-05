@@ -46,6 +46,8 @@ export class EmpdashboardPage {
   edate: any;
   currTime: any;
   EndcurrTime: any;
+  gcoEmp: boolean = false;
+  sectorName: String = 'My Location';
 
   private bookingForm: FormGroup;
 
@@ -60,6 +62,10 @@ export class EmpdashboardPage {
     public alertCtrl: AlertController
   ) {
     this.userDetails = navParams.data.response;
+    console.log("this.userDetails ", this.userDetails);
+    this.commonProvider.userSector = this.userDetails.empSectorName;
+
+
     // this.userName = navParams.get('userId');
     // this.userName = navParams.get('response');
     this.bookingForm = this.formBuilder.group({
@@ -119,7 +125,18 @@ export class EmpdashboardPage {
           this.serviceProvider.get('/getAllLocations').then((response: any) => {
             this.commonProvider.hideLoader();
             this.locations = response;
-            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.sectorName = 'My Sector';
+              this.gcoEmp = true;
+
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.sectorName = 'My Location';
+              this.gcoEmp = false;
+            }
+
           },
             (err) => {
               this.commonProvider.hideLoader();
@@ -155,7 +172,16 @@ export class EmpdashboardPage {
 
       this.serviceProvider.getAllLocations('/getAllLocations').subscribe((response: any) => {
         this.locations = JSON.parse(response._body);
-        this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+        if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+          this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+          this.sectorName = 'My Sector';
+          this.gcoEmp = true;
+
+        } else {
+          this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+          this.sectorName = 'My Location';
+          this.gcoEmp = false;
+        }
       },
         (err) => {
           this.commonProvider.showToast(err.message);
@@ -294,7 +320,13 @@ export class EmpdashboardPage {
           if (response) {
             this.confirmReqst = false;
             this.bookingForm.reset();
-            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.gcoEmp = true;
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.gcoEmp = false;
+            }
             this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
             this.commonProvider.showToast('Request sent successfully');
           } else {
@@ -339,7 +371,15 @@ export class EmpdashboardPage {
           if (response) {
             this.confirmReqst = false;
             this.bookingForm.reset();
-            this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+            if (this.userDetails.empSectorName == 'GROUP CORPORATE OFFICE') {
+              this.bookingForm.get('travelsrc').setValue(this.commonProvider.userSector);
+              this.sectorName = 'My Sector';
+              this.gcoEmp = true;
+            } else {
+              this.bookingForm.get('travelsrc').setValue(this.userDetails.emp_psa);
+              this.sectorName = 'My Location';
+              this.gcoEmp = false;
+            }
             this.bookingForm.get('costid').setValue(this.userDetails.emp_cosid);
             this.commonProvider.showToast('Request sent successfully');
           } else {

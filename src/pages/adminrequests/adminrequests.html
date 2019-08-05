@@ -45,9 +45,9 @@
         <ion-segment-button value="pendingReq" (ionSelect)="getPendingList()">
           Pending
         </ion-segment-button>
-        <!-- <ion-segment-button value="raisereq" (ionSelect)="pageTitle = 'Raise Request'">
+        <ion-segment-button value="raisereq" (ionSelect)="pageTitle = 'Raise Request'">
           Raise Request
-        </ion-segment-button> -->
+        </ion-segment-button>
         <ion-segment-button value="history" (ionSelect)="getEmpHistory()">
           Approved
         </ion-segment-button>
@@ -62,7 +62,7 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label floating>My Location<sup style="color:red">*</sup></ion-label>
+                <ion-label floating>My Sector/Location<sup style="color:red">*</sup></ion-label>
                 <ion-input type="text" formControlName="travelsrc"></ion-input>
               </ion-item>
             </ion-col>
@@ -139,7 +139,7 @@
             </ion-select>
           </ion-item>
           <ion-item>
-            <ion-label>Assign Cab</ion-label>
+            <ion-label>Assign Car</ion-label>
             <!-- [disabled]="bookingForm.value.travelType == 'outstation' " -->
             <ion-select formControlName="cabs" name="cabs">
               <ion-option value="select" [selected]="true">select</ion-option>

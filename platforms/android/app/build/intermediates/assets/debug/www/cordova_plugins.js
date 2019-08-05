@@ -1,6 +1,126 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
   {
+    "id": "cordova-plugin-advanced-http.lodash",
+    "file": "plugins/cordova-plugin-advanced-http/www/lodash.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.tough-cookie",
+    "file": "plugins/cordova-plugin-advanced-http/www/umd-tough-cookie.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.messages",
+    "file": "plugins/cordova-plugin-advanced-http/www/messages.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.local-storage-store",
+    "file": "plugins/cordova-plugin-advanced-http/www/local-storage-store.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.cookie-handler",
+    "file": "plugins/cordova-plugin-advanced-http/www/cookie-handler.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.helpers",
+    "file": "plugins/cordova-plugin-advanced-http/www/helpers.js",
+    "pluginId": "cordova-plugin-advanced-http"
+  },
+  {
+    "id": "cordova-plugin-advanced-http.http",
+    "file": "plugins/cordova-plugin-advanced-http/www/advanced-http.js",
+    "pluginId": "cordova-plugin-advanced-http",
+    "clobbers": [
+      "cordova.plugin.http"
+    ]
+  },
+  {
+    "id": "cordova-plugin-aes256-encryption.AES256",
+    "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
+    "pluginId": "cordova-plugin-aes256-encryption",
+    "clobbers": [
+      "cordova.plugins.AES256"
+    ]
+  },
+  {
+    "id": "cordova-plugin-device.device",
+    "file": "plugins/cordova-plugin-device/www/device.js",
+    "pluginId": "cordova-plugin-device",
+    "clobbers": [
+      "device"
+    ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
+  },
+  {
+    "id": "cordova-plugin-ionic-keyboard.keyboard",
+    "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
+    "pluginId": "cordova-plugin-ionic-keyboard",
+    "clobbers": [
+      "window.Keyboard"
+    ]
+  },
+  {
+    "id": "cordova-plugin-iroot.IRoot",
+    "file": "plugins/cordova-plugin-iroot/www/iroot.js",
+    "pluginId": "cordova-plugin-iroot",
+    "clobbers": [
+      "IRoot"
+    ]
+  },
+  {
+    "id": "cordova-plugin-network-information.network",
+    "file": "plugins/cordova-plugin-network-information/www/network.js",
+    "pluginId": "cordova-plugin-network-information",
+    "clobbers": [
+      "navigator.connection",
+      "navigator.network.connection"
+    ]
+  },
+  {
+    "id": "cordova-plugin-network-information.Connection",
+    "file": "plugins/cordova-plugin-network-information/www/Connection.js",
+    "pluginId": "cordova-plugin-network-information",
+    "clobbers": [
+      "Connection"
+    ]
+  },
+  {
+    "id": "cordova-plugin-qrscanner.QRScanner",
+    "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+    "pluginId": "cordova-plugin-qrscanner",
+    "clobbers": [
+      "QRScanner"
+    ]
+  },
+  {
+    "id": "cordova-plugin-splashscreen.SplashScreen",
+    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+    "pluginId": "cordova-plugin-splashscreen",
+    "clobbers": [
+      "navigator.splashscreen"
+    ]
+  },
+  {
+    "id": "mx.ferreyra.callnumber.CallNumber",
+    "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
+    "pluginId": "mx.ferreyra.callnumber",
+    "clobbers": [
+      "call"
+    ]
+  },
+  {
     "id": "cordova-plugin-file.DirectoryEntry",
     "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
     "pluginId": "cordova-plugin-file",
@@ -172,133 +292,12 @@ module.exports = [
       "cordova"
     ],
     "runs": true
-  },
-  {
-    "id": "cordova-plugin-advanced-http.lodash",
-    "file": "plugins/cordova-plugin-advanced-http/www/lodash.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.tough-cookie",
-    "file": "plugins/cordova-plugin-advanced-http/www/umd-tough-cookie.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.messages",
-    "file": "plugins/cordova-plugin-advanced-http/www/messages.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.local-storage-store",
-    "file": "plugins/cordova-plugin-advanced-http/www/local-storage-store.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.cookie-handler",
-    "file": "plugins/cordova-plugin-advanced-http/www/cookie-handler.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.helpers",
-    "file": "plugins/cordova-plugin-advanced-http/www/helpers.js",
-    "pluginId": "cordova-plugin-advanced-http"
-  },
-  {
-    "id": "cordova-plugin-advanced-http.http",
-    "file": "plugins/cordova-plugin-advanced-http/www/advanced-http.js",
-    "pluginId": "cordova-plugin-advanced-http",
-    "clobbers": [
-      "cordova.plugin.http"
-    ]
-  },
-  {
-    "id": "cordova-plugin-aes256-encryption.AES256",
-    "file": "plugins/cordova-plugin-aes256-encryption/www/AES256.js",
-    "pluginId": "cordova-plugin-aes256-encryption",
-    "clobbers": [
-      "cordova.plugins.AES256"
-    ]
-  },
-  {
-    "id": "cordova-plugin-device.device",
-    "file": "plugins/cordova-plugin-device/www/device.js",
-    "pluginId": "cordova-plugin-device",
-    "clobbers": [
-      "device"
-    ]
-  },
-  {
-    "id": "cordova-plugin-inappbrowser.inappbrowser",
-    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
-    "pluginId": "cordova-plugin-inappbrowser",
-    "clobbers": [
-      "cordova.InAppBrowser.open",
-      "window.open"
-    ]
-  },
-  {
-    "id": "cordova-plugin-ionic-keyboard.keyboard",
-    "file": "plugins/cordova-plugin-ionic-keyboard/www/android/keyboard.js",
-    "pluginId": "cordova-plugin-ionic-keyboard",
-    "clobbers": [
-      "window.Keyboard"
-    ]
-  },
-  {
-    "id": "cordova-plugin-iroot.IRoot",
-    "file": "plugins/cordova-plugin-iroot/www/iroot.js",
-    "pluginId": "cordova-plugin-iroot",
-    "clobbers": [
-      "IRoot"
-    ]
-  },
-  {
-    "id": "cordova-plugin-network-information.network",
-    "file": "plugins/cordova-plugin-network-information/www/network.js",
-    "pluginId": "cordova-plugin-network-information",
-    "clobbers": [
-      "navigator.connection",
-      "navigator.network.connection"
-    ]
-  },
-  {
-    "id": "cordova-plugin-network-information.Connection",
-    "file": "plugins/cordova-plugin-network-information/www/Connection.js",
-    "pluginId": "cordova-plugin-network-information",
-    "clobbers": [
-      "Connection"
-    ]
-  },
-  {
-    "id": "cordova-plugin-qrscanner.QRScanner",
-    "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
-    "pluginId": "cordova-plugin-qrscanner",
-    "clobbers": [
-      "QRScanner"
-    ]
-  },
-  {
-    "id": "cordova-plugin-splashscreen.SplashScreen",
-    "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-    "pluginId": "cordova-plugin-splashscreen",
-    "clobbers": [
-      "navigator.splashscreen"
-    ]
-  },
-  {
-    "id": "mx.ferreyra.callnumber.CallNumber",
-    "file": "plugins/mx.ferreyra.callnumber/www/CallNumber.js",
-    "pluginId": "mx.ferreyra.callnumber",
-    "clobbers": [
-      "call"
-    ]
   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
   "cordova-plugin-add-swift-support": "1.7.2",
-  "cordova-plugin-file": "6.0.1",
   "cordova-plugin-advanced-http": "2.0.1",
   "cordova-plugin-aes256-encryption": "1.1.0",
   "cordova-plugin-device": "2.0.2",
@@ -310,7 +309,8 @@ module.exports.metadata =
   "cordova-plugin-qrscanner": "2.6.0",
   "cordova-plugin-splashscreen": "5.0.2",
   "cordova-plugin-whitelist": "1.3.3",
-  "mx.ferreyra.callnumber": "0.0.2"
+  "mx.ferreyra.callnumber": "0.0.2",
+  "cordova-plugin-file": "6.0.1"
 };
 // BOTTOM OF METADATA
 });

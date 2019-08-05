@@ -61,9 +61,10 @@ export class AdminrequestsPage {
   ) {
     this.userDetails = navParams.data.response;
     this.userDetails.location = {
-      'loc_name': this.userDetails.loc_name,
-      'id': this.userDetails.locationId
+      'loc_name': this.userDetails.location.loc_name,
+      'id': this.userDetails.location.id
     }
+    console.log("this ", this.userDetails)
     this.bookingForm = this.formBuilder.group({
       // costid: ['', Validators.compose([
       //   Validators.required,

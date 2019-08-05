@@ -147,11 +147,11 @@
 
     <ion-card class="driverCard" *ngIf="tripDetail.cab">
       <ion-card-header style="text-align: center" color="red">
-        Cab Details</ion-card-header>
+        Car Details</ion-card-header>
       <ion-card-content>
         <ion-row>
           <ion-col>
-            <span class="formtitle">Cab Name</span>
+            <span class="formtitle">Car Name</span>
           </ion-col>
           <ion-col>
             {{tripDetail.cab.cab_name}}
@@ -159,7 +159,7 @@
         </ion-row>
         <ion-row>
           <ion-col>
-            <span class="formtitle">Cab Number</span>
+            <span class="formtitle">Car Number</span>
           </ion-col>
           <ion-col>
             {{tripDetail.cab.cab_no}}
@@ -201,9 +201,11 @@
     <div *ngIf="viewName == 'hodView'">
       <ion-row text-center class="row-height" style="margin-top: 1%">
         <ion-col>
-          <button ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction($event,'Pending with Admin');">Accept
+          <button ion-button outline small="true" solid="true" style="background-color: #398b00;"
+            (click)="reqAction($event,'Pending with Admin');">Accept
           </button>
-          <button ion-button outline small="true" solid="true" style="background-color: #ca3636;" (click)="reqAction($event,'Rejected');">Decline
+          <button ion-button outline small="true" solid="true" style="background-color: #ca3636;"
+            (click)="reqAction($event,'Rejected');">Decline
           </button>
         </ion-col>
         <!-- <button text-center ion-button outline small="true" solid="true" style="background-color: #398b00;" (click)="reqAction($event,'Pending with Admin');">Accept</button>

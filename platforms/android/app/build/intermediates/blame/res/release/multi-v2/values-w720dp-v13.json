@@ -4,7 +4,7 @@
             "outputFile": "/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-w720dp-v13/values-w720dp-v13.xml",
             "map": [
                 {
-                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/449957b2e28d4e22816a49c8222a954e/res/values-w720dp/values-w720dp.xml",
+                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/e1633bbf65501b652ccf30562fbab22d/res/values-w720dp/values-w720dp.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "4",

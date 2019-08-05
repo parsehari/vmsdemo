@@ -115,7 +115,7 @@
     </ion-card>
 
     <ion-item>
-      <ion-label>Assign Cab</ion-label>
+      <ion-label>Assign Car</ion-label>
       <ion-select [(ngModel)]="cabs">
         <!--This is for disable the field depend on type [disabled]="tripDetail.travelType == 'outstation' " -->
         <ion-option value="select" [selected]="true">select</ion-option>
@@ -134,6 +134,7 @@
         </div>
       </ion-select>
     </ion-item>
+    <!-- <div [disabled]="gcoEmp"> -->
     <ion-item>
       <ion-label>Assign Vendor</ion-label>
       <ion-select [(ngModel)]="vendor">
@@ -144,6 +145,7 @@
         </div>
       </ion-select>
     </ion-item>
+    <!-- </div> -->
     <ion-item>
       <ion-label floating>Admin note</ion-label>
       <ion-input type="text" [(ngModel)]="admincomment"></ion-input>

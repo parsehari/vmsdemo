@@ -4,7 +4,7 @@
             "outputFile": "/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-sw600dp-v13/values-sw600dp-v13.xml",
             "map": [
                 {
-                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/449957b2e28d4e22816a49c8222a954e/res/values-sw600dp/values-sw600dp.xml",
+                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/e1633bbf65501b652ccf30562fbab22d/res/values-sw600dp/values-sw600dp.xml",
                     "from": {
                         "startLines": "4,5,6,7,10,13,14,15",
                         "startColumns": "4,4,4,4,4,4,4,4",

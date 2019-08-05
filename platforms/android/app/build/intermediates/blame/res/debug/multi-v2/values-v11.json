@@ -4,7 +4,7 @@
             "outputFile": "/Users/Apple/Desktop/mahindraApps/VMS/platforms/android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v11/values-v11.xml",
             "map": [
                 {
-                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/449957b2e28d4e22816a49c8222a954e/res/values-v11/values-v11.xml",
+                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/appcompat-v7-23.1.0.aar/e1633bbf65501b652ccf30562fbab22d/res/values-v11/values-v11.xml",
                     "from": {
                         "startLines": "4,10,16,22,28,34,42,43,44,49,56,58,62,63,64,115,169",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/zxing-android-embedded-3.3.0.aar/5972a649b9a9956b368a6aac9465a366/res/values-v11/values-v11.xml",
+                    "source": "/private/var/root/.gradle/caches/transforms-1/files-1.1/zxing-android-embedded-3.3.0.aar/e5f2e7f4d18329cd060521b0c1acd4f6/res/values-v11/values-v11.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

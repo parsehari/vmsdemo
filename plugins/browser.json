@@ -57,9 +57,6 @@
   "dependent_plugins": {
     "cordova-plugin-add-swift-support": {
       "PACKAGE_NAME": "com.mahindra.vmsapp"
-    },
-    "cordova-plugin-file": {
-      "PACKAGE_NAME": "com.mahindra.vmsapp"
     }
   }
 }

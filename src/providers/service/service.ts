@@ -19,7 +19,9 @@ import { LoginPage } from '../../pages/login/login';
 @Injectable()
 export class ServiceProvider {
 
-  private url = 'https://gmc.mahindra.com/vms_vapt';
+  private url = 'https://mapps.mahindra.com/vms';
+  //private url = 'https://gmc.mahindra.com/vms_vapt';
+  // private url = 'http://10.174.55.60:8080/vms';
   raiseReq: any;
   tripDTO: any;
   lgnDTO: any;
@@ -55,10 +57,11 @@ export class ServiceProvider {
   }
 
   raiseRequest(param: any, data: any, datastatus: any = "default"): Observable<any> {
-
+    console.log("data", data);
     this.raiseReq = new FormData();
     this.raiseReq.append("userID", data.userID);
     this.raiseReq.append("source", data.source);
+    //this.raiseReq.append("source", 'GROUP CORPORATE OFFICE');
     this.raiseReq.append("destination", data.destination);
     this.raiseReq.append("pickupPoint", data.pickupPoint);
     this.raiseReq.append("purpose", data.purpose);
@@ -89,6 +92,19 @@ export class ServiceProvider {
       this.raiseReq.append("modifiedby", data.modified_by);
       this.raiseReq.append("comment", data.comment);
     }
+
+    if (data.raisedBySecretory == 'manager') {
+      this.raiseReq.append("managerToken", data.managerToken);
+      this.raiseReq.append("managerName", data.managerName);
+      this.raiseReq.append("raisedForManager", 'Yes');
+      this.raiseReq.append("managerMobile", data.managerMobile);
+    } else {
+      this.raiseReq.append("managerToken", 'NA');
+      this.raiseReq.append("raisedForManager", 'No');
+      this.raiseReq.append("managerName", 'NA');
+      this.raiseReq.append("managerMobile", 'NA');
+    }
+
     let headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     return this.http.post(this.url + param, this.raiseReq, options);
@@ -138,7 +154,7 @@ export class ServiceProvider {
     return this.http.get(this.url + params);
   }
 
-  tripStart(params: any, cdate: any, type: any, id: any, km: any): Observable<any> {
+  tripStart(params: any, cdate: any, type: any, id: any, km: any, gateid: any): Observable<any> {
     var headers = new Headers({});
     let options = new RequestOptions({ headers: headers });
     this.tripDTO = new FormData();
@@ -146,9 +162,11 @@ export class ServiceProvider {
     if (type == 'startTrip') {
       this.tripDTO.append("startTrip", cdate);
       this.tripDTO.append("startKm", km);
+      this.tripDTO.append("tripStartGate", gateid);
     } else {
       this.tripDTO.append("endTrip", cdate);
       this.tripDTO.append("endKm", km);
+      this.tripDTO.append("tripEndGate", gateid);
     }
 
     return this.http.post(this.url + params, this.tripDTO, options);
@@ -224,6 +242,7 @@ export class ServiceProvider {
       this.ahttp.setSSLCertMode("nocheck").then((data) => {
         this.ahttp.setDataSerializer('json');
         let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
+        // opts = this.ahttp.setHeader(this.url, 'Access-Control-Allow-Origin', '');
         this.ahttp.get(this.url + url, params, opts).then(resp => {
           this.decryptData(resp.data).then(respData => {
             let decrypted: any = respData;
@@ -244,11 +263,12 @@ export class ServiceProvider {
 
   post(url: any, params?: any, options?: any) {
     return new Promise((resolve, reject) => {
-      this.ahttp.setSSLCertMode("nocheck").then((data) => {
+      this.ahttp.setSSLCertMode('nocheck').then((data) => {
         this.ahttp.setDataSerializer('json');
         this.encryptData(params).then(Encryresp => {
           let objParam = { "param": Encryresp };
           let opts = this.ahttp.setHeader('*', 'access_token', this.commonprovider.accessToken);
+          // opts = this.ahttp.setHeader(this.url, 'Access-Control-Allow-Origin', '');
           this.ahttp.post(this.url + url, objParam, opts).then(resp => {
             if (resp.data == "Access token has expired") {
               // this.commonprovider.showToast(resp.data);
@@ -281,11 +301,7 @@ export class ServiceProvider {
 
   }
 
-  getPendingTrip(params: any, id: any): Observable<any> {
-    var headers = new Headers({});
-    let options = new RequestOptions({ headers: headers });
-    return this.http.get(this.url + params + "/" + id, options)
-  }
+
 
   decryptData(sessionData: any) {
     var promise = new Promise(function (resolve, reject) {
@@ -321,5 +337,24 @@ export class ServiceProvider {
       resolve(text);
     });
     return promise;
+  }
+
+
+  getPendingTrip(params: any, id: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + id, options)
+  }
+
+  getGateDetails(params: any, id: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params + "/" + id, options);
+  }
+
+  getEndGateDetails(params: any): Observable<any> {
+    var headers = new Headers({});
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(this.url + params, options);
   }
 }
